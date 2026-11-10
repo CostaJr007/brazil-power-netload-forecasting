@@ -23,6 +23,10 @@ import pandas as pd
 from shapely import is_valid_reason
 
 # Reutilizamos auditoria, escrita e geração de URL já existentes.
+# Scripts desta subpasta reutilizam os módulos de scripts/ (acquire, pipeline...).
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
 from acquire import DATA_DIR, ROOT, Store, atomic_json, gfs_url, utcnow
 from discover_weather import listing
 

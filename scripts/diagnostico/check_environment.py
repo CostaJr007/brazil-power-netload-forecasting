@@ -22,7 +22,7 @@ import tempfile
 from pathlib import Path
 
 # Define ROOT: a raiz do projeto: parte do caminho deste arquivo, resolve seu endereço absoluto e sobe até a pasta Energy.
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 # FUNÇÃO main — coordena a sequência descrita no cabeçalho deste arquivo.

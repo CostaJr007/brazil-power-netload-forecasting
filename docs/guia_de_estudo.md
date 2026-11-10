@@ -207,7 +207,7 @@ Comece por comandos locais:
 # Só mostra opções. Não baixa dados.
 .\.venv\Scripts\python.exe scripts/acquire.py --help
 # Lê o catálogo local e reescreve os relatórios do inventário.
-.\.venv\Scripts\python.exe scripts/inventory.py
+.\.venv\Scripts\python.exe scripts/preparacao/inventory.py
 # Executa simulações locais de respostas e arquivos temporários.
 .\.venv\Scripts\python.exe -m pytest -q tests
 ```

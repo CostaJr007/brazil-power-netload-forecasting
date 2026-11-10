@@ -12,10 +12,14 @@ from pathlib import Path
 from zipfile import ZipFile
 
 # De acquire, importa Store, atomic_json, profile_csv, resource_plan, utcnow: reutiliza funções do coletor central em vez de duplicar suas regras.
+# Scripts desta subpasta reutilizam os módulos de scripts/ (acquire, pipeline...).
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
 from acquire import DATA_DIR, Store, atomic_json, profile_csv, resource_plan, utcnow
 
 # Define ROOT: a raiz do projeto: parte do caminho deste arquivo, resolve seu endereço absoluto e sobe até a pasta Energy.
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 # FUNÇÃO main — coordena a sequência descrita no cabeçalho deste arquivo.

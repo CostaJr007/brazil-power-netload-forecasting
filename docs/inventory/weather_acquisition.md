@@ -36,8 +36,8 @@ Não foram calculadas médias de chuva por bacia, reparadas geometrias, preenchi
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/discover_weather.py
-.\.venv\Scripts\python.exe scripts/download_weather.py
-.\.venv\Scripts\python.exe scripts/report_weather.py
+.\.venv\Scripts\python.exe scripts/preparacao/download_weather.py
+.\.venv\Scripts\python.exe scripts/diagnostico/report_weather.py
 ```
 
 As listagens oficiais foram preservadas em data/weather_catalog. Os originais meteorológicos estão em data/bronze/inpe, data/bronze/noaa e data/bronze/inmet, com manifestos e histórico SQLite.

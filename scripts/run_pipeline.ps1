@@ -3,7 +3,9 @@ $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $pythonPath = Join-Path $projectRoot '.venv\Scripts\python.exe'
 $scriptPath = Join-Path $PSScriptRoot 'pipeline.py'
-$logDir = Join-Path $projectRoot 'data\runs'
+# Mesma regra do Python: ENERGY_DATA_DIR, se definida, senão <projeto>\data.
+$dataDir = if ($env:ENERGY_DATA_DIR) { $env:ENERGY_DATA_DIR } else { Join-Path $projectRoot 'data' }
+$logDir = Join-Path $dataDir 'runs'
 New-Item -ItemType Directory -Path $logDir -Force | Out-Null
 Set-Location -LiteralPath $projectRoot
 # UTC e UTF-8 deixam os registros consistentes mesmo no Windows em português.

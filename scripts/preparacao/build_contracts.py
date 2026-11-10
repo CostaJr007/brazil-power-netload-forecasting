@@ -3,6 +3,10 @@
 Não baixa dados. Revise configs/ons_contracts.json quando a fonte mudar o schema.
 """
 import json
+# Scripts desta subpasta reutilizam os módulos de scripts/ (acquire, pipeline...).
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
 from acquire import ROOT, atomic_json
 
 

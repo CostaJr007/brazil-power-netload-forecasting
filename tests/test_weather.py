@@ -7,6 +7,7 @@ import eccodes
 # Carregamos o módulo pela pasta scripts sem iniciar o comando principal.
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts" / "preparacao"))
 from discover_weather import Links
 from download_weather import grib_inventory
 

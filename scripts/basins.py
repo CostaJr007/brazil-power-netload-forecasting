@@ -26,7 +26,7 @@ import numpy as np
 import polars as pl
 import shapely
 
-from acquire import ROOT
+from acquire import ROOT, resolve_data_path
 
 AREA_CRS = "EPSG:5880"
 
@@ -40,7 +40,8 @@ def normalize_name(value):
 def load_basins():
     """Lê os polígonos do ONS, repara geometrias inválidas e calcula a área de cada bacia."""
     discovery = json.loads((ROOT / "docs/inventory/weather_discovery.json").read_text(encoding="utf-8"))
-    path = discovery["basins"]["access_copy"]
+    # Caminho absoluto gravado na descoberta; resolve_data_path reencontra se data/ mudou de lugar.
+    path = str(resolve_data_path(discovery["basins"]["access_copy"]))
     frame = gpd.read_file("zip://" + path)
     if frame.crs is None or frame.crs.to_epsg() != 4326:
         raise ValueError(f"CRS inesperado nos polígonos: {frame.crs}")
