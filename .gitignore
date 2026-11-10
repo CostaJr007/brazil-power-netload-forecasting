@@ -1,0 +1,20 @@
+# Ambiente e IDE
+.venv/
+.idea/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Dados (Bronze/Silver/Gold/estado). Localmente "data" pode ser um junction para outro disco,
+# por isso o padrão sem barra final: ignora tanto a pasta quanto o link.
+/data
+data/
+artifacts/
+*.part
+
+# Segredos e credenciais locais (CDS, ANA, etc.)
+.env
+.cdsapirc
+*.token

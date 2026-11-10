@@ -1,0 +1,890 @@
+﻿{
+    "TaskName":  "Energy-Data-Pipeline",
+    "State":  "Ready",
+    "LastTaskResult":  0,
+    "LastRunTime":  "2026-11-10T10:27:28.0000000-05:00",
+    "NextRunTime":  "2026-11-10T10:29:28.0000000-05:00",
+    "Actions":  [
+                    {
+                        "CimClass":  {
+                                         "CimSuperClassName":  "MSFT_TaskAction",
+                                         "CimSuperClass":  {
+                                                               "CimSuperClassName":  null,
+                                                               "CimSuperClass":  null,
+                                                               "CimClassProperties":  [
+                                                                                          {
+                                                                                              "Name":  "Id",
+                                                                                              "Value":  null,
+                                                                                              "CimType":  14,
+                                                                                              "Flags":  "Property, NullValue",
+                                                                                              "Qualifiers":  "",
+                                                                                              "ReferenceClassName":  null
+                                                                                          }
+                                                                                      ],
+                                                               "CimClassQualifiers":  [
+
+                                                                                      ],
+                                                               "CimClassMethods":  [
+
+                                                                                   ],
+                                                               "CimSystemProperties":  {
+                                                                                           "Namespace":  "ROOT/Microsoft/Windows/TaskScheduler",
+                                                                                           "ServerName":  "COSTA",
+                                                                                           "ClassName":  "MSFT_TaskAction",
+                                                                                           "Path":  null
+                                                                                       }
+                                                           },
+                                         "CimClassProperties":  [
+                                                                    {
+                                                                        "Name":  "Id",
+                                                                        "Value":  null,
+                                                                        "CimType":  14,
+                                                                        "Flags":  "Property, NullValue",
+                                                                        "Qualifiers":  [
+
+                                                                                       ],
+                                                                        "ReferenceClassName":  null
+                                                                    },
+                                                                    {
+                                                                        "Name":  "Arguments",
+                                                                        "Value":  null,
+                                                                        "CimType":  14,
+                                                                        "Flags":  "Property, NullValue",
+                                                                        "Qualifiers":  [
+
+                                                                                       ],
+                                                                        "ReferenceClassName":  null
+                                                                    },
+                                                                    {
+                                                                        "Name":  "Execute",
+                                                                        "Value":  null,
+                                                                        "CimType":  14,
+                                                                        "Flags":  "Property, NullValue",
+                                                                        "Qualifiers":  [
+
+                                                                                       ],
+                                                                        "ReferenceClassName":  null
+                                                                    },
+                                                                    {
+                                                                        "Name":  "WorkingDirectory",
+                                                                        "Value":  null,
+                                                                        "CimType":  14,
+                                                                        "Flags":  "Property, NullValue",
+                                                                        "Qualifiers":  [
+
+                                                                                       ],
+                                                                        "ReferenceClassName":  null
+                                                                    }
+                                                                ],
+                                         "CimClassQualifiers":  [
+
+                                                                ],
+                                         "CimClassMethods":  [
+
+                                                             ],
+                                         "CimSystemProperties":  {
+                                                                     "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
+                                                                     "ServerName":  "COSTA",
+                                                                     "ClassName":  "MSFT_TaskExecAction",
+                                                                     "Path":  null
+                                                                 }
+                                     },
+                        "CimInstanceProperties":  [
+                                                      {
+                                                          "Name":  "Id",
+                                                          "Value":  null,
+                                                          "CimType":  14,
+                                                          "Flags":  "Property, NotModified, NullValue",
+                                                          "IsValueModified":  false
+                                                      },
+                                                      {
+                                                          "Name":  "Arguments",
+                                                          "Value":  "-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File \"C:\\Users\\adeil\\PycharmProjects\\Energy\\scripts\\run_pipeline.ps1\"",
+                                                          "CimType":  14,
+                                                          "Flags":  "Property, NotModified",
+                                                          "IsValueModified":  false
+                                                      },
+                                                      {
+                                                          "Name":  "Execute",
+                                                          "Value":  "powershell.exe",
+                                                          "CimType":  14,
+                                                          "Flags":  "Property, NotModified",
+                                                          "IsValueModified":  false
+                                                      },
+                                                      {
+                                                          "Name":  "WorkingDirectory",
+                                                          "Value":  null,
+                                                          "CimType":  14,
+                                                          "Flags":  "Property, NotModified, NullValue",
+                                                          "IsValueModified":  false
+                                                      }
+                                                  ],
+                        "CimSystemProperties":  {
+                                                    "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
+                                                    "ServerName":  "COSTA",
+                                                    "ClassName":  "MSFT_TaskExecAction",
+                                                    "Path":  null
+                                                }
+                    }
+                ],
+    "Triggers":  [
+                     {
+                         "CimClass":  {
+                                          "CimSuperClassName":  "MSFT_TaskTrigger",
+                                          "CimSuperClass":  {
+                                                                "CimSuperClassName":  null,
+                                                                "CimSuperClass":  null,
+                                                                "CimClassProperties":  [
+                                                                                           {
+                                                                                               "Name":  "Enabled",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  1,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "",
+                                                                                               "ReferenceClassName":  null
+                                                                                           },
+                                                                                           {
+                                                                                               "Name":  "EndBoundary",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  14,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "",
+                                                                                               "ReferenceClassName":  null
+                                                                                           },
+                                                                                           {
+                                                                                               "Name":  "ExecutionTimeLimit",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  14,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "",
+                                                                                               "ReferenceClassName":  null
+                                                                                           },
+                                                                                           {
+                                                                                               "Name":  "Id",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  14,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "",
+                                                                                               "ReferenceClassName":  null
+                                                                                           },
+                                                                                           {
+                                                                                               "Name":  "Repetition",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  16,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "EmbeddedInstance = \"MSFT_TaskRepetitionPattern\"",
+                                                                                               "ReferenceClassName":  "MSFT_TaskRepetitionPattern"
+                                                                                           },
+                                                                                           {
+                                                                                               "Name":  "StartBoundary",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  14,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "",
+                                                                                               "ReferenceClassName":  null
+                                                                                           }
+                                                                                       ],
+                                                                "CimClassQualifiers":  [
+
+                                                                                       ],
+                                                                "CimClassMethods":  [
+
+                                                                                    ],
+                                                                "CimSystemProperties":  {
+                                                                                            "Namespace":  "ROOT/Microsoft/Windows/TaskScheduler",
+                                                                                            "ServerName":  "COSTA",
+                                                                                            "ClassName":  "MSFT_TaskTrigger",
+                                                                                            "Path":  null
+                                                                                        }
+                                                            },
+                                          "CimClassProperties":  [
+                                                                     {
+                                                                         "Name":  "Enabled",
+                                                                         "Value":  null,
+                                                                         "CimType":  1,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "EndBoundary",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "ExecutionTimeLimit",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "Id",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "Repetition",
+                                                                         "Value":  null,
+                                                                         "CimType":  16,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+                                                                                            "EmbeddedInstance = \"MSFT_TaskRepetitionPattern\""
+                                                                                        ],
+                                                                         "ReferenceClassName":  "MSFT_TaskRepetitionPattern"
+                                                                     },
+                                                                     {
+                                                                         "Name":  "StartBoundary",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "RandomDelay",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     }
+                                                                 ],
+                                          "CimClassQualifiers":  [
+
+                                                                 ],
+                                          "CimClassMethods":  [
+
+                                                              ],
+                                          "CimSystemProperties":  {
+                                                                      "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
+                                                                      "ServerName":  "COSTA",
+                                                                      "ClassName":  "MSFT_TaskTimeTrigger",
+                                                                      "Path":  null
+                                                                  }
+                                      },
+                         "CimInstanceProperties":  [
+                                                       {
+                                                           "Name":  "Enabled",
+                                                           "Value":  true,
+                                                           "CimType":  1,
+                                                           "Flags":  "Property, NotModified",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "EndBoundary",
+                                                           "Value":  null,
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified, NullValue",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "ExecutionTimeLimit",
+                                                           "Value":  null,
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified, NullValue",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "Id",
+                                                           "Value":  null,
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified, NullValue",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "Repetition",
+                                                           "Value":  {
+                                                                         "CimClass":  {
+                                                                                          "CimSuperClassName":  null,
+                                                                                          "CimSuperClass":  null,
+                                                                                          "CimClassProperties":  "Duration Interval StopAtDurationEnd",
+                                                                                          "CimClassQualifiers":  "",
+                                                                                          "CimClassMethods":  "",
+                                                                                          "CimSystemProperties":  "Microsoft.Management.Infrastructure.CimSystemProperties"
+                                                                                      },
+                                                                         "CimInstanceProperties":  [
+                                                                                                       "Duration",
+                                                                                                       "Interval = \"PT15M\"",
+                                                                                                       "StopAtDurationEnd = True"
+                                                                                                   ],
+                                                                         "CimSystemProperties":  {
+                                                                                                     "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
+                                                                                                     "ServerName":  "COSTA",
+                                                                                                     "ClassName":  "MSFT_TaskRepetitionPattern",
+                                                                                                     "Path":  null
+                                                                                                 }
+                                                                     },
+                                                           "CimType":  16,
+                                                           "Flags":  "Property, NotModified",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "StartBoundary",
+                                                           "Value":  "2026-11-10T10:29:28-05:00",
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "RandomDelay",
+                                                           "Value":  null,
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified, NullValue",
+                                                           "IsValueModified":  false
+                                                       }
+                                                   ],
+                         "CimSystemProperties":  {
+                                                     "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
+                                                     "ServerName":  "COSTA",
+                                                     "ClassName":  "MSFT_TaskTimeTrigger",
+                                                     "Path":  null
+                                                 }
+                     },
+                     {
+                         "CimClass":  {
+                                          "CimSuperClassName":  "MSFT_TaskTrigger",
+                                          "CimSuperClass":  {
+                                                                "CimSuperClassName":  null,
+                                                                "CimSuperClass":  null,
+                                                                "CimClassProperties":  [
+                                                                                           {
+                                                                                               "Name":  "Enabled",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  1,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "",
+                                                                                               "ReferenceClassName":  null
+                                                                                           },
+                                                                                           {
+                                                                                               "Name":  "EndBoundary",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  14,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "",
+                                                                                               "ReferenceClassName":  null
+                                                                                           },
+                                                                                           {
+                                                                                               "Name":  "ExecutionTimeLimit",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  14,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "",
+                                                                                               "ReferenceClassName":  null
+                                                                                           },
+                                                                                           {
+                                                                                               "Name":  "Id",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  14,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "",
+                                                                                               "ReferenceClassName":  null
+                                                                                           },
+                                                                                           {
+                                                                                               "Name":  "Repetition",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  16,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "EmbeddedInstance = \"MSFT_TaskRepetitionPattern\"",
+                                                                                               "ReferenceClassName":  "MSFT_TaskRepetitionPattern"
+                                                                                           },
+                                                                                           {
+                                                                                               "Name":  "StartBoundary",
+                                                                                               "Value":  null,
+                                                                                               "CimType":  14,
+                                                                                               "Flags":  "Property, NullValue",
+                                                                                               "Qualifiers":  "",
+                                                                                               "ReferenceClassName":  null
+                                                                                           }
+                                                                                       ],
+                                                                "CimClassQualifiers":  [
+
+                                                                                       ],
+                                                                "CimClassMethods":  [
+
+                                                                                    ],
+                                                                "CimSystemProperties":  {
+                                                                                            "Namespace":  "ROOT/Microsoft/Windows/TaskScheduler",
+                                                                                            "ServerName":  "COSTA",
+                                                                                            "ClassName":  "MSFT_TaskTrigger",
+                                                                                            "Path":  null
+                                                                                        }
+                                                            },
+                                          "CimClassProperties":  [
+                                                                     {
+                                                                         "Name":  "Enabled",
+                                                                         "Value":  null,
+                                                                         "CimType":  1,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "EndBoundary",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "ExecutionTimeLimit",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "Id",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "Repetition",
+                                                                         "Value":  null,
+                                                                         "CimType":  16,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+                                                                                            "EmbeddedInstance = \"MSFT_TaskRepetitionPattern\""
+                                                                                        ],
+                                                                         "ReferenceClassName":  "MSFT_TaskRepetitionPattern"
+                                                                     },
+                                                                     {
+                                                                         "Name":  "StartBoundary",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "Delay",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     },
+                                                                     {
+                                                                         "Name":  "UserId",
+                                                                         "Value":  null,
+                                                                         "CimType":  14,
+                                                                         "Flags":  "Property, NullValue",
+                                                                         "Qualifiers":  [
+
+                                                                                        ],
+                                                                         "ReferenceClassName":  null
+                                                                     }
+                                                                 ],
+                                          "CimClassQualifiers":  [
+
+                                                                 ],
+                                          "CimClassMethods":  [
+
+                                                              ],
+                                          "CimSystemProperties":  {
+                                                                      "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
+                                                                      "ServerName":  "COSTA",
+                                                                      "ClassName":  "MSFT_TaskLogonTrigger",
+                                                                      "Path":  null
+                                                                  }
+                                      },
+                         "CimInstanceProperties":  [
+                                                       {
+                                                           "Name":  "Enabled",
+                                                           "Value":  true,
+                                                           "CimType":  1,
+                                                           "Flags":  "Property, NotModified",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "EndBoundary",
+                                                           "Value":  null,
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified, NullValue",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "ExecutionTimeLimit",
+                                                           "Value":  null,
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified, NullValue",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "Id",
+                                                           "Value":  null,
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified, NullValue",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "Repetition",
+                                                           "Value":  {
+                                                                         "CimClass":  {
+                                                                                          "CimSuperClassName":  null,
+                                                                                          "CimSuperClass":  null,
+                                                                                          "CimClassProperties":  "Duration Interval StopAtDurationEnd",
+                                                                                          "CimClassQualifiers":  "",
+                                                                                          "CimClassMethods":  "",
+                                                                                          "CimSystemProperties":  "Microsoft.Management.Infrastructure.CimSystemProperties"
+                                                                                      },
+                                                                         "CimInstanceProperties":  [
+                                                                                                       "Duration",
+                                                                                                       "Interval",
+                                                                                                       "StopAtDurationEnd = False"
+                                                                                                   ],
+                                                                         "CimSystemProperties":  {
+                                                                                                     "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
+                                                                                                     "ServerName":  "COSTA",
+                                                                                                     "ClassName":  "MSFT_TaskRepetitionPattern",
+                                                                                                     "Path":  null
+                                                                                                 }
+                                                                     },
+                                                           "CimType":  16,
+                                                           "Flags":  "Property, NotModified",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "StartBoundary",
+                                                           "Value":  null,
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified, NullValue",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "Delay",
+                                                           "Value":  null,
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified, NullValue",
+                                                           "IsValueModified":  false
+                                                       },
+                                                       {
+                                                           "Name":  "UserId",
+                                                           "Value":  "COSTA\\adeil",
+                                                           "CimType":  14,
+                                                           "Flags":  "Property, NotModified",
+                                                           "IsValueModified":  false
+                                                       }
+                                                   ],
+                         "CimSystemProperties":  {
+                                                     "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
+                                                     "ServerName":  "COSTA",
+                                                     "ClassName":  "MSFT_TaskLogonTrigger",
+                                                     "Path":  null
+                                                 }
+                     }
+                 ],
+    "Principal":  {
+                      "CimClass":  {
+                                       "CimSuperClassName":  "MSFT_TaskPrincipal",
+                                       "CimSuperClass":  {
+                                                             "CimSuperClassName":  null,
+                                                             "CimSuperClass":  null,
+                                                             "CimClassProperties":  [
+                                                                                        {
+                                                                                            "Name":  "DisplayName",
+                                                                                            "Value":  null,
+                                                                                            "CimType":  14,
+                                                                                            "Flags":  "Property, NullValue",
+                                                                                            "Qualifiers":  [
+
+                                                                                                           ],
+                                                                                            "ReferenceClassName":  null
+                                                                                        },
+                                                                                        {
+                                                                                            "Name":  "GroupId",
+                                                                                            "Value":  null,
+                                                                                            "CimType":  14,
+                                                                                            "Flags":  "Property, NullValue",
+                                                                                            "Qualifiers":  [
+
+                                                                                                           ],
+                                                                                            "ReferenceClassName":  null
+                                                                                        },
+                                                                                        {
+                                                                                            "Name":  "Id",
+                                                                                            "Value":  null,
+                                                                                            "CimType":  14,
+                                                                                            "Flags":  "Property, NullValue",
+                                                                                            "Qualifiers":  [
+
+                                                                                                           ],
+                                                                                            "ReferenceClassName":  null
+                                                                                        },
+                                                                                        {
+                                                                                            "Name":  "LogonType",
+                                                                                            "Value":  null,
+                                                                                            "CimType":  7,
+                                                                                            "Flags":  "Property, ReadOnly, NullValue",
+                                                                                            "Qualifiers":  [
+                                                                                                               "read = True",
+                                                                                                               "ValueMap = ...",
+                                                                                                               "Values = ..."
+                                                                                                           ],
+                                                                                            "ReferenceClassName":  null
+                                                                                        },
+                                                                                        {
+                                                                                            "Name":  "RunLevel",
+                                                                                            "Value":  null,
+                                                                                            "CimType":  7,
+                                                                                            "Flags":  "Property, NullValue",
+                                                                                            "Qualifiers":  [
+
+                                                                                                           ],
+                                                                                            "ReferenceClassName":  null
+                                                                                        },
+                                                                                        {
+                                                                                            "Name":  "UserId",
+                                                                                            "Value":  null,
+                                                                                            "CimType":  14,
+                                                                                            "Flags":  "Property, NullValue",
+                                                                                            "Qualifiers":  [
+
+                                                                                                           ],
+                                                                                            "ReferenceClassName":  null
+                                                                                        }
+                                                                                    ],
+                                                             "CimClassQualifiers":  [
+
+                                                                                    ],
+                                                             "CimClassMethods":  [
+
+                                                                                 ],
+                                                             "CimSystemProperties":  {
+                                                                                         "Namespace":  "ROOT/Microsoft/Windows/TaskScheduler",
+                                                                                         "ServerName":  "COSTA",
+                                                                                         "ClassName":  "MSFT_TaskPrincipal",
+                                                                                         "Path":  null
+                                                                                     }
+                                                         },
+                                       "CimClassProperties":  [
+                                                                  {
+                                                                      "Name":  "DisplayName",
+                                                                      "Value":  null,
+                                                                      "CimType":  14,
+                                                                      "Flags":  "Property, NullValue",
+                                                                      "Qualifiers":  [
+
+                                                                                     ],
+                                                                      "ReferenceClassName":  null
+                                                                  },
+                                                                  {
+                                                                      "Name":  "GroupId",
+                                                                      "Value":  null,
+                                                                      "CimType":  14,
+                                                                      "Flags":  "Property, NullValue",
+                                                                      "Qualifiers":  [
+
+                                                                                     ],
+                                                                      "ReferenceClassName":  null
+                                                                  },
+                                                                  {
+                                                                      "Name":  "Id",
+                                                                      "Value":  null,
+                                                                      "CimType":  14,
+                                                                      "Flags":  "Property, NullValue",
+                                                                      "Qualifiers":  [
+
+                                                                                     ],
+                                                                      "ReferenceClassName":  null
+                                                                  },
+                                                                  {
+                                                                      "Name":  "LogonType",
+                                                                      "Value":  null,
+                                                                      "CimType":  7,
+                                                                      "Flags":  "Property, ReadOnly, NullValue",
+                                                                      "Qualifiers":  [
+                                                                                         {
+                                                                                             "Name":  "read",
+                                                                                             "Value":  true,
+                                                                                             "CimType":  1,
+                                                                                             "Flags":  "EnableOverride, ToSubclass"
+                                                                                         },
+                                                                                         {
+                                                                                             "Name":  "ValueMap",
+                                                                                             "Value":  "0 1 2 3 4 5 6",
+                                                                                             "CimType":  30,
+                                                                                             "Flags":  "EnableOverride, ToSubclass"
+                                                                                         },
+                                                                                         {
+                                                                                             "Name":  "Values",
+                                                                                             "Value":  "1 2 3 4 5 6 7",
+                                                                                             "CimType":  30,
+                                                                                             "Flags":  "EnableOverride, ToSubclass"
+                                                                                         }
+                                                                                     ],
+                                                                      "ReferenceClassName":  null
+                                                                  },
+                                                                  {
+                                                                      "Name":  "RunLevel",
+                                                                      "Value":  null,
+                                                                      "CimType":  7,
+                                                                      "Flags":  "Property, NullValue",
+                                                                      "Qualifiers":  [
+
+                                                                                     ],
+                                                                      "ReferenceClassName":  null
+                                                                  },
+                                                                  {
+                                                                      "Name":  "UserId",
+                                                                      "Value":  null,
+                                                                      "CimType":  14,
+                                                                      "Flags":  "Property, NullValue",
+                                                                      "Qualifiers":  [
+
+                                                                                     ],
+                                                                      "ReferenceClassName":  null
+                                                                  },
+                                                                  {
+                                                                      "Name":  "ProcessTokenSidType",
+                                                                      "Value":  null,
+                                                                      "CimType":  7,
+                                                                      "Flags":  "Property, ReadOnly, NullValue",
+                                                                      "Qualifiers":  [
+                                                                                         {
+                                                                                             "Name":  "read",
+                                                                                             "Value":  true,
+                                                                                             "CimType":  1,
+                                                                                             "Flags":  "EnableOverride, ToSubclass"
+                                                                                         },
+                                                                                         {
+                                                                                             "Name":  "ValueMap",
+                                                                                             "Value":  "0 1 2",
+                                                                                             "CimType":  30,
+                                                                                             "Flags":  "EnableOverride, ToSubclass"
+                                                                                         },
+                                                                                         {
+                                                                                             "Name":  "Values",
+                                                                                             "Value":  "109 110 111",
+                                                                                             "CimType":  30,
+                                                                                             "Flags":  "EnableOverride, ToSubclass"
+                                                                                         }
+                                                                                     ],
+                                                                      "ReferenceClassName":  null
+                                                                  },
+                                                                  {
+                                                                      "Name":  "RequiredPrivilege",
+                                                                      "Value":  null,
+                                                                      "CimType":  30,
+                                                                      "Flags":  "Property, NullValue",
+                                                                      "Qualifiers":  [
+
+                                                                                     ],
+                                                                      "ReferenceClassName":  null
+                                                                  }
+                                                              ],
+                                       "CimClassQualifiers":  [
+
+                                                              ],
+                                       "CimClassMethods":  [
+
+                                                           ],
+                                       "CimSystemProperties":  {
+                                                                   "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
+                                                                   "ServerName":  "COSTA",
+                                                                   "ClassName":  "MSFT_TaskPrincipal2",
+                                                                   "Path":  null
+                                                               }
+                                   },
+                      "CimInstanceProperties":  [
+                                                    {
+                                                        "Name":  "DisplayName",
+                                                        "Value":  null,
+                                                        "CimType":  14,
+                                                        "Flags":  "Property, NotModified, NullValue",
+                                                        "IsValueModified":  false
+                                                    },
+                                                    {
+                                                        "Name":  "GroupId",
+                                                        "Value":  null,
+                                                        "CimType":  14,
+                                                        "Flags":  "Property, NotModified, NullValue",
+                                                        "IsValueModified":  false
+                                                    },
+                                                    {
+                                                        "Name":  "Id",
+                                                        "Value":  "Author",
+                                                        "CimType":  14,
+                                                        "Flags":  "Property, NotModified",
+                                                        "IsValueModified":  false
+                                                    },
+                                                    {
+                                                        "Name":  "LogonType",
+                                                        "Value":  3,
+                                                        "CimType":  7,
+                                                        "Flags":  "Property, ReadOnly, NotModified",
+                                                        "IsValueModified":  false
+                                                    },
+                                                    {
+                                                        "Name":  "RunLevel",
+                                                        "Value":  0,
+                                                        "CimType":  7,
+                                                        "Flags":  "Property, NotModified",
+                                                        "IsValueModified":  false
+                                                    },
+                                                    {
+                                                        "Name":  "UserId",
+                                                        "Value":  "adeil",
+                                                        "CimType":  14,
+                                                        "Flags":  "Property, NotModified",
+                                                        "IsValueModified":  false
+                                                    },
+                                                    {
+                                                        "Name":  "ProcessTokenSidType",
+                                                        "Value":  2,
+                                                        "CimType":  7,
+                                                        "Flags":  "Property, ReadOnly, NotModified",
+                                                        "IsValueModified":  false
+                                                    },
+                                                    {
+                                                        "Name":  "RequiredPrivilege",
+                                                        "Value":  null,
+                                                        "CimType":  30,
+                                                        "Flags":  "Property, NotModified, NullValue",
+                                                        "IsValueModified":  false
+                                                    }
+                                                ],
+                      "CimSystemProperties":  {
+                                                  "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
+                                                  "ServerName":  "COSTA",
+                                                  "ClassName":  "MSFT_TaskPrincipal2",
+                                                  "Path":  null
+                                              }
+                  }
+}

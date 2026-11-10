@@ -1,0 +1,3884 @@
+{
+  "started_at": "2026-11-10T00:46:53.955597+00:00",
+  "scope": "Newest dated resources per selected dataset; not every historical URL",
+  "results": [
+    {
+      "dataset": "bacia_contorno",
+      "title": "Contornos das Bacias Hidrográficas",
+      "checked_at": "2026-11-10T00:46:56.765384+00:00",
+      "latest_label_date": [
+        0,
+        0,
+        0
+      ],
+      "endpoints": [
+        {
+          "resource_id": "beb946ac-f35a-4b5b-b8b2-ea017e9e5783",
+          "format": "ZIP",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip",
+          "http_status": 200,
+          "content_length": "1622722",
+          "last_modified": "Fri, 03 Nov 2023 15:06:22 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip",
+      "content": {
+        "status": "non_temporal_resource",
+        "format": "ZIP",
+        "reference_column": null,
+        "max_reference": null
+      },
+      "status": "non_temporal_resource",
+      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+    },
+    {
+      "dataset": "balanco-energia-subsistema",
+      "title": "Balanço de Energia nos Subsistemas",
+      "checked_at": "2026-11-10T00:46:53.958857+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "1eaa8072-a556-4d05-825c-6267f0c8623d",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2026.parquet",
+          "http_status": 200,
+          "content_length": "1822095",
+          "last_modified": "Mon, 09 Nov 2026 22:00:20 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2026.parquet"
+        },
+        {
+          "resource_id": "6a0e9a8c-1c3d-45c7-b272-a23457d5ac2d",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2026.csv",
+          "http_status": 200,
+          "content_length": "3915646",
+          "last_modified": "Mon, 09 Nov 2026 22:00:23 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 1822095,
+        "sha256": "95ebd9442e7110e68fbc93a55808a88724a2c11f75308a889c33ccd447e1aafc",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\8ed74eb27a820c837f4102423818ca8d66dc81e182ac0ea35286a3e521e0208b.parquet",
+        "rows": 37320,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-07 23:00:00",
+            "nonnull": 37320
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-07 23:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_gerhidraulica",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_gertermica",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_gereolica",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_gersolar",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_carga",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_intercambio",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "balanco_dessem_detalhe",
+      "title": "DESSEM - Balanço de Energia Detalhado",
+      "checked_at": "2026-11-10T00:47:00.625070+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        10
+      ],
+      "endpoints": [
+        {
+          "resource_id": "741b16e4-57e0-4835-af28-d4d91338eb64",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_dessem_detalhe/BALANCO_DESSEM_DETALHE_2026_11_10.parquet",
+          "http_status": 200,
+          "content_length": "16470",
+          "last_modified": "Mon, 09 Nov 2026 18:58:04 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_dessem_detalhe/BALANCO_DESSEM_DETALHE_2026_11_10.parquet"
+        },
+        {
+          "resource_id": "33ea53f1-2281-4012-99f1-641e13a019b5",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_dessem_detalhe/BALANCO_DESSEM_DETALHE_2026_11_10.csv",
+          "http_status": 200,
+          "content_length": "17449",
+          "last_modified": "Mon, 09 Nov 2026 18:58:06 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_dessem_detalhe/BALANCO_DESSEM_DETALHE_2026_11_10.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_dessem_detalhe/BALANCO_DESSEM_DETALHE_2026_11_10.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 16470,
+        "sha256": "a04f10d4f4218855d65452f5cb3a2a46ea20b12a625a8789bf3c66ad6cd37a74",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\d7ba49e072800d0214d8dc8535399eb3d29bf467624ca6d7b86d168978578954.parquet",
+        "rows": 192,
+        "date_columns": {
+          "din_programacaodia": {
+            "min": "2026-11-10 00:00:00",
+            "max": "2026-11-10 00:00:00",
+            "nonnull": 192
+          }
+        },
+        "reference_column": "din_programacaodia",
+        "max_reference": "2026-11-10 00:00:00",
+        "columns": [
+          {
+            "name": "din_programacaodia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "num_patamar",
+            "type": "INTEGER"
+          },
+          {
+            "name": "cod_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_demanda",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_ger_hidraulica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_ger_pch",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_ger_termica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_ger_pct",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_ger_eolica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_ger_fotovoltaica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_ger_mmgd",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_cons_elevatoria",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "balanco_dessem_geral",
+      "title": "DESSEM - Balanço de Energia Geral",
+      "checked_at": "2026-11-10T00:47:00.272025+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        10
+      ],
+      "endpoints": [
+        {
+          "resource_id": "2ba6c342-a693-4abc-960a-c621153874c3",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_dessem_geral/BALANCO_DESSEM_GERAL_2026_11_10.parquet",
+          "http_status": 200,
+          "content_length": "11899",
+          "last_modified": "Mon, 09 Nov 2026 18:57:54 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_dessem_geral/BALANCO_DESSEM_GERAL_2026_11_10.parquet"
+        },
+        {
+          "resource_id": "31f0d9d4-0a68-4c12-9f6e-68c85e38723d",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_dessem_geral/BALANCO_DESSEM_GERAL_2026_11_10.csv",
+          "http_status": 200,
+          "content_length": "11457",
+          "last_modified": "Mon, 09 Nov 2026 18:57:55 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_dessem_geral/BALANCO_DESSEM_GERAL_2026_11_10.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_dessem_geral/BALANCO_DESSEM_GERAL_2026_11_10.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 11899,
+        "sha256": "fa5bf35fb8af4ad512c4c4fdb5b518919451d3d66f549dc3c3cac4edf6e77137",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\e5b64fc98bf7708b09b197f1b3e59e94a46e2059d907d5593f7df14f87cba035.parquet",
+        "rows": 192,
+        "date_columns": {
+          "din_programacaodia": {
+            "min": "2026-11-10 00:00:00",
+            "max": "2026-11-10 00:00:00",
+            "nonnull": 192
+          }
+        },
+        "reference_column": "din_programacaodia",
+        "max_reference": "2026-11-10 00:00:00",
+        "columns": [
+          {
+            "name": "din_programacaodia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "num_patamar",
+            "type": "INTEGER"
+          },
+          {
+            "name": "cod_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_demanda",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracao_renovavel",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracao_hidraulica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracao_termica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_cons_elevatoria",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "capacidade-geracao",
+      "title": "Capacidade Instalada de Geração",
+      "checked_at": "2026-11-10T00:46:57.485615+00:00",
+      "latest_label_date": [
+        0,
+        0,
+        0
+      ],
+      "endpoints": [
+        {
+          "resource_id": "a6412542-f2ce-408e-b51d-19a48cc50b62",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/capacidade-geracao/CAPACIDADE_GERACAO.csv",
+          "http_status": 200,
+          "content_length": "1318263",
+          "last_modified": "Mon, 09 Nov 2026 22:00:31 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/capacidade-geracao/CAPACIDADE_GERACAO.csv"
+        },
+        {
+          "resource_id": "03aff81f-4a46-40f3-b076-463458c94356",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/capacidade-geracao/CAPACIDADE_GERACAO.parquet",
+          "http_status": 200,
+          "content_length": "243532",
+          "last_modified": "Mon, 09 Nov 2026 22:00:29 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/capacidade-geracao/CAPACIDADE_GERACAO.parquet"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/capacidade-geracao/CAPACIDADE_GERACAO.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 243532,
+        "sha256": "d1992f12dc0ec840d1dc67ffeec536b74508d49cede69a93dd24c9c7c7245f45",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\928819d3e5b719c7f35f5d95da5765960dac505976dad1e272dbdcd6b6170ca1.parquet",
+        "rows": 5837,
+        "date_columns": {
+          "dat_entradateste": {
+            "min": "1924-03-01 00:00:00",
+            "max": "2026-07-31 00:00:00",
+            "nonnull": 5829
+          },
+          "dat_entradaoperacao": {
+            "min": "1924-03-01 00:00:00",
+            "max": "2026-10-30 00:00:00",
+            "nonnull": 5837
+          },
+          "dat_desativacao": {
+            "min": "1986-01-01 00:00:00",
+            "max": "2026-09-30 00:00:00",
+            "nonnull": 1101
+          }
+        },
+        "reference_column": null,
+        "max_reference": null,
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_modalidadeoperacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_agenteproprietario",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_agenteoperador",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_tipousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_unidadegeradora",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_equipamento",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "num_unidadegeradora",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_combustivel",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "dat_entradateste",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "dat_entradaoperacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "dat_desativacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_potenciaefetiva",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable",
+      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+    },
+    {
+      "dataset": "carga-energia",
+      "title": "Carga de Energia Diária",
+      "checked_at": "2026-11-10T00:46:57.460298+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "abb91c8a-ce49-4e80-b3b5-c2f9c2b1b82b",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_energia_di/CARGA_ENERGIA_2026.parquet",
+          "http_status": 200,
+          "content_length": "17279",
+          "last_modified": "Mon, 09 Nov 2026 22:00:34 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_energia_di/CARGA_ENERGIA_2026.parquet"
+        },
+        {
+          "resource_id": "1691a33a-2c6b-4009-be3a-5bdca2f1bc3b",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_energia_di/CARGA_ENERGIA_2026.csv",
+          "http_status": 200,
+          "content_length": "50752",
+          "last_modified": "Mon, 09 Nov 2026 22:00:36 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_energia_di/CARGA_ENERGIA_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_energia_di/CARGA_ENERGIA_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 17279,
+        "sha256": "cbc6d92e9d08f6ea26d73bc06d373e52c31a8b54c94d1e87ff84114c373c6bc8",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\a3b85309baa6b06cb2eb996b4e9a5b075d6e2abfbb9c21447fba6201009305a0.parquet",
+        "rows": 1240,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-06 00:00:00",
+            "nonnull": 1240
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-06 00:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_cargaenergiamwmed",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "carga-energia-programada",
+      "title": "Carga de Energia Programada",
+      "checked_at": "2026-11-10T00:46:53.961077+00:00",
+      "status": "http_200_empty_response_without_area",
+      "api_descriptions": [
+        "https://apicarga.ons.org.br/prd/cargaprogramada?dat_inicio=YYYY-MM-DD&dat_fim=YYYY-MM-DD&cod_areacarga=AREA"
+      ],
+      "api_probe": {
+        "kind": "programada",
+        "url": "https://apicarga.ons.org.br/prd/cargaprogramada?dat_inicio=2026-11-08&dat_fim=2026-11-08",
+        "checked_at": "2026-11-10T00:46:48.720585+00:00",
+        "note": "Area omitted deliberately; no official area code was inferred.",
+        "http_status": 200,
+        "json_type": "list",
+        "rows": 0,
+        "sample": []
+      }
+    },
+    {
+      "dataset": "carga-energia-verificada",
+      "title": "Carga de Energia Verificada",
+      "checked_at": "2026-11-10T00:46:53.960983+00:00",
+      "status": "http_200_empty_response_without_area",
+      "api_descriptions": [
+        "Request URL: https://apicarga.ons.org.br/prd/cargaverificada?dat_inicio=YYYY-MM-DD&dat_fim=YYYY-MM-DD&cod_areacarga=AREA"
+      ],
+      "api_probe": {
+        "kind": "verificada",
+        "url": "https://apicarga.ons.org.br/prd/cargaverificada?dat_inicio=2026-11-08&dat_fim=2026-11-08",
+        "checked_at": "2026-11-10T00:46:48.893638+00:00",
+        "note": "Area omitted deliberately; no official area code was inferred.",
+        "http_status": 200,
+        "json_type": "list",
+        "rows": 0,
+        "sample": []
+      }
+    },
+    {
+      "dataset": "cmo-semi-horario",
+      "title": "CMO Semi-Horário",
+      "checked_at": "2026-11-10T00:47:02.474805+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "5c1f05de-9c48-40ea-882d-477bf902c68f",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/cmo_tm/CMO_SEMIHORARIO_2026.parquet",
+          "http_status": 200,
+          "content_length": "382276",
+          "last_modified": "Mon, 09 Nov 2026 22:00:50 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/cmo_tm/CMO_SEMIHORARIO_2026.parquet"
+        },
+        {
+          "resource_id": "3aa5d65b-3563-4b6a-a4c9-c59e107e536a",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/cmo_tm/CMO_SEMIHORARIO_2026.csv",
+          "http_status": 200,
+          "content_length": "2122462",
+          "last_modified": "Mon, 09 Nov 2026 22:00:52 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/cmo_tm/CMO_SEMIHORARIO_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/cmo_tm/CMO_SEMIHORARIO_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 382276,
+        "sha256": "21ef00adeab56a9263233a8a35a948dd526032cd9f201559bd01965e02453afb",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\2a9b4ca7d94cdff1558ef7c27213f74dc1bf5cee30cef3d9d8ec19f28192a9c1.parquet",
+        "rows": 59520,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-10 23:30:00",
+            "nonnull": 59520
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-10 23:30:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_cmo",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "curva-carga",
+      "title": "Curva de Carga Horária",
+      "checked_at": "2026-11-10T00:46:56.991168+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "8032cb14-8494-441b-8767-9faaf7837505",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/curva-carga-ho/CURVA_CARGA_2026.parquet",
+          "http_status": 200,
+          "content_length": "334755",
+          "last_modified": "Mon, 09 Nov 2026 22:00:53 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/curva-carga-ho/CURVA_CARGA_2026.parquet"
+        },
+        {
+          "resource_id": "e8bf6238-e9e4-448f-bcee-bec2b8d30a20",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/curva-carga-ho/CURVA_CARGA_2026.csv",
+          "http_status": 200,
+          "content_length": "1384186",
+          "last_modified": "Mon, 09 Nov 2026 22:00:55 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/curva-carga-ho/CURVA_CARGA_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/curva-carga-ho/CURVA_CARGA_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 334755,
+        "sha256": "bf3735622c3422b5a66b7fb38ab93f0375583e34417c1446fa2fc1e522543192",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\201b13e88624ce49954f863a09c33b1fcde4084cc0ee8f912b97e763c204ae19.parquet",
+        "rows": 29856,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-07 23:00:00",
+            "nonnull": 29856
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-07 23:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_cargaenergiahomwmed",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "cvu-usitermica",
+      "title": "CVU das Usina Térmicas",
+      "checked_at": "2026-11-10T00:47:02.161779+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "1d7500b2-111e-44eb-b68c-a690808afa63",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/cvu_usitermica_se/CVU_USINA_TERMICA_2026.parquet",
+          "http_status": 200,
+          "content_length": "24793",
+          "last_modified": "Mon, 09 Nov 2026 22:01:06 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/cvu_usitermica_se/CVU_USINA_TERMICA_2026.parquet"
+        },
+        {
+          "resource_id": "a969c512-b5ea-426c-b045-6a100849c663",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/cvu_usitermica_se/CVU_USINA_TERMICA_2026.csv",
+          "http_status": 200,
+          "content_length": "432117",
+          "last_modified": "Mon, 09 Nov 2026 22:01:08 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/cvu_usitermica_se/CVU_USINA_TERMICA_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/cvu_usitermica_se/CVU_USINA_TERMICA_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 24793,
+        "sha256": "0218109d57a016d7d4b84fcd6cd6e913b8b112180f9c73a5583492e2619d1aaf",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\83226a33ac3ee1021629e0f6807432d30a057e10ba132080eb0905e7f64102da.parquet",
+        "rows": 4674,
+        "date_columns": {
+          "dat_iniciosemana": {
+            "min": "2025-12-27 00:00:00",
+            "max": "2026-11-07 00:00:00",
+            "nonnull": 4674
+          },
+          "dat_fimsemana": {
+            "min": "2026-01-02 00:00:00",
+            "max": "2026-11-13 00:00:00",
+            "nonnull": 4674
+          }
+        },
+        "reference_column": "dat_fimsemana",
+        "max_reference": "2026-11-13 00:00:00",
+        "columns": [
+          {
+            "name": "dat_iniciosemana",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "dat_fimsemana",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "ano_referencia",
+            "type": "BIGINT"
+          },
+          {
+            "name": "mes_referencia",
+            "type": "BIGINT"
+          },
+          {
+            "name": "num_revisao",
+            "type": "BIGINT"
+          },
+          {
+            "name": "nom_semanaoperativa",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_usinaplanejamento",
+            "type": "BIGINT"
+          },
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_cvu",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "dados-hidrologicos-res",
+      "title": "Dados Hidráulicos por Reservatório – Base diária",
+      "checked_at": "2026-11-10T00:46:55.202010+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "d44449c7-f26b-4693-82c6-aaf98827753b",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/dados_hidrologicos_di/DADOS_HIDROLOGICOS_RES_2026.parquet",
+          "http_status": 200,
+          "content_length": "1799772",
+          "last_modified": "Mon, 09 Nov 2026 20:00:36 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/dados_hidrologicos_di/DADOS_HIDROLOGICOS_RES_2026.parquet"
+        },
+        {
+          "resource_id": "b7e8fc77-655d-4c77-b7cf-1c1782316505",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/dados_hidrologicos_di/DADOS_HIDROLOGICOS_RES_2026.csv",
+          "http_status": 200,
+          "content_length": "8667849",
+          "last_modified": "Mon, 09 Nov 2026 20:00:39 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/dados_hidrologicos_di/DADOS_HIDROLOGICOS_RES_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/dados_hidrologicos_di/DADOS_HIDROLOGICOS_RES_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 1799772,
+        "sha256": "4878be3c89f7405af535ad38f4bc817b0ed05f1e61092740ed3dbc18d642970c",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\70b3565bdb7bf87de3a8684a30e3f76ed2803b007890ba8b747b0f6f50b4dded.parquet",
+        "rows": 54485,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-09 00:00:00",
+            "nonnull": 54485
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-09 00:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "tip_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_bacia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_ree",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "num_ordemcs",
+            "type": "INTEGER"
+          },
+          {
+            "name": "cod_usina",
+            "type": "INTEGER"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_nivelmontante",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_niveljusante",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_volumeutilcon",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaoafluente",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaoturbinada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaovertida",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaooutrasestruturas",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaodefluente",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaotransferida",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaonatural",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaoartificial",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaoincremental",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaoevaporacaoliquida",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaousoconsuntivo",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaoincrementalbruta",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "dados_hidrologicos_ho",
+      "title": "Dados Hidráulicos por Reservatório – Base horária",
+      "checked_at": "2026-11-10T00:46:55.242964+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "94300048-80ac-44f5-99d3-b3c5a2a4c9e9",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/dados_hidrologicos_ho/DADOS_HIDROLOGICOS_HO_2026_11.parquet",
+          "http_status": 200,
+          "content_length": "520041",
+          "last_modified": "Tue, 10 Nov 2026 00:38:18 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/dados_hidrologicos_ho/DADOS_HIDROLOGICOS_HO_2026_11.parquet"
+        },
+        {
+          "resource_id": "a5680956-335c-40c4-ae5b-1770aa2d33e8",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/dados_hidrologicos_ho/DADOS_HIDROLOGICOS_HO_2026_11.csv",
+          "http_status": 200,
+          "content_length": "6387937",
+          "last_modified": "Tue, 10 Nov 2026 00:38:21 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/dados_hidrologicos_ho/DADOS_HIDROLOGICOS_HO_2026_11.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/dados_hidrologicos_ho/DADOS_HIDROLOGICOS_HO_2026_11.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 520041,
+        "sha256": "815a5bb1d7247148b312103214964d76489827a9031c28a4353ce51ef991b575",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\f554afb9c0b9ee4c256371adb67011edc09d10a89c6642fd2c9c7011d5e6116a.parquet",
+        "rows": 35999,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-11-01 01:00:00",
+            "max": "2026-11-09 21:00:00",
+            "nonnull": 35999
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-09 21:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "tip_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_bacia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_usina",
+            "type": "INTEGER"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_nivelmontante",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_niveljusante",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_volumeutil",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaoafluente",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaodefluente",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaoturbinada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaovertida",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaooutrasestruturas",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaotransferida",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaovertidanaoturbinavel",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "disponibilidade_usina",
+      "title": "Dados de Disponibilidade de Usinas",
+      "checked_at": "2026-11-10T00:46:55.767473+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "721e90e1-d0a9-4d78-88f5-e72e73d0fc42",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/disponibilidade_usina_ho/DISPONIBILIDADE_USINA_2026_11.parquet",
+          "http_status": 200,
+          "content_length": "59415",
+          "last_modified": "Mon, 09 Nov 2026 22:03:13 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/disponibilidade_usina_ho/DISPONIBILIDADE_USINA_2026_11.parquet"
+        },
+        {
+          "resource_id": "4fe477ab-2309-41d2-a145-181f32eba38c",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/disponibilidade_usina_ho/DISPONIBILIDADE_USINA_2026_11.csv",
+          "http_status": 200,
+          "content_length": "5188491",
+          "last_modified": "Mon, 09 Nov 2026 22:03:15 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/disponibilidade_usina_ho/DISPONIBILIDADE_USINA_2026_11.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/disponibilidade_usina_ho/DISPONIBILIDADE_USINA_2026_11.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 59415,
+        "sha256": "1d1427f2e69266cbf650911b26975f76628230398fc134247b855d9195602c1d",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\ca5974d3e7bdc524d04d86cd7138c11419b9af4a24fdb2a2635a08e7b996052f.parquet",
+        "rows": 33708,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-11-01 00:00:00",
+            "max": "2026-11-09 19:00:00",
+            "nonnull": 33708
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-09 19:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_tipousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_tipocombustivel",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_ons",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_potenciainstalada",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_dispoperacional",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_dispsincronizada",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "ear-diario-por-bacia",
+      "title": "EAR Diário por Bacia",
+      "checked_at": "2026-11-10T00:46:58.445930+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "02250113-6c4e-46e1-a2e7-877178683690",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_bacia_di/EAR_DIARIO_BACIAS_2026.parquet",
+          "http_status": 200,
+          "content_length": "111698",
+          "last_modified": "Mon, 09 Nov 2026 22:01:14 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_bacia_di/EAR_DIARIO_BACIAS_2026.parquet"
+        },
+        {
+          "resource_id": "bb510358-aef2-463a-8a48-b03e48c00171",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_bacia_di/EAR_DIARIO_BACIAS_2026.csv",
+          "http_status": 200,
+          "content_length": "440779",
+          "last_modified": "Mon, 09 Nov 2026 22:01:16 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_bacia_di/EAR_DIARIO_BACIAS_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_bacia_di/EAR_DIARIO_BACIAS_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 111698,
+        "sha256": "9491f1861c170da5ebf9497c69c51011480343b6289397050a09486fe728f30e",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\4fa85efa7c4f7f504541b3a81dc36ff906e74d8b9da6659a1465d347f5d9869b.parquet",
+        "rows": 10908,
+        "date_columns": {
+          "ear_data": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-08 00:00:00",
+            "nonnull": 10908
+          }
+        },
+        "reference_column": "ear_data",
+        "max_reference": "2026-11-08 00:00:00",
+        "columns": [
+          {
+            "name": "nomecurto",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ear_data",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ear_max_bacia",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ear_verif_bacia_mwmes",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ear_verif_bacia_percentual",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "ear-diario-por-ree-reservatorio-equivalente-de-energia",
+      "title": "EAR Diário por REE - Reservatório Equivalente de Energia",
+      "checked_at": "2026-11-10T00:46:59.431622+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "285e710e-6d34-4a58-a677-578643cf8248",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_ree_di/EAR_DIARIO_REE_2026.parquet",
+          "http_status": 200,
+          "content_length": "66575",
+          "last_modified": "Mon, 09 Nov 2026 22:01:18 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_ree_di/EAR_DIARIO_REE_2026.parquet"
+        },
+        {
+          "resource_id": "0bc9e52b-465a-479f-b168-2c1c21603a0f",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_ree_di/EAR_DIARIO_REE_2026.csv",
+          "http_status": 200,
+          "content_length": "215804",
+          "last_modified": "Mon, 09 Nov 2026 22:01:19 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_ree_di/EAR_DIARIO_REE_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_ree_di/EAR_DIARIO_REE_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 66575,
+        "sha256": "3593b2d586a8b8fae3247f5753841181578be5e61ea5d8f99e28cea7437e2bec",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\fb7830f1102e238877468f39ed78fc1b2f64435fafdd0d4f88327b26c4673881.parquet",
+        "rows": 3744,
+        "date_columns": {
+          "ear_data": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-08 00:00:00",
+            "nonnull": 3744
+          }
+        },
+        "reference_column": "ear_data",
+        "max_reference": "2026-11-08 00:00:00",
+        "columns": [
+          {
+            "name": "nom_ree",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ear_data",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ear_max_ree",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ear_verif_ree_mwmes",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ear_verif_ree_percentual",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "ear-diario-por-reservatorio",
+      "title": "EAR Diário por Reservatório",
+      "checked_at": "2026-11-10T00:46:59.287159+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "fe4bd332-38eb-41f8-a4a6-f69289284b36",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_reservatorio_di/EAR_DIARIO_RESERVATORIOS_2026.parquet",
+          "http_status": 200,
+          "content_length": "1113728",
+          "last_modified": "Mon, 09 Nov 2026 22:01:29 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_reservatorio_di/EAR_DIARIO_RESERVATORIOS_2026.parquet"
+        },
+        {
+          "resource_id": "3ad25afb-d6ad-4ea0-be38-5c7197cc58c9",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_reservatorio_di/EAR_DIARIO_RESERVATORIOS_2026.csv",
+          "http_status": 200,
+          "content_length": "5449337",
+          "last_modified": "Mon, 09 Nov 2026 22:01:31 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_reservatorio_di/EAR_DIARIO_RESERVATORIOS_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_reservatorio_di/EAR_DIARIO_RESERVATORIOS_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 1113728,
+        "sha256": "f1d4c69e6f72d91b506d2c22fee1cccf56d07d0b6c09156a7294fe4894488317",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\fea62308dadb9fd8f4be532f5a3660a861117501a7714dc0262cd5e51a2d2812.parquet",
+        "rows": 23636,
+        "date_columns": {
+          "ear_data": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-07 00:00:00",
+            "nonnull": 23636
+          }
+        },
+        "reference_column": "ear_data",
+        "max_reference": "2026-11-07 00:00:00",
+        "columns": [
+          {
+            "name": "nom_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_resplanejamento",
+            "type": "INTEGER"
+          },
+          {
+            "name": "tip_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_bacia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_ree",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_subsistema_jusante",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema_jusante",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ear_data",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ear_reservatorio_subsistema_proprio_mwmes",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ear_reservatorio_subsistema_jusante_mwmes",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "earmax_reservatorio_subsistema_proprio_mwmes",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "earmax_reservatorio_subsistema_jusante_mwmes",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ear_reservatorio_percentual",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ear_total_mwmes",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ear_maxima_total_mwmes",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_contribearbacia",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_contribearmaxbacia",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_contribearsubsistema",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_contribearmaxsubsistema",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_contribearsubsistemajusante",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_contribearmaxsubsistemajusante",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_contribearsin",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_contribearmaxsin",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "ear-diario-por-subsistema",
+      "title": "EAR Diário por Subsistema",
+      "checked_at": "2026-11-10T00:46:54.886739+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "e4418c1e-b3f6-4527-b9e2-5f4466894eb9",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_subsistema_di/EAR_DIARIO_SUBSISTEMA_2026.parquet",
+          "http_status": 200,
+          "content_length": "27566",
+          "last_modified": "Mon, 09 Nov 2026 22:01:28 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_subsistema_di/EAR_DIARIO_SUBSISTEMA_2026.parquet"
+        },
+        {
+          "resource_id": "9ee71162-0959-4de0-aac7-4a2cf9cb85f9",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_subsistema_di/EAR_DIARIO_SUBSISTEMA_2026.csv",
+          "http_status": 200,
+          "content_length": "61111",
+          "last_modified": "Mon, 09 Nov 2026 22:01:30 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_subsistema_di/EAR_DIARIO_SUBSISTEMA_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_subsistema_di/EAR_DIARIO_SUBSISTEMA_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 27566,
+        "sha256": "7c8ae0fcca5a5b5462a412dc610e0ba85d777e734a03c3afccbcef5f88119024",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\c0dd611c11df1162080d52824e8df6dfaac52d304c7721a5c71249fb95334b69.parquet",
+        "rows": 1248,
+        "date_columns": {
+          "ear_data": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-08 00:00:00",
+            "nonnull": 1248
+          }
+        },
+        "reference_column": "ear_data",
+        "max_reference": "2026-11-08 00:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ear_data",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ear_max_subsistema",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ear_verif_subsistema_mwmes",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ear_verif_subsistema_percentual",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "ena-diario-por-bacia",
+      "title": "ENA Diário por Bacia",
+      "checked_at": "2026-11-10T00:46:58.773990+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "13b73075-3c2f-4f19-bd0c-a5213a9ecda7",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_bacia_di/ENA_DIARIO_BACIAS_2026.parquet",
+          "http_status": 200,
+          "content_length": "348274",
+          "last_modified": "Mon, 09 Nov 2026 22:01:34 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_bacia_di/ENA_DIARIO_BACIAS_2026.parquet"
+        },
+        {
+          "resource_id": "7e4e3e84-0749-420b-b2a8-f0b7ac9b92ee",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_bacia_di/ENA_DIARIO_BACIAS_2026.csv",
+          "http_status": 200,
+          "content_length": "594643",
+          "last_modified": "Mon, 09 Nov 2026 22:01:36 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_bacia_di/ENA_DIARIO_BACIAS_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_bacia_di/ENA_DIARIO_BACIAS_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 348274,
+        "sha256": "c70d45b572d940a487731fe3d8f8bb7d9b7e865e059253aa5f4322a912d80962",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\d4fa95bc67b9044011642952e2161c83a13d161482a66b8930001025f115dd47.parquet",
+        "rows": 10908,
+        "date_columns": {
+          "ena_data": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-08 00:00:00",
+            "nonnull": 10908
+          }
+        },
+        "reference_column": "ena_data",
+        "max_reference": "2026-11-08 00:00:00",
+        "columns": [
+          {
+            "name": "nom_bacia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_data",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_bruta_bacia_mwmed",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ena_bruta_bacia_percentualmlt",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ena_armazenavel_bacia_mwmed",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ena_armazenavel_bacia_percentualmlt",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "ena-diario-por-ree-reservatorio-equivalente-de-energia",
+      "title": "ENA Diário por REE - Reservatório Equivalente de Energia",
+      "checked_at": "2026-11-10T00:46:59.773107+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "71172c1b-be70-4ef9-84e3-c26e3a0bc093",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_ree_di/ENA_DIARIO_REE_2026.parquet",
+          "http_status": 200,
+          "content_length": "157730",
+          "last_modified": "Mon, 09 Nov 2026 22:01:39 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_ree_di/ENA_DIARIO_REE_2026.parquet"
+        },
+        {
+          "resource_id": "8642cddc-e668-4d5d-877a-2abf1bb5faa2",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_ree_di/ENA_DIARIO_REE_2026.csv",
+          "http_status": 200,
+          "content_length": "270341",
+          "last_modified": "Mon, 09 Nov 2026 22:01:41 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_ree_di/ENA_DIARIO_REE_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_ree_di/ENA_DIARIO_REE_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 157730,
+        "sha256": "7d661433fce9f00cd23bf4700235482d2aace85204a0fbabe119b3f29bf0a002",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\cf344e0e0ba8615b40ba9f065ee42408484b1c7c03ba225d1d9d29941a60c996.parquet",
+        "rows": 3744,
+        "date_columns": {
+          "ena_data": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-08 00:00:00",
+            "nonnull": 3744
+          }
+        },
+        "reference_column": "ena_data",
+        "max_reference": "2026-11-08 00:00:00",
+        "columns": [
+          {
+            "name": "nom_reservatorioee",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_data",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_bruta_ree_mwmed",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_bruta_ree_percentualmlt",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_armazenavel_ree_mwmed",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_armazenavel_ree_percentualmlt",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "ena-diario-por-reservatorio",
+      "title": "ENA Diário por Reservatório",
+      "checked_at": "2026-11-10T00:46:59.386781+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "81c1365f-4277-4d59-9273-ccc1c414b0dc",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_reservatorio_di/ENA_DIARIO_RESERVATORIOS_2026.parquet",
+          "http_status": 200,
+          "content_length": "1761211",
+          "last_modified": "Mon, 09 Nov 2026 22:01:49 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_reservatorio_di/ENA_DIARIO_RESERVATORIOS_2026.parquet"
+        },
+        {
+          "resource_id": "185e5f65-86b1-4d21-87a5-484ceec82046",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_reservatorio_di/ENA_DIARIO_RESERVATORIOS_2026.csv",
+          "http_status": 200,
+          "content_length": "5583577",
+          "last_modified": "Mon, 09 Nov 2026 22:01:52 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_reservatorio_di/ENA_DIARIO_RESERVATORIOS_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_reservatorio_di/ENA_DIARIO_RESERVATORIOS_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 1761211,
+        "sha256": "4fc5f2745a81305248b33682e411aae138c4448af8cd513fe27098a865a3d4c5",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\73387c24bd31731a5b2c05b2668af72ae3cec61f035ca77bd292fe44382ba1b6.parquet",
+        "rows": 48205,
+        "date_columns": {
+          "ena_data": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-07 00:00:00",
+            "nonnull": 48205
+          }
+        },
+        "reference_column": "ena_data",
+        "max_reference": "2026-11-07 00:00:00",
+        "columns": [
+          {
+            "name": "nom_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_resplanejamento",
+            "type": "INTEGER"
+          },
+          {
+            "name": "tip_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_bacia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_ree",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_data",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_bruta_res_mwmed",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ena_bruta_res_percentualmlt",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ena_armazenavel_res_mwmed",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ena_armazenavel_res_percentualmlt",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ena_queda_bruta",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "mlt_ena",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "ena-diario-por-subsistema",
+      "title": "ENA Diário por Subsistema",
+      "checked_at": "2026-11-10T00:46:54.919662+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "2be57306-8b33-4bde-9e94-484612ff6807",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_subsistema_di/ENA_DIARIO_SUBSISTEMA_2026.parquet",
+          "http_status": 200,
+          "content_length": "49920",
+          "last_modified": "Mon, 09 Nov 2026 22:01:50 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_subsistema_di/ENA_DIARIO_SUBSISTEMA_2026.parquet"
+        },
+        {
+          "resource_id": "2fd0038a-5bb6-47dd-b346-125b7808cb07",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_subsistema_di/ENA_DIARIO_SUBSISTEMA_2026.csv",
+          "http_status": 200,
+          "content_length": "79272",
+          "last_modified": "Mon, 09 Nov 2026 22:01:51 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_subsistema_di/ENA_DIARIO_SUBSISTEMA_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_subsistema_di/ENA_DIARIO_SUBSISTEMA_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 49920,
+        "sha256": "e21223abc774af5f14f21f208bc39c72af01179f68e8db4794eb6f14a53058e1",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\ac8bf9fab19e18d54fe49553b1fe691715b383da848a0f6673fe37bd8458ca97.parquet",
+        "rows": 1248,
+        "date_columns": {
+          "ena_data": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-08 00:00:00",
+            "nonnull": 1248
+          }
+        },
+        "reference_column": "ena_data",
+        "max_reference": "2026-11-08 00:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_data",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ena_bruta_regiao_mwmed",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ena_bruta_regiao_percentualmlt",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ena_armazenavel_regiao_mwmed",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "ena_armazenavel_regiao_percentualmlt",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "energia-vertida-turbinavel",
+      "title": "Energia Vertida Turbinável",
+      "checked_at": "2026-11-10T00:47:01.059351+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "4ccf7d5c-470b-4331-b2ef-7e0316e10b67",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/energia_vertida_turbinavel_ho/ENERGIA_VERTIDA_TURBINAVEL_2026_11.parquet",
+          "http_status": 200,
+          "content_length": "704007",
+          "last_modified": "Mon, 09 Nov 2026 22:06:27 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/energia_vertida_turbinavel_ho/ENERGIA_VERTIDA_TURBINAVEL_2026_11.parquet"
+        },
+        {
+          "resource_id": "cd9bb7c8-4357-4ef6-81fe-0b85b5dcb2db",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/energia_vertida_turbinavel_ho/ENERGIA_VERTIDA_TURBINAVEL_2026_11.csv",
+          "http_status": 200,
+          "content_length": "3346794",
+          "last_modified": "Mon, 09 Nov 2026 22:06:30 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/energia_vertida_turbinavel_ho/ENERGIA_VERTIDA_TURBINAVEL_2026_11.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/energia_vertida_turbinavel_ho/ENERGIA_VERTIDA_TURBINAVEL_2026_11.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 704007,
+        "sha256": "6f8cee4a925e1449a2dc781528ed622c4360c1a255372eacfd8903aafba7b32c",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\2a21d19085444051831ca4459a17a9cc507f9fbd97841399cd078bf018913add.parquet",
+        "rows": 21932,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-11-01 00:00:00",
+            "max": "2026-11-08 23:00:00",
+            "nonnull": 21932
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-08 23:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_bacia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_rio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_agente",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_usina",
+            "type": "INTEGER"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_geracao",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_disponibilidade",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaoturbinada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaovertida",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaovertidanaoturbinavel",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_produtividade",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_folgadegeracao",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_energiavertida",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaovertidaturbinavel",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_energiavertidaturbinavel",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "fator-capacidade-2",
+      "title": "Fator de Capacidade de Geração Eólica e Solar",
+      "checked_at": "2026-11-10T00:47:00.647022+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "92ce02fe-b050-4452-9fc6-d1a48d7fc72f",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/fator_capacidade_2_di/FATOR_CAPACIDADE-2_2026_11.parquet",
+          "http_status": 200,
+          "content_length": "587372",
+          "last_modified": "Mon, 09 Nov 2026 22:04:17 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/fator_capacidade_2_di/FATOR_CAPACIDADE-2_2026_11.parquet"
+        },
+        {
+          "resource_id": "43d83abb-c13a-43e5-9948-0eda86a89fb2",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/fator_capacidade_2_di/FATOR_CAPACIDADE-2_2026_11.csv",
+          "http_status": 200,
+          "content_length": "8194778",
+          "last_modified": "Mon, 09 Nov 2026 22:04:19 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/fator_capacidade_2_di/FATOR_CAPACIDADE-2_2026_11.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/fator_capacidade_2_di/FATOR_CAPACIDADE-2_2026_11.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 587372,
+        "sha256": "aa4517126ed4e866b348ffa6cf5714bd2d80f5a56010e2a7be510e134e77cd4d",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\c53f6bdda8ca1a485f5f486ee3a53955af090057f59c833044566169d3115c52.parquet",
+        "rows": 33984,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-11-01 00:00:00",
+            "max": "2026-11-06 23:00:00",
+            "nonnull": 33984
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-06 23:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_pontoconexao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_pontoconexao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_localizacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_latitudesecoletora",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_longitudesecoletora",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_latitudepontoconexao",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_longitudepontoconexao",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "nom_modalidadeoperacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_tipousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina_conjunto",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_ons",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_geracaoprogramada",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracaoverificada",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_capacidadeinstalada",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_fatorcapacidade",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "geracao-termica-despacho-2",
+      "title": "Geração Térmica por Motivo de Despacho",
+      "checked_at": "2026-11-10T00:47:00.702021+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "e8854dc5-341d-4abb-96ca-57c1308f6257",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/geracao_termica_despacho_2_ho/GERACAO_TERMICA_DESPACHO-2_2026_11.parquet",
+          "http_status": 200,
+          "content_length": "313099",
+          "last_modified": "Mon, 09 Nov 2026 22:04:08 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/geracao_termica_despacho_2_ho/GERACAO_TERMICA_DESPACHO-2_2026_11.parquet"
+        },
+        {
+          "resource_id": "25708611-cc31-4c89-b999-e10be28333d3",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/geracao_termica_despacho_2_ho/GERACAO_TERMICA_DESPACHO-2_2026_11.csv",
+          "http_status": 200,
+          "content_length": "9184332",
+          "last_modified": "Mon, 09 Nov 2026 22:04:10 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/geracao_termica_despacho_2_ho/GERACAO_TERMICA_DESPACHO-2_2026_11.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/geracao_termica_despacho_2_ho/GERACAO_TERMICA_DESPACHO-2_2026_11.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 313099,
+        "sha256": "37871ed398f3d2e25a2677f625442591b2e27557e4a53270d2f755b190a4542e",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\937b00fe2befb0c92db9a95f4779ea5ee14b43db1db09590cec1601832bbe77e.parquet",
+        "rows": 27840,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-11-01 00:00:00",
+            "max": "2026-11-08 23:00:00",
+            "nonnull": 27840
+          },
+          "din_publicacao": {
+            "min": "2026-11-09 19:03:58",
+            "max": "2026-11-09 19:03:58",
+            "nonnull": 27840
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-08 23:00:00",
+        "columns": [
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "nom_tipopatamar",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_usinaplanejamento",
+            "type": "INTEGER"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_proggeracao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_progordemmerito",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_progordemdemeritoref",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_progordemdemeritoacimadainflex",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_proginflexibilidade",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_proginflexembutmerito",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_proginflexpura",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_prograzaoeletrica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_proggarantiaenergetica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_proggfom",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_progreposicaoperdas",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_progexportacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_progreservapotencia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_proggsub",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_progunitcommitment",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_progconstrainedoff",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_proginflexibilidadedessem",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifgeracao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifordemmerito",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifordemdemeritoacimadainflex",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifinflexibilidade",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifinflexembutmerito",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifinflexpura",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifrazaoeletrica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifgarantiaenergetica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifgfom",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifreposicaoperdas",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifexportacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_fdexp",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifreservapotencia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_atendsatisfatoriorpo",
+            "type": "INTEGER"
+          },
+          {
+            "name": "val_verifgsub",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifunitcommitment",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_verifconstrainedoff",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "tip_restricaoeletrica",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_progdisponibilidade",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracaodespachada",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_combustivel",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "dsc_tpmotivorestricao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_publicacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_despom",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_despfom",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "geracao-usina-2",
+      "title": "Geração por Usina em Base Horária",
+      "checked_at": "2026-11-10T00:46:53.959728+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "89387035-49a0-45f3-b27b-458c56c26e02",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/geracao_usina_2_ho/GERACAO_USINA-2_2026_11.parquet",
+          "http_status": 200,
+          "content_length": "1265942",
+          "last_modified": "Mon, 09 Nov 2026 22:04:31 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/geracao_usina_2_ho/GERACAO_USINA-2_2026_11.parquet"
+        },
+        {
+          "resource_id": "1ab5dc1d-0f74-4fb7-9848-54c8ebbf8158",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/geracao_usina_2_ho/GERACAO_USINA-2_2026_11.csv",
+          "http_status": 200,
+          "content_length": "17350105",
+          "last_modified": "Mon, 09 Nov 2026 22:04:33 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/geracao_usina_2_ho/GERACAO_USINA-2_2026_11.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/geracao_usina_2_ho/GERACAO_USINA-2_2026_11.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 1265942,
+        "sha256": "eae64bb729e1ef5d6b96dd09db5f4f498a0623f4719076141cf52be093c914d2",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\3d8d6953dc820a252ecf27a111e358e099cc564c8db0a46157a3487a7c377161.parquet",
+        "rows": 132672,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-11-01 00:00:00",
+            "max": "2026-11-08 23:00:00",
+            "nonnull": 132672
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-08 23:00:00",
+        "columns": [
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_modalidadeoperacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_tipousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_tipocombustivel",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_ons",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracao",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "grandezas_fluviometricas",
+      "title": "Dados de Grandezas Fluviométricas",
+      "checked_at": "2026-11-10T00:46:58.377642+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "b2b5a541-c3a3-4b66-a264-429c0e38f122",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/grandezas_fluviometricas_di/GRANDEZAS_FLUVIOMETRICAS_2026.parquet",
+          "http_status": 200,
+          "content_length": "430325",
+          "last_modified": "Mon, 09 Nov 2026 22:02:39 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/grandezas_fluviometricas_di/GRANDEZAS_FLUVIOMETRICAS_2026.parquet"
+        },
+        {
+          "resource_id": "49b603b4-51ab-4991-bfc2-5e5478077f22",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/grandezas_fluviometricas_di/GRANDEZAS_FLUVIOMETRICAS_2026.csv",
+          "http_status": 200,
+          "content_length": "6451951",
+          "last_modified": "Mon, 09 Nov 2026 22:02:42 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/grandezas_fluviometricas_di/GRANDEZAS_FLUVIOMETRICAS_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/grandezas_fluviometricas_di/GRANDEZAS_FLUVIOMETRICAS_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 430325,
+        "sha256": "f1d3b9f93191458c931747eff1b1440892738c99941510e047998375859bc8cd",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\d42677e8ee763eb7309f936e3f62f7d283f2c15707e961f6d6efbdd9802492a6.parquet",
+        "rows": 32609,
+        "date_columns": {
+          "din_medicao": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-09 00:00:00",
+            "nonnull": 32609
+          }
+        },
+        "reference_column": "din_medicao",
+        "max_reference": "2026-11-09 00:00:00",
+        "columns": [
+          {
+            "name": "id_postofluv",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_postofluviometrico",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_latitude",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_longitude",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_rio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_bacia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_medicao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_vazaomedia",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_vazaomediaincr",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "intercambio-nacional",
+      "title": "Intercâmbios Entre Subsistemas",
+      "checked_at": "2026-11-10T00:46:55.707388+00:00",
+      "latest_label_date": [
+        2026,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "5e1fe42a-8322-43c5-b4d9-4bb718a7bf2d",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/intercambio_nacional_ho/INTERCAMBIO_NACIONAL_2026.parquet",
+          "http_status": 200,
+          "content_length": "643781",
+          "last_modified": "Mon, 09 Nov 2026 22:04:18 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/intercambio_nacional_ho/INTERCAMBIO_NACIONAL_2026.parquet"
+        },
+        {
+          "resource_id": "5cc3d7eb-1b50-4ad7-beb3-5e46798a39ad",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/intercambio_nacional_ho/INTERCAMBIO_NACIONAL_2026.csv",
+          "http_status": 200,
+          "content_length": "1783043",
+          "last_modified": "Mon, 09 Nov 2026 22:04:20 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/intercambio_nacional_ho/INTERCAMBIO_NACIONAL_2026.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/intercambio_nacional_ho/INTERCAMBIO_NACIONAL_2026.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 643781,
+        "sha256": "348a752fd0f7d4293c6715eeb2e3299c50bc772abe2bd65e780e855bf080a4b6",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\f8902b6a029622a5e9b55d29be905bbeb795bbe7804e3e67d2bae96a66a3b8f3.parquet",
+        "rows": 29952,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-01-01 00:00:00",
+            "max": "2026-11-08 23:00:00",
+            "nonnull": 29952
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-08 23:00:00",
+        "columns": [
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "id_subsistema_origem",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema_origem",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_subsistema_destino",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema_destino",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_intercambiomwmed",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_intercambioprogmwmed",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "programacao_diaria",
+      "title": "Dados dos Valores da Programação Diária",
+      "checked_at": "2026-11-10T00:46:53.961092+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        10
+      ],
+      "endpoints": [
+        {
+          "resource_id": "7e4329d8-b9ba-4853-8f15-38d291da8f2d",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_diaria/PROGRAMACAO_DIARIA_2026_11_10.parquet",
+          "http_status": 200,
+          "content_length": "169270",
+          "last_modified": "Mon, 09 Nov 2026 20:58:56 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_diaria/PROGRAMACAO_DIARIA_2026_11_10.parquet"
+        },
+        {
+          "resource_id": "6ed5a3e1-3632-4a92-815c-edee50b1ccea",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_diaria/PROGRAMACAO_DIARIA_2026_11_10.csv",
+          "http_status": 200,
+          "content_length": "39270297",
+          "last_modified": "Mon, 09 Nov 2026 20:58:58 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_diaria/PROGRAMACAO_DIARIA_2026_11_10.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_diaria/PROGRAMACAO_DIARIA_2026_11_10.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 169270,
+        "sha256": "cedf7fdfd8cfb60daafeb6f22b59330c750ff2538ccfbbe60efd6e70a14feef0",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\eb98f619934898582dfdad06a4f6dc52471cfbc299015c2b70b843f57f492271.parquet",
+        "rows": 204288,
+        "date_columns": {
+          "din_programacaodia": {
+            "min": "2026-11-10 00:00:00",
+            "max": "2026-11-10 00:00:00",
+            "nonnull": 204288
+          }
+        },
+        "reference_column": "din_programacaodia",
+        "max_reference": "2026-11-10 00:00:00",
+        "columns": [
+          {
+            "name": "din_programacaodia",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "num_patamar",
+            "type": "INTEGER"
+          },
+          {
+            "name": "cod_exibicaousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "tip_geracao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_modalidadeoperacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracaoprogramada",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_disponibilidade",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_ordemmerito",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_inflexibilidade",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_uc",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_razaoeletrica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracaoenergetica",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_gesubgsub",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_exportacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_reposicaoexportacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_faltacombustivel",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "programacao_x_previsao",
+      "title": "Dados dos Valores da Previsão Versus Programado - Eólicas e Solares",
+      "checked_at": "2026-11-10T00:46:53.966378+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        10
+      ],
+      "endpoints": [
+        {
+          "resource_id": "82dba247-0e53-4289-b324-a290982e2267",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_x_previsao/PROGRAMACAO_X_PREVISAO_2026_11_10.parquet",
+          "http_status": 200,
+          "content_length": "154794",
+          "last_modified": "Mon, 09 Nov 2026 20:57:52 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_x_previsao/PROGRAMACAO_X_PREVISAO_2026_11_10.parquet"
+        },
+        {
+          "resource_id": "8a253e07-469d-4aba-aeeb-8583e28fa60c",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_x_previsao/PROGRAMACAO_X_PREVISAO_2026_11_10.csv",
+          "http_status": 200,
+          "content_length": "1944300",
+          "last_modified": "Mon, 09 Nov 2026 20:57:54 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_x_previsao/PROGRAMACAO_X_PREVISAO_2026_11_10.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_x_previsao/PROGRAMACAO_X_PREVISAO_2026_11_10.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 154794,
+        "sha256": "3c53f8d895563cfffdf78f3238ef13fe165d9d22e32b5a8c5219890e7ea98871",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\1a89d21ea38ca4c8f2d5fc07558808416180cd6708038f0e42f3463fdf1a6b75.parquet",
+        "rows": 29088,
+        "date_columns": {
+          "dat_programacao": {
+            "min": "2026-11-10 00:00:00",
+            "max": "2026-11-10 00:00:00",
+            "nonnull": 29088
+          }
+        },
+        "reference_column": "dat_programacao",
+        "max_reference": "2026-11-10 00:00:00",
+        "columns": [
+          {
+            "name": "dat_programacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "num_patamar",
+            "type": "INTEGER"
+          },
+          {
+            "name": "cod_usinapdp",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usinapdp",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_previsao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_programado",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "res_cotaareavolume",
+      "title": "Reservatório - tabelas cota x area x volume",
+      "checked_at": "2026-11-10T00:46:58.236977+00:00",
+      "latest_label_date": [
+        0,
+        0,
+        0
+      ],
+      "endpoints": [
+        {
+          "resource_id": "6f8461fb-d760-40aa-91b7-2bc5a4ee875b",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/res_cotaareavolume/RES_COTAAREAVOLUME.parquet",
+          "http_status": 200,
+          "content_length": "791470",
+          "last_modified": "Thu, 29 Oct 2026 15:05:25 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/res_cotaareavolume/RES_COTAAREAVOLUME.parquet"
+        },
+        {
+          "resource_id": "a82e7029-13fe-4c56-8f5b-e8cbb10300cf",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/res_cotaareavolume/RES_COTAAREAVOLUME.csv",
+          "http_status": 200,
+          "content_length": "3314780",
+          "last_modified": "Thu, 29 Oct 2026 15:05:27 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/res_cotaareavolume/RES_COTAAREAVOLUME.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/res_cotaareavolume/RES_COTAAREAVOLUME.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 791470,
+        "sha256": "f72fbdc7a1de495693d7316566f339109a8f4a7014808b01f769ea455f9480a0",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\9ad36be17e86fd759a3e05ff60999dd4cacc3ab3092bf5c0abbc669c44c457bd.parquet",
+        "rows": 45102,
+        "date_columns": {
+          "din_valinicial": {
+            "min": "1901-01-01 00:00:00",
+            "max": "1901-01-01 00:00:00",
+            "nonnull": 45102
+          },
+          "din_valfinal": {
+            "min": "3000-12-31 00:00:00",
+            "max": "3000-12-31 00:00:00",
+            "nonnull": 45102
+          }
+        },
+        "reference_column": null,
+        "max_reference": null,
+        "columns": [
+          {
+            "name": "id_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_volume",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_cota",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_area",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "din_valinicial",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "din_valfinal",
+            "type": "TIMESTAMP"
+          }
+        ]
+      },
+      "status": "readable",
+      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+    },
+    {
+      "dataset": "res_volumeespera",
+      "title": "Dados Hidrológicos - Volume de Espera Recomendado",
+      "checked_at": "2026-11-10T00:47:01.732218+00:00",
+      "latest_label_date": [
+        2027,
+        1,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "28528bdb-25ae-4167-b734-af604c5388f2",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/res_volumeespera/RES_VOLUMEESPERA_2027.parquet",
+          "http_status": 200,
+          "content_length": "15402",
+          "last_modified": "Mon, 09 Nov 2026 22:05:47 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/res_volumeespera/RES_VOLUMEESPERA_2027.parquet"
+        },
+        {
+          "resource_id": "172b85fe-4750-490d-96b6-fe913ebb22e0",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/res_volumeespera/RES_VOLUMEESPERA_2027.csv",
+          "http_status": 200,
+          "content_length": "864388",
+          "last_modified": "Mon, 09 Nov 2026 22:05:49 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/res_volumeespera/RES_VOLUMEESPERA_2027.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/res_volumeespera/RES_VOLUMEESPERA_2027.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 15402,
+        "sha256": "406c0a82f135495fd4cb1929877ae3c3a12d2102926eb3926a906e30ffbaf578",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\2f412c34351fce2ae2bc7ca11337391fbb9244c23756fcbfbff037325915680d.parquet",
+        "rows": 8343,
+        "date_columns": {
+          "din_instante": {
+            "min": "2027-01-01 00:00:00",
+            "max": "2027-11-05 00:00:00",
+            "nonnull": 8343
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2027-11-05 00:00:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "tip_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_bacia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_ree",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "num_ordemcs",
+            "type": "INTEGER"
+          },
+          {
+            "name": "cod_usina",
+            "type": "INTEGER"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_volumeespera",
+            "type": "DOUBLE"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "reservatorio",
+      "title": "Reservatórios",
+      "checked_at": "2026-11-10T00:46:56.685053+00:00",
+      "latest_label_date": [
+        0,
+        0,
+        0
+      ],
+      "endpoints": [
+        {
+          "resource_id": "29ac7c4e-b46f-42de-bcae-2d4a8ac349c3",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/reservatorio/RESERVATORIOS.parquet",
+          "http_status": 200,
+          "content_length": "37939",
+          "last_modified": "Mon, 09 Nov 2026 22:05:12 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/reservatorio/RESERVATORIOS.parquet"
+        },
+        {
+          "resource_id": "68680c27-cd5b-4d1d-bf41-0cdf4c830ba9",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/reservatorio/RESERVATORIOS.csv",
+          "http_status": 200,
+          "content_length": "35738",
+          "last_modified": "Mon, 09 Nov 2026 22:05:13 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/reservatorio/RESERVATORIOS.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/reservatorio/RESERVATORIOS.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 37939,
+        "sha256": "af5e249fc494f8d9417549440716b9ad47352cd22b28dcb1599ea206fc373f46",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\cdee4da569693221b6e70df5fb7f1aaada8842c23d65de6f657c269c47cfa3da.parquet",
+        "rows": 162,
+        "date_columns": {
+          "dat_entrada": {
+            "min": "1924-03-01 00:00:00",
+            "max": "2025-09-03 00:00:00",
+            "nonnull": 162
+          }
+        },
+        "reference_column": null,
+        "max_reference": null,
+        "columns": [
+          {
+            "name": "nom_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "tip_reservatorio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_resplanejamento",
+            "type": "INTEGER"
+          },
+          {
+            "name": "cod_posto",
+            "type": "INTEGER"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_bacia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_rio",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_ree",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "dat_entrada",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_cotamaxima",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_cotaminima",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_volmax",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_volmin",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_volutiltot",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_produtibilidadeespecifica",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_produtividade65volutil",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_tipoperda",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_perda",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_latitude",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_longitude",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "res_id",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable",
+      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+    },
+    {
+      "dataset": "restricao_coff_eolica_detail",
+      "title": "Dados de Restrição De Operação Por Constrained-off de Usinas Eólicas - Detalhamento Por Usinas",
+      "checked_at": "2026-11-10T00:47:01.361278+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "99b40190-9ed8-4440-af76-7679c8c05e33",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_eolica_detail_tm/RESTRICAO_COFF_EOLICA_DETAIL_2026_11.parquet",
+          "http_status": 200,
+          "content_length": "3984576",
+          "last_modified": "Mon, 09 Nov 2026 22:06:50 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_eolica_detail_tm/RESTRICAO_COFF_EOLICA_DETAIL_2026_11.parquet"
+        },
+        {
+          "resource_id": "88e7a217-0442-48c3-896d-f38318b54f87",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_eolica_detail_tm/RESTRICAO_COFF_EOLICA_DETAIL_2026_11.csv",
+          "http_status": 200,
+          "content_length": "65526429",
+          "last_modified": "Mon, 09 Nov 2026 22:06:52 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_eolica_detail_tm/RESTRICAO_COFF_EOLICA_DETAIL_2026_11.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_eolica_detail_tm/RESTRICAO_COFF_EOLICA_DETAIL_2026_11.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 3984576,
+        "sha256": "6ae35b38ca6158f2a2502b79dbcb6b0d1800253176f191c0f872b77dcfbf89c2",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\413799c15804f7e3983123cbc5b590363271d8d6b9ec04794aa724adca7123b7.parquet",
+        "rows": 413952,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-11-01 00:00:00",
+            "max": "2026-11-08 23:30:00",
+            "nonnull": 413952
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-08 23:30:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_modalidadeoperacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_conjuntousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_ons",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_ventoverificado",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "flg_dadoventoinvalido",
+            "type": "INTEGER"
+          },
+          {
+            "name": "val_geracaoestimada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_geracaoverificada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "id_ons_conjuntousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_origemvento",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "flg_dadoventosupervisaoinvalido",
+            "type": "INTEGER"
+          },
+          {
+            "name": "nom_origemgeracaoreferencia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracaoreferenciafinal",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "flg_geracaorestrita",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "restricao_coff_eolica_usi",
+      "title": "Dados de Restrição de Operação por Constrained-off de Usinas Eólicas",
+      "checked_at": "2026-11-10T00:46:56.297764+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "7690bbba-fe09-450b-bd27-bc78d7359cbc",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_eolica_tm/RESTRICAO_COFF_EOLICA_2026_11.parquet",
+          "http_status": 200,
+          "content_length": "1326274",
+          "last_modified": "Mon, 09 Nov 2026 22:06:14 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_eolica_tm/RESTRICAO_COFF_EOLICA_2026_11.parquet"
+        },
+        {
+          "resource_id": "f30e3bd9-1b05-4b04-971c-6345ca969c95",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_eolica_tm/RESTRICAO_COFF_EOLICA_2026_11.csv",
+          "http_status": 200,
+          "content_length": "11315584",
+          "last_modified": "Mon, 09 Nov 2026 22:06:16 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_eolica_tm/RESTRICAO_COFF_EOLICA_2026_11.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_eolica_tm/RESTRICAO_COFF_EOLICA_2026_11.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 1326274,
+        "sha256": "ea938d0884c10323e5256e84ee8c970bae7e9198bf6729a7f7ca9725542f0b1b",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\8514a7e2b9c7c4148ba63da699e555880735937bfa0d184eed2fb177f804afca.parquet",
+        "rows": 58368,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-11-01 00:00:00",
+            "max": "2026-11-08 23:30:00",
+            "nonnull": 58368
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-08 23:30:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_ons",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_geracao",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_geracaolimitada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_disponibilidade",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_geracaoreferencia",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_geracaoreferenciafinal",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "cod_razaorestricao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_origemrestricao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "dsc_restricao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_pontoconexao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_pontoconexao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_agenteoperador",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracaonaorealizadaapurada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "num_minutos_rel",
+            "type": "BIGINT"
+          },
+          {
+            "name": "num_minutos_cnf",
+            "type": "BIGINT"
+          },
+          {
+            "name": "num_minutos_ene",
+            "type": "BIGINT"
+          },
+          {
+            "name": "num_minutos_restricao",
+            "type": "BIGINT"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "restricao_coff_fotovoltaica",
+      "title": "Dados de Restrição de Operação por Constrained-off de Usinas Fotovoltaicas",
+      "checked_at": "2026-11-10T00:46:56.516186+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "38d448d6-66de-4edc-a1fc-cb4c76e832d9",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_fotovoltaica_tm/RESTRICAO_COFF_FOTOVOLTAICA_2026_11.parquet",
+          "http_status": 200,
+          "content_length": "509270",
+          "last_modified": "Mon, 09 Nov 2026 22:06:43 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_fotovoltaica_tm/RESTRICAO_COFF_FOTOVOLTAICA_2026_11.parquet"
+        },
+        {
+          "resource_id": "346761e7-c77e-4d79-8486-937b6cff0818",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_fotovoltaica_tm/RESTRICAO_COFF_FOTOVOLTAICA_2026_11.csv",
+          "http_status": 200,
+          "content_length": "5677446",
+          "last_modified": "Mon, 09 Nov 2026 22:06:46 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_fotovoltaica_tm/RESTRICAO_COFF_FOTOVOLTAICA_2026_11.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_fotovoltaica_tm/RESTRICAO_COFF_FOTOVOLTAICA_2026_11.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 509270,
+        "sha256": "2f5603d81d442d80f7ca1645bb554cd9fc857420b3662f7dcba9fbfea51d8bdc",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\6c03fd693c0f4cd6ce968aff88ab1680497b46a3ec5e3a1e8f58d2e0f1749b8d.parquet",
+        "rows": 32256,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-11-01 00:00:00",
+            "max": "2026-11-08 23:30:00",
+            "nonnull": 32256
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-08 23:30:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_ons",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_geracao",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_geracaolimitada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_disponibilidade",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_geracaoreferencia",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_geracaoreferenciafinal",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "cod_razaorestricao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "cod_origemrestricao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "dsc_restricao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_pontoconexao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_pontoconexao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_agenteoperador",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracaonaorealizadaapurada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "num_minutos_rel",
+            "type": "BIGINT"
+          },
+          {
+            "name": "num_minutos_cnf",
+            "type": "BIGINT"
+          },
+          {
+            "name": "num_minutos_ene",
+            "type": "BIGINT"
+          },
+          {
+            "name": "num_minutos_restricao",
+            "type": "BIGINT"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "restricao_coff_fotovoltaica_detail",
+      "title": "Dados de Restrição De Operação Por Constrained-off de Usinas Fotovoltaicas - Detalhamento Por Usinas",
+      "checked_at": "2026-11-10T00:47:01.687335+00:00",
+      "latest_label_date": [
+        2026,
+        11,
+        1
+      ],
+      "endpoints": [
+        {
+          "resource_id": "0bad61d9-5243-481b-9a87-661cf15b5602",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_fotovoltaica_detail_tm/RESTRICAO_COFF_FOTOVOLTAICA_DETAIL_2026_11.parquet",
+          "http_status": 200,
+          "content_length": "2069441",
+          "last_modified": "Mon, 09 Nov 2026 22:07:03 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_fotovoltaica_detail_tm/RESTRICAO_COFF_FOTOVOLTAICA_DETAIL_2026_11.parquet"
+        },
+        {
+          "resource_id": "249652dd-cc7b-4319-b761-38d42363b734",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_fotovoltaica_detail_tm/RESTRICAO_COFF_FOTOVOLTAICA_DETAIL_2026_11.csv",
+          "http_status": 200,
+          "content_length": "34414159",
+          "last_modified": "Mon, 09 Nov 2026 22:07:06 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_fotovoltaica_detail_tm/RESTRICAO_COFF_FOTOVOLTAICA_DETAIL_2026_11.csv"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/restricao_coff_fotovoltaica_detail_tm/RESTRICAO_COFF_FOTOVOLTAICA_DETAIL_2026_11.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 2069441,
+        "sha256": "5df597a75ace78b17691e71e43c33d57cd4cd8e2f23afa93acb86b1beb7aaa6a",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\f818e6f68d982408143b5adb0a4f61bdd506eff947263aed7d5824cfb5029942.parquet",
+        "rows": 217728,
+        "date_columns": {
+          "din_instante": {
+            "min": "2026-11-01 00:00:00",
+            "max": "2026-11-08 23:30:00",
+            "nonnull": 217728
+          }
+        },
+        "reference_column": "din_instante",
+        "max_reference": "2026-11-08 23:30:00",
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_modalidadeoperacao",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_conjuntousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_ons",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "din_instante",
+            "type": "TIMESTAMP"
+          },
+          {
+            "name": "val_irradianciaverificado",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "flg_dadoirradianciainvalido",
+            "type": "INTEGER"
+          },
+          {
+            "name": "val_geracaoestimada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "val_geracaoverificada",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "id_ons_conjuntousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_origemirradiancia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "flg_dadoirradianciasupervisaoinvalido",
+            "type": "INTEGER"
+          },
+          {
+            "name": "nom_origemgeracaoreferencia",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "val_geracaoreferenciafinal",
+            "type": "DOUBLE"
+          },
+          {
+            "name": "flg_geracaorestrita",
+            "type": "INTEGER"
+          }
+        ]
+      },
+      "status": "readable"
+    },
+    {
+      "dataset": "usina_conjunto",
+      "title": "Dados do Relacionamento Entre Conjuntos e Usinas",
+      "checked_at": "2026-11-10T00:46:57.562230+00:00",
+      "latest_label_date": [
+        0,
+        0,
+        0
+      ],
+      "endpoints": [
+        {
+          "resource_id": "ecf77a6e-467b-4a2b-ade0-31162be4fbb5",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/usina_conjunto/RELACIONAMENTO_USINA_CONJUNTO.csv",
+          "http_status": 200,
+          "content_length": "338760",
+          "last_modified": "Mon, 09 Nov 2026 22:05:01 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/usina_conjunto/RELACIONAMENTO_USINA_CONJUNTO.csv"
+        },
+        {
+          "resource_id": "ec24642e-b9f1-4fa7-83c2-710becedff47",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/usina_conjunto/RELACIONAMENTO_USINA_CONJUNTO.parquet",
+          "http_status": 200,
+          "content_length": "69990",
+          "last_modified": "Mon, 09 Nov 2026 22:04:59 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/usina_conjunto/RELACIONAMENTO_USINA_CONJUNTO.parquet"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/usina_conjunto/RELACIONAMENTO_USINA_CONJUNTO.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 69990,
+        "sha256": "18debf5171ab69697e6c17dcb3f95c91906742ea4b576b0b8d42147f6c509ac7",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\b98ec30c283ecafa9a54171e1eedce35c471968f20a97ee1cfc77e318bde2ba2.parquet",
+        "rows": 2159,
+        "date_columns": {
+          "dat_iniciorelacionamento": {
+            "min": "1986-12-01 00:00:00",
+            "max": "2026-10-29 00:00:00",
+            "nonnull": 2159
+          },
+          "dat_fimrelacionamento": {
+            "min": "2021-04-19 00:00:00",
+            "max": "2026-10-28 00:00:00",
+            "nonnull": 416
+          }
+        },
+        "reference_column": null,
+        "max_reference": null,
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "estad_id",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_tipousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_tipousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_conjuntousina",
+            "type": "INTEGER"
+          },
+          {
+            "name": "id_ons_conjunto",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_ons_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_conjunto",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "dat_iniciorelacionamento",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "dat_fimrelacionamento",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable",
+      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+    },
+    {
+      "dataset": "usina_pqu",
+      "title": "Dados do Relacionamento Entre Grupos de Pequenas Usinas e Usinas",
+      "checked_at": "2026-11-10T00:46:57.992111+00:00",
+      "latest_label_date": [
+        0,
+        0,
+        0
+      ],
+      "endpoints": [
+        {
+          "resource_id": "6c4ac0a0-7ca0-4e6d-ae23-dc2eeda0b4d1",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/usina_pqu/RELACIONAMENTO_USINA_PEQUENAUSINA.csv",
+          "http_status": 200,
+          "content_length": "157294",
+          "last_modified": "Mon, 09 Nov 2026 22:05:05 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/usina_pqu/RELACIONAMENTO_USINA_PEQUENAUSINA.csv"
+        },
+        {
+          "resource_id": "16cff1c2-64dd-4ea5-aa68-84f9fc45c3b1",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/usina_pqu/RELACIONAMENTO_USINA_PEQUENAUSINA.parquet",
+          "http_status": 200,
+          "content_length": "47185",
+          "last_modified": "Mon, 09 Nov 2026 22:05:04 GMT",
+          "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/usina_pqu/RELACIONAMENTO_USINA_PEQUENAUSINA.parquet"
+        }
+      ],
+      "inspected_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/usina_pqu/RELACIONAMENTO_USINA_PEQUENAUSINA.parquet",
+      "content": {
+        "status": "readable",
+        "bytes": 47185,
+        "sha256": "2d3515e678291fa87de7d4d072fcbb4376e96495ab752f99df746a20a972c114",
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\f265942207c1062d8ba2628ad4f14f271df84325511c69da12025b5bd61d66c2.parquet",
+        "rows": 1318,
+        "date_columns": {},
+        "reference_column": null,
+        "max_reference": null,
+        "columns": [
+          {
+            "name": "id_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_subsistema",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "estad_id",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_estado",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_tipousina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_ons_pequenasusinas",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "id_ons_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_pequenasusinas",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "nom_usina",
+            "type": "VARCHAR"
+          },
+          {
+            "name": "ceg",
+            "type": "VARCHAR"
+          }
+        ]
+      },
+      "status": "readable",
+      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+    }
+  ],
+  "freshness_note": "Reference dates are reported, not a cadence/SLA guarantee. Cadastral tables may have no operational reference date.",
+  "completed_at": "2026-11-10T00:47:03.461595+00:00",
+  "summary": {
+    "datasets": 39,
+    "file_urls_tested": 73,
+    "http_200": 73,
+    "file_errors": [],
+    "load_api": "Both HTTP 200 but empty without area: acquisition not confirmed"
+  }
+}

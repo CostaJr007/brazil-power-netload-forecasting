@@ -1,0 +1,15 @@
+{
+  "status": "initial_live_acquisition_completed_2026-11-10; see docs/inventory/weather_acquisition.md",
+  "sources": [
+    {"id":"inmet", "role":"station_observations", "url":"https://portal.inmet.gov.br/dadoshistoricos", "access":"annual ZIP HTTP", "status":"2026_zip_downloaded_634_station_metadata_records; one_station_observation_sample_inspected", "quality":"ZIP announced through 2026-10-31; station coverage is not uniform; preserve source units and measurement heights"},
+    {"id":"ana", "role":"rain_level_discharge_observations", "url":"https://www.ana.gov.br/hidrowebservice/swagger-ui/index.html", "access":"authenticated REST; registration required", "status":"planned", "quality":"preserve station inventory, consistency level, raw/adopted flag"},
+    {"id":"merge", "role":"gridded_precipitation_estimate", "url":"https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/", "access":"HTTP archive; actual manual is MERGE_READ-ME.pdf", "status":"seven_daily_gribs_20261103_to_20261109_downloaded_and_decoded", "quality":"CTL fields PREC/NEST override generic GRIB labels for interpretation; exact daily closure to confirm; preserve V07B documentation"},
+    {"id":"gfs", "role":"deterministic_forecast", "url":"https://nomads.ncep.noaa.gov/", "access":"GRIB filter / HTTP", "status":"20261110_00UTC_f024_f048_f072_downloaded_and_decoded", "quality":"100m and 10m wind confirmed; rectangular basin extent; different precipitation accumulation windows coexist"},
+    {"id":"gefs", "role":"ensemble_forecast", "url":"https://www.ncei.noaa.gov/products/weather-climate-models/global-ensemble-forecast", "access":"NOAA archive / public cloud", "status":"planned", "quality":"member, resolution, model version and historical availability vary"},
+    {"id":"ecmwf_ifs", "role":"forecast", "url":"https://www.ecmwf.int/en/forecasts/datasets/open-data", "access":"GRIB2 HTTP / ecmwf-opendata client", "status":"planned", "quality":"rolling recent archive; store fields, cycle, release time, stream, resolution and member"},
+    {"id":"era5", "role":"reanalysis", "url":"https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels", "access":"CDS account, accepted licence, cdsapi", "status":"planned", "quality":"retrospective reconstruction; preserve final/provisional product and accumulation semantics"},
+    {"id":"era5_land", "role":"land_reanalysis", "url":"https://www.ecmwf.int/en/era5-land", "access":"CDS account, accepted licence, cdsapi", "status":"planned", "quality":"land fields; not a substitute for hub-height wind fields"},
+    {"id":"imerg", "role":"satellite_precipitation_estimate", "url":"https://gpm.nasa.gov/data/imerg", "access":"NASA product-specific archive; authentication may apply", "status":"optional", "quality":"Early, Late and Final must remain separate"},
+    {"id":"chirps", "role":"gridded_precipitation_estimate", "url":"https://www.chc.ucsb.edu/data/chirps3", "access":"HTTP gridded archive", "status":"optional", "quality":"version and preliminary/final publication must be explicit"}
+  ]
+}

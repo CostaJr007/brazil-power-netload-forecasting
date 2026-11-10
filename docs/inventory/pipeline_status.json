@@ -1,0 +1,461 @@
+{
+  "checked_at": "2026-11-10T17:50:54.547196+00:00",
+  "last_run": "20261110T175050-36ec7633",
+  "last_run_status": "success",
+  "status": "success",
+  "minutes_since_last_run": 0.1,
+  "alerts": [],
+  "scheduler": {
+    "last_run": "2026-11-10T12:50:48.0000000-05:00",
+    "last_result": 0,
+    "next_run": "2026-11-10T12:59:28.0000000-05:00"
+  },
+  "errors": [],
+  "tasks": [
+    {
+      "task": "ecmwf",
+      "last_success_utc": "2026-11-10T17:03:08.489485+00:00"
+    },
+    {
+      "task": "gfs",
+      "last_success_utc": "2026-11-10T17:31:05.905457+00:00"
+    },
+    {
+      "task": "inmet",
+      "last_success_utc": "2026-11-10T16:25:06.478437+00:00"
+    },
+    {
+      "task": "merge",
+      "last_success_utc": "2026-11-10T17:30:06.565273+00:00"
+    },
+    {
+      "task": "ons",
+      "last_success_utc": "2026-11-10T17:30:00.008823+00:00"
+    },
+    {
+      "task": "ons_dataset:balanco-energia-subsistema",
+      "last_success_utc": "2026-11-10T17:29:30.997051+00:00"
+    },
+    {
+      "task": "ons_dataset:balanco_dessem_detalhe",
+      "last_success_utc": "2026-11-10T17:29:32.258941+00:00"
+    },
+    {
+      "task": "ons_dataset:balanco_dessem_geral",
+      "last_success_utc": "2026-11-10T17:29:33.495919+00:00"
+    },
+    {
+      "task": "ons_dataset:capacidade-geracao",
+      "last_success_utc": "2026-11-10T17:29:33.847010+00:00"
+    },
+    {
+      "task": "ons_dataset:carga-energia",
+      "last_success_utc": "2026-11-10T17:29:34.199530+00:00"
+    },
+    {
+      "task": "ons_dataset:cmo-semanal",
+      "last_success_utc": "2026-11-10T17:30:00.006719+00:00"
+    },
+    {
+      "task": "ons_dataset:cmo-semi-horario",
+      "last_success_utc": "2026-11-10T17:29:34.634249+00:00"
+    },
+    {
+      "task": "ons_dataset:curva-carga",
+      "last_success_utc": "2026-11-10T17:29:35.023983+00:00"
+    },
+    {
+      "task": "ons_dataset:cvu-usitermica",
+      "last_success_utc": "2026-11-10T17:29:35.385431+00:00"
+    },
+    {
+      "task": "ons_dataset:dados-hidrologicos-res",
+      "last_success_utc": "2026-11-10T17:29:36.913952+00:00"
+    },
+    {
+      "task": "ons_dataset:dados_hidrologicos_ho",
+      "last_success_utc": "2026-11-10T17:44:32.738018+00:00"
+    },
+    {
+      "task": "ons_dataset:disponibilidade_usina",
+      "last_success_utc": "2026-11-10T17:29:37.482432+00:00"
+    },
+    {
+      "task": "ons_dataset:ear-diario-por-bacia",
+      "last_success_utc": "2026-11-10T17:29:37.850147+00:00"
+    },
+    {
+      "task": "ons_dataset:ear-diario-por-ree-reservatorio-equivalente-de-energia",
+      "last_success_utc": "2026-11-10T17:29:38.164396+00:00"
+    },
+    {
+      "task": "ons_dataset:ear-diario-por-reservatorio",
+      "last_success_utc": "2026-11-10T17:29:38.720584+00:00"
+    },
+    {
+      "task": "ons_dataset:ear-diario-por-subsistema",
+      "last_success_utc": "2026-11-10T17:29:39.078170+00:00"
+    },
+    {
+      "task": "ons_dataset:ena-diario-por-bacia",
+      "last_success_utc": "2026-11-10T17:29:39.432741+00:00"
+    },
+    {
+      "task": "ons_dataset:ena-diario-por-ree-reservatorio-equivalente-de-energia",
+      "last_success_utc": "2026-11-10T17:29:39.760861+00:00"
+    },
+    {
+      "task": "ons_dataset:ena-diario-por-reservatorio",
+      "last_success_utc": "2026-11-10T17:29:40.272646+00:00"
+    },
+    {
+      "task": "ons_dataset:ena-diario-por-subsistema",
+      "last_success_utc": "2026-11-10T17:29:40.639171+00:00"
+    },
+    {
+      "task": "ons_dataset:energia-vertida-turbinavel",
+      "last_success_utc": "2026-11-10T17:29:41.188089+00:00"
+    },
+    {
+      "task": "ons_dataset:fator-capacidade-2",
+      "last_success_utc": "2026-11-10T17:29:41.761230+00:00"
+    },
+    {
+      "task": "ons_dataset:geracao-termica-despacho-2",
+      "last_success_utc": "2026-11-10T17:29:42.626226+00:00"
+    },
+    {
+      "task": "ons_dataset:geracao-usina-2",
+      "last_success_utc": "2026-11-10T17:29:43.350516+00:00"
+    },
+    {
+      "task": "ons_dataset:grandezas_fluviometricas",
+      "last_success_utc": "2026-11-10T17:29:43.821930+00:00"
+    },
+    {
+      "task": "ons_dataset:intercambio-nacional",
+      "last_success_utc": "2026-11-10T17:29:44.239878+00:00"
+    },
+    {
+      "task": "ons_dataset:programacao_diaria",
+      "last_success_utc": "2026-11-10T17:29:50.393366+00:00"
+    },
+    {
+      "task": "ons_dataset:programacao_x_previsao",
+      "last_success_utc": "2026-11-10T17:29:52.457704+00:00"
+    },
+    {
+      "task": "ons_dataset:res_cotaareavolume",
+      "last_success_utc": "2026-11-10T17:29:52.871386+00:00"
+    },
+    {
+      "task": "ons_dataset:res_volumeespera",
+      "last_success_utc": "2026-11-10T17:29:53.250640+00:00"
+    },
+    {
+      "task": "ons_dataset:reservatorio",
+      "last_success_utc": "2026-11-10T17:29:53.598821+00:00"
+    },
+    {
+      "task": "ons_dataset:restricao_coff_eolica_detail",
+      "last_success_utc": "2026-11-10T17:29:55.922895+00:00"
+    },
+    {
+      "task": "ons_dataset:restricao_coff_eolica_usi",
+      "last_success_utc": "2026-11-10T17:29:56.729309+00:00"
+    },
+    {
+      "task": "ons_dataset:restricao_coff_fotovoltaica",
+      "last_success_utc": "2026-11-10T17:29:57.342606+00:00"
+    },
+    {
+      "task": "ons_dataset:restricao_coff_fotovoltaica_detail",
+      "last_success_utc": "2026-11-10T17:29:58.933305+00:00"
+    },
+    {
+      "task": "ons_dataset:usina_conjunto",
+      "last_success_utc": "2026-11-10T17:29:59.288906+00:00"
+    },
+    {
+      "task": "ons_dataset:usina_pqu",
+      "last_success_utc": "2026-11-10T17:29:59.608579+00:00"
+    },
+    {
+      "task": "ons_hourly_hydro",
+      "last_success_utc": "2026-11-10T17:44:32.740213+00:00"
+    },
+    {
+      "task": "ons_load_programada",
+      "last_success_utc": "2026-11-10T17:30:02.689070+00:00"
+    },
+    {
+      "task": "ons_load_verificada",
+      "last_success_utc": "2026-11-10T16:22:59.502141+00:00"
+    }
+  ],
+  "datasets": [
+    {
+      "dataset": "ecmwf_ifs_0p25",
+      "snapshots": 30,
+      "valid_rows": 1737450,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "automatic_stations_annual",
+      "snapshots": 1,
+      "valid_rows": 4556568,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "merge_daily",
+      "snapshots": 679,
+      "valid_rows": 164809575,
+      "rejected_rows": 21
+    },
+    {
+      "dataset": "gfs_0p25",
+      "snapshots": 21,
+      "valid_rows": 4459455,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "balanco-energia-subsistema",
+      "snapshots": 10,
+      "valid_rows": 431879,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "balanco_dessem_detalhe",
+      "snapshots": 4,
+      "valid_rows": 768,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "balanco_dessem_geral",
+      "snapshots": 4,
+      "valid_rows": 768,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "capacidade-geracao",
+      "snapshots": 1,
+      "valid_rows": 5827,
+      "rejected_rows": 10
+    },
+    {
+      "dataset": "carga-energia-programada",
+      "snapshots": 12,
+      "valid_rows": 6336,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "carga-energia-verificada",
+      "snapshots": 32,
+      "valid_rows": 7296,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "carga-energia",
+      "snapshots": 9,
+      "valid_rows": 12936,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "cmo-semanal",
+      "snapshots": 9,
+      "valid_rows": 1852,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "cmo-semi-horario",
+      "snapshots": 7,
+      "valid_rows": 473088,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "curva-carga",
+      "snapshots": 9,
+      "valid_rows": 310464,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "cvu-usitermica",
+      "snapshots": 1,
+      "valid_rows": 4630,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "dados-hidrologicos-res",
+      "snapshots": 36,
+      "valid_rows": 1932991,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "dados_hidrologicos_ho",
+      "snapshots": 1,
+      "valid_rows": 38872,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "disponibilidade_usina",
+      "snapshots": 1,
+      "valid_rows": 36570,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "ear-diario-por-bacia",
+      "snapshots": 9,
+      "valid_rows": 75978,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "ear-diario-por-ree-reservatorio-equivalente-de-energia",
+      "snapshots": 9,
+      "valid_rows": 38820,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "ear-diario-por-reservatorio",
+      "snapshots": 1,
+      "valid_rows": 23712,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "ear-diario-por-subsistema",
+      "snapshots": 9,
+      "valid_rows": 12940,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "ena-diario-por-bacia",
+      "snapshots": 9,
+      "valid_rows": 75978,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "ena-diario-por-ree-reservatorio-equivalente-de-energia",
+      "snapshots": 9,
+      "valid_rows": 38820,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "ena-diario-por-reservatorio",
+      "snapshots": 1,
+      "valid_rows": 48360,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "ena-diario-por-subsistema",
+      "snapshots": 9,
+      "valid_rows": 12940,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "energia-vertida-turbinavel",
+      "snapshots": 1,
+      "valid_rows": 29180,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "fator-capacidade-2",
+      "snapshots": 1,
+      "valid_rows": 45312,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "geracao-termica-despacho-2",
+      "snapshots": 1,
+      "valid_rows": 31368,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "geracao-usina-2",
+      "snapshots": 1,
+      "valid_rows": 149256,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "grandezas_fluviometricas",
+      "snapshots": 25,
+      "valid_rows": 315152,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "intercambio-nacional",
+      "snapshots": 1,
+      "valid_rows": 30048,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "programacao_diaria",
+      "snapshots": 4,
+      "valid_rows": 816384,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "programacao_x_previsao",
+      "snapshots": 4,
+      "valid_rows": 116352,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "res_cotaareavolume",
+      "snapshots": 1,
+      "valid_rows": 45102,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "res_volumeespera",
+      "snapshots": 1,
+      "valid_rows": 10158,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "reservatorio",
+      "snapshots": 1,
+      "valid_rows": 162,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "restricao_coff_eolica_detail",
+      "snapshots": 1,
+      "valid_rows": 465696,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "restricao_coff_eolica_usi",
+      "snapshots": 1,
+      "valid_rows": 65664,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "restricao_coff_fotovoltaica_detail",
+      "snapshots": 1,
+      "valid_rows": 244944,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "restricao_coff_fotovoltaica",
+      "snapshots": 1,
+      "valid_rows": 36288,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "usina_conjunto",
+      "snapshots": 1,
+      "valid_rows": 2159,
+      "rejected_rows": 0
+    },
+    {
+      "dataset": "usina_pqu",
+      "snapshots": 1,
+      "valid_rows": 1318,
+      "rejected_rows": 0
+    }
+  ],
+  "note": "Contagens são por snapshot de recurso, não energia total nem deduplicação entre produtos/fontes.",
+  "blocked_sources": {
+    "ccee_pld": "HTTP 403 do firewall da CCEE para o IP de saída em 10/11/2026 (inclusive www.ccee.org.br). Conector pronto em ccee.enabled=false; habilitar quando a rede tiver acesso. Enquanto isso, CMO semi-horário/semanal do ONS é a referência disponível (PLD horário = CMO do DESSEM limitado aos PLD mínimo/máximo regulados pela ANEEL; não substitui a série oficial).",
+    "era5_ecmwf_gefs_ana": "Conectores não habilitados nesta versão. ERA5/ECMWF exigem conta e chave CDS locais."
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "checked_at": "2026-11-10T13:05:16.215944+00:00",
+  "files": 13,
+  "total_bytes": 87708195,
+  "errors": [],
+  "resources": [
+    {
+      "source": "inpe",
+      "dataset": "merge_daily",
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261103.grib2",
+      "validation": "readable",
+      "bytes": 509419,
+      "sha256": "b206c9fe7eb45533a044239c93c977df1a49ed49ecad4e1a492e68dac848d400",
+      "grib_messages": 2
+    },
+    {
+      "source": "inpe",
+      "dataset": "merge_daily",
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261104.grib2",
+      "validation": "readable",
+      "bytes": 434688,
+      "sha256": "2470b89eab26a6374c6856418a85aa2063876ec9182931f46a917ef68f992124",
+      "grib_messages": 2
+    },
+    {
+      "source": "inpe",
+      "dataset": "merge_daily",
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261105.grib2",
+      "validation": "readable",
+      "bytes": 422308,
+      "sha256": "de9cb039a5b483b3dc9a39a68211cb5984b03fb46995236d4bbc438b0260eeae",
+      "grib_messages": 2
+    },
+    {
+      "source": "inpe",
+      "dataset": "merge_daily",
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261106.grib2",
+      "validation": "readable",
+      "bytes": 460289,
+      "sha256": "c0ae04f7b7392c5c491533c80f212c93ff147bd47101a6c607bb9beade991c9e",
+      "grib_messages": 2
+    },
+    {
+      "source": "inpe",
+      "dataset": "merge_daily",
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261107.grib2",
+      "validation": "readable",
+      "bytes": 437025,
+      "sha256": "4749f560f58dbe97fd5e383001f599f7d70b67e7f3a612f8f9d50046888bc5f7",
+      "grib_messages": 2
+    },
+    {
+      "source": "inpe",
+      "dataset": "merge_daily",
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261108.grib2",
+      "validation": "readable",
+      "bytes": 446534,
+      "sha256": "d29b00b3c2e7422fa62cb4476b972048839fffeb64c889c43653bb0c8150240b",
+      "grib_messages": 2
+    },
+    {
+      "source": "inpe",
+      "dataset": "merge_daily",
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261109.grib2",
+      "validation": "readable",
+      "bytes": 492205,
+      "sha256": "77d46e2cd866f015adab02c9e288fec136c7c09fafad49a75599da5828ff068c",
+      "grib_messages": 2
+    },
+    {
+      "source": "inpe",
+      "dataset": "merge_documentation",
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261109.ctl",
+      "validation": "readable",
+      "bytes": 375,
+      "sha256": "f8e564a07321d0d7b28ae81bd77f19a1de19f5e7abab2e018bfaafe1048122f2",
+      "grib_messages": 0
+    },
+    {
+      "source": "inpe",
+      "dataset": "merge_documentation",
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/MERGE_READ-ME.pdf",
+      "validation": "readable",
+      "bytes": 1707522,
+      "sha256": "e9f40e3bb65b33f404ac6451c310f3c5e3c00a7daa8a55d774689249892bc050",
+      "grib_messages": 0
+    },
+    {
+      "source": "noaa",
+      "dataset": "gfs_0p25",
+      "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t00z.pgrb2.0p25.f024&dir=%2Fgfs.20261110%2F00%2Fatmos&subregion=&leftlon=-72.75&rightlon=-36.25&bottomlat=-31.75&toplat=2.75&var_UGRD=on&var_VGRD=on&var_TMP=on&var_PRES=on&var_APCP=on&var_DSWRF=on&lev_100_m_above_ground=on&lev_10_m_above_ground=on&lev_2_m_above_ground=on&lev_surface=on",
+      "validation": "readable",
+      "bytes": 341745,
+      "sha256": "ef33d0533fd7917bce3d5db854499e433ea64c7c2d16c9fe3b2dabd393810dfa",
+      "grib_messages": 11
+    },
+    {
+      "source": "noaa",
+      "dataset": "gfs_0p25",
+      "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t00z.pgrb2.0p25.f048&dir=%2Fgfs.20261110%2F00%2Fatmos&subregion=&leftlon=-72.75&rightlon=-36.25&bottomlat=-31.75&toplat=2.75&var_UGRD=on&var_VGRD=on&var_TMP=on&var_PRES=on&var_APCP=on&var_DSWRF=on&lev_100_m_above_ground=on&lev_10_m_above_ground=on&lev_2_m_above_ground=on&lev_surface=on",
+      "validation": "readable",
+      "bytes": 344299,
+      "sha256": "5b36a79c5105100df4e20fd735bddb4802cf8ee5a60054e109118e35c2d47973",
+      "grib_messages": 11
+    },
+    {
+      "source": "noaa",
+      "dataset": "gfs_0p25",
+      "url": "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?file=gfs.t00z.pgrb2.0p25.f072&dir=%2Fgfs.20261110%2F00%2Fatmos&subregion=&leftlon=-72.75&rightlon=-36.25&bottomlat=-31.75&toplat=2.75&var_UGRD=on&var_VGRD=on&var_TMP=on&var_PRES=on&var_APCP=on&var_DSWRF=on&lev_100_m_above_ground=on&lev_10_m_above_ground=on&lev_2_m_above_ground=on&lev_surface=on",
+      "validation": "readable",
+      "bytes": 339191,
+      "sha256": "3bcbc53755e0965682f2f96cb06828ae1f04dfb6fb00e84362b6c06abba60236",
+      "grib_messages": 11
+    },
+    {
+      "source": "inmet",
+      "dataset": "automatic_stations_annual",
+      "url": "https://portal.inmet.gov.br/uploads/dadoshistoricos/2026.zip",
+      "validation": "readable",
+      "bytes": 81772595,
+      "sha256": "e50640dee9556273fcdf02874fc88518c5a82a377e3780eb0fcdf202cb9006fd",
+      "grib_messages": 0
+    }
+  ],
+  "invalid_source_basins": [
+    {
+      "ID": 6,
+      "Nome_Bacia": "Iguaçu",
+      "source_geometry_valid": false,
+      "source_geometry_reason": "Self-intersection[-49.1008512822345 -26.0884832766447]"
+    },
+    {
+      "ID": 7,
+      "Nome_Bacia": "Madeira",
+      "source_geometry_valid": false,
+      "source_geometry_reason": "Ring Self-intersection[-63.9370390748045 -8.38829054446893]"
+    },
+    {
+      "ID": 8,
+      "Nome_Bacia": "Paraná",
+      "source_geometry_valid": false,
+      "source_geometry_reason": "Ring Self-intersection[-55.3106714647369 -23.9632066254395]"
+    },
+    {
+      "ID": 9,
+      "Nome_Bacia": "Paranaíba",
+      "source_geometry_valid": false,
+      "source_geometry_reason": "Ring Self-intersection[-48.0742972091105 -15.6274677083304]"
+    },
+    {
+      "ID": 11,
+      "Nome_Bacia": "São Francisco",
+      "source_geometry_valid": false,
+      "source_geometry_reason": "Self-intersection[-46.3326834542159 -11.8008585802135]"
+    },
+    {
+      "ID": 13,
+      "Nome_Bacia": "Tocantins",
+      "source_geometry_valid": false,
+      "source_geometry_reason": "Self-intersection[-46.3326834548768 -11.8008585787441]"
+    }
+  ]
+}

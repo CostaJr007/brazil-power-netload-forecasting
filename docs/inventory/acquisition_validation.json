@@ -1,0 +1,419 @@
+{
+  "checked_at": "2026-11-10T00:27:13.132604+00:00",
+  "checks": [
+    {
+      "dataset": "balanco-energia-subsistema",
+      "format": "CSV",
+      "manifest": {
+        "attempt_id": "e17d8c7d3ae54e0db7baef9f974b6802",
+        "started_at": "2026-11-10T00:27:13.132909+00:00",
+        "ingested_at": "2026-11-10T00:27:14.382904+00:00",
+        "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2025.csv",
+        "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2025.csv",
+        "headers": {
+          "x-amz-request-id": "NXFMN3GWJ1V3HF17",
+          "x-amz-id-2": "V/O8X1QCRYBA/hokNvV841MrjSU/TvuSDTfcGnnM4XaXw5i3YP4UXiXjWYeZRju9ofCq3t1BhPI=",
+          "Content-Length": "4077517",
+          "Accept-Ranges": "bytes",
+          "Date": "Tue, 10 Nov 2026 00:27:13 GMT",
+          "Server": "AmazonS3",
+          "Last-Modified": "Sat, 31 Jan 2026 22:01:09 GMT",
+          "ETag": "\"2aa4fe3fe117e971be54a31fdb17e8ba\"",
+          "Content-Type": "binary/octet-stream",
+          "x-amz-server-side-encryption": "AES256",
+          "Connection": "close"
+        },
+        "sha256": "69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
+        "bytes": 4077517,
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\balanco-energia-subsistema\\719955c5-9ee2-48ef-aef6-b9c3d65db24b\\69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
+        "source": "ons",
+        "dataset": "balanco-energia-subsistema",
+        "resource_id": "719955c5-9ee2-48ef-aef6-b9c3d65db24b",
+        "status": "downloaded",
+        "context": {
+          "dataset": "balanco-energia-subsistema",
+          "resource_id": "719955c5-9ee2-48ef-aef6-b9c3d65db24b",
+          "name": "Balanco_de_Energia_Subsistema-2025",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2025.csv"
+        },
+        "note": "HTTP Last-Modified is not a historical publication timestamp."
+      },
+      "profile": {
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\balanco-energia-subsistema\\719955c5-9ee2-48ef-aef6-b9c3d65db24b\\69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
+        "sha256": "69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
+        "rows": 43800,
+        "columns": [
+          "id_subsistema",
+          "nom_subsistema",
+          "din_instante",
+          "val_gerhidraulica",
+          "val_gertermica",
+          "val_gereolica",
+          "val_gersolar",
+          "val_carga",
+          "val_intercambio"
+        ],
+        "delimiter": ";",
+        "empty_cells": {
+          "id_subsistema": 0,
+          "nom_subsistema": 0,
+          "din_instante": 0,
+          "val_gerhidraulica": 0,
+          "val_gertermica": 0,
+          "val_gereolica": 0,
+          "val_gersolar": 0,
+          "val_carga": 0,
+          "val_intercambio": 0
+        },
+        "malformed_rows": 0,
+        "key_columns": [],
+        "duplicate_keys": null,
+        "limitations": "No physical bounds, timestamp coverage or business keys inferred. Empty means literal empty string only."
+      }
+    },
+    {
+      "dataset": "balanco-energia-subsistema",
+      "format": "PARQUET",
+      "manifest": {
+        "attempt_id": "27ca255ae3a546d29a3b72ed5569edf9",
+        "started_at": "2026-11-10T00:27:14.516078+00:00",
+        "ingested_at": "2026-11-10T00:27:15.514048+00:00",
+        "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2025.parquet",
+        "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2025.parquet",
+        "headers": {
+          "x-amz-request-id": "CVTB3V8JFTGXRG5S",
+          "x-amz-id-2": "O6p+ms+AjdeHbI23zBHd5gXx1EOL375QNg6TrL9lE/5xTl0TBEawz4H3E0IJvkjpFRDjI9GOcFC60o+gkPLJnoS7zv2BGdnM",
+          "Content-Length": "2105644",
+          "Accept-Ranges": "bytes",
+          "Date": "Tue, 10 Nov 2026 00:27:14 GMT",
+          "Server": "AmazonS3",
+          "Last-Modified": "Sat, 31 Jan 2026 22:01:07 GMT",
+          "ETag": "\"4761165d97f13928b7b87d963d9e76e3\"",
+          "Content-Type": "binary/octet-stream",
+          "x-amz-server-side-encryption": "AES256",
+          "Connection": "close"
+        },
+        "sha256": "e9b36337b8980693228de317789d06e309305949f643cb50c5d6bf53fe5ca2d0",
+        "bytes": 2105644,
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\balanco-energia-subsistema\\cdc17ef6-29a0-48a6-8c07-fbbc2a4c5db9\\e9b36337b8980693228de317789d06e309305949f643cb50c5d6bf53fe5ca2d0",
+        "source": "ons",
+        "dataset": "balanco-energia-subsistema",
+        "resource_id": "cdc17ef6-29a0-48a6-8c07-fbbc2a4c5db9",
+        "status": "downloaded",
+        "context": {
+          "dataset": "balanco-energia-subsistema",
+          "resource_id": "cdc17ef6-29a0-48a6-8c07-fbbc2a4c5db9",
+          "name": "Balanco_de_Energia_Subsistema-2025",
+          "format": "PARQUET",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2025.parquet"
+        },
+        "note": "HTTP Last-Modified is not a historical publication timestamp."
+      }
+    },
+    {
+      "dataset": "ear-diario-por-subsistema",
+      "format": "CSV",
+      "manifest": {
+        "attempt_id": "2b9002e20ae14075ba9b5df6c1bfaa6d",
+        "started_at": "2026-11-10T00:27:15.518119+00:00",
+        "ingested_at": "2026-11-10T00:27:15.833510+00:00",
+        "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_subsistema_di/EAR_DIARIO_SUBSISTEMA_2025.csv",
+        "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_subsistema_di/EAR_DIARIO_SUBSISTEMA_2025.csv",
+        "headers": {
+          "x-amz-request-id": "N3M47BSD6X7H01V9",
+          "x-amz-id-2": "8O/kyzu8b/wU3lMop8w+6ZfzG6ZwExnhbjO/iTBmqdpuwGXtyIp5w2RbPmu8sMcIu/ngXGAql42NdPYjGjogdqGpoF7HznxT",
+          "Content-Length": "71449",
+          "Accept-Ranges": "bytes",
+          "Date": "Tue, 10 Nov 2026 00:27:15 GMT",
+          "Server": "AmazonS3",
+          "Last-Modified": "Fri, 30 Oct 2026 22:09:25 GMT",
+          "ETag": "\"0c396f3d2a0dd9384cd13020838b60fa\"",
+          "Content-Type": "binary/octet-stream",
+          "x-amz-server-side-encryption": "AES256",
+          "Connection": "close"
+        },
+        "sha256": "289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
+        "bytes": 71449,
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\ear-diario-por-subsistema\\b180b221-8939-488d-bb09-1d5ede971470\\289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
+        "source": "ons",
+        "dataset": "ear-diario-por-subsistema",
+        "resource_id": "b180b221-8939-488d-bb09-1d5ede971470",
+        "status": "downloaded",
+        "context": {
+          "dataset": "ear-diario-por-subsistema",
+          "resource_id": "b180b221-8939-488d-bb09-1d5ede971470",
+          "name": "EAR_Diario_por_Subsistema-2025",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ear_subsistema_di/EAR_DIARIO_SUBSISTEMA_2025.csv"
+        },
+        "note": "HTTP Last-Modified is not a historical publication timestamp."
+      },
+      "profile": {
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\ear-diario-por-subsistema\\b180b221-8939-488d-bb09-1d5ede971470\\289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
+        "sha256": "289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
+        "rows": 1460,
+        "columns": [
+          "id_subsistema",
+          "nom_subsistema",
+          "ear_data",
+          "ear_max_subsistema",
+          "ear_verif_subsistema_mwmes",
+          "ear_verif_subsistema_percentual"
+        ],
+        "delimiter": ";",
+        "empty_cells": {
+          "id_subsistema": 0,
+          "nom_subsistema": 0,
+          "ear_data": 0,
+          "ear_max_subsistema": 0,
+          "ear_verif_subsistema_mwmes": 0,
+          "ear_verif_subsistema_percentual": 0
+        },
+        "malformed_rows": 0,
+        "key_columns": [],
+        "duplicate_keys": null,
+        "limitations": "No physical bounds, timestamp coverage or business keys inferred. Empty means literal empty string only."
+      }
+    },
+    {
+      "dataset": "ena-diario-por-subsistema",
+      "format": "CSV",
+      "manifest": {
+        "attempt_id": "38c2fb0ed9e74f229b3897623497dd62",
+        "started_at": "2026-11-10T00:27:15.844472+00:00",
+        "ingested_at": "2026-11-10T00:27:16.249711+00:00",
+        "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_subsistema_di/ENA_DIARIO_SUBSISTEMA_2025.csv",
+        "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_subsistema_di/ENA_DIARIO_SUBSISTEMA_2025.csv",
+        "headers": {
+          "x-amz-request-id": "N3M4FQBCEJP3H57Y",
+          "x-amz-id-2": "9sV2jVwRlr22G/LpkY0BuRSem5COp8FrF0V3rPrnjnq3EDULeJtfalFCPmu5h6MHl7gkG+i/y5aih6lI//pUvJgxlXaxftKf",
+          "Content-Length": "92203",
+          "Accept-Ranges": "bytes",
+          "Date": "Tue, 10 Nov 2026 00:27:15 GMT",
+          "Server": "AmazonS3",
+          "Last-Modified": "Fri, 30 Oct 2026 22:09:48 GMT",
+          "ETag": "\"8f038f0cd128155f1896344aa0e966ee\"",
+          "Content-Type": "binary/octet-stream",
+          "x-amz-server-side-encryption": "AES256",
+          "Connection": "close"
+        },
+        "sha256": "04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
+        "bytes": 92203,
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\ena-diario-por-subsistema\\06c9cfdc-2938-4b1d-ab71-086b1bea44a3\\04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
+        "source": "ons",
+        "dataset": "ena-diario-por-subsistema",
+        "resource_id": "06c9cfdc-2938-4b1d-ab71-086b1bea44a3",
+        "status": "downloaded",
+        "context": {
+          "dataset": "ena-diario-por-subsistema",
+          "resource_id": "06c9cfdc-2938-4b1d-ab71-086b1bea44a3",
+          "name": "ENA_Diario_por_Subsistema-2025",
+          "format": "CSV",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/ena_subsistema_di/ENA_DIARIO_SUBSISTEMA_2025.csv"
+        },
+        "note": "HTTP Last-Modified is not a historical publication timestamp."
+      },
+      "profile": {
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\ena-diario-por-subsistema\\06c9cfdc-2938-4b1d-ab71-086b1bea44a3\\04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
+        "sha256": "04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
+        "rows": 1460,
+        "columns": [
+          "id_subsistema",
+          "nom_subsistema",
+          "ena_data",
+          "ena_bruta_regiao_mwmed",
+          "ena_bruta_regiao_percentualmlt",
+          "ena_armazenavel_regiao_mwmed",
+          "ena_armazenavel_regiao_percentualmlt"
+        ],
+        "delimiter": ";",
+        "empty_cells": {
+          "id_subsistema": 0,
+          "nom_subsistema": 0,
+          "ena_data": 0,
+          "ena_bruta_regiao_mwmed": 0,
+          "ena_bruta_regiao_percentualmlt": 0,
+          "ena_armazenavel_regiao_mwmed": 0,
+          "ena_armazenavel_regiao_percentualmlt": 0
+        },
+        "malformed_rows": 0,
+        "key_columns": [],
+        "duplicate_keys": null,
+        "limitations": "No physical bounds, timestamp coverage or business keys inferred. Empty means literal empty string only."
+      }
+    },
+    {
+      "dataset": "bacia_contorno",
+      "format": "ZIP",
+      "manifest": {
+        "attempt_id": "ac113ba08e6f44359f91ffa99c63ea0a",
+        "started_at": "2026-11-10T00:27:16.260405+00:00",
+        "ingested_at": "2026-11-10T00:27:17.077333+00:00",
+        "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip",
+        "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip",
+        "headers": {
+          "x-amz-request-id": "6YQCCK5KQR8MNJZ4",
+          "x-amz-id-2": "+BNyVujADyYB04Occzepv7EXiZDzo0xlbjIhPhAtOfZhiVU/Kxl53kpuwXQDCWO00jHvTjI4XY5dmlCeYdG8324+cnaxoQbt",
+          "Content-Length": "1622722",
+          "Accept-Ranges": "bytes",
+          "Date": "Tue, 10 Nov 2026 00:27:16 GMT",
+          "Server": "AmazonS3",
+          "Last-Modified": "Fri, 03 Nov 2023 15:06:22 GMT",
+          "ETag": "\"f8d6e80f23d87ad93b92e2379beb1b93\"",
+          "Content-Type": "application/zip",
+          "x-amz-server-side-encryption": "AES256",
+          "Connection": "close"
+        },
+        "sha256": "1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4",
+        "bytes": 1622722,
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\bacia_contorno\\beb946ac-f35a-4b5b-b8b2-ea017e9e5783\\1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4",
+        "source": "ons",
+        "dataset": "bacia_contorno",
+        "resource_id": "beb946ac-f35a-4b5b-b8b2-ea017e9e5783",
+        "status": "downloaded",
+        "context": {
+          "dataset": "bacia_contorno",
+          "resource_id": "beb946ac-f35a-4b5b-b8b2-ea017e9e5783",
+          "name": "Arquivo vetorial das Bacias",
+          "format": "ZIP",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip"
+        },
+        "note": "HTTP Last-Modified is not a historical publication timestamp."
+      },
+      "zip_members": [
+        "Bacias_Hidrograficas_SIN.cpg",
+        "Bacias_Hidrograficas_SIN.dbf",
+        "Bacias_Hidrograficas_SIN.prj",
+        "Bacias_Hidrograficas_SIN.qmd",
+        "Bacias_Hidrograficas_SIN.shp",
+        "Bacias_Hidrograficas_SIN.shx"
+      ],
+      "corrupt_member": null
+    },
+    {
+      "dataset": "programacao_diaria",
+      "format": "JSON",
+      "manifest": {
+        "attempt_id": "52ce8231da9447048b3b302704630d59",
+        "started_at": "2026-11-10T00:27:17.095328+00:00",
+        "ingested_at": "2026-11-10T00:27:17.383589+00:00",
+        "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_diaria/DicionarioDados_Valores_Programacao_Diaria.json",
+        "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_diaria/DicionarioDados_Valores_Programacao_Diaria.json",
+        "headers": {
+          "x-amz-request-id": "70TGY7C4JTTMHNY6",
+          "x-amz-id-2": "r7VWMD21pHD3g8ab840ZvjqKb3mQClfCHqgKgfCSsCibW0Dk9JvWNHY9e88GGkKMEi8D+GuFVyI=",
+          "Content-Length": "2817",
+          "Accept-Ranges": "bytes",
+          "Date": "Tue, 10 Nov 2026 00:27:17 GMT",
+          "Server": "AmazonS3",
+          "Last-Modified": "Wed, 08 Oct 2025 22:34:23 GMT",
+          "ETag": "\"7a9a380076780de2c339cd7a70173d6d\"",
+          "x-amz-meta-cb-modifiedtime": "Sat, 27 Sep 2025 17:26:56 GMT",
+          "Content-Type": "application/octet-stream",
+          "x-amz-server-side-encryption": "AES256",
+          "Connection": "close"
+        },
+        "sha256": "3d78e62a8a83f00a3e8cb6435aed15ff22ba3bb995efa64ef01effbef3d540d3",
+        "bytes": 2817,
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\programacao_diaria\\94437ef6-d928-4c24-8d74-c2d8c49c8825\\3d78e62a8a83f00a3e8cb6435aed15ff22ba3bb995efa64ef01effbef3d540d3",
+        "source": "ons",
+        "dataset": "programacao_diaria",
+        "resource_id": "94437ef6-d928-4c24-8d74-c2d8c49c8825",
+        "status": "downloaded",
+        "context": {
+          "dataset": "programacao_diaria",
+          "resource_id": "94437ef6-d928-4c24-8d74-c2d8c49c8825",
+          "name": "Dicionário de Dados Json",
+          "format": "JSON",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/programacao_diaria/DicionarioDados_Valores_Programacao_Diaria.json"
+        },
+        "note": "HTTP Last-Modified is not a historical publication timestamp."
+      },
+      "json_type": "dict"
+    },
+    {
+      "dataset": "carga-energia-programada",
+      "format": "JSON",
+      "manifest": {
+        "attempt_id": "fa8351c20fe2463aa57ed7c7f3ffc811",
+        "started_at": "2026-11-10T00:27:17.387795+00:00",
+        "ingested_at": "2026-11-10T00:27:17.698343+00:00",
+        "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_programada_tm/DicionarioDados_Carga_Programada.json",
+        "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_programada_tm/DicionarioDados_Carga_Programada.json",
+        "headers": {
+          "x-amz-request-id": "70TSE8636VH7YN1Q",
+          "x-amz-id-2": "AjY5vfZB3f71+M97ZwsY3/19M7j6fLpvW2hWryUhNN7g5n3uIYPcLa+yo5iMrK94Jz3N441YIHw=",
+          "Content-Length": "693",
+          "Accept-Ranges": "bytes",
+          "Date": "Tue, 10 Nov 2026 00:27:17 GMT",
+          "Server": "AmazonS3",
+          "Last-Modified": "Wed, 01 Oct 2025 18:57:37 GMT",
+          "ETag": "\"84346f49bdde23757e7dad99e509e522\"",
+          "x-amz-meta-cb-modifiedtime": "Tue, 30 Sep 2025 18:20:42 GMT",
+          "Content-Type": "application/octet-stream",
+          "x-amz-server-side-encryption": "AES256",
+          "Connection": "close"
+        },
+        "sha256": "9afa920dbc3fac6024d2a20b92e2a9386207913000e8cb5cf39cebefa1a354df",
+        "bytes": 693,
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\carga-energia-programada\\89977965-9817-4e5f-8fc2-df0995ee595c\\9afa920dbc3fac6024d2a20b92e2a9386207913000e8cb5cf39cebefa1a354df",
+        "source": "ons",
+        "dataset": "carga-energia-programada",
+        "resource_id": "89977965-9817-4e5f-8fc2-df0995ee595c",
+        "status": "downloaded",
+        "context": {
+          "dataset": "carga-energia-programada",
+          "resource_id": "89977965-9817-4e5f-8fc2-df0995ee595c",
+          "name": "Dicionário de Dados Json",
+          "format": "JSON",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_programada_tm/DicionarioDados_Carga_Programada.json"
+        },
+        "note": "HTTP Last-Modified is not a historical publication timestamp."
+      },
+      "json_type": "dict"
+    },
+    {
+      "dataset": "carga-energia-verificada",
+      "format": "JSON",
+      "manifest": {
+        "attempt_id": "c750ff17d6b44c3986faa34a0214c346",
+        "started_at": "2026-11-10T00:27:17.702710+00:00",
+        "ingested_at": "2026-11-10T00:27:17.983907+00:00",
+        "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_verificada_tm/DicionarioDados_Carga_Verificada.json",
+        "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_verificada_tm/DicionarioDados_Carga_Verificada.json",
+        "headers": {
+          "x-amz-request-id": "70TGNCV4PG6D53DE",
+          "x-amz-id-2": "uEsU4GExkQidK6GmO12AZpftO8HNWTVr+pbQj8LwteQtIIfdY+ROtMgGJ3cnoyXlcESdIV3tN4A=",
+          "Content-Length": "1947",
+          "Accept-Ranges": "bytes",
+          "Date": "Tue, 10 Nov 2026 00:27:17 GMT",
+          "Server": "AmazonS3",
+          "Last-Modified": "Wed, 01 Oct 2025 19:05:48 GMT",
+          "ETag": "\"fa91154b03eadb4e4162419bde2a383d\"",
+          "x-amz-meta-cb-modifiedtime": "Tue, 30 Sep 2025 18:20:42 GMT",
+          "Content-Type": "application/octet-stream",
+          "x-amz-server-side-encryption": "AES256",
+          "Connection": "close"
+        },
+        "sha256": "a3362aea962fb1c97d6eac040c8aa985798c548457763fc7cb2bf542570d440f",
+        "bytes": 1947,
+        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\carga-energia-verificada\\8bdbe075-53b0-441d-9770-a6ec2289f1ba\\a3362aea962fb1c97d6eac040c8aa985798c548457763fc7cb2bf542570d440f",
+        "source": "ons",
+        "dataset": "carga-energia-verificada",
+        "resource_id": "8bdbe075-53b0-441d-9770-a6ec2289f1ba",
+        "status": "downloaded",
+        "context": {
+          "dataset": "carga-energia-verificada",
+          "resource_id": "8bdbe075-53b0-441d-9770-a6ec2289f1ba",
+          "name": "Dicionário de Dados Json",
+          "format": "JSON",
+          "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/carga_verificada_tm/DicionarioDados_Carga_Verificada.json"
+        },
+        "note": "HTTP Last-Modified is not a historical publication timestamp."
+      },
+      "json_type": "dict"
+    }
+  ],
+  "errors": []
+}

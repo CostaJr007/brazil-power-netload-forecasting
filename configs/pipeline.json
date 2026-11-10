@@ -1,0 +1,62 @@
+{
+  "version": "silver-v1",
+  "scheduler_minutes": 15,
+  "max_invalid_fraction": 0.01,
+  "ons": {"enabled": true, "interval_minutes": 60, "hourly_hydro_interval_minutes": 15, "lookback_days": 3, "max_file_mb": 150},
+  "ons_load": {
+    "enabled": true,
+    "programada_interval_minutes": 60,
+    "verificada_interval_minutes": 360,
+    "programada_areas": ["SECO", "S", "NE", "N"],
+    "programada_offsets": [0, 1],
+    "verificada_areas": ["SECO", "S", "NE", "N"],
+    "verificada_lookback_days": 7,
+    "area_codes_note": "Códigos confirmados ao vivo em 10/11/2026: SECO, S, NE, N (subsistemas). SIN responde na verificada mas com TODOS os valores zero (2025-10 e 2026-11) — fora da coleta; some os subsistemas. Também respondem áreas estaduais/regionais: RJ, SP, MG, ES, PR, SC, RS, PESE, MT, MS, GO, DF, AC, RO, AM. SE e BA não respondem.",
+    "contracts": {
+      "carga-energia-programada": {"required": ["cod_areacarga", "dat_referencia", "din_referenciautc", "val_cargaglobalprogramada"]},
+      "carga-energia-verificada": {"required": ["cod_areacarga", "dat_referencia", "din_referenciautc", "din_atualizacao", "val_cargaglobal",
+                                                "val_cargaglobalcons", "val_cargaglobalsmmgd", "val_cargammgd",
+                                                "val_cargasupervisionada", "val_carganaosupervisionada", "val_consistencia"]}
+    }
+  },
+  "merge": {"enabled": true, "interval_minutes": 60, "lookback_days": 3},
+  "gfs": {"enabled": true, "interval_minutes": 60, "lookback_days": 1, "cycles": [0, 6, 12, 18], "leads": [24, 48, 72]},
+  "ecmwf": {
+    "enabled": true,
+    "interval_minutes": 60,
+    "lookback_days": 1,
+    "cycles": [0],
+    "leads": [24, 48, 72, 96, 120, 144, 168, 192, 216, 240, 264, 288, 312, 336, 360],
+    "params": ["tp", "2t", "ro"],
+    "params_note": "tp=chuva total, 2t=temperatura a 2 m, ro=escoamento (todos acumulados desde a rodada, exceto 2t). ~0,8 MB por horizonte; 15 horizontes ≈ 12 MB/dia. Para eólica acrescente 100u/100v (+1,3 MB por horizonte); para solar, ssrd (+0,5 MB).",
+    "license": "ECMWF Open Data, CC-BY-4.0 (atribuição obrigatória). Retenção na origem: ~12 rodadas."
+  },
+  "inmet": {"enabled": true, "interval_minutes": 1440, "max_file_mb": 500},
+  "ccee": {
+    "enabled": false,
+    "interval_minutes": 360,
+    "catalog_url": "https://dadosabertos.ccee.org.br/api/3/action/",
+    "datasets": ["pld_horario", "pld_media_diaria", "pld_media_semanal"],
+    "datasets_note": "Nomes a confirmar no catálogo quando o acesso for liberado; o 403 impediu a verificação.",
+    "formats": ["CSV", "PARQUET"],
+    "lookback_days": 3,
+    "max_file_mb": 200
+  },
+  "backfill": {
+    "default_start": "2018-01-01",
+    "ons_datasets": [
+      "balanco-energia-subsistema", "curva-carga", "carga-energia", "cmo-semi-horario", "cmo-semanal",
+      "ear-diario-por-subsistema", "ena-diario-por-subsistema", "ear-diario-por-bacia", "ena-diario-por-bacia",
+      "ear-diario-por-ree-reservatorio-equivalente-de-energia", "ena-diario-por-ree-reservatorio-equivalente-de-energia",
+      "intercambio-nacional", "geracao-usina-2", "fator-capacidade-2", "restricao_coff_eolica_usi",
+      "restricao_coff_fotovoltaica", "dados-hidrologicos-res"
+    ],
+    "load_areas": {"programada": ["SECO", "S", "NE", "N"], "verificada": ["SECO", "S", "NE", "N"]},
+    "merge_note": "MERGE diário: ~1 arquivo/dia. Use intervalos explícitos; o plano mostra o volume antes de baixar."
+  },
+  "blocked_sources": {
+    "ccee_pld": "HTTP 403 do firewall da CCEE para o IP de saída em 10/11/2026 (inclusive www.ccee.org.br). Conector pronto em ccee.enabled=false; habilitar quando a rede tiver acesso. Enquanto isso, CMO semi-horário/semanal do ONS é a referência disponível (PLD horário = CMO do DESSEM limitado aos PLD mínimo/máximo regulados pela ANEEL; não substitui a série oficial).",
+    "era5_ecmwf_gefs_ana": "Conectores não habilitados nesta versão. ERA5/ECMWF exigem conta e chave CDS locais."
+  },
+  "notes": "Frequências de consulta são políticas do projeto, não horários prometidos pelas fontes. INMET anual é verificado diariamente, mas não contém observações novas todos os dias."
+}

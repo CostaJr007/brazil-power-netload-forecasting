@@ -1,0 +1,138 @@
+[
+  {
+    "dataset": "balanco-energia-subsistema",
+    "sha256": "69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
+    "groups_columns": [
+      "id_subsistema",
+      "rows",
+      "min_date",
+      "max_date",
+      "distinct_timestamps"
+    ],
+    "groups": [
+      [
+        "N",
+        8760,
+        "2025-01-01 00:00:00",
+        "2025-12-31 23:00:00",
+        8760
+      ],
+      [
+        "NE",
+        8760,
+        "2025-01-01 00:00:00",
+        "2025-12-31 23:00:00",
+        8760
+      ],
+      [
+        "S",
+        8760,
+        "2025-01-01 00:00:00",
+        "2025-12-31 23:00:00",
+        8760
+      ],
+      [
+        "SE",
+        8760,
+        "2025-01-01 00:00:00",
+        "2025-12-31 23:00:00",
+        8760
+      ],
+      [
+        "SIN",
+        8760,
+        "2025-01-01 00:00:00",
+        "2025-12-31 23:00:00",
+        8760
+      ]
+    ],
+    "duplicate_key_groups": 0,
+    "note": "Counts do not establish physical validity or original publication time."
+  },
+  {
+    "dataset": "ear-diario-por-subsistema",
+    "sha256": "289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
+    "groups_columns": [
+      "id_subsistema",
+      "rows",
+      "min_date",
+      "max_date",
+      "distinct_timestamps"
+    ],
+    "groups": [
+      [
+        "N ",
+        365,
+        "2025-01-01",
+        "2025-12-31",
+        365
+      ],
+      [
+        "NE",
+        365,
+        "2025-01-01",
+        "2025-12-31",
+        365
+      ],
+      [
+        "S ",
+        365,
+        "2025-01-01",
+        "2025-12-31",
+        365
+      ],
+      [
+        "SE",
+        365,
+        "2025-01-01",
+        "2025-12-31",
+        365
+      ]
+    ],
+    "duplicate_key_groups": 0,
+    "note": "Counts do not establish physical validity or original publication time."
+  },
+  {
+    "dataset": "ena-diario-por-subsistema",
+    "sha256": "04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
+    "groups_columns": [
+      "id_subsistema",
+      "rows",
+      "min_date",
+      "max_date",
+      "distinct_timestamps"
+    ],
+    "groups": [
+      [
+        "N ",
+        365,
+        "2025-01-01",
+        "2025-12-31",
+        365
+      ],
+      [
+        "NE",
+        365,
+        "2025-01-01",
+        "2025-12-31",
+        365
+      ],
+      [
+        "S ",
+        365,
+        "2025-01-01",
+        "2025-12-31",
+        365
+      ],
+      [
+        "SE",
+        365,
+        "2025-01-01",
+        "2025-12-31",
+        365
+      ]
+    ],
+    "duplicate_key_groups": 0,
+    "note": "Counts do not establish physical validity or original publication time."
+  }
+]

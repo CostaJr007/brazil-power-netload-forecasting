@@ -1,0 +1,15 @@
+# Acquisition, tabular storage and source quality inspection.
+duckdb==1.5.6
+numpy>=2,<3
+pandas>=2.2,<4
+polars>=1,<2
+pyarrow>=19
+requests>=2.32,<3
+httpx>=0.28,<1
+tenacity>=9,<10
+pydantic>=2,<3
+pandera[pandas]>=0.24,<1
+# Explicit fallback for sites without structured interfaces.
+beautifulsoup4>=4.13,<5
+lxml>=5
+openpyxl>=3.1,<4

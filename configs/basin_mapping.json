@@ -1,0 +1,12 @@
+{
+  "description": "Exceções explícitas para ligar o nome do polígono (Bacias_Hidrograficas_SIN.zip, campo Nome_Bacia) ao nom_bacia das séries ENA/EAR por bacia do ONS. Nomes que coincidem após remover acentos/hífens são ligados automaticamente; o resto fica sem correspondência (não inferimos pertencimento).",
+  "overrides": {
+    "Itajaí-Açu": "ITAJAI",
+    "Uatuamã": "UATUMA"
+  },
+  "justification": {
+    "Itajaí-Açu": "Mesmo rio; a série ENA usa o nome curto ITAJAI.",
+    "Uatuamã": "Grafia do polígono difere de UATUMA (rio Uatumã, UHE Balbina) na série ENA."
+  },
+  "unmatched_note": "Correntes, Tapajós, Manso, Itiquira e Jauru não têm nom_bacia equivalente na ENA por bacia (ex.: a ENA usa PARAGUAI e TELES PIRES). Ligar exige a correspondência usina→bacia, ainda não mapeada."
+}

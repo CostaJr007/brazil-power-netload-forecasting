@@ -1,0 +1,19 @@
+# Spatial and meteorological acquisition/inspection (no prediction models).
+-r requirements.txt
+geopandas>=1.1,<2
+shapely>=2,<3
+pyproj>=3.7,<4
+rasterio>=1.4,<2
+rioxarray>=0.19,<1
+xarray>=2025.1
+cfgrib>=0.9.15
+eccodes>=2.40
+netCDF4>=1.7,<2
+h5netcdf>=1.6,<2
+h5py>=3.12,<4
+dask[array]>=2025.1
+fsspec>=2025.1
+s3fs>=2025.1
+boto3>=1.36,<2
+ecmwf-opendata>=0.3
+cdsapi>=0.7

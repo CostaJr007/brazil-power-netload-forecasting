@@ -1,0 +1,8 @@
+# Código e configuração sempre com quebra de linha LF, em qualquer sistema.
+# Importante: o código de scripts/silver.py entra na assinatura de versão da Silver.
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.parquet binary
+*.duckdb binary
+*.zip binary
+*.grib2 binary

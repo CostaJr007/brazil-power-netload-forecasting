@@ -1,0 +1,22 @@
+[
+  {
+    "kind": "programada",
+    "url": "https://apicarga.ons.org.br/prd/cargaprogramada?dat_inicio=2026-11-08&dat_fim=2026-11-08",
+    "checked_at": "2026-11-10T00:46:48.720585+00:00",
+    "note": "Area omitted deliberately; no official area code was inferred.",
+    "http_status": 200,
+    "json_type": "list",
+    "rows": 0,
+    "sample": []
+  },
+  {
+    "kind": "verificada",
+    "url": "https://apicarga.ons.org.br/prd/cargaverificada?dat_inicio=2026-11-08&dat_fim=2026-11-08",
+    "checked_at": "2026-11-10T00:46:48.893638+00:00",
+    "note": "Area omitted deliberately; no official area code was inferred.",
+    "http_status": 200,
+    "json_type": "list",
+    "rows": 0,
+    "sample": []
+  }
+]

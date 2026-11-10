@@ -1,0 +1,621 @@
+{
+  "checked_at": "2026-11-10T12:56:39.349542+00:00",
+  "basins": {
+    "source_manifest": {
+      "attempt_id": "ac113ba08e6f44359f91ffa99c63ea0a",
+      "started_at": "2026-11-10T00:27:16.260405+00:00",
+      "ingested_at": "2026-11-10T00:27:17.077333+00:00",
+      "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip",
+      "final_url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip",
+      "headers": {
+        "x-amz-request-id": "6YQCCK5KQR8MNJZ4",
+        "x-amz-id-2": "+BNyVujADyYB04Occzepv7EXiZDzo0xlbjIhPhAtOfZhiVU/Kxl53kpuwXQDCWO00jHvTjI4XY5dmlCeYdG8324+cnaxoQbt",
+        "Content-Length": "1622722",
+        "Accept-Ranges": "bytes",
+        "Date": "Tue, 10 Nov 2026 00:27:16 GMT",
+        "Server": "AmazonS3",
+        "Last-Modified": "Fri, 03 Nov 2023 15:06:22 GMT",
+        "ETag": "\"f8d6e80f23d87ad93b92e2379beb1b93\"",
+        "Content-Type": "application/zip",
+        "x-amz-server-side-encryption": "AES256",
+        "Connection": "close"
+      },
+      "sha256": "1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4",
+      "bytes": 1622722,
+      "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\bacia_contorno\\beb946ac-f35a-4b5b-b8b2-ea017e9e5783\\1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4",
+      "source": "ons",
+      "dataset": "bacia_contorno",
+      "resource_id": "beb946ac-f35a-4b5b-b8b2-ea017e9e5783",
+      "status": "downloaded",
+      "context": {
+        "dataset": "bacia_contorno",
+        "resource_id": "beb946ac-f35a-4b5b-b8b2-ea017e9e5783",
+        "name": "Arquivo vetorial das Bacias",
+        "format": "ZIP",
+        "url": "https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip"
+      },
+      "note": "HTTP Last-Modified is not a historical publication timestamp."
+    },
+    "access_copy": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\geography\\1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4.zip",
+    "crs": "EPSG:4326",
+    "columns": [
+      "ID",
+      "Nome_Bacia",
+      "geometry"
+    ],
+    "features": 31,
+    "invalid_features": 6,
+    "bbox": [
+      -72.41200418150575,
+      -31.44140964597829,
+      -36.64627860194715,
+      2.478056053068939
+    ],
+    "basins": [
+      {
+        "row_id": 0,
+        "attributes": {
+          "ID": "0",
+          "Nome_Bacia": "Parnaíba"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -47.06104899999998,
+          -10.927308,
+          -40.01109245484737,
+          -2.705736326388997
+        ]
+      },
+      {
+        "row_id": 1,
+        "attributes": {
+          "ID": "1",
+          "Nome_Bacia": "Correntes"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -54.84623318389359,
+          -17.767640027835306,
+          -53.66901294220072,
+          -17.22455224991502
+        ]
+      },
+      {
+        "row_id": 2,
+        "attributes": {
+          "ID": "2",
+          "Nome_Bacia": "Itajaí-Açu"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -50.353507,
+          -27.876007,
+          -49.146608,
+          -26.78704
+        ]
+      },
+      {
+        "row_id": 3,
+        "attributes": {
+          "ID": "3",
+          "Nome_Bacia": "Tapajós"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -60.10655794916497,
+          -14.9199699855331,
+          -53.829918,
+          -2.387017204767921
+        ]
+      },
+      {
+        "row_id": 4,
+        "attributes": {
+          "ID": "4",
+          "Nome_Bacia": "Xingu"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -55.62622,
+          -14.921864,
+          -50.34018599999999,
+          -1.496553957312144
+        ]
+      },
+      {
+        "row_id": 5,
+        "attributes": {
+          "ID": "5",
+          "Nome_Bacia": "Grande"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -50.39978248959026,
+          -22.888027076849284,
+          -43.587881130506176,
+          -19.401931263390694
+        ]
+      },
+      {
+        "row_id": 6,
+        "attributes": {
+          "ID": "6",
+          "Nome_Bacia": "Iguaçu"
+        },
+        "geometry_type": "Polygon",
+        "valid": false,
+        "bbox": [
+          -54.59657742224198,
+          -26.85179004270348,
+          -48.95247373096885,
+          -24.94625575630196
+        ]
+      },
+      {
+        "row_id": 7,
+        "attributes": {
+          "ID": "7",
+          "Nome_Bacia": "Madeira"
+        },
+        "geometry_type": "Polygon",
+        "valid": false,
+        "bbox": [
+          -72.41200418150575,
+          -20.60516232554705,
+          -56.05755939852084,
+          -2.60033419542636
+        ]
+      },
+      {
+        "row_id": 8,
+        "attributes": {
+          "ID": "8",
+          "Nome_Bacia": "Paraná"
+        },
+        "geometry_type": "Polygon",
+        "valid": false,
+        "bbox": [
+          -55.941853811833155,
+          -25.582793607089627,
+          -49.43693330549126,
+          -17.0300771366342
+        ]
+      },
+      {
+        "row_id": 9,
+        "attributes": {
+          "ID": "9",
+          "Nome_Bacia": "Paranaíba"
+        },
+        "geometry_type": "Polygon",
+        "valid": false,
+        "bbox": [
+          -51.76139889747909,
+          -20.17338496264404,
+          -46.066294917864745,
+          -15.453478154031654
+        ]
+      },
+      {
+        "row_id": 10,
+        "attributes": {
+          "ID": "10",
+          "Nome_Bacia": "Paranapanema"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -53.08795521995733,
+          -25.6557182860018,
+          -47.378973765256546,
+          -22.136750159880837
+        ]
+      },
+      {
+        "row_id": 11,
+        "attributes": {
+          "ID": "11",
+          "Nome_Bacia": "São Francisco"
+        },
+        "geometry_type": "Polygon",
+        "valid": false,
+        "bbox": [
+          -47.640433770115266,
+          -20.930182815143894,
+          -36.64627860194715,
+          -7.270952910334714
+        ]
+      },
+      {
+        "row_id": 12,
+        "attributes": {
+          "ID": "12",
+          "Nome_Bacia": "Tietê"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -51.30774472222222,
+          -23.952455209017362,
+          -45.63740270731008,
+          -20.53063929584093
+        ]
+      },
+      {
+        "row_id": 13,
+        "attributes": {
+          "ID": "13",
+          "Nome_Bacia": "Tocantins"
+        },
+        "geometry_type": "Polygon",
+        "valid": false,
+        "bbox": [
+          -55.40151244321747,
+          -18.08646385649432,
+          -45.69630447333232,
+          -3.6862608013011027
+        ]
+      },
+      {
+        "row_id": 14,
+        "attributes": {
+          "ID": "14",
+          "Nome_Bacia": "Uruguai"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -57.60001758171835,
+          -31.44140964597829,
+          -49.281370341585216,
+          -26.238680744598362
+        ]
+      },
+      {
+        "row_id": 15,
+        "attributes": {
+          "ID": "15",
+          "Nome_Bacia": "Antas"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -51.7132878914324,
+          -29.40465170659713,
+          -49.93707535785231,
+          -28.17543696115592
+        ]
+      },
+      {
+        "row_id": 16,
+        "attributes": {
+          "ID": "16",
+          "Nome_Bacia": "Manso"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -56.24205303622508,
+          -15.635329391916033,
+          -54.659382692137626,
+          -14.549064223732744
+        ]
+      },
+      {
+        "row_id": 17,
+        "attributes": {
+          "ID": "17",
+          "Nome_Bacia": "Uatuamã"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -60.96284811404748,
+          -1.9776998141865683,
+          -59.12404457805839,
+          -0.2465872599452723
+        ]
+      },
+      {
+        "row_id": 18,
+        "attributes": {
+          "ID": "18",
+          "Nome_Bacia": "Capivari"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -49.275295703515276,
+          -25.40232487119526,
+          -48.598772156501894,
+          -24.96695094044556
+        ]
+      },
+      {
+        "row_id": 19,
+        "attributes": {
+          "ID": "19",
+          "Nome_Bacia": "Araguari"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -53.039339006876986,
+          0.4188475136355496,
+          -51.22828905939332,
+          2.4484935965139067
+        ]
+      },
+      {
+        "row_id": 20,
+        "attributes": {
+          "ID": "20",
+          "Nome_Bacia": "Curuá-Una"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -55.167588,
+          -4.467014999999999,
+          -54.046001,
+          -2.513746999999999
+        ]
+      },
+      {
+        "row_id": 21,
+        "attributes": {
+          "ID": "21",
+          "Nome_Bacia": "Doce"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -43.82423499999998,
+          -21.18103137741822,
+          -39.78003529901176,
+          -17.75878264944791
+        ]
+      },
+      {
+        "row_id": 22,
+        "attributes": {
+          "ID": "22",
+          "Nome_Bacia": "Jacuí"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -53.849111398984796,
+          -29.488384387809575,
+          -52.25248201442448,
+          -28.14062168249521
+        ]
+      },
+      {
+        "row_id": 23,
+        "attributes": {
+          "ID": "23",
+          "Nome_Bacia": "Itabapoana"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -42.08677685327796,
+          -21.39189181231975,
+          -40.938607988418106,
+          -20.397783031875182
+        ]
+      },
+      {
+        "row_id": 24,
+        "attributes": {
+          "ID": "24",
+          "Nome_Bacia": "Itiquira"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -54.50910391104123,
+          -17.37468881574503,
+          -53.42886400000001,
+          -16.83894228420685
+        ]
+      },
+      {
+        "row_id": 25,
+        "attributes": {
+          "ID": "25",
+          "Nome_Bacia": "Jauru"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -58.88470422409313,
+          -15.291322782150615,
+          -58.36461693643481,
+          -14.472164666502373
+        ]
+      },
+      {
+        "row_id": 26,
+        "attributes": {
+          "ID": "26",
+          "Nome_Bacia": "Mucuri"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -42.06038543951983,
+          -18.146831158677323,
+          -39.53448525110959,
+          -16.82120808800302
+        ]
+      },
+      {
+        "row_id": 27,
+        "attributes": {
+          "ID": "27",
+          "Nome_Bacia": "Paraguaçu"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -42.038631656841986,
+          -13.605600747270408,
+          -38.79679246990317,
+          -11.271464508394951
+        ]
+      },
+      {
+        "row_id": 28,
+        "attributes": {
+          "ID": "28",
+          "Nome_Bacia": "Jequitinhonha"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -43.813769,
+          -18.61561783877038,
+          -38.85677116656406,
+          -15.64545511074004
+        ]
+      },
+      {
+        "row_id": 29,
+        "attributes": {
+          "ID": "29",
+          "Nome_Bacia": "Jari"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -54.95191675534144,
+          -1.329453693714865,
+          -51.88769437133489,
+          2.478056053068939
+        ]
+      },
+      {
+        "row_id": 30,
+        "attributes": {
+          "ID": "30",
+          "Nome_Bacia": "Paraíba do Sul"
+        },
+        "geometry_type": "Polygon",
+        "valid": true,
+        "bbox": [
+          -46.4169,
+          -23.63876,
+          -41.00592,
+          -20.428739999999998
+        ]
+      }
+    ]
+  },
+  "sources": {
+    "merge_root": {
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/",
+      "links": [
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/?C=D;O=A",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/?C=M;O=A",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/?C=N;O=D",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/?C=S;O=A",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/ANOMALY/",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/CLIMATOLOGY/",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/HOURLY/",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/HOURLY_NOW/",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/MERGE_READ-ME.pdf",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/PET/",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/Rozante.2024.pdf",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/Rozante_et.al.2010.pdf",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/Rozante_et.al.2020.pdf",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/SPEI/",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/SPI/"
+      ],
+      "count": 17
+    },
+    "merge_month": {
+      "url": "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/",
+      "links": [
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261101.ctl",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261101.grib2",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261102.ctl",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261102.grib2",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261103.ctl",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261103.grib2",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261104.ctl",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261104.grib2",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261105.ctl",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261105.grib2",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261106.ctl",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261106.grib2",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261107.ctl",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261107.grib2",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261108.ctl",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261108.grib2",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261109.ctl",
+        "https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/2026/11/MERGE_CPTEC_20261109.grib2"
+      ],
+      "count": 18
+    },
+    "gfs_root": {
+      "url": "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/",
+      "links": [
+        "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.20261101/",
+        "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.20261102/",
+        "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.20261103/",
+        "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.20261104/",
+        "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.20261105/",
+        "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.20261106/",
+        "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.20261107/",
+        "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.20261108/",
+        "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.20261109/",
+        "https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/gfs.20261110/"
+      ],
+      "count": 10
+    },
+    "inmet": {
+      "url": "https://portal.inmet.gov.br/dadoshistoricos",
+      "links": [
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2000.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2001.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2002.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2003.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2004.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2005.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2006.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2007.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2008.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2009.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2010.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2011.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2012.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2013.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2014.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2015.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2016.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2017.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2018.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2019.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2020.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2021.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2022.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2023.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2025.zip",
+        "https://portal.inmet.gov.br/uploads/dadoshistoricos/2026.zip"
+      ],
+      "count": 27
+    }
+  },
+  "errors": []
+}

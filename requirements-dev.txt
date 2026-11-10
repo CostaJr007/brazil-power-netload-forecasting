@@ -1,0 +1,11 @@
+# Local inspection, notebooks, plots, tests and linting.
+-r requirements-research.txt
+jupyterlab>=4,<5
+ipykernel>=6,<8
+matplotlib>=3.10,<4
+seaborn>=0.13,<1
+plotly>=6,<7
+pytest>=8,<10
+ruff>=0.11,<1
+# Leitura da documentação técnica que acompanha os produtos meteorológicos.
+pypdf>=6,<8

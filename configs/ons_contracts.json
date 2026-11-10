@@ -1,0 +1,1066 @@
+{
+  "balanco-energia-subsistema": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "din_instante",
+      "val_gerhidraulica",
+      "val_gertermica",
+      "val_gereolica",
+      "val_gersolar",
+      "val_carga",
+      "val_intercambio"
+    ],
+    "numeric": [
+      "val_gerhidraulica",
+      "val_gertermica",
+      "val_gereolica",
+      "val_gersolar",
+      "val_carga",
+      "val_intercambio"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "balanco_dessem_detalhe": {
+    "required": [
+      "din_programacaodia",
+      "num_patamar",
+      "cod_subsistema",
+      "val_demanda",
+      "val_ger_hidraulica",
+      "val_ger_pch",
+      "val_ger_termica",
+      "val_ger_pct",
+      "val_ger_eolica",
+      "val_ger_fotovoltaica",
+      "val_ger_mmgd",
+      "val_cons_elevatoria"
+    ],
+    "numeric": [
+      "num_patamar",
+      "val_demanda",
+      "val_ger_hidraulica",
+      "val_ger_pch",
+      "val_ger_termica",
+      "val_ger_pct",
+      "val_ger_eolica",
+      "val_ger_fotovoltaica",
+      "val_ger_mmgd",
+      "val_cons_elevatoria"
+    ],
+    "event_column": "din_programacaodia",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "balanco_dessem_geral": {
+    "required": [
+      "din_programacaodia",
+      "num_patamar",
+      "cod_subsistema",
+      "val_demanda",
+      "val_geracao_renovavel",
+      "val_geracao_hidraulica",
+      "val_geracao_termica",
+      "val_cons_elevatoria"
+    ],
+    "numeric": [
+      "num_patamar",
+      "val_demanda",
+      "val_geracao_renovavel",
+      "val_geracao_hidraulica",
+      "val_geracao_termica",
+      "val_cons_elevatoria"
+    ],
+    "event_column": "din_programacaodia",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "capacidade-geracao": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "id_estado",
+      "nom_estado",
+      "nom_modalidadeoperacao",
+      "nom_agenteproprietario",
+      "nom_agenteoperador",
+      "nom_tipousina",
+      "nom_usina",
+      "ceg",
+      "nom_unidadegeradora",
+      "cod_equipamento",
+      "num_unidadegeradora",
+      "nom_combustivel",
+      "dat_entradateste",
+      "dat_entradaoperacao",
+      "dat_desativacao",
+      "val_potenciaefetiva"
+    ],
+    "numeric": [
+      "val_potenciaefetiva"
+    ],
+    "event_column": null,
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "carga-energia": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "din_instante",
+      "val_cargaenergiamwmed"
+    ],
+    "numeric": [
+      "val_cargaenergiamwmed"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "cmo-semi-horario": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "din_instante",
+      "val_cmo"
+    ],
+    "numeric": [
+      "val_cmo"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "curva-carga": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "din_instante",
+      "val_cargaenergiahomwmed"
+    ],
+    "numeric": [
+      "val_cargaenergiahomwmed"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "cvu-usitermica": {
+    "required": [
+      "dat_iniciosemana",
+      "dat_fimsemana",
+      "ano_referencia",
+      "mes_referencia",
+      "num_revisao",
+      "nom_semanaoperativa",
+      "cod_usinaplanejamento",
+      "id_subsistema",
+      "nom_subsistema",
+      "nom_usina",
+      "val_cvu"
+    ],
+    "numeric": [
+      "ano_referencia",
+      "mes_referencia",
+      "num_revisao",
+      "val_cvu"
+    ],
+    "event_column": "dat_fimsemana",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "dados-hidrologicos-res": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "tip_reservatorio",
+      "nom_bacia",
+      "nom_ree",
+      "id_reservatorio",
+      "nom_reservatorio",
+      "num_ordemcs",
+      "cod_usina",
+      "din_instante",
+      "val_nivelmontante",
+      "val_niveljusante",
+      "val_volumeutilcon",
+      "val_vazaoafluente",
+      "val_vazaoturbinada",
+      "val_vazaovertida",
+      "val_vazaooutrasestruturas",
+      "val_vazaodefluente",
+      "val_vazaotransferida",
+      "val_vazaonatural",
+      "val_vazaoartificial",
+      "val_vazaoincremental",
+      "val_vazaoevaporacaoliquida",
+      "val_vazaousoconsuntivo",
+      "val_vazaoincrementalbruta"
+    ],
+    "numeric": [
+      "num_ordemcs",
+      "val_nivelmontante",
+      "val_niveljusante",
+      "val_volumeutilcon",
+      "val_vazaoafluente",
+      "val_vazaoturbinada",
+      "val_vazaovertida",
+      "val_vazaooutrasestruturas",
+      "val_vazaodefluente",
+      "val_vazaotransferida",
+      "val_vazaonatural",
+      "val_vazaoartificial",
+      "val_vazaoincremental",
+      "val_vazaoevaporacaoliquida",
+      "val_vazaousoconsuntivo",
+      "val_vazaoincrementalbruta"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "dados_hidrologicos_ho": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "tip_reservatorio",
+      "nom_bacia",
+      "id_reservatorio",
+      "nom_reservatorio",
+      "cod_usina",
+      "din_instante",
+      "val_nivelmontante",
+      "val_niveljusante",
+      "val_volumeutil",
+      "val_vazaoafluente",
+      "val_vazaodefluente",
+      "val_vazaoturbinada",
+      "val_vazaovertida",
+      "val_vazaooutrasestruturas",
+      "val_vazaotransferida",
+      "val_vazaovertidanaoturbinavel"
+    ],
+    "numeric": [
+      "val_nivelmontante",
+      "val_niveljusante",
+      "val_volumeutil",
+      "val_vazaoafluente",
+      "val_vazaodefluente",
+      "val_vazaoturbinada",
+      "val_vazaovertida",
+      "val_vazaooutrasestruturas",
+      "val_vazaotransferida",
+      "val_vazaovertidanaoturbinavel"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "disponibilidade_usina": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "id_estado",
+      "nom_estado",
+      "nom_usina",
+      "id_tipousina",
+      "nom_tipocombustivel",
+      "id_ons",
+      "ceg",
+      "din_instante",
+      "val_potenciainstalada",
+      "val_dispoperacional",
+      "val_dispsincronizada"
+    ],
+    "numeric": [
+      "val_potenciainstalada",
+      "val_dispoperacional",
+      "val_dispsincronizada"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "ear-diario-por-bacia": {
+    "required": [
+      "nomecurto",
+      "ear_data",
+      "ear_max_bacia",
+      "ear_verif_bacia_mwmes",
+      "ear_verif_bacia_percentual"
+    ],
+    "numeric": [
+      "ear_max_bacia",
+      "ear_verif_bacia_mwmes",
+      "ear_verif_bacia_percentual"
+    ],
+    "event_column": "ear_data",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "ear-diario-por-ree-reservatorio-equivalente-de-energia": {
+    "required": [
+      "nom_ree",
+      "ear_data",
+      "ear_max_ree",
+      "ear_verif_ree_mwmes",
+      "ear_verif_ree_percentual"
+    ],
+    "numeric": [
+      "ear_max_ree",
+      "ear_verif_ree_mwmes",
+      "ear_verif_ree_percentual"
+    ],
+    "event_column": "ear_data",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "ear-diario-por-reservatorio": {
+    "required": [
+      "nom_reservatorio",
+      "cod_resplanejamento",
+      "tip_reservatorio",
+      "nom_bacia",
+      "nom_ree",
+      "id_subsistema",
+      "nom_subsistema",
+      "id_subsistema_jusante",
+      "nom_subsistema_jusante",
+      "ear_data",
+      "ear_reservatorio_subsistema_proprio_mwmes",
+      "ear_reservatorio_subsistema_jusante_mwmes",
+      "earmax_reservatorio_subsistema_proprio_mwmes",
+      "earmax_reservatorio_subsistema_jusante_mwmes",
+      "ear_reservatorio_percentual",
+      "ear_total_mwmes",
+      "ear_maxima_total_mwmes",
+      "val_contribearbacia",
+      "val_contribearmaxbacia",
+      "val_contribearsubsistema",
+      "val_contribearmaxsubsistema",
+      "val_contribearsubsistemajusante",
+      "val_contribearmaxsubsistemajusante",
+      "val_contribearsin",
+      "val_contribearmaxsin"
+    ],
+    "numeric": [
+      "ear_reservatorio_subsistema_proprio_mwmes",
+      "ear_reservatorio_subsistema_jusante_mwmes",
+      "earmax_reservatorio_subsistema_proprio_mwmes",
+      "earmax_reservatorio_subsistema_jusante_mwmes",
+      "ear_reservatorio_percentual",
+      "ear_total_mwmes",
+      "ear_maxima_total_mwmes",
+      "val_contribearbacia",
+      "val_contribearmaxbacia",
+      "val_contribearsubsistema",
+      "val_contribearmaxsubsistema",
+      "val_contribearsubsistemajusante",
+      "val_contribearmaxsubsistemajusante",
+      "val_contribearsin",
+      "val_contribearmaxsin"
+    ],
+    "event_column": "ear_data",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "ear-diario-por-subsistema": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "ear_data",
+      "ear_max_subsistema",
+      "ear_verif_subsistema_mwmes",
+      "ear_verif_subsistema_percentual"
+    ],
+    "numeric": [
+      "ear_max_subsistema",
+      "ear_verif_subsistema_mwmes",
+      "ear_verif_subsistema_percentual"
+    ],
+    "event_column": "ear_data",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "ena-diario-por-bacia": {
+    "required": [
+      "nom_bacia",
+      "ena_data",
+      "ena_bruta_bacia_mwmed",
+      "ena_bruta_bacia_percentualmlt",
+      "ena_armazenavel_bacia_mwmed",
+      "ena_armazenavel_bacia_percentualmlt"
+    ],
+    "numeric": [
+      "ena_bruta_bacia_mwmed",
+      "ena_bruta_bacia_percentualmlt",
+      "ena_armazenavel_bacia_mwmed",
+      "ena_armazenavel_bacia_percentualmlt"
+    ],
+    "event_column": "ena_data",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "ena-diario-por-ree-reservatorio-equivalente-de-energia": {
+    "required": [
+      "nom_reservatorioee",
+      "ena_data",
+      "ena_bruta_ree_mwmed",
+      "ena_bruta_ree_percentualmlt",
+      "ena_armazenavel_ree_mwmed",
+      "ena_armazenavel_ree_percentualmlt"
+    ],
+    "numeric": [
+      "ena_bruta_ree_mwmed",
+      "ena_bruta_ree_percentualmlt",
+      "ena_armazenavel_ree_mwmed",
+      "ena_armazenavel_ree_percentualmlt"
+    ],
+    "event_column": "ena_data",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "ena-diario-por-reservatorio": {
+    "required": [
+      "nom_reservatorio",
+      "cod_resplanejamento",
+      "tip_reservatorio",
+      "nom_bacia",
+      "nom_ree",
+      "id_subsistema",
+      "nom_subsistema",
+      "ena_data",
+      "ena_bruta_res_mwmed",
+      "ena_bruta_res_percentualmlt",
+      "ena_armazenavel_res_mwmed",
+      "ena_armazenavel_res_percentualmlt",
+      "ena_queda_bruta",
+      "mlt_ena"
+    ],
+    "numeric": [
+      "ena_bruta_res_mwmed",
+      "ena_bruta_res_percentualmlt",
+      "ena_armazenavel_res_mwmed",
+      "ena_armazenavel_res_percentualmlt",
+      "ena_queda_bruta",
+      "mlt_ena"
+    ],
+    "event_column": "ena_data",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "ena-diario-por-subsistema": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "ena_data",
+      "ena_bruta_regiao_mwmed",
+      "ena_bruta_regiao_percentualmlt",
+      "ena_armazenavel_regiao_mwmed",
+      "ena_armazenavel_regiao_percentualmlt"
+    ],
+    "numeric": [
+      "ena_bruta_regiao_mwmed",
+      "ena_bruta_regiao_percentualmlt",
+      "ena_armazenavel_regiao_mwmed",
+      "ena_armazenavel_regiao_percentualmlt"
+    ],
+    "event_column": "ena_data",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "energia-vertida-turbinavel": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "nom_bacia",
+      "nom_rio",
+      "nom_agente",
+      "nom_reservatorio",
+      "cod_usina",
+      "din_instante",
+      "val_geracao",
+      "val_disponibilidade",
+      "val_vazaoturbinada",
+      "val_vazaovertida",
+      "val_vazaovertidanaoturbinavel",
+      "val_produtividade",
+      "val_folgadegeracao",
+      "val_energiavertida",
+      "val_vazaovertidaturbinavel",
+      "val_energiavertidaturbinavel"
+    ],
+    "numeric": [
+      "val_geracao",
+      "val_disponibilidade",
+      "val_vazaoturbinada",
+      "val_vazaovertida",
+      "val_vazaovertidanaoturbinavel",
+      "val_produtividade",
+      "val_folgadegeracao",
+      "val_energiavertida",
+      "val_vazaovertidaturbinavel",
+      "val_energiavertidaturbinavel"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "fator-capacidade-2": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "id_estado",
+      "nom_estado",
+      "cod_pontoconexao",
+      "nom_pontoconexao",
+      "nom_localizacao",
+      "val_latitudesecoletora",
+      "val_longitudesecoletora",
+      "val_latitudepontoconexao",
+      "val_longitudepontoconexao",
+      "nom_modalidadeoperacao",
+      "nom_tipousina",
+      "nom_usina_conjunto",
+      "id_ons",
+      "ceg",
+      "din_instante",
+      "val_geracaoprogramada",
+      "val_geracaoverificada",
+      "val_capacidadeinstalada",
+      "val_fatorcapacidade"
+    ],
+    "numeric": [
+      "val_latitudesecoletora",
+      "val_longitudesecoletora",
+      "val_latitudepontoconexao",
+      "val_longitudepontoconexao",
+      "val_geracaoprogramada",
+      "val_geracaoverificada",
+      "val_capacidadeinstalada",
+      "val_fatorcapacidade"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "geracao-termica-despacho-2": {
+    "required": [
+      "din_instante",
+      "nom_tipopatamar",
+      "id_subsistema",
+      "nom_subsistema",
+      "nom_usina",
+      "cod_usinaplanejamento",
+      "ceg",
+      "val_proggeracao",
+      "val_progordemmerito",
+      "val_progordemdemeritoref",
+      "val_progordemdemeritoacimadainflex",
+      "val_proginflexibilidade",
+      "val_proginflexembutmerito",
+      "val_proginflexpura",
+      "val_prograzaoeletrica",
+      "val_proggarantiaenergetica",
+      "val_proggfom",
+      "val_progreposicaoperdas",
+      "val_progexportacao",
+      "val_progreservapotencia",
+      "val_proggsub",
+      "val_progunitcommitment",
+      "val_progconstrainedoff",
+      "val_proginflexibilidadedessem",
+      "val_verifgeracao",
+      "val_verifordemmerito",
+      "val_verifordemdemeritoacimadainflex",
+      "val_verifinflexibilidade",
+      "val_verifinflexembutmerito",
+      "val_verifinflexpura",
+      "val_verifrazaoeletrica",
+      "val_verifgarantiaenergetica",
+      "val_verifgfom",
+      "val_verifreposicaoperdas",
+      "val_verifexportacao",
+      "val_fdexp",
+      "val_verifreservapotencia",
+      "val_atendsatisfatoriorpo",
+      "val_verifgsub",
+      "val_verifunitcommitment",
+      "val_verifconstrainedoff",
+      "tip_restricaoeletrica",
+      "val_progdisponibilidade",
+      "val_geracaodespachada",
+      "nom_combustivel",
+      "dsc_tpmotivorestricao",
+      "din_publicacao",
+      "val_despom",
+      "val_despfom"
+    ],
+    "numeric": [
+      "val_proggeracao",
+      "val_progordemmerito",
+      "val_progordemdemeritoref",
+      "val_progordemdemeritoacimadainflex",
+      "val_proginflexibilidade",
+      "val_proginflexembutmerito",
+      "val_proginflexpura",
+      "val_prograzaoeletrica",
+      "val_proggarantiaenergetica",
+      "val_proggfom",
+      "val_progreposicaoperdas",
+      "val_progexportacao",
+      "val_progreservapotencia",
+      "val_proggsub",
+      "val_progunitcommitment",
+      "val_progconstrainedoff",
+      "val_proginflexibilidadedessem",
+      "val_verifgeracao",
+      "val_verifordemmerito",
+      "val_verifordemdemeritoacimadainflex",
+      "val_verifinflexibilidade",
+      "val_verifinflexembutmerito",
+      "val_verifinflexpura",
+      "val_verifrazaoeletrica",
+      "val_verifgarantiaenergetica",
+      "val_verifgfom",
+      "val_verifreposicaoperdas",
+      "val_verifexportacao",
+      "val_fdexp",
+      "val_verifreservapotencia",
+      "val_atendsatisfatoriorpo",
+      "val_verifgsub",
+      "val_verifunitcommitment",
+      "val_verifconstrainedoff",
+      "tip_restricaoeletrica",
+      "val_progdisponibilidade",
+      "val_geracaodespachada",
+      "val_despom",
+      "val_despfom"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "geracao-usina-2": {
+    "required": [
+      "din_instante",
+      "id_subsistema",
+      "nom_subsistema",
+      "id_estado",
+      "nom_estado",
+      "cod_modalidadeoperacao",
+      "nom_tipousina",
+      "nom_tipocombustivel",
+      "nom_usina",
+      "id_ons",
+      "ceg",
+      "val_geracao"
+    ],
+    "numeric": [
+      "val_geracao"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "grandezas_fluviometricas": {
+    "required": [
+      "id_postofluv",
+      "nom_postofluviometrico",
+      "val_latitude",
+      "val_longitude",
+      "nom_rio",
+      "nom_bacia",
+      "din_medicao",
+      "val_vazaomedia",
+      "val_vazaomediaincr"
+    ],
+    "numeric": [
+      "val_latitude",
+      "val_longitude",
+      "val_vazaomedia",
+      "val_vazaomediaincr"
+    ],
+    "event_column": "din_medicao",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "intercambio-nacional": {
+    "required": [
+      "din_instante",
+      "id_subsistema_origem",
+      "nom_subsistema_origem",
+      "id_subsistema_destino",
+      "nom_subsistema_destino",
+      "val_intercambiomwmed",
+      "val_intercambioprogmwmed"
+    ],
+    "numeric": [
+      "val_intercambiomwmed",
+      "val_intercambioprogmwmed"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "programacao_diaria": {
+    "required": [
+      "din_programacaodia",
+      "num_patamar",
+      "cod_exibicaousina",
+      "nom_usina",
+      "tip_geracao",
+      "nom_modalidadeoperacao",
+      "id_subsistema",
+      "nom_subsistema",
+      "id_estado",
+      "nom_estado",
+      "val_geracaoprogramada",
+      "val_disponibilidade",
+      "val_ordemmerito",
+      "val_inflexibilidade",
+      "val_uc",
+      "val_razaoeletrica",
+      "val_geracaoenergetica",
+      "val_gesubgsub",
+      "val_exportacao",
+      "val_reposicaoexportacao",
+      "val_faltacombustivel"
+    ],
+    "numeric": [
+      "num_patamar",
+      "val_geracaoprogramada",
+      "val_disponibilidade",
+      "val_ordemmerito",
+      "val_inflexibilidade",
+      "val_uc",
+      "val_razaoeletrica",
+      "val_geracaoenergetica",
+      "val_gesubgsub",
+      "val_exportacao",
+      "val_reposicaoexportacao",
+      "val_faltacombustivel"
+    ],
+    "event_column": "din_programacaodia",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "programacao_x_previsao": {
+    "required": [
+      "dat_programacao",
+      "num_patamar",
+      "cod_usinapdp",
+      "nom_usinapdp",
+      "val_previsao",
+      "val_programado"
+    ],
+    "numeric": [
+      "num_patamar",
+      "val_previsao",
+      "val_programado"
+    ],
+    "event_column": "dat_programacao",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "res_cotaareavolume": {
+    "required": [
+      "id_reservatorio",
+      "nom_reservatorio",
+      "val_volume",
+      "val_cota",
+      "val_area",
+      "din_valinicial",
+      "din_valfinal"
+    ],
+    "numeric": [
+      "val_volume",
+      "val_cota",
+      "val_area"
+    ],
+    "event_column": null,
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "res_volumeespera": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "tip_reservatorio",
+      "nom_bacia",
+      "nom_ree",
+      "id_reservatorio",
+      "nom_reservatorio",
+      "num_ordemcs",
+      "cod_usina",
+      "din_instante",
+      "val_volumeespera"
+    ],
+    "numeric": [
+      "num_ordemcs",
+      "val_volumeespera"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "reservatorio": {
+    "required": [
+      "nom_reservatorio",
+      "tip_reservatorio",
+      "cod_resplanejamento",
+      "cod_posto",
+      "nom_usina",
+      "ceg",
+      "id_subsistema",
+      "nom_subsistema",
+      "nom_bacia",
+      "nom_rio",
+      "nom_ree",
+      "dat_entrada",
+      "val_cotamaxima",
+      "val_cotaminima",
+      "val_volmax",
+      "val_volmin",
+      "val_volutiltot",
+      "val_produtibilidadeespecifica",
+      "val_produtividade65volutil",
+      "val_tipoperda",
+      "val_perda",
+      "val_latitude",
+      "val_longitude",
+      "res_id"
+    ],
+    "numeric": [
+      "val_cotamaxima",
+      "val_cotaminima",
+      "val_volmax",
+      "val_volmin",
+      "val_volutiltot",
+      "val_produtibilidadeespecifica",
+      "val_produtividade65volutil",
+      "val_perda",
+      "val_latitude",
+      "val_longitude"
+    ],
+    "event_column": null,
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "restricao_coff_eolica_detail": {
+    "required": [
+      "id_subsistema",
+      "id_estado",
+      "nom_modalidadeoperacao",
+      "nom_conjuntousina",
+      "nom_usina",
+      "id_ons",
+      "ceg",
+      "din_instante",
+      "val_ventoverificado",
+      "flg_dadoventoinvalido",
+      "val_geracaoestimada",
+      "val_geracaoverificada",
+      "id_ons_conjuntousina",
+      "nom_origemvento",
+      "flg_dadoventosupervisaoinvalido",
+      "nom_origemgeracaoreferencia",
+      "val_geracaoreferenciafinal",
+      "flg_geracaorestrita"
+    ],
+    "numeric": [
+      "val_ventoverificado",
+      "flg_dadoventoinvalido",
+      "val_geracaoestimada",
+      "val_geracaoverificada",
+      "flg_dadoventosupervisaoinvalido",
+      "val_geracaoreferenciafinal",
+      "flg_geracaorestrita"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "restricao_coff_eolica_usi": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "id_estado",
+      "nom_estado",
+      "nom_usina",
+      "id_ons",
+      "ceg",
+      "din_instante",
+      "val_geracao",
+      "val_geracaolimitada",
+      "val_disponibilidade",
+      "val_geracaoreferencia",
+      "val_geracaoreferenciafinal",
+      "cod_razaorestricao",
+      "cod_origemrestricao",
+      "dsc_restricao",
+      "id_pontoconexao",
+      "nom_pontoconexao",
+      "nom_agenteoperador",
+      "val_geracaonaorealizadaapurada",
+      "num_minutos_rel",
+      "num_minutos_cnf",
+      "num_minutos_ene",
+      "num_minutos_restricao"
+    ],
+    "numeric": [
+      "val_geracao",
+      "val_geracaolimitada",
+      "val_disponibilidade",
+      "val_geracaoreferencia",
+      "val_geracaoreferenciafinal",
+      "val_geracaonaorealizadaapurada",
+      "num_minutos_rel",
+      "num_minutos_cnf",
+      "num_minutos_ene",
+      "num_minutos_restricao"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "restricao_coff_fotovoltaica": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "id_estado",
+      "nom_estado",
+      "nom_usina",
+      "id_ons",
+      "ceg",
+      "din_instante",
+      "val_geracao",
+      "val_geracaolimitada",
+      "val_disponibilidade",
+      "val_geracaoreferencia",
+      "val_geracaoreferenciafinal",
+      "cod_razaorestricao",
+      "cod_origemrestricao",
+      "dsc_restricao",
+      "id_pontoconexao",
+      "nom_pontoconexao",
+      "nom_agenteoperador",
+      "val_geracaonaorealizadaapurada",
+      "num_minutos_rel",
+      "num_minutos_cnf",
+      "num_minutos_ene",
+      "num_minutos_restricao"
+    ],
+    "numeric": [
+      "val_geracao",
+      "val_geracaolimitada",
+      "val_disponibilidade",
+      "val_geracaoreferencia",
+      "val_geracaoreferenciafinal",
+      "val_geracaonaorealizadaapurada",
+      "num_minutos_rel",
+      "num_minutos_cnf",
+      "num_minutos_ene",
+      "num_minutos_restricao"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "restricao_coff_fotovoltaica_detail": {
+    "required": [
+      "id_subsistema",
+      "id_estado",
+      "nom_modalidadeoperacao",
+      "nom_conjuntousina",
+      "nom_usina",
+      "id_ons",
+      "ceg",
+      "din_instante",
+      "val_irradianciaverificado",
+      "flg_dadoirradianciainvalido",
+      "val_geracaoestimada",
+      "val_geracaoverificada",
+      "id_ons_conjuntousina",
+      "nom_origemirradiancia",
+      "flg_dadoirradianciasupervisaoinvalido",
+      "nom_origemgeracaoreferencia",
+      "val_geracaoreferenciafinal",
+      "flg_geracaorestrita"
+    ],
+    "numeric": [
+      "val_irradianciaverificado",
+      "flg_dadoirradianciainvalido",
+      "val_geracaoestimada",
+      "val_geracaoverificada",
+      "flg_dadoirradianciasupervisaoinvalido",
+      "val_geracaoreferenciafinal",
+      "flg_geracaorestrita"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "usina_conjunto": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "estad_id",
+      "nom_estado",
+      "id_tipousina",
+      "nom_tipousina",
+      "id_conjuntousina",
+      "id_ons_conjunto",
+      "id_ons_usina",
+      "nom_conjunto",
+      "nom_usina",
+      "ceg",
+      "dat_iniciorelacionamento",
+      "dat_fimrelacionamento"
+    ],
+    "numeric": [],
+    "event_column": null,
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "usina_pqu": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "estad_id",
+      "nom_estado",
+      "id_tipousina",
+      "id_ons_pequenasusinas",
+      "id_ons_usina",
+      "nom_pequenasusinas",
+      "nom_usina",
+      "ceg"
+    ],
+    "numeric": [],
+    "event_column": null,
+    "timezone": "not_verified",
+    "origin": "observed_schema_initial_contract"
+  },
+  "cmo-semanal": {
+    "required": [
+      "id_subsistema",
+      "nom_subsistema",
+      "din_instante",
+      "val_cmomediasemanal",
+      "val_cmoleve",
+      "val_cmomedia",
+      "val_cmopesada"
+    ],
+    "numeric": [
+      "val_cmomediasemanal",
+      "val_cmoleve",
+      "val_cmomedia",
+      "val_cmopesada"
+    ],
+    "event_column": "din_instante",
+    "timezone": "not_verified",
+    "origin": "observed_schema_2026-11-10 (CMO_SEMANAL_2026.parquet; valores em texto na fonte)"
+  }
+}

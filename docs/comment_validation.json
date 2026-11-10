@@ -1,0 +1,74 @@
+[
+  {
+    "file": "main.py",
+    "original_lines": 16,
+    "commented_lines": 4,
+    "ast_unchanged": true
+  },
+  {
+    "file": "scripts\\acquire.py",
+    "original_lines": 359,
+    "commented_lines": 308,
+    "ast_unchanged": true
+  },
+  {
+    "file": "scripts\\audit_endpoints.py",
+    "original_lines": 158,
+    "commented_lines": 131,
+    "ast_unchanged": true
+  },
+  {
+    "file": "scripts\\check_environment.py",
+    "original_lines": 110,
+    "commented_lines": 95,
+    "ast_unchanged": true
+  },
+  {
+    "file": "scripts\\compare_formats.py",
+    "original_lines": 43,
+    "commented_lines": 32,
+    "ast_unchanged": true
+  },
+  {
+    "file": "scripts\\inspect_samples.py",
+    "original_lines": 32,
+    "commented_lines": 26,
+    "ast_unchanged": true
+  },
+  {
+    "file": "scripts\\inventory.py",
+    "original_lines": 40,
+    "commented_lines": 26,
+    "ast_unchanged": true
+  },
+  {
+    "file": "scripts\\plan_weather.py",
+    "original_lines": 42,
+    "commented_lines": 32,
+    "ast_unchanged": true
+  },
+  {
+    "file": "scripts\\probe_load_api.py",
+    "original_lines": 38,
+    "commented_lines": 32,
+    "ast_unchanged": true
+  },
+  {
+    "file": "scripts\\summarize_audit.py",
+    "original_lines": 61,
+    "commented_lines": 52,
+    "ast_unchanged": true
+  },
+  {
+    "file": "scripts\\validate_sources.py",
+    "original_lines": 53,
+    "commented_lines": 39,
+    "ast_unchanged": true
+  },
+  {
+    "file": "tests\\test_acquisition.py",
+    "original_lines": 75,
+    "commented_lines": 61,
+    "ast_unchanged": true
+  }
+]
