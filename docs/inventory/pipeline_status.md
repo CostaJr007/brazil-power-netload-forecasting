@@ -1,15 +1,15 @@
 # Estado do pipeline
 
-Verificado: 2026-11-10T21:39:41.910260+00:00; execução: 20261110T212930-422e3e5c (success, há 10 min); status geral: **success**.
+Verificado: 2026-11-10T21:42:13.814612+00:00; execução: 20261110T214048-714b9af0 (success, há 0 min); status geral: **success**.
 
-Agendador: última execução 2026-11-10T16:29:29.0000000-05:00, código 0; próxima 2026-11-10T16:44:28.0000000-05:00.
+Agendador: última execução 2026-11-10T16:40:47.0000000-05:00, código 0; próxima 2026-11-10T16:44:28.0000000-05:00.
 
 | Conjunto | Snapshots de recursos | Linhas válidas | Rejeitadas |
 |---|---:|---:|---:|
 | ecmwf_ifs_0p25 | 30 | 1737450 | 0 |
 | automatic_stations_annual | 1 | 4556568 | 0 |
 | merge_daily | 3235 | 785212119 | 21 |
-| gfs_0p25 | 21 | 4459455 | 0 |
+| gfs_0p25 | 22 | 4671810 | 0 |
 | balanco-energia-subsistema | 10 | 431879 | 0 |
 | balanco_dessem_detalhe | 5 | 960 | 0 |
 | balanco_dessem_geral | 5 | 960 | 0 |
@@ -22,7 +22,7 @@ Agendador: última execução 2026-11-10T16:29:29.0000000-05:00, código 0; pró
 | curva-carga | 9 | 310464 | 0 |
 | cvu-usitermica | 1 | 4630 | 0 |
 | dados-hidrologicos-res | 44 | 2429005 | 0 |
-| dados_hidrologicos_ho | 1 | 39473 | 0 |
+| dados_hidrologicos_ho | 1 | 39511 | 0 |
 | disponibilidade_usina | 1 | 36570 | 0 |
 | ear-diario-por-bacia | 9 | 75978 | 0 |
 | ear-diario-por-ree-reservatorio-equivalente-de-energia | 9 | 38820 | 0 |
