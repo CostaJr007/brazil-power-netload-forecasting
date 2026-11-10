@@ -1,28 +1,28 @@
 # Estado do pipeline
 
-Verificado: 2026-11-10T17:50:54.547196+00:00; execução: 20261110T175050-36ec7633 (success, há 0 min); status geral: **success**.
+Verificado: 2026-11-10T21:39:41.910260+00:00; execução: 20261110T212930-422e3e5c (success, há 10 min); status geral: **success**.
 
-Agendador: última execução 2026-11-10T12:50:48.0000000-05:00, código 0; próxima 2026-11-10T12:59:28.0000000-05:00.
+Agendador: última execução 2026-11-10T16:29:29.0000000-05:00, código 0; próxima 2026-11-10T16:44:28.0000000-05:00.
 
 | Conjunto | Snapshots de recursos | Linhas válidas | Rejeitadas |
 |---|---:|---:|---:|
 | ecmwf_ifs_0p25 | 30 | 1737450 | 0 |
 | automatic_stations_annual | 1 | 4556568 | 0 |
-| merge_daily | 679 | 164809575 | 21 |
+| merge_daily | 3235 | 785212119 | 21 |
 | gfs_0p25 | 21 | 4459455 | 0 |
 | balanco-energia-subsistema | 10 | 431879 | 0 |
-| balanco_dessem_detalhe | 4 | 768 | 0 |
-| balanco_dessem_geral | 4 | 768 | 0 |
+| balanco_dessem_detalhe | 5 | 960 | 0 |
+| balanco_dessem_geral | 5 | 960 | 0 |
 | capacidade-geracao | 1 | 5827 | 10 |
-| carga-energia-programada | 12 | 6336 | 0 |
-| carga-energia-verificada | 32 | 7296 | 0 |
+| carga-energia-programada | 286 | 399456 | 0 |
+| carga-energia-verificada | 456 | 622472 | 0 |
 | carga-energia | 9 | 12936 | 0 |
 | cmo-semanal | 9 | 1852 | 0 |
 | cmo-semi-horario | 7 | 473088 | 0 |
 | curva-carga | 9 | 310464 | 0 |
 | cvu-usitermica | 1 | 4630 | 0 |
-| dados-hidrologicos-res | 36 | 1932991 | 0 |
-| dados_hidrologicos_ho | 1 | 38872 | 0 |
+| dados-hidrologicos-res | 44 | 2429005 | 0 |
+| dados_hidrologicos_ho | 1 | 39473 | 0 |
 | disponibilidade_usina | 1 | 36570 | 0 |
 | ear-diario-por-bacia | 9 | 75978 | 0 |
 | ear-diario-por-ree-reservatorio-equivalente-de-energia | 9 | 38820 | 0 |
@@ -33,20 +33,20 @@ Agendador: última execução 2026-11-10T12:50:48.0000000-05:00, código 0; pró
 | ena-diario-por-reservatorio | 1 | 48360 | 0 |
 | ena-diario-por-subsistema | 9 | 12940 | 0 |
 | energia-vertida-turbinavel | 1 | 29180 | 0 |
-| fator-capacidade-2 | 1 | 45312 | 0 |
+| fator-capacidade-2 | 63 | 13288279 | 0 |
 | geracao-termica-despacho-2 | 1 | 31368 | 0 |
-| geracao-usina-2 | 1 | 149256 | 0 |
+| geracao-usina-2 | 63 | 46372285 | 0 |
 | grandezas_fluviometricas | 25 | 315152 | 0 |
-| intercambio-nacional | 1 | 30048 | 0 |
+| intercambio-nacional | 2 | 65088 | 0 |
 | programacao_diaria | 4 | 816384 | 0 |
 | programacao_x_previsao | 4 | 116352 | 0 |
 | res_cotaareavolume | 1 | 45102 | 0 |
 | res_volumeespera | 1 | 10158 | 0 |
 | reservatorio | 1 | 162 | 0 |
 | restricao_coff_eolica_detail | 1 | 465696 | 0 |
-| restricao_coff_eolica_usi | 1 | 65664 | 0 |
+| restricao_coff_eolica_usi | 62 | 13437600 | 0 |
 | restricao_coff_fotovoltaica_detail | 1 | 244944 | 0 |
-| restricao_coff_fotovoltaica | 1 | 36288 | 0 |
+| restricao_coff_fotovoltaica | 32 | 3135888 | 0 |
 | usina_conjunto | 1 | 2159 | 0 |
 | usina_pqu | 1 | 1318 | 0 |
 

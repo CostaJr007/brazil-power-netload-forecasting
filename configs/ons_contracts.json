@@ -703,7 +703,11 @@
     ],
     "event_column": "din_instante",
     "timezone": "not_verified",
-    "origin": "observed_schema_initial_contract"
+    "origin": "observed_schema_initial_contract",
+    "optional": [
+      "val_intercambioprogmwmed"
+    ],
+    "optional_note": "Intercâmbio programado ausente em INTERCAMBIO_NACIONAL_2023.parquet; presente nos arquivos recentes (verificado em 10/11/2026)."
   },
   "programacao_diaria": {
     "required": [

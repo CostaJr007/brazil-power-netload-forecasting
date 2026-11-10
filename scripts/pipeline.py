@@ -22,7 +22,7 @@ from urllib.error import HTTPError
 
 from acquire import DATA_DIR, ROOT, Store, atomic_json, digest_file, gfs_url, json_get, open_http, resolve_data_path, utcnow
 from discover_weather import listing
-from silver import LOAD_DATASETS, build_silver
+from silver import LOAD_DATASETS, build_silver, parse_load_json
 
 LOAD_API = "https://apicarga.ons.org.br/prd/carga{kind}?"
 
@@ -381,7 +381,7 @@ class Pipeline:
         context = {"api": "apicarga", "kind": kind, "area": area, "start": start.isoformat(),
                    "end": end.isoformat(), "role": role}
         manifest = self.obtain("ons", "carga-energia-" + kind, resource_id, url, context, 30_000_000, head=False)
-        rows = json.loads(resolve_data_path(manifest["path"]).read_text(encoding="utf-8-sig"))
+        rows = parse_load_json(resolve_data_path(manifest["path"]))
         if not isinstance(rows, list):
             raise ValueError(f"API de carga devolveu {type(rows).__name__}, esperado lista")
         return manifest, rows

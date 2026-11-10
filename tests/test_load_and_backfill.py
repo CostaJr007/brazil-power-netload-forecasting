@@ -188,3 +188,30 @@ def test_block_pages_are_not_saved_as_data(tmp_path, monkeypatch, body, ctype):
         assert not [p for p in (tmp_path / "bronze").rglob("*") if p.is_file()]
     finally:
         store.close()
+
+
+def test_load_json_with_empty_values_from_source(tmp_path):
+    """A API publica '"campo": ,' em 2018/2019; vira null sem inventar valor."""
+    from silver import parse_load_json
+    path = tmp_path / "old.json"
+    path.write_text('[{"cod_areacarga": "SECO", "din_referenciautc": "2019-01-01T02:30:00.000Z", '
+                    '"val_cargaglobal": 32988.2, "val_cargammgd": , "val_x": }]', encoding="utf-8")
+    rows = parse_load_json(path)
+    assert rows[0]["val_cargammgd"] is None and rows[0]["val_x"] is None
+    assert rows[0]["val_cargaglobal"] == 32988.2
+    valid, rejected, _ = load_frame(path, load_manifest(path), {"required": ["cod_areacarga"]})
+    assert valid.height == 1 and valid["val_cargammgd"][0] is None
+
+
+def test_optional_contract_column_may_be_absent_in_old_files(tmp_path):
+    import polars as pl
+    from silver import ons_frame
+    path = tmp_path / "old.parquet"
+    pl.DataFrame({"din_instante": ["2023-01-01 00:00:00"], "val_intercambiomwmed": ["1,5"]}).write_parquet(path)
+    contract = {"required": ["din_instante", "val_intercambiomwmed", "val_intercambioprogmwmed"],
+                "optional": ["val_intercambioprogmwmed"], "numeric": ["val_intercambiomwmed", "val_intercambioprogmwmed"]}
+    meta = {**load_manifest(path), "dataset": "intercambio-nacional", "context": {"format": "PARQUET"}}
+    valid, rejected, _ = ons_frame(path, meta, contract)
+    assert valid.height == 1 and valid["val_intercambiomwmed"][0] == 1.5
+    with pytest.raises(ValueError, match="ausentes"):
+        ons_frame(path, meta, {**contract, "optional": []})

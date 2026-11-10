@@ -55,7 +55,9 @@ def ons_frame(path, manifest, contract):
     frame = pl.read_csv(path, separator=";", infer_schema=False) if fmt == "CSV" else pl.read_parquet(path)
     source_rows = frame.height
     required = contract.get("required", [])
-    missing = sorted(set(required) - set(frame.columns))
+    # "optional": colunas que a fonte só passou a publicar a partir de certa data
+    # (arquivos antigos não as têm). Ausência delas não reprova o arquivo.
+    missing = sorted(set(required) - set(frame.columns) - set(contract.get("optional", [])))
     if missing:
         raise ValueError(f"Schema incompatível, colunas ausentes: {missing}")
     # Só duplicatas exatamente iguais são removidas. Conflitos entre chaves ficam visíveis.
@@ -124,6 +126,21 @@ def ons_frame(path, manifest, contract):
 LOAD_DATASETS = {"carga-energia-programada", "carga-energia-verificada"}
 
 
+def parse_load_json(path):
+    """Lê a resposta da API de carga tolerando um defeito conhecido da fonte.
+
+    Em períodos antigos (ex.: 2018 a início de 2019) a API escreve campos sem valor
+    como  "val_cargammgd": ,  — isso não é JSON válido. Só esse padrão (dois-pontos
+    seguido direto de vírgula, } ou ]) vira null; nenhum valor é inventado e os
+    bytes originais continuam intactos na Bronze.
+    """
+    text = Path(path).read_text(encoding="utf-8-sig")
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        return json.loads(re.sub(r":\s*(?=[,}\]])", ": null", text))
+
+
 def load_frame(path, manifest, contract):
     """Tipa a resposta JSON da API de carga do ONS (apicarga).
 
@@ -131,7 +148,7 @@ def load_frame(path, manifest, contract):
     intervalo de meia hora; por isso o início é calculado subtraindo 30 minutos.
     Esta é a única fonte ONS do projeto com fuso horário declarado.
     """
-    payload = json.loads(Path(path).read_text(encoding="utf-8-sig"))
+    payload = parse_load_json(path)
     if not isinstance(payload, list):
         raise ValueError("Resposta da API de carga não é uma lista JSON")
     if not payload:

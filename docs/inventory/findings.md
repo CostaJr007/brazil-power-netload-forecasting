@@ -31,13 +31,23 @@ As três amostras CSV não apresentaram grupos duplicados na chave proposta (sub
 1. **SIN já está no balanço.** Somar todas as linhas de subsistemas sem separar esse agregado pode contar o total novamente.
 2. **Chaves com espaços à direita.** EAR e ENA trazem `N ` e `S ` nas amostras, enquanto o balanço tem `N` e `S`. Preservamos os bytes originais; uma regra explícita de normalização será necessária para junções futuras.
 
+## Achados posteriores (10/11/2026, pipeline e backfill)
+
+| Achado | Onde | Tratamento |
+|---|---|---|
+| API de carga exige `cod_areacarga`; sem ele devolve lista vazia | apicarga | Códigos confirmados: SECO, S, NE, N (+ áreas estaduais) |
+| Área `SIN` da carga verificada devolve **todos os valores zero** | apicarga | Fora da coleta; alerta `zero_total_load` na Silver |
+| **JSON inválido** em 2018 a fev/2019: campos MMGD sem valor escritos como `"campo": ,` | apicarga verificada | Leitura tolerante só para esse padrão (vira `null`); bytes originais intactos |
+| Carga verificada é **revisada** depois (`din_atualizacao`) | apicarga | Cada revisão é um objeto novo; views escolhem a mais recente |
+| `val_intercambioprogmwmed` ausente nos arquivos de 2023 | intercambio-nacional | Coluna marcada como `optional` no contrato |
+| 6 das 31 geometrias de bacias com autointerseção | bacia_contorno | `make_valid`, variação de área 0,000% |
+| Firewall da CCEE devolve 403 (inclusive no site principal) | CCEE | Conector desligado até haver acesso |
+
 ## O que permanece sem validação ao vivo
 
-- Dados de observação retornados pela API apicarga (os dicionários foram validados, não a série).
-- Equivalência entre API de carga e CSVs de outros produtos.
-- Conteúdo/qualidade das demais séries catalogadas.
-- Geometrias, CRS e correspondência entre bacias, reservatórios e áreas incrementais; ZIP íntegro não equivale a geometria correta.
-- Download de meteorologia e campos disponíveis em cada produto/rodada.
-- Planejamento geoespacial GeoPandas e comando de download GFS: código preparado, ainda não validado ao vivo.
+- Equivalência entre a API de carga e os CSVs de outros produtos (granularidades e componentes diferentes).
+- Fuso horário dos produtos ONS em arquivo (só a API de carga declara UTC).
+- Correspondência entre bacias, reservatórios, usinas e áreas incrementais (5 polígonos sem ligação com a ENA).
+- Schema real dos conjuntos de PLD da CCEE.
 
-Os quatro testes automatizados de aquisição passaram. Os scripts foram compilados com Python 3.13.13. DuckDB instalado no .venv: 1.5.6.
+Situação original desta seção (início do projeto): os quatro testes de aquisição passaram, com Python 3.13.13 e DuckDB 1.5.6. Hoje a suíte tem 35 testes.

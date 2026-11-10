@@ -1,5 +1,5 @@
 {
-  "refreshed_at": "2026-11-10T18:00:09.795468+00:00",
+  "refreshed_at": "2026-11-10T21:39:41.021276+00:00",
   "database": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\gold\\energia.duckdb",
   "views": [
     "vw_chuva_observada_bacia_diaria",
@@ -12,10 +12,14 @@
     "vw_cmo_semanal"
   ],
   "skipped_views": [],
-  "basin_weather_files": 730,
+  "basin_weather_files": 3286,
   "basin_weather_built": 0,
   "basins_repaired": 6,
   "ena_mapping": [
+    {
+      "match": "none",
+      "len": 5
+    },
     {
       "match": "manual_spelling",
       "len": 2
@@ -23,10 +27,6 @@
     {
       "match": "exact_normalized",
       "len": 24
-    },
-    {
-      "match": "none",
-      "len": 5
     }
   ]
 }

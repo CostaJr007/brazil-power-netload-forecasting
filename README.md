@@ -54,8 +54,8 @@ Detalhes, decisões e limitações de cada fonte: [docs/sources.md](docs/sources
 
 ## Primeiros resultados (das views Gold)
 
-- **Previsão de carga do ONS:** em outubro de 2025, o erro médio absoluto da carga programada contra a verificada foi de **3–4%** por subsistema (≈1,4 GW no SE/CO). É um mês só, mas mostra que a view funciona e que o erro é mensurável.
-- **Chuva × ENA:** com o MERGE desde 2025, a chuva acumulada em 15 dias por bacia correlaciona **0,7 a 0,9** com a ENA de 7 dias depois (ex.: Tocantins 0,79; Grande 0,75). Boa parte disso é sazonalidade. A vantagem real só aparece comparando com a previsão do próprio ONS, o que fica para a fase de modelagem.
+- **Previsão de carga do ONS (2021–2026):** o erro percentual médio absoluto da carga programada contra a verificada fica entre **2,6% e 4,4%** ao ano (2022 foi o pior ano, 2024 o melhor). A carga programada da API começa em 2021.
+- **Chuva × ENA (2018–2026, 3.235 dias):** a chuva acumulada em 15 dias por bacia correlaciona com a ENA de 7 dias depois em **0,8 no Grande, 0,78 no Tocantins e 0,77 no Paranaíba**, mas só **0,3 a 0,4 no Uruguai e no Jacuí**. As bacias do Sul respondem rápido e não têm estação seca marcada. Parte da correlação alta é sazonalidade. A vantagem real só aparece comparando com a previsão do próprio ONS, o que fica para a fase de modelagem.
 
 ## Como rodar
 

@@ -1,110 +1,19 @@
 {
-  "planned_at": "2026-11-10T18:03:15.556629+00:00",
-  "start": "2018-01-01",
-  "end": "2026-11-09",
+  "planned_at": "2026-11-10T21:20:39.837933+00:00",
+  "start": "2023-12-25",
+  "end": "2024-12-31",
   "sources": [
-    "ons",
-    "load"
+    "merge"
   ],
   "groups": {
-    "balanco-energia-subsistema": {
-      "files": 9,
-      "bytes_known": 21105551,
-      "unknown_size": 0
-    },
-    "curva-carga": {
-      "files": 9,
-      "bytes_known": 4166982,
-      "unknown_size": 0
-    },
-    "carga-energia": {
-      "files": 9,
-      "bytes_known": 193526,
-      "unknown_size": 0
-    },
-    "cmo-semi-horario": {
-      "files": 7,
-      "bytes_known": 2719788,
-      "unknown_size": 0
-    },
-    "cmo-semanal": {
-      "files": 9,
-      "bytes_known": 69492,
-      "unknown_size": 0
-    },
-    "ear-diario-por-subsistema": {
-      "files": 9,
-      "bytes_known": 284325,
-      "unknown_size": 0
-    },
-    "ena-diario-por-subsistema": {
-      "files": 9,
-      "bytes_known": 510802,
-      "unknown_size": 0
-    },
-    "ear-diario-por-bacia": {
-      "files": 9,
-      "bytes_known": 947085,
-      "unknown_size": 0
-    },
-    "ena-diario-por-bacia": {
-      "files": 9,
-      "bytes_known": 2396282,
-      "unknown_size": 0
-    },
-    "ear-diario-por-ree-reservatorio-equivalente-de-energia": {
-      "files": 9,
-      "bytes_known": 674926,
-      "unknown_size": 0
-    },
-    "ena-diario-por-ree-reservatorio-equivalente-de-energia": {
-      "files": 9,
-      "bytes_known": 1649747,
-      "unknown_size": 0
-    },
-    "intercambio-nacional": {
-      "files": 4,
-      "bytes_known": 1777465,
-      "unknown_size": 0
-    },
-    "geracao-usina-2": {
-      "files": 63,
-      "bytes_known": 412792892,
-      "unknown_size": 0
-    },
-    "fator-capacidade-2": {
-      "files": 63,
-      "bytes_known": 276966522,
-      "unknown_size": 0
-    },
-    "restricao_coff_eolica_usi": {
-      "files": 62,
-      "bytes_known": 199188096,
-      "unknown_size": 0
-    },
-    "restricao_coff_fotovoltaica": {
-      "files": 32,
-      "bytes_known": 35389911,
-      "unknown_size": 0
-    },
-    "dados-hidrologicos-res": {
-      "files": 9,
-      "bytes_known": 15692532,
-      "unknown_size": 0
-    },
-    "carga-programada": {
-      "files": 428,
-      "bytes_known": 121636000,
-      "unknown_size": 0
-    },
-    "carga-verificada": {
-      "files": 428,
-      "bytes_known": 304090000,
+    "merge": {
+      "files": 373,
+      "bytes_known": 153875662,
       "unknown_size": 0
     }
   },
-  "total_files": 1186,
-  "total_bytes_known": 1402251924,
+  "total_files": 373,
+  "total_bytes_known": 153875662,
   "errors": [],
   "note": "Bytes de carga e MERGE são estimativas; ONS vem do Content-Length de cada arquivo. Silver ocupa espaço adicional (Parquet zstd, em geral menor que a origem)."
 }
