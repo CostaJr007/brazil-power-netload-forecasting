@@ -1,8 +1,8 @@
-"""Mostra estado e resultados do pipeline sem coletar nem transformar arquivos.
+"""Shows pipeline status and results without collecting or transforming files.
 
-Além do último relatório, confere duas coisas que o relatório sozinho não mostra:
-- se ele está ATRASADO (uma execução que cai no meio não grava relatório nenhum);
-- o resultado da tarefa no Agendador do Windows (LastTaskResult).
+Besides the latest report, it checks two things the report alone cannot show:
+- whether the report is LATE (a run that dies midway writes no report);
+- the Windows Task Scheduler result (LastTaskResult).
 """
 import json
 import os

@@ -1,13 +1,13 @@
-# Testes do coletor
+# Tests
 
-`test_acquisition.py` usa unittest e também pode ser executado pelo pytest.
-
-Cada teste tem preparação (arquivo/resposta fictícia), ação (função do projeto) e verificação (assert). `TemporaryDirectory` isola os arquivos; `patch.object` troca a rede real por uma resposta em memória.
-
-Os testes verificam: reaproveitamento de conteúdo idêntico, preservação de revisão, tratamento de HTML/tamanho excessivo, ausência de temporários publicados, leitura sem alterar o CSV e seleção correta de recursos.
+All tests run offline with pytest (91 tests), including the collector, the Silver contracts, the Gold views and the models.
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q tests
 ```
 
-Eles não certificam a disponibilidade atual do ONS. Essa pergunta é respondida pela auditoria de endpoints, que usa rede e guarda evidências próprias.
+- **Collector:** reuse of identical content, preservation of revisions, rejection of HTML or oversized responses, no half-written files and correct resource selection. `TemporaryDirectory` isolates files and `patch.object` replaces the network with in-memory responses.
+- **Leakage tests:** the future is overwritten with extreme values and the forecast must not change (models, bias corrections, prediction band).
+- **Data cleaning and operations:** night-time solar, frozen values, effective horizon choice and the net-load sum across subsystems.
+
+The tests do not certify that ONS endpoints are available today; that question is answered by the endpoint audit, which uses the network and keeps its own evidence.

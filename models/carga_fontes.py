@@ -1,10 +1,10 @@
-"""Quanto cada fonte de dados ajuda a antecipar a carga do dia seguinte?
+"""How much does each data source help anticipate next-day load?
 
-Testa, grupo a grupo, meteorologia observada, reservatórios, geração das usinas e previsão real de
-vento, sol e umidade. Dois alvos, ambos emitidos antes da divulgação:
-  verificada: a carga que de fato ocorrerá em T;
-  programada: o número que o ONS publicará para T.
-Todo dado observado entra com defasagem de 2 dias, a mesma da carga verificada.
+Tests, group by group, observed weather, reservoirs, plant generation and real wind, sun and humidity forecasts.
+Two targets, both issued before publication:
+  verified: the load that will actually occur on T;
+  scheduled: the number ONS will publish for T.
+All observed data enter with a 2-day lag, the same as verified load.
 """
 import numpy as np
 import pandas as pd

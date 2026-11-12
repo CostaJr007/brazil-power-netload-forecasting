@@ -1,7 +1,7 @@
-"""Pipeline diário: consulta fontes, mantém Bronze e publica snapshots Silver.
+"""Daily pipeline: queries sources, keeps Bronze and publishes Silver snapshots and Gold views.
 
-Executar --offline trata apenas arquivos já baixados. Sem essa opção há rede.
-O Agendador chama este programa a cada 15 minutos; a frequência por fonte fica no JSON.
+--offline processes only files already downloaded; without it the network is used.
+Task Scheduler calls this program every 15 minutes; the cadence of each source lives in configs/pipeline.json.
 """
 import argparse
 import hashlib

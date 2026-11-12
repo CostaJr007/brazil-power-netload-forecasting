@@ -1,4 +1,6 @@
-"""Leitura das views Gold para modelagem. Nenhum tratamento de negócio novo: só formato."""
+"""Readers of the Gold views for modelling, plus data cleaning (night-time solar, frozen values, zero load,
+half-published schedules) and the holiday calendar.
+"""
 import sys
 from datetime import date, timedelta
 from pathlib import Path

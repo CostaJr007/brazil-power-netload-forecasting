@@ -1,6 +1,6 @@
-"""Tratamento Bronze -> Silver, mantendo a origem e separando rejeições.
+"""Bronze -> Silver processing, keeping lineage and separating rejected rows into quarantine.
 
-Os comentários explicam as regras de negócio. Arquivos da Bronze nunca são editados.
+Comments explain the business rules. Bronze files are never edited.
 """
 import csv
 import hashlib

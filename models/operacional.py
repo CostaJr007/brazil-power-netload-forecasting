@@ -1,9 +1,9 @@
-"""Previsão operacional da carga líquida: o que a mesa recebe hoje para amanhã (D+1) e depois de amanhã (D+2).
+"""Operational net-load forecast: what the desk receives today for tomorrow (D+1) and the day after (D+2).
 
-Usa as mesmas funções do backtest, com as receitas escolhidas em 2025 (gravadas nos JSON de resultados),
-treinando com tudo o que existe até a hora da decisão. Se um insumo ainda não saiu (balanço de D−1 sai
-por volta das 19h50 de Brasília; DESSEM de D+1 entre 15h e 17h), o dia é previsto com o horizonte
-seguinte, que exige menos informação, e isso fica registrado na saída.
+Uses the same functions as the backtest, with the recipes chosen on 2025 (stored in the results JSON files), training
+on everything available at decision time. If an input is not out yet (the D−1 balance comes out around 7:50 pm
+Brasília time; the D+1 DESSEM between 3 and 5 pm), the day is forecast with the next horizon, which needs less
+information, and this is recorded in the output. Includes the empirical 80% prediction band.
 """
 import pandas as pd
 

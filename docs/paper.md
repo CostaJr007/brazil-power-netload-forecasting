@@ -137,6 +137,8 @@ the operator has not yet seen the weather for the target day, and pure ML wins f
 | D+1 | 2,104 MW | 2,371 MW (DESSEM) | **11.2%** | −94 MW vs bias-corrected DESSEM, 95% CI [−171, −19] |
 | D+2 | 2,594 MW | 3,501 MW (weekday-corrected T−1) | **25.9%** | 95% CI of the difference [−1,195, −580] MW; anticipates the not-yet-published DESSEM with MAE 2,256 vs 3,021 MW |
 
+These figures use the common sample where every candidate model has a value; recomputed on every available hour, as in the dashboard, they are 2,110 vs 2,373 MW (11.1%) and 2,607 vs 3,534 MW (26.2%).
+
 The model beats the benchmark on 64% of days at D+1 and 69% at D+2. Errors peak in the late morning
 (11 am at D+1), when solar ramps and solar forecast errors are largest, not at the evening load peak.
 Holidays and weekends are harder than weekdays (D+1: 2,333 and 2,250 vs 2,041 MW), but the model still beats

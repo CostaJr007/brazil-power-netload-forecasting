@@ -1,13 +1,13 @@
-"""Auditoria: como teria acertado a previsão operacional nos últimos dias, comparada com o que aconteceu.
+r"""Audit: how the operational forecast would have done over recent days, compared with what happened.
 
-Para cada dia-alvo T e passo (D+1, D+2), refaz a previsão como se fossem 22h da véspera da decisão:
-  - balanço cortado em D−1 e programação do ONS cortada em D+1 (o que existia naquela noite);
-  - previsão do tempo arquivada, emitida 48 h (D+1) ou 72 h (D+2) antes, como no treino;
-  - receitas congeladas dos JSON de resultados, sem nenhum ajuste olhando a semana auditada.
-Ressalva: o "real" é o balanço de hoje, já revisado; o último dia ainda é preliminar.
+For each target day T and step (D+1, D+2), rebuilds the forecast as of 10 pm the night before the decision:
+  - balance cut at D−1 and ONS schedule cut at D+1 (what existed that night);
+  - archived weather forecast issued 48 h (D+1) or 72 h (D+2) before, as in training;
+  - recipes frozen from the results JSON files, with no tuning on the audited week.
+Caveat: "actual" is today's balance, already revised; the most recent day is still preliminary.
 
-Saída: docs/inventory/auditoria_previsoes.json, data/gold/auditoria_previsoes.parquet e resumo no terminal.
-Executar: .\\.venv\\Scripts\\python.exe scripts/auditar_previsoes.py [--inicio 2026-11-04 --fim 2026-11-10]
+Output: docs/inventory/auditoria_previsoes.json, data/gold/auditoria_previsoes.parquet and a terminal summary.
+Run: .\.venv\Scripts\python.exe scripts/auditar_previsoes.py [--inicio 2026-11-04 --fim 2026-11-10]
 """
 import argparse
 import json

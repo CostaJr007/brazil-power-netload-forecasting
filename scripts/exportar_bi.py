@@ -1,16 +1,17 @@
-"""Camada de BI: tabelas em modelo estrela (Parquet) para o Power BI, em data/bi/.
+r"""BI layer: star-schema tables (Parquet) for Power BI, in data/bi/ (names and values in English).
 
-Fatos (um por pergunta de negócio) e dimensões compartilhadas (data, hora, subsistema):
-  fato_carga_liquida  backtest horário D+1 e D+2: previsto, real, régua, ONS e banda de 80% (walk-forward)
-  fato_pecas          o mesmo por peça (carga, eólica, solar), para ver de onde vem o erro
-  fato_previsao       previsão operacional (cada decisão), com banda de 80%
-  fato_auditoria      replay da semana auditada, como se fossem 22h da véspera
-  fato_painel_diario  balanço diário do SIN (carga, renováveis, hidro, térmica, ENA, EAR, CMO, PLD estimado)
-  fato_pld_diario / fato_ear_diario / fato_ena_bacia   séries diárias por subsistema ou bacia
-  dim_data / dim_hora / dim_subsistema / info_execucao
+Facts (one per business question) and shared dimensions (date, hour, subsystem):
+  fact_net_load       hourly D+1 and D+2 backtest: forecast, actual, benchmark, ONS, walk-forward 80% band
+  fact_components     the same per component (load, wind, solar), to see where the error comes from
+  fact_forecast       operational forecast (each decision date), with 80% band
+  fact_audit          replay of the audited week, as of 10 pm the day before
+  fact_system_daily   daily national balance (load, renewables, hydro, thermal, inflow, storage, CMO, estimated price)
+  fact_price_daily / fact_storage_daily / fact_inflow_basin   daily series by subsystem or basin
+  dim_date / dim_hour / dim_subsystem / run_info
+Days with ONS telemetry outages are flagged (telemetry_outage).
 
-Sem rede: lê os resultados já gerados e as views Gold. O projeto Power BI (bi/) aponta para esta pasta.
-Executar: .\\.venv\\Scripts\\python.exe scripts/exportar_bi.py
+Offline: reads results already produced and the Gold views. The Power BI project (bi/) points to this folder.
+Run: .\.venv\Scripts\python.exe scripts/exportar_bi.py
 """
 import json
 import sys

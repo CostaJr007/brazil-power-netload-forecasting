@@ -1,11 +1,10 @@
-"""Gera o projeto Power BI em texto (PBIP + TMDL) em bi/, a partir dos Parquet de data/bi/.
+r"""Generates the Power BI project as text in bi/: semantic model (TMDL) and, with --relatorio, the report pages (PBIR).
 
-Por que gerar por código: o modelo (tabelas, tipos, relações e medidas DAX) fica versionado no git e é
-refeito igual sempre que uma coluna muda. As páginas do relatório são montadas no Power BI Desktop
-(roteiro em bi/README.md).
+Why generate by code: tables, types, relationships and DAX measures are versioned in git and rebuilt identically
+whenever a column changes. Measures on hourly tables default to the national grid when no subsystem is selected.
 
-Executar: .\\.venv\\Scripts\\python.exe scripts/gerar_projeto_bi.py [--relatorio]   (depois de scripts/exportar_bi.py)
---relatorio regenera também as 5 páginas (scripts/relatorio_bi.py), sobrescrevendo o que foi editado no Desktop.
+Run: .\.venv\Scripts\python.exe scripts/gerar_projeto_bi.py [--relatorio]   (after scripts/exportar_bi.py)
+--relatorio regenerates the 5 pages (scripts/relatorio_bi.py), overwriting edits made in Power BI Desktop.
 """
 import json
 import sys

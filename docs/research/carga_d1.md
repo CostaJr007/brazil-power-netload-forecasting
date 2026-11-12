@@ -1,38 +1,43 @@
-# Previsão horária da carga do dia seguinte (D+1)
+# Next-day (D+1) hourly load forecast
 
-Rodada de 10/11/2026. Teste walk-forward anual de 2023 a 08/11/2026 nos 4 subsistemas. Números completos em `docs/inventory/carga_d1_results.json` e `carga_fontes_results.json`. Código em `models/carga_d1.py` e `models/carga_fontes.py`.
+Run of 2026-11-10. Yearly walk-forward test from 2023 to 2026-11-08 on the 4 subsystems. Full numbers in
+`docs/inventory/carga_d1_results.json` and `carga_fontes_results.json`; code in `models/carga_d1.py` and
+`models/carga_fontes.py`.
 
-Informação usada para prever o dia T: carga verificada até T−2 e temperatura prevista 48 h antes de cada hora (GFS arquivado, Open-Meteo). Com isso, a previsão pode ser feita antes de o ONS publicar a programada.
+Information used to forecast day T: verified load up to T−2 and temperature forecast 48 h before each hour
+(archived GFS, Open-Meteo). The forecast can therefore be issued before ONS publishes its scheduled load.
 
-## Quanto cada fonte ajuda (erro horário médio, MAPE)
+## How much each source helps (mean hourly error, MAPE)
 
-| Variáveis somadas ao histórico de carga e calendário | Prever a carga verificada | Prever a programada do ONS |
+| Variables added to load history and calendar | Forecasting verified load | Forecasting the ONS schedule |
 |---|---|---|
-| Só histórico e calendário | 3,05% | 2,10% |
-| + temperatura prevista | **2,63%** | **1,99%** |
-| + clima observado (sol, vento, umidade, chuva) | 2,83% | 2,01% |
-| + reservatórios (EAR, ENA) | 3,03% (sem efeito significativo) | 2,11% (sem efeito) |
-| + geração das usinas | 3,05% (sem efeito) | 2,10% (sem efeito) |
-| Tudo junto, Ridge | **2,58%** | **1,97%** |
-| Tudo junto, boosting | 2,75% | 2,16% |
+| History and calendar only | 3.05% | 2.10% |
+| + forecast temperature | **2.63%** | **1.99%** |
+| + observed weather (sun, wind, humidity, rain) | 2.83% | 2.01% |
+| + reservoirs (EAR, ENA) | 3.03% (no significant effect) | 2.11% (no effect) |
+| + plant generation | 3.05% (no effect) | 2.10% (no effect) |
+| Everything, Ridge | **2.58%** | **1.97%** |
+| Everything, gradient boosting | 2.75% | 2.16% |
 
-Referência: a programada do ONS erra 3,09% contra a verificada, no mesmo período.
+Reference: the ONS scheduled load errs 3.09% against verified load over the same period.
 
-**Leitura:**
-- **Temperatura prevista é a variável decisiva.** No SE/CO, o erro cai de 3,16% para 2,22%.
-- **Reservatórios e geração não explicam a carga.** Faz sentido físico: consumo depende de clima e calendário, não de quanta água há na represa. Esses dados voltam na etapa de preço, onde têm efeito.
-- **Modelo mais adequado: um Ridge por hora do dia.** Ganhou do boosting nos dois alvos.
-- **Combinação com o ONS:** a média de ONS corrigido, Ridge e boosting foi a melhor em 2023 e 2024, e confirmou em 2025 e 2026 (MAE 12,5% menor que o ONS e 4,6% menor que a regra de viés, IC 95% excluindo zero).
+- **Forecast temperature is the decisive variable.** In SE/CO the error falls from 3.16% to 2.22%.
+- **Reservoirs and generation do not explain load,** which makes physical sense: consumption depends on weather and calendar, not on how much water is in the reservoirs. These data matter for price, not for load.
+- **Best model: one Ridge per hour of the day.** It beat gradient boosting on both targets.
+- **Blend with ONS:** the mean of corrected ONS, Ridge and boosting was best in 2023 and 2024 and confirmed in 2025 and 2026 (MAE 12.5% below ONS and 4.6% below the bias rule, 95% CI excluding zero).
 
-## Limites
-- Vento, radiação e umidade **previstos** não foram testados: o Open-Meteo retornou erro 503 de forma persistente. O erro do ONS sobe de ~2,2% de madrugada para ~4,6% ao meio-dia, e a geração solar distribuída é hipótese ainda sem teste.
-- O clima observado do INMET vem de pacotes anuais publicados com atraso. Em produção, precisaria de uma fonte diária.
-- A temperatura é a média simples de 3 ou 4 capitais por subsistema, não ponderada pela carga.
-- "Tudo junto" foi avaliado em todo o período, sem separar um trecho de confirmação.
-- A programada é assumida como a publicada na véspera; o horário exato não foi confirmado.
-- **Revisões:** a verificada do ONS é reescrita depois da primeira publicação (`din_atualizacao` chega a mais de um ano após o dia). O backtest usa o valor final, não o que estava publicado na época, então o erro real pode ser um pouco maior. A defasagem de 2 dias é coerente com o observado em 10/11/2026 à noite, quando a verificada mais recente era a de 09/11.
+## Limits
 
-## Próximo passo: preço
-Prever CMO ou PLD estimado em dois estágios: primeiro o regime (piso, normal ou teto), depois o nível por quantis, com EAR, ENA, carga líquida prevista e erro da carga de D+1 como entradas.
+- Forecast wind, radiation and humidity were not tested for load (Open-Meteo returned persistent 503 errors at the time). The ONS error rises from ~2.2% overnight to ~4.6% at midday, consistent with rooftop solar, a hypothesis later used in the net-load model.
+- INMET observed weather comes in yearly packages published with delay; production would need a daily source.
+- Temperature is the simple mean of 3–4 capitals per subsystem, not load-weighted.
+- "Everything" was evaluated over the whole period, without a separate confirmation slice.
+- The scheduled load is assumed to be the one published the day before; the exact publication time was not confirmed.
+- **Revisions:** ONS rewrites verified load after the first release (`din_atualizacao` can be more than a year after the day). The backtest uses the final value, so the real-time error may be slightly larger. The 2-day lag matches what was observed on the evening of 2026-11-10, when the latest verified day was 11-09.
 
-Fontes: [modelos lineares por hora em previsão D+1](https://ir.cwi.nl/pub/28449/28449.pdf) · [comparação Ridge, Lasso e rede neural no GEFCom2014](https://10wvvw.easychair.org/publications/preprint/Jcdq/open) · [Open-Meteo, Previous Runs API](https://open-meteo.com/en/docs/previous-runs-api)
+## Next step: price
+
+Forecast CMO or estimated PLD in two stages: first the regime (floor, normal or cap), then the level by quantiles,
+with storage, inflow, forecast net load and the D+1 load error as inputs.
+
+Sources: [hourly linear models for D+1 forecasting](https://ir.cwi.nl/pub/28449/28449.pdf) · [Ridge, Lasso and neural network comparison in GEFCom2014](https://10wvvw.easychair.org/publications/preprint/Jcdq/open) · [Open-Meteo Previous Runs API](https://open-meteo.com/en/docs/previous-runs-api)

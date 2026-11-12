@@ -1,11 +1,11 @@
-"""Carga líquida de D+1 pela soma das peças: carga − eólica − solar.
+"""Net load by summing components: load − wind − solar, at D+1 and D+2.
 
-Cada fonte é prevista por subsistema e hora, com dados disponíveis na noite de T−1:
-geração verificada até T−2 e previsões de tempo emitidas 48 h antes de cada hora de T.
-O alvo é a razão entre a geração e o nível recente da mesma hora, que já embute o crescimento
-de capacidade, a sazonalidade e o patamar recente de cortes. À noite a solar é zero por construção.
+Each source is forecast per subsystem and hour with data available on the evening of the decision: verified generation
+up to T−gap and weather forecasts issued 48 h (D+1) or 72 h (D+2) before each hour of T. The target is the ratio of
+generation to the recent level of the same hour, which already embeds capacity growth, seasonality and the recent
+curtailment level. Solar is zero at night by construction.
 
-A referência é o DESSEM do ONS, a programação publicada na véspera.
+The benchmark is the ONS DESSEM schedule (D+1) or the previous-day schedule corrected by hour and weekday (D+2).
 """
 import numpy as np
 import pandas as pd

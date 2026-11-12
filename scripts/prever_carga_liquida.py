@@ -1,19 +1,19 @@
-"""Previsão operacional da carga líquida (carga − eólica − solar) para amanhã e depois de amanhã.
+r"""Operational forecast of net load (load − wind − solar) for tomorrow and the day after.
 
-É o "produto" do projeto: em vez de backtest, a previsão que uma mesa receberia hoje, por subsistema e
-hora, com as receitas escolhidas em 2025 e confirmadas em 2026 (docs/research/carga_liquida_d1.md e _d2.md).
+The project's "product": instead of a backtest, the forecast a desk would receive today, by subsystem and hour, with the
+recipes chosen on 2025 and confirmed on 2026 (docs/research/carga_liquida_d1.md and _d2.md), plus an 80% band.
 
-Insumos:
-  - balanço e DESSEM do ONS já tratados na Gold (rode antes scripts/pipeline.py);
-  - previsões arquivadas (scripts/baixar_previsao_renovaveis.py e baixar_temperatura_prevista.py, dias 2 e 3),
-    que alimentam as anomalias e o treino;
-  - previsão do tempo atual do Open-Meteo (CC-BY 4.0, uso não comercial) para os mesmos pontos, guardada na Bronze.
+Inputs:
+  - ONS balance and DESSEM already processed in Gold (run scripts/pipeline.py first);
+  - archived forecasts (scripts/baixar_previsao_renovaveis.py and baixar_temperatura_prevista.py, days 2 and 3), which
+    feed the anomalies and training;
+  - the current Open-Meteo forecast (CC-BY 4.0, non-commercial) at the same points, stored in Bronze.
 
-Hora ideal: depois das 20h de Brasília, quando o balanço de ontem já saiu. Antes disso, cada dia é previsto
-com o horizonte seguinte (menos informação), e a coluna `horizonte` mostra isso.
+Best time: after 8 pm Brasília time, when yesterday's balance is out. Before that, each day is forecast with the next
+horizon (less information) and the `horizonte` column shows it.
 
-Saída: data/gold/previsao_operacional.parquet (acumula por data de decisão) e resumo no terminal.
-Executar: .\\.venv\\Scripts\\python.exe scripts/prever_carga_liquida.py [--decisao 2026-11-12]
+Output: data/gold/previsao_operacional.parquet and previsao_operacional_liquida.parquet (accumulated by decision date).
+Run: .\.venv\Scripts\python.exe scripts/prever_carga_liquida.py [--decisao 2026-11-12]
 """
 import argparse
 import json

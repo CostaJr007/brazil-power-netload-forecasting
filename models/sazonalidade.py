@@ -1,9 +1,9 @@
-"""Fatiar o modelo de carga de D+1 por época do ano e entender onde ele acerta ou erra.
+"""Slicing the D+1 load model by time of year to see where it does well or badly.
 
-Duas ideias diferentes:
-  1. Avaliar em fatias: um único modelo, com o erro medido por estação, mês e faixa horária.
-  2. Treinar em fatias: um Ridge por hora que aprende só com a própria estação, ou só com o mês
-     vizinho. Faz sentido se a resposta à temperatura muda ao longo do ano; custa menos exemplos.
+Two different ideas:
+  1. Evaluate in slices: one model, with error measured by season, month and hour band.
+  2. Train in slices: one Ridge per hour that learns only from its own season or neighbouring months. It helps if the
+     temperature response changes through the year, at the cost of fewer examples.
 """
 import numpy as np
 import pandas as pd

@@ -19,6 +19,8 @@ antecipa essa carga líquida melhor do que as referências públicas, ou antes d
 | Carga D+1, por subsistema | Carga programada pela API do ONS | −22% de MAE no SIN na confirmação; −26 MW por hora além da correção de viés | [carga_d1.md](research/carga_d1.md) |
 | ENA por bacia (vazão em energia), 1 a 14 dias | Persistência | ganho de 30,5% (1 dia), 19,2% (3), 14,1% (7) e 14,9% (14) com memória e chuva observada | [modelagem_meteorologia_energia.md](research/modelagem_meteorologia_energia.md) |
 
+> **Duas contagens equivalentes.** As tabelas da pesquisa comparam todos os modelos na mesma amostra de horas (2.104 contra 2.371 MW em D+1, 11,2%); o BI usa todas as horas disponíveis (2.110 contra 2.373 MW, 11,1%; D+2: 2.607 contra 3.534 MW, 26,2%). As duas são fora da amostra.
+
 ## O que aprendemos e que vale para qualquer mesa
 
 1. **Corrigir o viés do ONS vem antes de qualquer ML.** A programação DESSEM fica 1,15 GW acima da carga verificada no Sudeste. Só essa correção já ganha 6,6% no SIN em D+1.

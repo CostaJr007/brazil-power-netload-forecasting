@@ -19,6 +19,8 @@ edge when it anticipates net load better than the public references, or before t
 | Load D+1, by subsystem | ONS scheduled load (API) | −22% MAE nationally; −26 MW/h beyond bias correction | [carga_d1.md](research/carga_d1.md) |
 | River inflow (ENA) by basin, 1–14 days | Persistence | 30.5% (1 day), 19.2% (3), 14.1% (7), 14.9% (14) with memory and observed rain | [modelagem_meteorologia_energia.md](research/modelagem_meteorologia_energia.md) |
 
+> **Two equivalent ways of counting.** The research tables score every candidate on the same sample of hours (2,104 vs 2,371 MW at D+1, 11.2%); the dashboard uses every available hour (2,110 vs 2,373 MW, 11.1%; D+2: 2,607 vs 3,534 MW, 26.2%). Both are out of sample.
+
 ## What we learned (useful for any desk)
 
 1. **Correct the operator's bias before any ML.** The DESSEM schedule runs 1.15 GW above verified load in the Southeast; that correction alone gains 6.6% nationally at D+1.

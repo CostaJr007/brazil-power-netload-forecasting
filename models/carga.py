@@ -1,15 +1,15 @@
-"""Calendário e temperatura → carga diária do dia T, emitida na manhã de T−1.
+"""Calendar and temperature → daily load for day T, issued on the morning of T−1.
 
-O dado mais recente da verificada na emissão é o de T−2 (GAP). O alvo é a razão
-carga/média dos 28 dias anteriores à emissão, porque árvores não extrapolam tendência.
-Modelos:
-  naive           carga de T−7 (mesmo dia da semana)
-  ons             carga programada do ONS: o concorrente a bater
-  ons_vies28      programada corrigida pelo erro médio recente (baseline de viés)
-  gbm_calendario  lags + calendário
-  gbm_temp        + temperatura observada até T−2 (disponível de verdade)
-  gbm_cenario     + temperatura do próprio dia T (previsão perfeita: limite superior)
-  ons_corrigido   aprende o viés do ONS: programada × correção por erros passados e calendário
+The most recent verified load at issue time is T−2 (GAP). The target is the ratio load / mean of the 28 days before
+issue, because trees do not extrapolate trends.
+Models:
+  naive           load of T−7 (same weekday)
+  ons             ONS scheduled load: the competitor to beat
+  ons_vies28      schedule corrected by its recent mean error (bias baseline)
+  gbm_calendario  lags + calendar
+  gbm_temp        + observed temperature up to T−2 (truly available)
+  gbm_cenario     + temperature of day T itself (perfect foresight: upper bound)
+  ons_corrigido   learns the ONS bias: schedule × correction from past errors and calendar
 """
 from datetime import timedelta
 

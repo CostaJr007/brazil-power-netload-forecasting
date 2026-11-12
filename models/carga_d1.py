@@ -1,17 +1,17 @@
-"""Previsão horária da carga do dia seguinte (D+1), com temperatura realmente prevista na véspera.
+"""Hourly next-day (D+1) load forecast, using temperature actually forecast the day before.
 
-Informação disponível ao prever o dia T (noite de T−1):
-  - carga verificada até T−2;
-  - programada do ONS para T;
-  - temperatura prevista 48 h antes de cada hora de T (rodada já pronta de madrugada em T−1).
+Information available when forecasting day T (evening of T−1):
+  - verified load up to T−2;
+  - the ONS schedule for T;
+  - temperature forecast 48 h before each hour of T.
 
-Duas famílias de modelo:
-  "com ONS": aprende log(carga/programada), isto é, onde o ONS erra.
-  "sem ONS": aprende log(carga/nível recente), útil antes de o ONS publicar a programada.
-O alvo em razão evita que o modelo precise extrapolar o crescimento da carga.
+Two model families:
+  "with ONS": learns log(load / schedule), i.e. where ONS errs.
+  "without ONS": learns log(load / recent level), useful before ONS publishes its schedule.
+The ratio target avoids extrapolating load growth.
 
-Um modelo Ridge por hora do dia é a prática comum em previsão D+1: cada hora tem sua própria
-resposta à temperatura. Temperatura só com sufixo _o é previsão perfeita (limite teórico).
+One Ridge per hour of the day is common practice in D+1 forecasting: each hour has its own response to temperature.
+Temperature columns with the _o suffix are perfect foresight (theoretical bound).
 """
 import numpy as np
 import pandas as pd

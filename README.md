@@ -70,7 +70,7 @@ flowchart LR
 | Open-Meteo | Forecasts **archived as issued** (GFS and ECMWF, 48/72/96 h ahead) and live forecasts at plant and city locations. CC-BY 4.0, non-commercial use | On demand |
 | CCEE (official spot price) | Connector ready but disabled: CCEE's firewall blocks the egress IP (HTTP 403); price is estimated from marginal cost | — |
 
-Details and limitations: [docs/sources.md](docs/sources.md) and [docs/pipeline_diario.md](docs/pipeline_diario.md) (Portuguese).
+Details and limitations: [docs/sources.md](docs/sources.md), [docs/pipeline_diario.md](docs/pipeline_diario.md) and [docs/architecture.md](docs/architecture.md).
 
 ## Key results
 
@@ -146,7 +146,7 @@ data/                (not in git) bronze/ silver/ gold/ bi/ runs/
 - [docs/paper.md](docs/paper.md): technical report (data, methodology, results, negative results, limitations).
 - [docs/results.md](docs/results.md): summary, audits, limitations and next steps (English).
 - [bi/README.md](bi/README.md): Power BI dashboard (star schema, DAX measures, pages).
-- Detailed research notes (Portuguese): [net load D+1](docs/research/carga_liquida_d1.md), [net load D+2](docs/research/carga_liquida_d2.md), [load D+1](docs/research/carga_d1.md), [inflow and daily load](docs/research/modelagem_meteorologia_energia.md), [solar and seasonality](docs/research/solar_e_sazonalidade.md).
+- Detailed research notes: [net load D+1](docs/research/carga_liquida_d1.md), [net load D+2](docs/research/carga_liquida_d2.md), [load D+1](docs/research/carga_d1.md), [inflow and daily load](docs/research/modelagem_meteorologia_energia.md), [solar and seasonality](docs/research/solar_e_sazonalidade.md).
 
 **Next step:** link the D+2 net-load forecast to the estimated spot price and test whether it anticipates price moves. A second market module for **Ontario (IESO)** is planned with the same architecture.
 

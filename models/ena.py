@@ -1,11 +1,10 @@
-"""Meteorologia e bacias → ENA, com h dias de antecedência.
+"""Weather and basins → inflow (ENA), h days ahead.
 
-Trabalhamos com a ANOMALIA: a = ENA/média − climatologia(dia do ano). Média e climatologia são
-calculadas só com o treino de cada ano de teste. Três famílias de variáveis:
-  - memória da bacia: anomalias até t;
-  - chuva observada até t (MERGE): já caiu, mas ainda não virou vazão;
-  - chuva de t+1 a t+h: CENÁRIO de previsão perfeita. Mostra o limite superior do ganho com
-    previsão de chuva; só haverá resultado real quando existir histórico de rodadas ECMWF/GFS.
+The target is the ANOMALY: a = ENA/mean − climatology(day of year). Mean and climatology use only each test year's
+training data. Three feature families:
+  - basin memory: anomalies up to t;
+  - observed rain up to t (MERGE): already fallen, not yet turned into flow;
+  - rain from t+1 to t+h: a perfect-foresight SCENARIO showing the upper bound of the gain from rain forecasts.
 """
 import numpy as np
 import pandas as pd

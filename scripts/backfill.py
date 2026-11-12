@@ -1,24 +1,17 @@
-"""Backfill histórico: monta o PLANO (padrão) e só baixa com --execute.
+r"""Historical backfill: builds the PLAN (default) and downloads only with --execute.
 
-Por que um script separado do pipeline diário?
-- O pipeline diário olha só os últimos dias; modelos e backtests precisam de anos.
-- Um backfill leva horas. Ele usa outra trava (data/backfill.lock), então o
-  Agendador continua rodando a coleta diária em paralelo.
-- O plano mostra quantos arquivos e quantos bytes serão baixados ANTES de baixar.
+Why separate from the daily pipeline?
+- The daily pipeline looks only at recent days; models and backtests need years.
+- A backfill takes hours. It uses another lock (data/backfill.lock), so the scheduled daily collection keeps running.
+- The plan shows how many files and bytes will be downloaded BEFORE downloading.
 
-Exemplos (PowerShell, na raiz do projeto):
-    # 1) Só planejar: ONS + API de carga desde 2018 (nada é baixado)
-    .\\.venv\\Scripts\\python.exe scripts/backfill.py --sources ons,load --start 2018-01-01
-    # 2) Executar o mesmo plano
-    .\\.venv\\Scripts\\python.exe scripts/backfill.py --sources ons,load --start 2018-01-01 --execute
-    # 3) Chuva MERGE de um ano específico
-    .\\.venv\\Scripts\\python.exe scripts/backfill.py --sources merge --start 2025-01-01 --end 2025-12-31
+Examples (PowerShell, project root):
+    .\.venv\Scripts\python.exe scripts/backfill.py --sources ons,load --start 2018-01-01             # plan only
+    .\.venv\Scripts\python.exe scripts/backfill.py --sources ons,load --start 2018-01-01 --execute   # run the plan
+    .\.venv\Scripts\python.exe scripts/backfill.py --sources merge --start 2025-01-01 --end 2025-12-31
+    .\.venv\Scripts\python.exe scripts/backfill.py --sources inmet --start 2018-01-01 --end 2025-12-31 --execute
 
-    # 4) Estações INMET (um ZIP por ano)
-    .\\.venv\\Scripts\\python.exe scripts/backfill.py --sources inmet --start 2018-01-01 --end 2025-12-31 --execute
-
-GFS não tem backfill: o NOMADS guarda só ~10 dias. Histórico de previsão/reanálise
-exige outra fonte (ex.: ERA5/CDS com conta própria) — ver blocked_sources.
+GFS has no backfill: NOMADS keeps only ~10 days. Archived forecasts come from Open-Meteo Previous Runs.
 """
 import argparse
 import json

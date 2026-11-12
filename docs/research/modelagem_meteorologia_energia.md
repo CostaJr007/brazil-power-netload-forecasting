@@ -1,82 +1,86 @@
-# Modelagem: meteorologia → bacias → ENA e carga
+# Modelling: weather → basins → inflow (ENA) and load
 
-Primeira rodada de modelos, em 10/11/2026. Código em `models/`, execução com `scripts/modelagem.py`, números completos em `docs/inventory/model_results.json`.
+First modelling round, 2026-11-10. Code in `models/`, run with `scripts/modelagem.py`, full numbers in
+`docs/inventory/model_results.json`.
 
-## Por que este alvo
+## Why this target
 
-O preço depende de quanta água chega aos reservatórios (ENA) e de quanta carga o sistema atende. Por isso, modelamos essas duas variáveis antes do preço.
+Price depends on how much water reaches the reservoirs (natural energy inflow, ENA) and on how much load the system
+serves, so both are modelled before price.
 
-Sobre a Axia, o que há de público é pouco: uma plataforma (SPOC) com [previsão de vazões em três horizontes de planejamento](https://www.zedudu.com.br/novo-sistema-com-ia-da-axia-energia-pode-elevar-geracao-de-energia-em-mais-de-12/) e [investimento em IA aplicada a modelos meteorológicos](https://agenciainfra.com/blog/precos-da-energia-devem-seguir-pressionados-ate-janeiro-diz-axia/). Não encontramos fonte sobre como a mesa de comercialização modela. O projeto imita o problema, não um método conhecido da empresa.
+Little is public about how Brazilian trading desks model this. One generator describes a platform with
+[inflow forecasts over three planning horizons](https://www.zedudu.com.br/novo-sistema-com-ia-da-axia-energia-pode-elevar-geracao-de-energia-em-mais-de-12/)
+and [AI applied to weather models](https://agenciainfra.com/blog/precos-da-energia-devem-seguir-pressionados-ate-janeiro-diz-axia/).
+The project imitates the problem, not a known company method.
 
-## O que veio dos repositórios
+## Methods borrowed from earlier quant projects
 
-| Origem | Matemática | Uso aqui | Resultado |
+| Origin | Mathematics | Use here | Outcome |
 |---|---|---|---|
-| long-short-cointegracao, stat-arb | Ornstein-Uhlenbeck, meia-vida ln2/θ | `models/timeseries.py`: reversão da anomalia da ENA | Útil como baseline e para medir a memória de cada bacia |
-| Athena-SDA | Kalman com inovação (NIS) | Regressão com coeficientes variáveis | **Pior que o Ridge fixo** em todos os horizontes |
-| Athena-SDA | Walk-forward só com o passado, placebo | `models/validation.py` | **O item mais valioso:** desmontou uma conclusão errada, ver "Carga" |
-| vix-engine | GARCH | Não usado | A previsão de ENA e carga é um problema de nível, não de volatilidade |
-| crypto-options-gex | Convexidade | Fica para a etapa de preço | Ver `modelos_dos_repositorios.md`, seção 4 |
+| Cointegration / stat-arb projects | Ornstein-Uhlenbeck, half-life ln2/θ | `models/timeseries.py`: mean reversion of the inflow anomaly | Useful baseline and a measure of each basin's memory |
+| Athena-SDA | Kalman filter with innovation (NIS) | Time-varying-coefficient regression | **Worse than fixed Ridge** at every horizon |
+| Athena-SDA | Past-only walk-forward, placebo tests | `models/validation.py` | **The most valuable item:** it overturned a wrong conclusion (see Load) |
+| Volatility engine | GARCH | Not used | Inflow and load are level problems, not volatility problems |
+| Options GEX project | Convexity | Deferred to the price stage | See `modelos_dos_repositorios.md`, section 4 |
 
-Os módulos foram reescritos para este problema, sem dependência dos repositórios.
+The modules were rewritten for this problem, with no dependency on those repositories.
 
-## Protocolo
+## Protocol
 
-- **Walk-forward anual:** cada ano de teste só usa modelos treinados com datas anteriores. Média e climatologia também são recalculadas só com o treino.
-- **Previsão perfeita é identificada como tal.** O projeto tem só 2 rodadas do ECMWF e 8 do GFS, então não há como avaliar previsão real. Os modelos `*_cenario` usam a chuva ou temperatura observada no período previsto. Eles mostram o **limite superior** do ganho e **não são desempenho alcançável**.
-- **Intervalos de confiança:** bootstrap em blocos de 14 dias.
+- **Yearly walk-forward:** each test year uses only models trained on earlier dates; means and climatology are also recomputed on training data only.
+- **Perfect-foresight runs are labelled as such.** At the time the project held only 2 ECMWF and 8 GFS runs, so real forecasts could not be evaluated. The `*_cenario` models use the observed rain or temperature of the forecast period: they show the **upper bound** of the gain and are **not achievable performance**.
+- **Confidence intervals:** 14-day block bootstrap.
 
-## ENA por bacia (20 bacias, 2021 a 2026)
+## Inflow by basin (20 basins, 2021–2026)
 
-Skill = fração do erro da persistência eliminada. A previsão é emitida em t, com dados até t, para t+h.
+Skill = share of the persistence error removed. The forecast is issued at t, with data up to t, for t+h.
 
-| Modelo | h=1 | h=3 | h=7 | h=14 |
+| Model | h=1 | h=3 | h=7 | h=14 |
 |---|---|---|---|---|
-| MAE da persistência (MWmed) | 147 | 374 | 629 | 867 |
-| OU (só anomalia atual) | 1,6% | 5,1% | 8,1% | 13,2% |
-| Ridge, memória | 29,1% | 16,8% | 12,4% | 14,5% |
-| **Ridge, memória + chuva já observada** | **30,5%** | **19,2%** | **14,1%** | **14,9%** |
-| Kalman ARX | 5,9% | 1,0% | 1,8% | 3,0% |
-| Boosting, memória + chuva observada | 2,2% | −0,8% | −0,3% | 6,1% |
-| *Limite: Ridge + chuva futura perfeita* | *34,2%* | *32,6%* | *34,7%* | *36,0%* |
+| Persistence MAE (average MW) | 147 | 374 | 629 | 867 |
+| OU (current anomaly only) | 1.6% | 5.1% | 8.1% | 13.2% |
+| Ridge, memory | 29.1% | 16.8% | 12.4% | 14.5% |
+| **Ridge, memory + observed rain** | **30.5%** | **19.2%** | **14.1%** | **14.9%** |
+| Kalman ARX | 5.9% | 1.0% | 1.8% | 3.0% |
+| Boosting, memory + observed rain | 2.2% | −0.8% | −0.3% | 6.1% |
+| *Bound: Ridge + perfect future rain* | *34.2%* | *32.6%* | *34.7%* | *36.0%* |
 
-**Leitura:**
-- **O modelo linear por bacia é o melhor entre os realizáveis**, com skill positivo em todos os anos e horizontes. Boosting com bacias juntas perde dele: há apenas ~8 anos, e árvores não extrapolam anomalias maiores que as do treino.
-- **A chuva já observada ajuda pouco:** de 0,4 a 2,4 pontos sobre a memória. O ganho é significativo em h=1, 3 e 7 e não é em h=14.
-- **A previsão de chuva tem o maior potencial:** a chuva futura perfeita leva o skill em h=14 de 14,9% para 36,0%. O ganho real será menor, porque previsão erra, sobretudo em prazos longos.
-- **Heterogeneidade:** em h=7, o ganho do Ridge realizável vai de 22,5% (Grande) a −29,5% (Paraguaçu). Doce e Jequitinhonha ficam em torno de zero.
-- **Placebo:** o controle mais justo é contra o modelo de memória. O placebo perde 2 anos de treino e acrescenta ruído, então a diferença contra ele superestima o valor da chuva.
+- **The per-basin linear model is the best achievable one,** with positive skill in every year and horizon. Pooled boosting loses: there are only ~8 years and trees do not extrapolate anomalies larger than those in training.
+- **Observed rain helps a little:** 0.4–2.4 points over memory; significant at h=1, 3 and 7, not at h=14.
+- **Rain forecasts have the largest potential:** perfect future rain lifts h=14 skill from 14.9% to 36.0%. Real gains will be smaller, because forecasts err, especially at long leads.
+- **Heterogeneity:** at h=7 the achievable Ridge gain ranges from 22.5% (Grande) to −29.5% (Paraguaçu); Doce and Jequitinhonha sit near zero.
+- **Placebo:** shuffling the rain lowers 1-day skill from 30.5% to 23.4%. The fairest control is the memory model, because the placebo loses two training years and adds noise.
 
-## Carga diária por subsistema (2022 a out/2026)
+## Daily load by subsystem (2022 – Oct 2026)
 
-Previsão do dia T emitida na manhã de T−1, com a verificada conhecida até T−2 (premissa conservadora). O concorrente é a carga programada do ONS, com erro médio (MAPE) de 2,72%.
+Forecast for day T issued on the morning of T−1, with verified load known up to T−2 (conservative). The competitor is
+the ONS scheduled load, with a mean error (MAPE) of 2.72%.
 
-| Modelo | MAPE | Redução de MAE sobre o ONS |
+| Model | MAPE | MAE reduction vs ONS |
 |---|---|---|
-| Mesmo dia da semana anterior | 4,15% | −72,6% |
-| **ONS + erro médio dos últimos 28 dias** | **2,20%** | **20,7%** |
-| ONS corrigido por boosting | 2,25% | 17,4% |
-| Boosting com calendário e temperatura passada | 2,42% | 2,2% |
-| *Limite: ONS corrigido + temperatura perfeita* | *1,96%* | *29,0%* |
-| *Limite: boosting + temperatura perfeita* | *1,78%* | *32,8%* |
+| Same weekday last week | 4.15% | −72.6% |
+| **ONS + mean error of the last 28 days** | **2.20%** | **20.7%** |
+| ONS corrected by boosting | 2.25% | 17.4% |
+| Boosting with calendar and past temperature | 2.42% | 2.2% |
+| *Bound: corrected ONS + perfect temperature* | *1.96%* | *29.0%* |
+| *Bound: boosting + perfect temperature* | *1.78%* | *32.8%* |
 
-**Leitura:**
-- **A regra simples ganhou do machine learning.** Corrigir o viés recente da programada foi melhor que o boosting que corrige o ONS (diferença de 18 MWmed, IC 95% de 3 a 34).
-- **A vantagem está concentrada em 2022 e 2023:** a regra reduziu o erro em 42,7% e 28,5% nesses anos, e em apenas 0,4% em 2024. O viés do ONS diminuiu, então o ganho futuro não deve ser extrapolado da média.
-- **Sem o ONS, o modelo não basta no SE/CO:** o boosting com calendário e temperatura passada é 12% pior que o ONS, o maior subsistema.
-- **A temperatura do dia alvo é o que falta.** Ela reduz o MAPE do boosting de 2,42% para 1,78%, mas só com previsão perfeita.
+- **The simple rule beat machine learning.** Correcting the recent bias of the schedule beat the boosting model that corrects ONS (difference of 18 average MW, 95% CI 3 to 34).
+- **The advantage is concentrated in 2022 and 2023:** the rule cut error by 42.7% and 28.5% in those years and only 0.4% in 2024. The ONS bias shrank, so future gains should not be extrapolated from the average.
+- **Without ONS, the model is not enough in SE/CO:** boosting with calendar and past temperature is 12% worse than ONS in the largest subsystem.
+- **Target-day temperature is what is missing.** It lowers boosting MAPE from 2.42% to 1.78%, but only with perfect foresight; the hourly D+1 model later confirmed the value of *forecast* temperature ([carga_d1.md](carga_d1.md)).
 
-## Limitações
+## Limitations
 
-- **Carga programada:** a API devolve uma versão de cada intervalo. Assumimos que é o programa da véspera. Se for revisado depois, o ONS parece melhor do que era, e a vantagem real dos modelos seria maior.
-- **Temperatura:** média das estações INMET dos 3 estados de maior carga de cada subsistema, sem ponderar por população.
-- **Dados:** a ENA é a verificada atual; revisões posteriores do ONS não são reconstruídas. 6 bacias só têm dados desde 2026 e ficaram de fora, entre elas Madeira e Xingu.
-- **Meia-vida OU em bacias longas** (São Francisco: 268 dias): reflete secas e cheias plurianuais, não um retorno rápido à média. Não usar como prazo de operação.
+- **Scheduled load:** the API returns one version per interval, assumed to be the day-before schedule. If it is revised later, ONS looks better than it was and the models' real advantage would be larger.
+- **Temperature:** mean of INMET stations in the 3 highest-load states of each subsystem, not population-weighted.
+- **Data:** inflow is the current verified value; later ONS revisions are not reconstructed. Six basins only have data from 2026 and were left out, including Madeira and Xingu.
+- **OU half-life in slow basins** (São Francisco: 268 days) reflects multi-year droughts and floods, not a quick return to the mean; it is not an operating horizon.
 
-## Próximos passos, por valor
+## Next steps, by value
 
-1. **Histórico de previsões reais de chuva e temperatura.** É o que transforma os limites acima em resultado. O coletor diário já acumula rodadas; para treinar antes, avaliar reprevisões históricas (GEFS, ECMWF).
-2. **Agregar a ENA por subsistema** e usar a topologia em cascata das bacias, o que deve ajudar Paraná e São Francisco.
-3. **Modelo de preço:** CMO condicionado a ENA prevista, EAR e carga líquida, com os limites do PLD aplicados depois.
+1. **History of real rain and temperature forecasts,** which turns the bounds above into results. The daily collector already accumulates runs; reforecasts (GEFS, ECMWF) could speed this up.
+2. **Aggregate inflow by subsystem** and use the cascade topology of the basins (Paraná and São Francisco should benefit).
+3. **Price model:** CMO conditioned on forecast inflow, storage and net load, with the PLD limits applied afterwards.
 
-Fontes da pesquisa: [estudo do IFMG com LSTM para ENA e EAR](https://repositorio.ifmg.edu.br/items/17e8e09e-b8bf-400c-9d0e-fe27024677c8), [tese da Unifei sobre preço e variáveis hidrológicas](https://repositorio.unifei.edu.br/jspui/bitstream/123456789/4124/1/Tese_2024041.pdf).
+Research sources: [IFMG study with LSTM for ENA and EAR](https://repositorio.ifmg.edu.br/items/17e8e09e-b8bf-400c-9d0e-fe27024677c8), [Unifei thesis on price and hydrological variables](https://repositorio.unifei.edu.br/jspui/bitstream/123456789/4124/1/Tese_2024041.pdf).

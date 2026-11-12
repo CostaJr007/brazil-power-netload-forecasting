@@ -1,20 +1,16 @@
-"""Médias meteorológicas por BACIA hidrográfica (polígonos oficiais do ONS).
+"""Weather averages per hydro BASIN (official ONS polygons).
 
-Por que não usar o centróide ou o retângulo da bacia?
-Uma bacia como a do Madeira tem 1,5 milhão de km²: chover no centro não diz
-nada sobre o resto. A média correta pondera cada célula da grade pela área
-que ela tem DENTRO do polígono:
+Why not the basin centroid or bounding box? A basin like the Madeira covers 1.5 million km²: rain at the centre says
+nothing about the rest. The correct mean weights each grid cell by the area it has INSIDE the polygon:
 
-    chuva_bacia = Σ (chuva_célula × área_célula∩bacia) / Σ área_célula∩bacia
+    basin_rain = Σ (cell_rain × area(cell ∩ basin)) / Σ area(cell ∩ basin)
 
-As áreas são calculadas em projeção de área (EPSG:5880, SIRGAS 2000 / Brazil
-Polyconic), não em graus: 1° de longitude encolhe à medida que se afasta do
-Equador.
+Areas are computed in an equal-area projection (EPSG:5880, SIRGAS 2000 / Brazil Polyconic), not in degrees: one degree
+of longitude shrinks away from the Equator.
 
-Reparo de geometrias: 6 das 31 feições do arquivo do ONS têm autointerseções
-minúsculas. shapely.make_valid corrige sem mudar a área (variação medida:
-0,000%). O arquivo original na Bronze continua intacto; o reparo é registrado
-em cada linha (geometry_repaired).
+Geometry repair: 6 of the 31 features in the ONS file have tiny self-intersections. shapely.make_valid fixes them
+without changing the area (measured change: 0.000%). The original file in Bronze stays intact; the repair is recorded
+on each row (geometry_repaired).
 """
 import hashlib
 import json

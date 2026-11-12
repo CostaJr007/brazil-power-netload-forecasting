@@ -1,70 +1,54 @@
-# Fontes e decisão de aquisição
+# Data sources and acquisition decisions
 
-Verificação: 2026-11-09. Os metadados integrais do ONS estão em docs/inventory/ons_catalog.md e ons_resources.csv; a seleção inicial tem 39 conjuntos e não descarta os demais.
+Full ONS metadata lives in `docs/inventory/ons_catalog.md` and `ons_resources.csv` (dataset titles are kept in
+Portuguese, as published). The initial selection has 39 datasets and does not exclude the others.
 
-## Energia e geografia
+## Energy and geography
 
-| Família | Fonte e acesso | Decisão |
+| Family | Source and access | Status |
 |---|---|---|
-| Balanço por subsistema | ONS CKAN → HTTP CSV/Parquet | Primeira amostra baixada em ambos os formatos |
-| EAR/ENA por subsistema | ONS → arquivos anuais | Primeiras amostras CSV baixadas |
-| EAR/ENA por bacia, REE e reservatório | ONS → arquivos e dicionários | Catalogados; amostras pendentes |
-| Geração por usina, conjunto e grupo | ONS → arquivos mensais conforme recursos | Catalogado; preservar distinção entre observado e estimado |
-| Carga programada/verificada | apicarga.ons.org.br; JSON | Dicionários baixados; dados da API ainda não validados |
-| Programação e previsão eólica/solar | ONS → arquivos diários | URLs resolvidas; dicionário de programação baixado |
-| Constrained-off, disponibilidade, intercâmbios | ONS → arquivos oficiais | Coletar para contextualizar geração entregue |
-| Cadastros de reservatórios, capacidade, usina/conjunto | ONS → snapshots | Preservar mudanças; alguns produtos não têm histórico |
-| Cota–área–volume | ONS res_cotaareavolume | Catalogado; dicionário e conteúdo ainda não inspecionados |
-| Contornos de bacias | ONS bacia_contorno → ZIP shapefile | Baixado; CRC e presença dos componentes verificados; geometria/CRS pendentes |
-| Áreas contribuintes detalhadas | ANA BHO6 | Complemento, não correspondência automática com bacias ONS |
-| Cadastro de geração | ANEEL SIGA | Complemento planejado, correspondência de IDs deve ser auditada |
-| PLD | CCEE | Fonte complementar planejada; conector e autenticação/download a validar separadamente |
+| Energy balance by subsystem (hourly load, wind, solar, hydro, thermal) | ONS CKAN → HTTP CSV/Parquet | Ingested since 2018; main target of the models |
+| Reservoir storage (EAR) and natural inflow (ENA) by subsystem, basin, REE and reservoir | ONS yearly files | Ingested; used by the inflow models and the dashboard |
+| Generation by plant, cluster and group | ONS monthly files | Ingested; some records are estimates, kept apart from observations |
+| Scheduled and verified load | ONS load API (`apicarga.ons.org.br`), JSON, UTC | Ingested by load area; benchmark of the load model |
+| Day-ahead schedule (DESSEM) and wind/solar schedules | ONS daily files | Ingested since 2025-05-23; benchmark of the net-load model |
+| Curtailment (constrained-off), availability, interchange | ONS official files | Ingested for context and for the curtailment analysis |
+| Reservoir, capacity and plant registries | ONS snapshots | Snapshotted periodically; some products have no history |
+| Basin outlines | ONS `bacia_contorno` → shapefile ZIP | Ingested; six invalid geometries repaired explicitly |
+| Detailed contributing areas | ANA BHO6 | Possible complement; no automatic mapping to ONS basins |
+| Generation registry | ANEEL SIGA | Possible complement; identifier mapping must be audited |
+| Official spot price (PLD) | CCEE | Connector ready but disabled: CCEE's firewall returns HTTP 403 to this network; price is estimated from CMO with the regulator's limits |
 
-ONS catálogo: https://dados.ons.org.br/api/3/action/package_list
+- Catalog: https://dados.ons.org.br/api/3/action/package_list
+- Dataset metadata: https://dados.ons.org.br/api/3/action/package_show?id=balanco-energia-subsistema
+- Example file: https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2025.csv
+- Basin polygons: https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip
+- Load API: `https://apicarga.ons.org.br/prd/cargaprogramada?dat_inicio=YYYY-MM-DD&dat_fim=YYYY-MM-DD&cod_areacarga=AREA` (and `cargaverificada`)
 
-Metadados por conjunto: https://dados.ons.org.br/api/3/action/package_show?id=balanco-energia-subsistema
+Load-area codes are taken from the official list, never guessed from SE/CO, S, NE or N.
 
-Exemplo real descoberto (corrige caminhos anteriormente sugeridos no chat):
-https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/balanco_energia_subsistema_ho/BALANCO_ENERGIA_SUBSISTEMA_2025.csv
+## Weather
 
-Polígonos:
-https://ons-aws-prod-opendata.s3.amazonaws.com/dataset/bacia_contorno/Bacias_Hidrograficas_SIN.zip
+Structured inventory: `configs/meteorology.json`; first-batch evidence in [weather_acquisition.md](inventory/weather_acquisition.md).
 
-Endpoints de carga informados na descrição dos recursos:
-https://apicarga.ons.org.br/prd/cargaprogramada?dat_inicio=YYYY-MM-DD&dat_fim=YYYY-MM-DD&cod_areacarga=AREA
-https://apicarga.ons.org.br/prd/cargaverificada?dat_inicio=YYYY-MM-DD&dat_fim=YYYY-MM-DD&cod_areacarga=AREA
-
-O código de área não deve ser adivinhado a partir de SE/CO, S, NE ou N. Confirmar lista de áreas, limites, autenticação e envelope de resposta antes de coletar em lote.
-
-## Meteorologia
-
-Fontes estruturadas: configs/meteorology.json. Atualização em 10/11/2026: primeiro lote INMET/MERGE/GFS baixado e inspecionado, com evidências em [weather_acquisition.md](inventory/weather_acquisition.md). As demais fontes permanecem apenas pesquisadas/documentadas.
-
-| Produto | Acesso | Disponibilidade/qualidade a conferir |
+| Product | Access | Use and caveats |
 |---|---|---|
-| INMET estações | ZIPs anuais, https://portal.inmet.gov.br/dadoshistoricos | Falhas, sentinelas, alturas, unidades, deslocamentos de estação |
-| ANA HidroWeb | https://www.ana.gov.br/hidrowebservice/swagger-ui/index.html | Requer acesso cadastrado; guardar nível de consistência e estação |
-| INPE MERGE | https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/ | Grade, versão, acumulação e arquivo README; estimativa não é medição pontual |
-| NOAA GFS | https://nomads.ncep.noaa.gov/ | HTTP/GRIB filter; ciclo e lead alteram disponibilidade; comando retangular preparado |
-| NOAA GEFS | https://www.ncei.noaa.gov/products/weather-climate-models/global-ensemble-forecast | Arquivo histórico tem mudanças de resolução; não misturar versões/membros |
-| ECMWF IFS/ENS | https://www.ecmwf.int/en/forecasts/datasets/open-data | GRIB2; arquivo público recente é rotativo, não histórico completo |
-| ERA5 e ERA5-Land | https://climate.copernicus.eu/climate-reanalysis | CDS/conta/licença; reanálise retrospectiva; latência e provisório/final |
-| NASA IMERG | https://gpm.nasa.gov/data/imerg | Early/Late/Final separados; avaliar autenticação por canal |
-| UCSB CHIRPS | https://www.chc.ucsb.edu/data/chirps3 | Escolher versão; preliminar e final têm disponibilidade distinta |
+| INMET stations | Yearly ZIPs, https://portal.inmet.gov.br/dadoshistoricos | Observed temperature; gaps, sentinels, station moves |
+| INPE MERGE | https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/ | Observed daily rain, 0.1°; an estimate, not a point measurement |
+| NOAA GFS | https://nomads.ncep.noaa.gov/ | 24/48/72 h forecasts; cycle and lead time change availability |
+| ECMWF IFS Open Data | https://www.ecmwf.int/en/forecasts/datasets/open-data | 15-day forecasts (GRIB2); the public archive is rolling, not full history |
+| Open-Meteo Previous Runs and Forecast API | https://open-meteo.com | Forecasts **as issued** 48/72/96 h ahead and live forecasts at plant and city points; CC-BY 4.0, non-commercial |
+| ERA5 / ERA5-Land, NASA IMERG, CHIRPS, NOAA GEFS | Copernicus CDS, NASA, UCSB, NCEI | Researched as optional comparators; not ingested |
+| ANA HidroWeb | https://www.ana.gov.br/hidrowebservice/swagger-ui/index.html | Requires registration; not ingested |
 
-Priorizar MERGE + INMET observados, NOAA GFS/GEFS previstos e ERA5/ERA5-Land históricos. ECMWF complementa as previsões após definir o modo de acesso ao histórico. NASA/CHIRPS são comparadores opcionais, evitando baixar coleções redundantes antes de dimensionar volume.
+Archived forecasts are what make the backtest honest: each feature uses the forecast that existed at decision time,
+not the observed weather or a reanalysis.
 
-A documentação ECMWF consultada informa arquivo rotativo de 12 rodadas e resoluções IFS 0,25° e 0,1° com horários de disponibilização diferentes. Registrar esses parâmetros em cada coleta; não fixar uma única resolução como se valesse para todo o histórico.
+## Caveats documented by ONS
 
-Geografia complementar ANA: https://www.gov.br/ana/pt-br/assuntos/noticias-e-eventos/noticias/base-de-dados-geoespaciais-da-ana-permite-gestao-mais-eficiente-das-bacias-hidrograficas/
-
-## Alertas documentados do ONS
-
-- Hidráulica horária: não consistida, responsabilidade dos agentes, possíveis lacunas; hora final. https://dados.ons.org.br/dataset/dados_hidrologicos_ho
-- Hidráulica diária: consolidada e revisável. https://dados.ons.org.br/dataset/dados-hidrologicos-res
-- Geração por usina: inclui conjuntos/grupos; alguns registros são previsão. https://dados.ons.org.br/dataset/geracao-usina-2
-- Cadastro de reservatórios: sem histórico no produto atual. https://dados.ons.org.br/dataset/reservatorio
-- Precipitação ONS 2020–2021: descontinuada. https://dados.ons.org.br/dataset/precipitacao-estacao
-- Data de atualização dos metadados não prova data de publicação de observações.
-
-Não atribuímos nota numérica à qualidade sem medir as amostras. A verificação de reputação institucional e de documentação está separada da qualidade observada dos arquivos.
+- Hourly hydraulic data: not consolidated, agents' responsibility, possible gaps; end-of-hour timestamps. https://dados.ons.org.br/dataset/dados_hidrologicos_ho
+- Daily hydraulic data: consolidated and revisable. https://dados.ons.org.br/dataset/dados-hidrologicos-res
+- Generation by plant: includes clusters/groups; some records are forecasts. https://dados.ons.org.br/dataset/geracao-usina-2
+- Reservoir registry: no history in the current product. https://dados.ons.org.br/dataset/reservatorio
+- Catalog update dates do not prove when observations were published.
+- Found in this project: on 3 days of 2026 the hourly balance lost most Northeast wind generation (telemetry outage); see [results.md](results.md).

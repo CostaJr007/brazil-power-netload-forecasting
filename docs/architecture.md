@@ -1,82 +1,91 @@
-# Arquitetura de aquisição e organização dos dados
+# Architecture
 
-O desenho abaixo começou na aquisição. Atualização: o tratamento Silver e o pipeline recorrente já foram implementados; operação, contratos, frequências e limites estão em [pipeline_diario.md](pipeline_diario.md). Gold e pesquisa estatística continuam futuras.
+From raw downloads to a daily forecast and a dashboard. Operations (frequencies, contracts, limits) are described
+in [pipeline_diario.md](pipeline_diario.md); results in [results.md](results.md) and [paper.md](paper.md).
 
 ```mermaid
 flowchart TD
-    A[Catálogo ONS CKAN] --> B[Inventário de datasets e recursos]
-    B --> C[Plano explícito de download]
-    D[API de carga ONS] --> E[Aquisição de JSON]
-    C --> F[CSV Parquet ZIP e dicionários oficiais]
-    G[Catálogos meteorológicos] --> H[Grades previsões e estações]
-    I[Polígonos ONS / ANA] --> J[Plano espacial versionado]
+    A[ONS CKAN catalog] --> B[Dataset and resource inventory]
+    B --> C[Explicit download plan]
+    D[ONS load API] --> E[JSON acquisition]
+    C --> F[CSV, Parquet, ZIP and official dictionaries]
+    G[Weather catalogs] --> H[Grids, forecasts and stations]
+    I[ONS / ANA polygons] --> J[Versioned spatial plan]
     J --> H
-    E --> K[Bronze original + manifestos + SQLite]
+    E --> K[Bronze: original bytes + manifests + SQLite]
     F --> K
     H --> K
-    K --> L[Relatórios de aquisição e cobertura]
-    L --> M[Silver futura: normalização documentada]
-    M --> N[Gold futura: produtos publicados]
-    N --> O[Pesquisa futura em módulo separado]
+    K --> L[Silver: typed, validated, quarantine]
+    L --> M[Gold: DuckDB views and basin averages]
+    M --> N[models/: walk-forward backtests and operational forecast]
+    N --> O[BI: star schema + Power BI as code]
 ```
 
-## Stack por etapa
+## Stack by stage
 
-| Componente | Agora | Depois |
-|---|---|---|
-| Aquisição | Python 3.13, urllib, JSON, CSV, ZIP | Clientes oficiais ECMWF/CDS quando necessário |
-| Auditoria | SQLite, SHA-256 e manifestos JSON | Alertas e política de retenção |
-| Inspeção tabular | DuckDB 1.5.6 | Parquet tipado na Silver |
-| Geografia | ZIP shapefile original; planejador GeoPandas disponível | Interseção grade–polígono com pesos por área |
-| Meteorologia | Registro de fontes; comando GFS retangular | xarray, cfgrib/ecCodes; validar suporte no Windows |
-| Execução | CLI explícita e testes unittest | Agendador de Tarefas do Windows; orquestrador quando necessário |
-| Publicação | Inventário e evidências | snapshots Silver/Gold e contratos |
+| Component | Implementation |
+|---|---|
+| Acquisition | Python 3.13, urllib, JSON, CSV, ZIP; retries for transient errors |
+| Audit trail | SQLite attempt log, SHA-256 content addressing, JSON manifests |
+| Tabular processing | DuckDB (views, no copies), pandas, typed Parquet in Silver |
+| Geography | GeoPandas: geometry repair, exact cell-area weights in EPSG:5880 |
+| Weather | GRIB/NetCDF readers for GFS and ECMWF; Open-Meteo archived forecasts as issued |
+| Models | scikit-learn (per-hour Ridge, HistGradientBoosting), block bootstrap, empirical prediction bands |
+| Scheduling | Windows Task Scheduler every 15 minutes; each source has its own cadence |
+| Delivery | Power BI project as code (PBIP: TMDL model, PBIR report), Markdown reports |
+| Quality | 91 offline pytest tests incl. leakage tests, CI on GitHub Actions |
 
-Não é necessário adicionar Spark, Kafka, Kubernetes ou nuvem para o volume inicial. O Python do projeto vem do ambiente .venv configurado no PyCharm.
+Spark, Kafka, Kubernetes or a cloud warehouse are not needed at this volume (a few GB, hourly data): DuckDB on a
+laptop handles every query in seconds.
 
-## Preferência de acesso
+## Access preference
 
-1. API do catálogo para descobrir recursos e guardar seus metadados.
-2. Download HTTP direto das URLs retornadas pelo catálogo: Parquet para leitura eficiente, CSV para auditabilidade/comparação.
-3. API de observações quando o produto só existir assim ou trouxer campos adicionais.
-4. Scraping HTML apenas como adaptador explícito se não houver canal estruturado. Não foi necessário para descobrir os recursos ONS.
+1. Catalog API to discover resources and store their metadata.
+2. Direct HTTP download of the URLs returned by the catalog: Parquet for efficient reading, CSV for auditability.
+3. Observation APIs when a product exists only there or carries extra fields.
+4. HTML scraping only as an explicit adapter when no structured channel exists (not needed for ONS).
 
-A API CKAN descreve arquivos; a API apicarga entrega outro produto, por área de carga. Não são intercambiáveis. A API pode apontar para Swagger no campo URL: o coletor não baixa essa página como se fosse observação.
+The CKAN API describes files; the load API delivers a different product, per load area. They are not interchangeable.
 
-## Separação de domínios
+## Domain separation
 
-- Energia: operação realizada, programação, geração, intercâmbios, restrições, disponibilidade e hidrologia operacional.
-- Meteorologia: observações de estação, estimativas de satélite, reanálises e previsões em coleções distintas.
-- Geografia: polígonos, estações, ativos e correspondências de identificadores, sem inferir correspondência apenas por nome.
+- **Energy:** verified operation, schedules, generation, interchange, curtailment, availability and operational hydrology.
+- **Weather:** station observations, satellite estimates, reanalysis and forecasts in separate collections.
+- **Geography:** polygons, stations, assets and identifier mappings, never matched by name alone.
 
-A Bronze mantém source/dataset/resource_id/hash. A classificação de domínio está no inventário, sem duplicar fisicamente a mesma aquisição. Reservatórios e cadastros devem ser fotografados periodicamente quando a origem só oferece o estado atual.
+Bronze keeps source / dataset / resource_id / hash. Reservoir and registry snapshots are taken periodically when the
+source only offers the current state.
 
-## Contrato de aquisição
+## Acquisition contract
 
-Cada tentativa tem ID, URL, início, fim, status e erro no SQLite. Cada sucesso tem manifesto com hash SHA-256, bytes, headers, URL final e contexto. Conteúdo igual reutiliza o objeto; revisões criam objetos distintos. Download parcial usa .part e não é publicado como sucesso. Arquivos HTML inesperados e vazios são rejeitados. Limite padrão: 100 MB por arquivo, ajustável. GET tem até três tentativas para erros transitórios.
+- Every attempt has an ID, URL, start, end, status and error in SQLite.
+- Every success has a manifest with SHA-256, bytes, headers, final URL and context.
+- Identical content reuses the stored object; revisions create new objects.
+- Partial downloads use `.part` and are never published as success; unexpected HTML and empty files are rejected.
+- Default limit 100 MB per file; up to three GET attempts for transient errors.
+- `downloaded` proves the payload arrived, not that it is semantically valid; that check happens before Silver.
+- No tokens in URLs or manifests; authenticated adapters must read local credentials kept out of git.
 
-O status downloaded prova recebimento do payload; não é um selo de qualidade semântica. APIs podem retornar JSON com erro, vazio ou paginação. Essa validação deve preceder qualquer uso na Silver. Interrupções abruptas ficam com status started para investigação.
+## Time and quality
 
-Não armazenar tokens em URLs ou manifestos: os comandos atuais são para fontes públicas. Adaptadores autenticados futuros devem usar credenciais locais fora do Git e omitir headers sensíveis. O armazenamento atual dos cabeçalhos refere-se às respostas públicas.
+- Keep times and units as published, together with the interval definition.
+- Do not assume Brasília time for every ONS dataset: only the load API and weather data declare UTC explicitly.
+- `ingested_at` is when we collected; `Last-Modified` and catalog dates do not prove when each record was published.
+- For forecasts, keep issue time, valid time, member, resolution, level and accumulation period.
+- Measure coverage, duplicate keys, nulls and schema changes; never fill or truncate values silently.
+- CSV/Parquet checks use `EXCEPT ALL` in both directions to preserve multiplicity.
 
-## Tempo e qualidade
+## Spatial processing
 
-- Preservar horário e unidade conforme fonte, junto com a definição do intervalo.
-- Não pressupor que todos os dados ONS usam Brasília: o dicionário da API de carga programada explicita din_referenciautc e final do intervalo semi-horário.
-- ingested_at é quando coletamos. Last-Modified, data do arquivo e metadata_modified não comprovam a publicação histórica de cada registro.
-- Guardar emissão da previsão, validade, membro, resolução, versão, altura/nível e período de acumulação.
-- Medir cobertura por entidade, duplicatas nas chaves propostas, nulos, schema e alterações. Não preencher ou truncar valores nesta fase.
-- Conferência CSV/Parquet usa EXCEPT ALL nas duas direções, preservando multiplicidade; registra tipos inferidos e suas coerções.
-- Comparar API/CSV exige comprovar mesma variável, definição de carga, entidades, intervalo e revisão. Nenhuma equivalência API/CSV foi declarada.
+The official basin polygons are downloaded and versioned. Six of the 31 features have invalid geometry at the
+source and are repaired explicitly. Grid cells are intersected with each polygon and weighted by their exact area in
+an equal-area projection; missing cells never become zero, and each value carries the fraction of the basin covered.
+Overlapping drainage areas are not summed directly. Wind and solar use plant locations weighted by installed capacity;
+load uses the main cities of each subsystem.
 
-## Aquisição espacial
+## Models and delivery
 
-Primeiro baixar e versionar os polígonos oficiais. Inspecionar CRS, IDs, geometrias e significado da área. O arquivo de bacias amplas não é automaticamente a área incremental de cada reservatório.
-
-plan_weather.py inspeciona o shapefile e gera retângulos WGS84 por ID explícito. A aquisição de 10/11/2026 usou discover_weather.py e download_weather.py: 31 feições foram inspecionadas e seis têm invalidez geométrica na fonte. A grade GFS foi obtida pelo retângulo envolvente, sem reparo dos polígonos. Depois do download é preciso calcular interseções e pesos com geometrias validadas; não usar centróide como substituto de chuva média da bacia. Preservar grade original, máscara e versão do polígono. Não somar diretamente áreas de drenagem sobrepostas.
-
-Para eólica/solar, usar localizações dos parques/conjuntos; para carga, regiões consumidoras. Os polígonos de bacias atendem principalmente à hidrologia.
-
-## Critério de passagem para limpeza
-
-O próximo marco exige: inventário aprovado, acesso repetível, amostras e histórico dimensionados, dicionários preservados, chaves e intervalos documentados, relatório de cobertura e decisão explícita sobre revisão/latência. Só então implementar a Silver. Estatística e modelagem ficam fora desta entrega.
+- `models/` reads Gold views, cleans the data and runs leakage-safe walk-forward backtests (see [paper.md](paper.md)).
+- `scripts/prever_carga_liquida.py` produces the daily D+1 and D+2 net-load forecast with an 80% band.
+- `scripts/exportar_bi.py` builds a star schema in Parquet; `scripts/gerar_projeto_bi.py` writes the Power BI semantic
+  model (TMDL) and the five report pages (PBIR), so the dashboard is versioned like code.

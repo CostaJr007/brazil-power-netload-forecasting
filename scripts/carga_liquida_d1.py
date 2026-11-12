@@ -1,14 +1,14 @@
-"""Backtest da carga líquida (carga − eólica − solar) pela soma das peças, contra a programação do ONS.
+"""Backtest of net load (load − wind − solar) by summing components, against the ONS schedule.
 
---horizonte 1 (padrão): D+1, decisão na véspera; a referência é o DESSEM do próprio dia.
---horizonte 2: D+2, decisão dois dias antes; o DESSEM do dia ainda não existe. A régua é a programação
-mais recente (a de T−1) corrigida pelo viés da mesma hora e dia da semana, que é o que uma mesa usaria. O DESSEM do dia entra só como
-referência do "mundo D+1", para medir quanto custa decidir um dia mais cedo.
+--horizonte 1 (default): D+1, decided the day before; the benchmark is the same-day DESSEM schedule.
+--horizonte 2: D+2, decided two days before; the same-day DESSEM does not exist yet. The benchmark is the latest
+schedule (T−1) corrected by the bias of the same hour and weekday, which is what a desk would use. The same-day DESSEM
+is kept only as a "D+1 world" reference, to measure the cost of deciding a day earlier.
 
-Escolhe o modelo de cada peça no período de desenvolvimento (2025) e confirma em 2026, sem viés de seleção.
-Grava docs/inventory/carga_liquida_results.json (D+1) ou carga_liquida_dmaisN_results.json, e as previsões em data/gold.
-Antes, rode scripts/baixar_previsao_renovaveis.py, scripts/baixar_temperatura_prevista.py (com --dias N+1
-para horizonte N > 1) e o backfill de balanco_dessem_detalhe.
+Each component's model is chosen on the development period (2025) and confirmed on 2026, without selection bias.
+Writes docs/inventory/carga_liquida_results.json (D+1) or carga_liquida_dmaisN_results.json, and forecasts to data/gold.
+Run first: scripts/baixar_previsao_renovaveis.py, scripts/baixar_temperatura_prevista.py (with --dias N+1 for horizon
+N > 1) and the balanco_dessem_detalhe backfill.
 """
 import argparse
 import json

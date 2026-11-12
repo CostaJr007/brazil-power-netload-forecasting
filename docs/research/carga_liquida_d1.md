@@ -1,118 +1,111 @@
-# Carga líquida de D+1 contra a programação do ONS (DESSEM)
+# D+1 net load vs the ONS day-ahead schedule (DESSEM)
 
-Pergunta: dá para prever a carga líquida de amanhã (carga − eólica − solar) melhor do que a programação
-que o ONS publica na véspera? É a pergunta de "alpha" mais direta que dados públicos permitem.
+Question: can tomorrow's net load (load − wind − solar) be forecast better than the schedule ONS publishes the day
+before? It is the most direct "alpha" question that public data allows.
 
-Script: `scripts/carga_liquida_d1.py`. Resultados: `docs/inventory/carga_liquida_results.json`.
-Previsões linha a linha: `data/gold/previsoes_carga_liquida.parquet`.
+Script: `scripts/carga_liquida_d1.py`. Results: `docs/inventory/carga_liquida_results.json`.
+Row-level forecasts: `data/gold/previsoes_carga_liquida.parquet`.
 
-## Tratamento dos dados (antes do ML)
+## Data cleaning (before any ML)
 
-Feito em `models.dados.tratar_balanco` e `carregar_dessem`; cobre menos de 1% das horas. Ausente, nunca zero.
+Done in `models.dados.tratar_balanco` and `carregar_dessem`; affects fewer than 1% of hours. Bad values become
+missing, never zero.
 
-- **Solar noturna**: solar acima de 50 MW entre 20h e 4h59 locais vira ausente. Ex.: SE em 2022–23.
-- **Valores congelados**: eólica ou solar idênticas por 4 h ou mais, acima de 50 MW, viram ausentes. Ex.: solar SE em 2.876 MW a madrugada inteira em 10/11/2024; eólica N.
-- **Carga zero**: vira ausente. Ex.: Sul em 04/11/2018.
-- **DESSEM publicado pela metade**: 136 subsistema-dias entre jul/2025 e jan/2026. Só entram horas com as duas meias horas.
-- **Previsões fora do intervalo físico**: radiação negativa e nuvens fora de 0–100% são limitadas.
+- **Night-time solar:** solar above 50 MW between 8 pm and 4:59 am local time becomes missing (e.g. SE in 2022–23).
+- **Frozen values:** wind or solar identical for 4 h or more above 50 MW becomes missing (e.g. SE solar stuck at 2,876 MW all night on 2024-11-10; North wind).
+- **Zero load:** becomes missing (e.g. South on 2018-11-04).
+- **Half-published DESSEM:** 136 subsystem-days between Jul 2025 and Jan 2026; only hours with both half-hours are used.
+- **Physically impossible forecasts:** negative radiation and cloud cover outside 0–100% are clipped.
 
-## Desenho
+## Design
 
-- **Alvo**: o balanço horário do ONS (`vw_balanco_carga_liquida`). A solar soma usinas e telhados (MMGD).
-- **Referência**: a programação DESSEM (`balanco_dessem_detalhe`) por subsistema e hora:
-  - carga = `val_demanda`;
-  - eólica = `val_ger_eolica`;
-  - solar = `val_ger_fotovoltaica + val_ger_mmgd`.
-  - Os dados existem desde 23/05/2025.
-- **Informação permitida**: só o que existe na noite de T−1.
-  - Geração e carga verificadas até T−2.
-  - Previsões GFS e ECMWF emitidas 48 h antes de cada hora (`previous_day2`), com médias ponderadas pela capacidade nas células das usinas.
-- **Modelos por peça**:
-  - Ridge por hora e GBM sobre a razão `y / nível`, onde o nível é a média de 28 dias da mesma hora até T−2.
-  - Combinações com o ONS.
-  - Retreino trimestral.
-- **Seleção honesta**: para cada peça, a receita é escolhida com dados de 2025 (31/05 a 31/12) e congelada. 2026 (até 07/11) serve só para confirmar.
-- **Teste**: intervalo de 95% por bootstrap em blocos de 14 dias sobre a diferença de MAE.
+- **Target:** the ONS hourly balance (`vw_balanco_carga_liquida`). Solar includes utility plants and rooftop (distributed) generation.
+- **Benchmark:** the DESSEM schedule (`balanco_dessem_detalhe`) by subsystem and hour: load = `val_demanda`, wind = `val_ger_eolica`, solar = `val_ger_fotovoltaica + val_ger_mmgd`. Available since 2025-05-23.
+- **Allowed information:** only what exists on the evening of T−1: verified generation and load up to T−2, and GFS/ECMWF forecasts issued 48 h before each hour (`previous_day2`), capacity-weighted over plant cells.
+- **Models per component:** per-hour Ridge and gradient boosting on the ratio `y / level`, where level is the 28-day mean of the same hour up to T−2; blends with the ONS schedule; quarterly refit.
+- **Honest selection:** for each component the recipe is chosen on 2025 data (May 31 – Dec 31) and frozen; 2026 (to Nov 7) is used only for confirmation.
+- **Test:** 95% interval from a 14-day block bootstrap on the MAE difference.
 
-## Duas descobertas antes do ML
+## Two findings before any ML
 
-1. **O DESSEM tem viés de nível contra o balanço.** Em 2026, o erro médio do ONS (previsto − real) foi:
+1. **DESSEM has a level bias against the balance.** In 2026 the mean ONS error (forecast − actual) was:
 
-   | Peça | Subsistema | Viés médio |
+   | Component | Subsystem | Mean bias |
    |---|---|---|
-   | Carga | SE | +1.153 MW |
-   | Carga | NE | +391 MW |
+   | Load | SE | +1,153 MW |
+   | Load | NE | +391 MW |
    | Solar | SE | +419 MW |
 
-   Parte disso é diferença de definição entre programação e verificado. Uma mesa corrigiria esse viés
-   antes de qualquer ML. Por isso a régua justa é o **ONS corrigido**: a programação menos o erro médio
-   dos últimos 28 dias na mesma hora, conhecido até T−2 (`models.renovaveis.corrigir_vies`).
-2. **No SIN, os erros do ONS por subsistema se cancelam.**
-   - A correlação entre subsistemas fica entre −0,10 e 0,24.
-   - A soma dos MAE dos subsistemas é 4.125 MW, mas o MAE do SIN é 2.369 MW.
-   - Ganhar em cada subsistema não garante ganhar no SIN.
+   Part of it is a definitional difference between schedule and verified data. A desk would correct this bias before
+   any ML, so the fair benchmark is the **bias-corrected ONS schedule**: the schedule minus the mean error of the last
+   28 days at the same hour, known up to T−2 (`models.renovaveis.corrigir_vies`).
+2. **Subsystem errors cancel out nationally.** Cross-subsystem error correlations are between −0.10 and 0.24; the
+   sum of subsystem MAEs is 4,125 MW but the national MAE is 2,369 MW. Winning in every subsystem does not guarantee
+   winning nationally.
 
-## Resultado por peça (confirmação 2026, MAE em MW)
+## Results by component (2026 confirmation, MAE in MW)
 
-| Peça | ONS | ONS corrigido | Receita escolhida em 2025 | MAE da receita | Ganho vs ONS |
+| Component | ONS | Bias-corrected ONS | Recipe chosen on 2025 | Recipe MAE | Gain vs ONS |
 |---|---|---|---|---|---|
-| Carga | 727 | 560 | média(ML, ONS corrigido) | 512 | 29,6% |
-| Eólica | 434 | 434 | média(ML, ONS corrigido) | 397 | 8,5% |
-| Solar | 315 | 241 | ONS corrigido | 241 | 23,6% |
+| Load | 727 | 560 | mean(ML, corrected ONS) | 512 | 29.6% |
+| Wind | 434 | 434 | mean(ML, corrected ONS) | 397 | 8.5% |
+| Solar | 315 | 241 | corrected ONS | 241 | 23.6% |
 
-- **Carga**: o ML acrescenta cerca de 8% além da correção de viés. A temperatura prevista é o que mais pesa, como no modelo de carga D+1.
-- **Eólica**: o DESSEM não tem viés. O ML sozinho perde do ONS (−2,5% a −9,6%), mas a média com o ONS ganha 8,5%, com IC95 que exclui zero.
-- **Solar**: o ML (Ridge com radiação e nuvens previstas) só empata com o ONS. Todo o ganho vem de corrigir o viés.
+- **Load:** ML adds about 8% beyond the bias correction; forecast temperature carries most of the weight.
+- **Wind:** DESSEM has no bias. ML alone loses to ONS (−2.5% to −9.6%), but the blend with ONS gains 8.5%, with a 95% CI excluding zero.
+- **Solar:** ML (Ridge on forecast radiation and cloud cover) only ties with ONS; all the gain comes from correcting the bias.
 
-## Resultado na carga líquida
+## Results on net load
 
-**Receita congelada no SIN:**
+**Frozen recipe, national grid (MAE, MW):**
 
-| | ONS | ONS corrigido | Receita por peças |
+| | ONS | Bias-corrected ONS | Component recipe |
 |---|---|---|---|
-| 2025 (seleção) | 1.961 | 1.738 (+11,4%) | 1.702 (+13,2%) |
-| 2026 (confirmação) | 2.371 | 2.214 (+6,6%) | 2.104 (+11,2%) |
+| 2025 (selection) | 1,961 | 1,738 (+11.4%) | 1,702 (+13.2%) |
+| 2026 (confirmation) | 2,371 | 2,214 (+6.6%) | 2,104 (+11.2%) |
 
-**Testes em 2026 (diferença de MAE, IC95):**
+These figures use the common sample where every candidate model has a value; the dashboard, which uses every
+available hour, shows 2,110 vs 2,373 MW (11.1%).
 
-| Comparação | Diferença de MAE | IC95 |
+**Tests on 2026 (MAE difference, 95% CI):**
+
+| Comparison | MAE difference | 95% CI |
 |---|---|---|
-| Receita − ONS | −238 MW | [−385, −101] |
-| Receita − ONS corrigido | −94 MW | [−171, −19] |
+| Recipe − ONS | −238 MW | [−385, −101] |
+| Recipe − corrected ONS | −94 MW | [−171, −19] |
 
-O ganho além da correção de viés, de cerca de 4,2%, é pequeno mas estatisticamente diferente de zero.
+The gain beyond the bias correction, about 4.2%, is small but statistically different from zero.
 
-**Por subsistema** (2026, ganho vs ONS): SE +28,0%, N +14,1%, NE +9,9%, S +4,4%. Contra o ONS corrigido,
-a receita ganha nos quatro, com IC95 que exclui zero em todos.
+**By subsystem** (2026, gain vs ONS): SE +28.0%, N +14.1%, NE +9.9%, S +4.4%. Against the corrected schedule the
+recipe wins in all four, with 95% CIs excluding zero.
 
-**Por faixa horária** (SIN 2026, ganho vs ONS):
+**By hour band** (national, 2026, gain vs ONS):
 
-| Faixa | Ganho |
+| Band | Gain |
 |---|---|
-| Sol, 10–15 h | +15,7% |
-| Ponta, 16–21 h | +12,7% |
-| Manhã | +9,6% |
-| Madrugada | +6,7% |
-| Noite | +5,0% |
+| Solar hours, 10 am – 3 pm | +15.7% |
+| Peak, 4–9 pm | +12.7% |
+| Morning | +9.6% |
+| Overnight | +6.7% |
+| Evening | +5.0% |
 
-A rampa diária (máximo − mínimo do dia) também melhora: o erro cai de 3.080 MW (ONS) para 2.695 MW.
+The daily ramp (max − min of the day) also improves: its error falls from 3,080 MW (ONS) to 2,695 MW.
 
-**Por mês**:
-- O ganho se concentra de março a julho (+14% a +34%).
-- Em agosto, setembro e novembro de 2026, a receita perde do ONS (−2% a −6%). É a temporada de ventos fortes no Nordeste, quando o erro da eólica domina.
+**By month:** the gain concentrates from March to July (+14% to +34%). In August, September and November 2026 the
+recipe loses to ONS (−2% to −6%): the Northeast high-wind season, when wind error dominates.
 
-## O que não funcionou
+## What did not work
 
-- **ML puro, sem o ONS como insumo** (`pecas_ridge`): perde do ONS no SIN, −12,7% em 2026. Com previsões de tempo públicas, a programação do ONS carrega informação que não conseguimos reproduzir: agenda de cortes, despacho e previsões próprias de vento.
-- **GBM na solar**: era muito pior que o Ridge enquanto a razão `y/nível` não tinha teto. No amanhecer o nível é quase zero e a razão explode. Agora o alvo é limitado a 3, e mesmo assim o GBM não supera o Ridge.
-- **Mesmo peso em todos os subsistemas**: o Sul quase não tem ganho (+4,4%).
+- **Pure ML without the ONS schedule as input:** loses to ONS nationally (−12.7% in 2026). With public weather forecasts, the ONS schedule carries information we cannot reproduce: curtailment plans, dispatch and the operator's own wind forecasts.
+- **Gradient boosting on solar:** much worse than Ridge while the `y/level` ratio was uncapped (at dawn the level is near zero and the ratio explodes). The target is now capped at 3, and gradient boosting still does not beat Ridge.
+- **Equal weight across subsystems:** the South barely gains (+4.4%).
 
-## Leitura de mercado (honesta)
+## Market reading (honest)
 
-- **É alpha de previsão, não de preço de D+1.** O PLD de amanhã sai do próprio DESSEM, já publicado na véspera. Prever melhor a carga líquida de D+1 não antecipa esse preço. O valor está em outros lugares:
-  - posição intradiária e risco de corte (curtailment) de renováveis;
-  - leitura do desvio entre programado e verificado, que entra em encargos;
-  - insumo para D+2 em diante, onde ainda não existe programação publicada. É o próximo passo natural.
-- **Os dados de seleção são curtos.** São 7 meses de 2025, porque o DESSEM público começa em 23/05/2025. Com mais história, a escolha das receitas pode mudar.
-- **Mais de metade do ganho é correção de viés.** É simples, mas é exatamente o tipo de ajuste que uma mesa faz antes de qualquer modelo sofisticado.
-- **Previsões de tempo usadas**: Open-Meteo (CC-BY 4.0, uso não comercial). Uso comercial exigiria licença ou dados próprios.
+- **This is forecast alpha, not D+1 price alpha.** Tomorrow's spot price comes from DESSEM itself, already published the day before, so a better D+1 net load does not anticipate that price. The value lies elsewhere:
+  - intraday positioning and renewable curtailment risk;
+  - reading the deviation between scheduled and verified values, which feeds settlement charges;
+  - input for D+2 onwards, where no schedule exists yet (see [carga_liquida_d2.md](carga_liquida_d2.md)).
+- **Short selection data:** 7 months of 2025, because public DESSEM starts on 2025-05-23. With more history the recipes may change.
+- **More than half of the gain is bias correction.** Simple, but exactly the adjustment a desk makes before any sophisticated model.
+- **Weather forecasts:** Open-Meteo (CC-BY 4.0, non-commercial). Commercial use would require a licence or own data.

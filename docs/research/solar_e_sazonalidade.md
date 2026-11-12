@@ -1,72 +1,83 @@
-# Usinas solares, incidência e sazonalidade da carga
+# Solar plants, irradiance and load seasonality
 
-Análise de 10/11/2026. Números em `docs/inventory/solar_usinas.json`, `solar_irradiancia.json` e `sazonalidade_carga.json`. Código em `scripts/solar_usinas.py`, `scripts/solar_irradiancia.py` e `models/sazonalidade.py`.
+Analysis of 2026-11-10. Numbers in `docs/inventory/solar_usinas.json`, `solar_irradiancia.json` and
+`sazonalidade_carga.json`; code in `scripts/solar_usinas.py`, `scripts/solar_irradiancia.py` and `models/sazonalidade.py`.
 
-## Onde estão as usinas
+## Where the plants are
 
-O conjunto `fator-capacidade-2` do ONS lista as solares com coordenadas: 99 conjuntos, cerca de 25,5 GW. O total pode estar levemente superestimado, porque há nomes duplicados (Rio Brilhante aparece duas vezes). Geração distribuída de telhado não entra.
+The ONS dataset `fator-capacidade-2` lists solar plants with coordinates: 99 clusters, about 25.5 GW. The total may
+be slightly overstated because of duplicated names (Rio Brilhante appears twice). Rooftop generation is not included.
 
-| Estado | Capacidade (MW) |
+| State | Capacity (MW) |
 |---|---|
-| MG | 9.626 |
-| BA | 3.445 |
-| PI | 2.775 |
-| CE | 2.516 |
-| RN | 2.088 |
+| MG | 9,626 |
+| BA | 3,445 |
+| PI | 2,775 |
+| CE | 2,516 |
+| RN | 2,088 |
 
-O ranking completo, com latitude e longitude, está em `solar_usinas.json`.
+The full ranking, with latitude and longitude, is in `solar_usinas.json`.
 
-## Melhor fonte de incidência: a medição da própria usina
+## Best irradiance source: the plant's own measurement
 
-`restricao_coff_fotovoltaica_detail` (abril/2024 em diante) traz irradiância medida, geração e o indicador de hora com corte.
+`restricao_coff_fotovoltaica_detail` (April 2024 onwards) has measured irradiance, generation and a curtailment flag.
 
-| Teste | Resultado |
+| Test | Result |
 |---|---|
-| Radiação de satélite/reanálise (NASA POWER) × geração | Correlação de 0,35 a 0,6; quase não supera a climatologia |
-| Irradiância medida × geração, todas as horas | 0,38 a 0,82 |
-| Irradiância medida × geração, **só horas sem corte** | **0,84 a 0,97 em 11 das 12 usinas** |
-| Geração estimada pela irradiância, de jan/2026 em diante | Reduz de 36% a 87% o erro da climatologia em 8 de 9 usinas |
+| Satellite/reanalysis radiation (NASA POWER) × generation | Correlation 0.35–0.6; barely beats climatology |
+| Measured irradiance × generation, all hours | 0.38–0.82 |
+| Measured irradiance × generation, **uncurtailed hours only** | **0.84–0.97 in 11 of 12 plants** |
+| Generation estimated from irradiance, Jan 2026 onwards | Cuts climatology error by 36–87% in 8 of 9 plants |
 
-**Leitura:** o sol explica a geração quando a usina pode gerar. A correlação fraca vinha principalmente dos cortes e da curva achatada de usinas com rastreador. Assu Sol é exceção (0,57, sem ganho) e merece checagem de sensor. A medição só existe depois do fato: para prever, ainda é preciso previsão de irradiância.
+**Reading:** sunlight explains generation when the plant is allowed to generate. The weak correlation came mainly
+from curtailment and from the flattened curve of tracker plants. Assu Sol is an exception (0.57, no gain) and its
+sensor deserves a check. The measurement only exists after the fact: forecasting still needs an irradiance forecast.
 
-**Cortes:** o percentual de horas diurnas com restrição registrada subiu de 5% a 21% em meados de 2024 para 60% a 80% em boa parte de 2025 e 2026. Duas ressalvas: uma hora conta se ao menos uma usina do conjunto teve restrição, então é limite superior; e o grupo de usinas muda, pois várias só entram depois. Concentra-se entre 8h e 13h. O campo `corte_pct_da_referencia_quando_informada` não mede a perda anual, porque a geração de referência vem preenchida em só parte das horas.
+**Curtailment:** the share of daytime hours with recorded restriction rose from 5–21% in mid-2024 to 60–80% in much of
+2025 and 2026. Two caveats: an hour counts if at least one plant in the cluster was restricted (an upper bound), and
+the plant set changes as many plants enter later. It concentrates between 8 am and 1 pm. The field
+`corte_pct_da_referencia_quando_informada` does not measure the yearly loss, because the reference generation is filled
+in only part of the hours.
 
-## Sazonalidade do sol (média das usinas com histórico, NASA POWER)
+## Solar seasonality (mean of plants with history, NASA POWER)
 
-| Mês | kWh/m²/dia | Claridade (real ÷ céu limpo) | Fator de capacidade |
+| Month | kWh/m²/day | Clearness (actual ÷ clear sky) | Capacity factor |
 |---|---|---|---|
-| Janeiro | 5,93 | 0,75 | 23,2% |
-| Abril | 5,51 | 0,84 | 21,9% |
-| Junho | 4,79 | 0,88 | 19,1% |
-| Setembro | 6,57 | 0,93 | 22,0% |
-| Novembro | 6,32 | 0,81 | 24,1% |
+| January | 5.93 | 0.75 | 23.2% |
+| April | 5.51 | 0.84 | 21.9% |
+| June | 4.79 | 0.88 | 19.1% |
+| September | 6.57 | 0.93 | 22.0% |
+| November | 6.32 | 0.81 | 24.1% |
 
-Junho tem o menor sol. Setembro tem o maior sol e o céu mais limpo. No verão o potencial é alto, mas as nuvens reduzem o aproveitamento.
+June has the least sun; September the most sun and the clearest sky. In summer the potential is high but clouds
+reduce the yield.
 
-## Modelo de carga fatiado (confirmação em 2025 e 2026)
+## Sliced load model (confirmation on 2025 and 2026)
 
-Treinar um modelo por estação ou por janela de meses **não superou o modelo único** em geral: MAPE de 2,69% e 2,65% contra 2,67%, com intervalos de confiança incluindo zero. O modelo único foi o escolhido em 2023 e 2024.
+Training one model per season or per month window **did not beat the single model** overall: MAPE 2.69% and 2.65%
+vs 2.67%, with confidence intervals including zero. The single model was chosen on 2023 and 2024.
 
-| Fatia | ONS | Modelo único |
+| Slice | ONS | Single model |
 |---|---|---|
-| Inverno | 2,61% | 2,31% |
-| Outono | 3,06% | 2,56% |
-| Primavera | 3,10% | 2,53% |
-| Verão | 3,54% | 3,41% |
-| Dezembro | 4,31% | 4,41% |
-| Madrugada (0h a 5h) | 2,26% | 2,32% |
-| Sol (10h a 15h) | 4,28% | 3,45% |
-| Ponta (16h a 21h) | 2,76% | 2,30% |
-| Feriados | 3,66% | **5,26%** |
-| Sul no verão | 4,66% | **5,52%** |
+| Winter | 2.61% | 2.31% |
+| Autumn | 3.06% | 2.56% |
+| Spring | 3.10% | 2.53% |
+| Summer | 3.54% | 3.41% |
+| December | 4.31% | 4.41% |
+| Overnight (0–5 am) | 2.26% | 2.32% |
+| Solar hours (10 am – 3 pm) | 4.28% | 3.45% |
+| Peak (4–9 pm) | 2.76% | 2.30% |
+| Holidays | 3.66% | **5.26%** |
+| South in summer | 4.66% | **5.52%** |
 
-**Pontos fracos:** feriados e verão no Sul, onde o ONS é melhor. No inverno do Sul o modelo por janela de meses caiu de 3,81% para 3,14%, mas é uma observação feita depois de olhar os dados: precisa ser testada antes de ser adotada.
+**Weak spots:** holidays and the South in summer, where ONS is better. In the South's winter the month-window model
+fell from 3.81% to 3.14%, but that observation was made after looking at the data and must be tested before adoption.
 
-## Sazonalidade da carga (índice mensal, 2022 a 2025)
+## Load seasonality (monthly index, 2022–2025)
 
-| Subsistema | Mês de pico | Mês de vale |
+| Subsystem | Peak month | Trough month |
 |---|---|---|
-| SE/CO | Março (1,08) | Julho (0,92) |
-| Sul | Fevereiro (1,14) | Maio (0,93) |
-| Nordeste | Novembro (1,06) | Julho (0,93) |
-| Norte | Outubro (1,09) | Janeiro (0,92) |
+| SE/CO | March (1.08) | July (0.92) |
+| South | February (1.14) | May (0.93) |
+| Northeast | November (1.06) | July (0.93) |
+| North | October (1.09) | January (0.92) |

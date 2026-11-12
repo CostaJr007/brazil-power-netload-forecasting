@@ -1,10 +1,9 @@
-"""Matemática dos repositórios quant, reescrita para séries do setor elétrico.
+"""Maths from earlier quant projects, rewritten for power-sector series.
 
-- Ornstein-Uhlenbeck (long-short-cointegracao): a anomalia da ENA reverte à média com meia-vida ln2/θ.
-  Discretizado, OU é um AR(1): a[t+h] = φ·a[t], com φ = exp(−θ·h).
-- Kalman com inovação (Athena-SDA, Zollo & Weigel 2023): lá acompanha órbitas; aqui os estados são
-  coeficientes de uma regressão, que mudam devagar. A inovação normalizada (NIS) sinaliza dias
-  em que o modelo foi surpreendido.
+- Ornstein-Uhlenbeck: the inflow anomaly reverts to the mean with half-life ln2/θ. Discretised, OU is an AR(1):
+  a[t+h] = φ·a[t], with φ = exp(−θ·h).
+- Kalman filter with innovation (Zollo & Weigel 2023): here the states are slowly changing regression coefficients.
+  The normalised innovation (NIS) flags days when the model was surprised.
 """
 import numpy as np
 

@@ -1,17 +1,15 @@
-"""Camada Gold: agregados por bacia + views SQL (DuckDB) prontas para análise e modelos.
+r"""Gold layer: basin aggregates + SQL views (DuckDB) ready for analysis and models.
 
-    Bronze (bytes originais) → Silver (tipado, validado) → Gold (tabelas de negócio)
+    Bronze (original bytes) → Silver (typed, validated) → Gold (business tables)
 
-O que este script faz:
-1. Para cada snapshot meteorológico atual (MERGE, GFS, ECMWF), calcula a média
-   por bacia ponderada por área (scripts/basins.py) e grava um Parquet por
-   snapshot em data/gold/basin_weather/. Snapshots já processados são pulados.
-2. Recria o banco data/gold/energia.duckdb só com VIEWS (nenhum dado copiado):
-   - silver_<conjunto>: os .valid.parquet ATUAIS de cada conjunto da Silver;
-   - vw_*: as tabelas de negócio descritas em docs/gold_views.md.
+What this script does:
+1. For each current weather snapshot (MERGE, GFS, ECMWF), computes the area-weighted basin average
+   (scripts/basins.py) and writes one Parquet per snapshot to data/gold/basin_weather/. Processed snapshots are skipped.
+2. Rebuilds data/gold/energia.duckdb with VIEWS only (no data copied):
+   - silver_<dataset>: the CURRENT .valid.parquet files of each Silver dataset;
+   - vw_*: the business tables described in docs/gold_views.md.
 
-Executar:  .\\.venv\\Scripts\\python.exe scripts/gold.py
-Consultar: .\\.venv\\Scripts\\python.exe -c "import duckdb; print(duckdb.connect('data/gold/energia.duckdb', read_only=True).sql('FROM vw_chuva_x_ena_bacia LIMIT 5'))"
+Run:   .\.venv\Scripts\python.exe scripts/gold.py
 """
 import json
 import re

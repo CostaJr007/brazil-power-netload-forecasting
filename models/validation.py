@@ -1,10 +1,10 @@
-"""Protocolo de backtest, adaptado do walk-forward "past-only" do Athena-SDA.
+"""Backtest protocol, adapted from a past-only walk-forward design.
 
-Três regras evitam que o resultado pareça melhor do que é:
-1. Walk-forward: cada ano de teste é previsto por um modelo que só viu datas anteriores.
-2. Baselines: um modelo só importa se ganhar de persistência e climatologia.
-3. Placebo: se trocar a variável explicativa por uma de outro ano não piorar o modelo,
-   a "melhora" atribuída a ela não era real.
+Three rules keep results from looking better than they are:
+1. Walk-forward: each test year is forecast by a model that only saw earlier dates.
+2. Baselines: a model only matters if it beats persistence and climatology.
+3. Placebo: if replacing an explanatory variable by one from another year does not hurt the model, the "improvement"
+   attributed to it was not real.
 """
 import numpy as np
 import pandas as pd
