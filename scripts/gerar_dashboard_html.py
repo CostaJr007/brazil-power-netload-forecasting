@@ -1,4 +1,4 @@
-"""Static HTML dashboard (single file, no server): docs/dashboard/index.html, ready for GitHub Pages.
+"""Static HTML dashboard (single file, no server): docs/dashboard/index.html, opens in any browser.
 
 Reads the same star-schema tables as Power BI (data/bi/*.parquet, from scripts/exportar_bi.py), pre-aggregates them
 into small JSON blocks and embeds them in one HTML page with Plotly.js (CDN). Numbers therefore match the Power BI
