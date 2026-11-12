@@ -1,113 +1,154 @@
-# Energy: pipeline de dados do setor elétrico brasileiro
+# Energy: data pipeline and forecasting for the Brazilian power system
 
-Pipeline de **engenharia de dados** inspirado no que mesas de comercialização de energia usam para acompanhar o sistema elétrico. Ele coleta dados **oficiais do ONS** (arquivos CSV/Parquet do portal **e** APIs) e **meteorologia** (observada e prevista) e organiza tudo em camadas **Bronze → Silver → Gold**, até chegar a views SQL prontas para análise e, numa fase futura, para modelos de previsão.
+An end-to-end data and modelling project inspired by what power trading desks use to follow the grid. It
+ingests **official grid-operator data** (Brazil's ONS: CSV/Parquet files **and** APIs) and **weather data**
+(observed and forecast), organises it in **Bronze → Silver → Gold** layers, and ends in a **daily
+net-load forecast** (load − wind − solar) for tomorrow and the day after, scored against the operator's
+own schedule and published in a **Power BI dashboard**.
 
-> Projeto pessoal de estudo e portfólio. A fase atual é a **engenharia de dados**. Modelagem estatística e ML vêm depois, consumindo as views da camada Gold.
+> Personal study and portfolio project. **Technical report: [docs/paper.md](docs/paper.md) · One-page results: [docs/results.md](docs/results.md).** · [Português](README.pt-BR.md)
 
-## A pergunta de negócio
+| Forecast (walk-forward backtest, validated on 2026) | Benchmark | MAE reduction |
+|---|---|---|
+| Net load D+1, national grid, hourly | Grid operator's day-ahead schedule (DESSEM) | **11.2%** |
+| Net load D+2, before any official schedule exists | Previous-day schedule, bias-corrected by hour and weekday | **25.9%** |
+| River inflow by basin, 1 day ahead | Persistence | 30.5% |
 
-No Brasil, o preço de curto prazo (CMO/PLD) depende de **quanta água vai chegar aos reservatórios** e de **quanta carga o sistema vai atender**. Duas coisas antecipam esse preço:
+## The business question
 
-1. **O erro da previsão de carga do operador**: a carga programada pelo ONS comparada com a carga verificada.
-2. **A chuva dentro das bacias**, observada e prevista, que antecede a ENA (energia natural afluente) e a EAR (energia armazenada).
+Brazil's spot price (CMO/PLD) is set by an operator model that balances **net load** against hydro,
+thermal and interconnections. A desk gains an edge when it anticipates net load better than the free
+public references, or before they are published. Two things move the price:
 
-O pipeline existe para que essas perguntas possam ser respondidas com dados rastreáveis.
+1. **The operator's load-forecast error**: scheduled vs. verified load.
+2. **Rain inside the hydro basins**, observed and forecast, which precedes inflows and reservoir storage.
 
-## Arquitetura
+The pipeline exists so these questions can be answered with traceable, reproducible data.
+
+## Architecture
 
 ```mermaid
 flowchart LR
-    subgraph Fontes
-        A[ONS CKAN<br/>CSV/Parquet] --> B
-        A2[ONS API de carga<br/>programada × verificada] --> B
-        M[MERGE/CPTEC<br/>chuva observada] --> B
-        E[ECMWF Open Data<br/>previsão 15 dias] --> B
+    subgraph Sources
+        A[ONS open data<br/>CSV/Parquet] --> B
+        A2[ONS load API<br/>scheduled × verified] --> B
+        M[MERGE/CPTEC<br/>observed rain] --> B
+        E[ECMWF Open Data<br/>15-day forecast] --> B
         G[GFS/NOAA] --> B
-        I[INMET estações] --> B
+        I[INMET stations] --> B
     end
-    B[Bronze<br/>bytes originais + hash + manifesto] --> S[Silver<br/>tipado, validado, quarentena]
-    S --> P[Média por bacia<br/>pesos por área, 31 polígonos ONS]
+    B[Bronze<br/>raw bytes + hash + manifest] --> S[Silver<br/>typed, validated, quarantine]
+    S --> P[Basin averages<br/>area weights, 31 ONS polygons]
     S --> V[(Gold: DuckDB views)]
     P --> V
-    V --> X[Análise / modelos<br/>próxima fase]
+    O[Open-Meteo<br/>archived and live forecasts] --> MD
+    V --> MD[models/<br/>per-hour Ridge, gradient boosting, bias correction]
+    MD --> BT[Walk-forward backtests<br/>select on 2025, validate on 2026]
+    MD --> PO[Operational forecast<br/>D+1 and D+2 with 80% band]
+    BT --> BI[Power BI<br/>PBIP + TMDL, star schema]
+    PO --> BI
 ```
 
-| Camada | O que garante |
+| Layer | Guarantees |
 |---|---|
-| **Bronze** | Bytes exatamente como recebidos, endereçados por SHA-256. Cada revisão da fonte é preservada, e cada tentativa fica registrada em SQLite |
-| **Silver** | Contrato de schema por conjunto, tipos, chaves normalizadas, linhas inválidas em quarentena (nunca corrigidas em silêncio), linhagem até o arquivo de origem e versão da transformação |
-| **Gold** | Médias meteorológicas por bacia e views de negócio no DuckDB (sem cópia de dados) |
+| **Bronze** | Bytes exactly as received, addressed by SHA-256. Every source revision is preserved and every attempt is logged in SQLite |
+| **Silver** | Schema contract per dataset, types, normalised keys, invalid rows quarantined (never silently fixed), lineage to the source file and transformation version |
+| **Gold** | Basin weather averages and business views in DuckDB (no data copies) |
+| **Models** | Use only what existed at decision time (leakage tests), on cleaned data (night-time solar, frozen values, incomplete schedules) |
+| **BI** | Star schema in Parquet, Power BI project as code (TMDL model, 53 DAX measures, 5 report pages generated by script) |
 
-## Fontes
+## Sources
 
-| Fonte | Conteúdo | Frequência no pipeline |
+| Source | Content | Cadence |
 |---|---|---|
-| ONS (portal CKAN) | 37 conjuntos: balanço, geração, EAR/ENA por bacia/REE/subsistema, CMO, intercâmbio, restrições eólica/solar… | Horária (hidrologia: 15 min) |
-| ONS (API `apicarga`) | Carga **programada** (D, D+1) e **verificada** com MMGD, por subsistema, em UTC | Horária / 6 h |
-| MERGE/CPTEC | Chuva diária observada, 0,1° | Horária (últimos 3 dias) |
-| ECMWF IFS Open Data | Chuva, temperatura e escoamento previstos, até 15 dias | Diária (rodada 00z) |
-| GFS/NOAA | Previsão 24/48/72 h | Horária |
-| INMET | Estações automáticas | Diária |
-| CCEE (PLD) | Conector pronto e desligado: o firewall da CCEE bloqueia o IP de saída (HTTP 403) | — |
+| ONS open data portal (CKAN) | 37 datasets: energy balance, generation, storage/inflow by basin and subsystem, marginal cost, interchange, wind/solar curtailment… | Hourly (hydrology: 15 min) |
+| ONS load API | **Scheduled** (D, D+1) and **verified** load incl. distributed generation, per subsystem, UTC | Hourly / 6 h |
+| MERGE/CPTEC | Observed daily rain, 0.1° | Hourly (last 3 days) |
+| ECMWF IFS Open Data | Forecast rain, temperature and runoff, up to 15 days | Daily (00z run) |
+| GFS/NOAA | 24/48/72 h forecast | Hourly |
+| INMET | Automatic weather stations | Daily |
+| Open-Meteo | Forecasts **archived as issued** (GFS and ECMWF, 48/72/96 h ahead) and live forecasts at plant and city locations. CC-BY 4.0, non-commercial use | On demand |
+| CCEE (official spot price) | Connector ready but disabled: CCEE's firewall blocks the egress IP (HTTP 403); price is estimated from marginal cost | — |
 
-Detalhes, decisões e limitações de cada fonte: [docs/sources.md](docs/sources.md), [docs/pipeline_diario.md](docs/pipeline_diario.md) e a [pesquisa de fontes e modelos](docs/research/meteorologia_bacias_e_modelos.md).
+Details and limitations: [docs/sources.md](docs/sources.md) and [docs/pipeline_diario.md](docs/pipeline_diario.md) (Portuguese).
 
-## Primeiros resultados (das views Gold)
+## Key results
 
-- **Previsão de carga do ONS (2021–2026):** o erro percentual médio absoluto da carga programada contra a verificada fica entre **2,6% e 4,4%** ao ano (2022 foi o pior ano, 2024 o melhor). A carga programada da API começa em 2021.
-- **Chuva × ENA (2018–2026, 3.235 dias):** a chuva acumulada em 15 dias por bacia correlaciona com a ENA de 7 dias depois em **0,8 no Grande, 0,78 no Tocantins e 0,77 no Paranaíba**, mas só **0,3 a 0,4 no Uruguai e no Jacuí**. As bacias do Sul respondem rápido e não têm estação seca marcada. Parte da correlação alta é sazonalidade. A vantagem real só aparece comparando com a previsão do próprio ONS, o que fica para a fase de modelagem.
+- **D+1 net load:** 2,104 MW hourly MAE vs. 2,371 MW for the operator in 2026 (−11.2%); −94 MW beyond a simple bias correction of the operator schedule (95% CI −171 to −19, 14-day block bootstrap).
+- **D+2 net load:** −25.9% vs. the bias-corrected previous-day schedule, and it anticipates the schedule the operator has not yet published with 25% less error.
+- **Weather is the edge:** archived weather forecasts cut error by 37% (wind), 22% (solar) and 17% (load) versus the same models without weather.
+- **80% prediction band** by resampling past errors: 79–80% coverage in 2026.
+- **Honest negatives:** extra heat features, a second-stage residual model and fuzzy-logic risk bands were tested and **did not** beat the simpler model out of sample; they are documented, not shipped.
+- **Live audit:** a week replayed as of 10 pm the day before (Nov 4–10, 2026): D+2 beat its benchmark by 20%; D+1 lost 9.8% during a heat wave when the operator's bias flipped sign.
 
-## Como rodar
+## How to run
 
 ```powershell
-# 1. Ambiente (Windows, Python 3.13)
+# 1. Environment (Windows, Python 3.13)
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 
-# 2. Coleta incremental: Bronze → Silver → Gold
+# 2. Incremental ingestion: Bronze → Silver → Gold
 .\.venv\Scripts\python.exe scripts/pipeline.py
 
-# 3. Histórico (por padrão só PLANEJA e mostra o tamanho; --execute baixa)
+# 3. History (plans and shows sizes by default; --execute downloads)
 .\.venv\Scripts\python.exe scripts/backfill.py --sources ons,load --start 2018-01-01
 
-# 4. Consultar as views
+# 4. Query the views
 .\.venv\Scripts\python.exe -c "import duckdb; c=duckdb.connect('data/gold/energia.duckdb', read_only=True); print(c.sql('FROM vw_carga_prevista_vs_verificada LIMIT 5'))"
 
-# 5. Estado e testes
+# 5. Tomorrow's and the day after's net-load forecast (best after 8 pm Brasília time)
+.\.venv\Scripts\python.exe scripts/prever_carga_liquida.py
+
+# 6. BI: star-schema tables and the Power BI project (open bi/Energia.pbip and click Refresh)
+.\.venv\Scripts\python.exe scripts/exportar_bi.py
+.\.venv\Scripts\python.exe scripts/gerar_projeto_bi.py
+
+# 7. Re-run the backtests (D+1 and D+2)
+.\.venv\Scripts\python.exe scripts/carga_liquida_d1.py
+.\.venv\Scripts\python.exe scripts/carga_liquida_d1.py --horizonte 2
+
+# 8. Status and tests
 .\.venv\Scripts\python.exe scripts/status_pipeline.py
 .\.venv\Scripts\python.exe -m pytest -q tests
 ```
 
-- **Agendamento:** `scripts/install_pipeline_task.ps1` registra uma tarefa no Agendador do Windows (a cada 15 min; cada fonte tem a própria cadência).
-- **Dados em outro disco:** defina `ENERGY_DATA_DIR`, ou use um junction em `data/`.
-- **Comandos avulsos:** [docs/comandos_manuais.md](docs/comandos_manuais.md).
+- **Scheduling:** `scripts/install_pipeline_task.ps1` registers a Windows Task Scheduler job (every 15 min; each source has its own cadence).
+- **Data on another drive:** set `ENERGY_DATA_DIR` or use a junction for `data/`.
 
-## Estrutura
+## Repository layout
 
 ```
-configs/            contratos de schema, políticas de coleta, correspondência de bacias
-scripts/            pipeline: acquire, pipeline, silver, basins, gold, backfill, status
-scripts/preparacao/ geraram inventários e contratos (rodar só se a fonte mudar)
-scripts/diagnostico/ auditorias e investigações pontuais
-tests/              testes sem rede (pytest)
-docs/               arquitetura, fontes, views, pesquisa, guia de estudo, inventários
-data/               (fora do git) bronze/ silver/ gold/ runs/
+configs/             schema contracts, collection policies, basin mapping
+scripts/             pipeline (acquire, pipeline, silver, basins, gold, backfill, status), backtests, forecast, BI export
+models/              Gold readers, data cleaning, models (load, renewables, inflow), validation and operations
+bi/                  Power BI project as code (PBIP + TMDL) and dashboard guide
+scripts/preparacao/  inventory and contract generators (run only if a source changes)
+scripts/diagnostico/ audits and one-off investigations (residual diagnostics, fuzzy-logic test)
+tests/               offline tests (pytest), including leakage tests
+docs/                architecture, sources, views, research notes, inventories
+data/                (not in git) bronze/ silver/ gold/ bi/ runs/
 ```
 
-## Decisões de engenharia que valem destacar
+## Engineering decisions worth highlighting
 
-- **Idempotência por conteúdo:** HEAD/ETag evita downloads repetidos, e o hash evita objetos duplicados. A Silver é reaproveitada enquanto a entrada e a versão forem as mesmas.
-- **Versão da transformação:** muda quando muda o contrato, o limite de qualidade ou o código do `silver.py`. Mudar frequência de coleta não reprocessa nada.
-- **Nada de fuso inventado:** só a API de carga e a meteorologia têm UTC declarado. Os demais horários ficam "como publicados", marcados como não verificados.
-- **Média por bacia correta:** a área de cada célula dentro do polígono é calculada em projeção de área (EPSG:5880). Células sem dado não viram zero, e cada valor vem com a fração da bacia coberta.
-- **Revisões e backtest:** a carga verificada é revisada pelo ONS e cada revisão vira um objeto novo. As previsões são guardadas por rodada, para permitir simular "o que se sabia no dia".
-- **Falhas visíveis:** uma fonte que falha não derruba as outras. A execução fica `partial` e o status alerta quando o agendamento para.
+- **Content-based idempotency:** HEAD/ETag avoids repeated downloads and hashing avoids duplicate objects. Silver is reused while input and version are unchanged.
+- **Transformation versioning:** changes when the contract, a quality threshold or the `silver.py` code changes; changing collection frequency reprocesses nothing.
+- **No invented time zones:** only the load API and weather data declare UTC; everything else stays "as published", flagged as unverified.
+- **Correct basin averages:** each grid cell's area inside the polygon is computed in an equal-area projection (EPSG:5880); missing cells never become zero.
+- **Revisions and backtesting:** verified load is revised by the operator and each revision becomes a new object; forecasts are stored per run so "what was known that day" can be replayed.
+- **Visible failures:** a failing source does not break the others; the run is marked `partial` and the status report alerts when scheduling stops.
+- **Leakage-free by construction:** every feature uses only what existed at 10 pm the day before (verified data to D−1, weather issued 48 or 72 h earlier). Tests perturb the future and check that nothing changes.
+- **A fair benchmark before celebrating:** every model is scored against what a desk already gets for free (bias-corrected operator schedule, or weekday-corrected for D+2). A first "42% gain" for D+2 dropped to 26% with the right benchmark.
 
-## Próxima fase
+## Results and research
 
-Modelagem: SMAP/ONS como baseline de chuva → vazão, depois LSTM do tipo hindcast/forecast para a ENA por bacia, e por fim um modelo de preço com ENA, EAR, carga líquida e CMO. Referências em [docs/research/](docs/research/meteorologia_bacias_e_modelos.md).
+- [docs/paper.md](docs/paper.md): technical report (data, methodology, results, negative results, limitations).
+- [docs/results.md](docs/results.md): summary, audits, limitations and next steps (English).
+- [bi/README.md](bi/README.md): Power BI dashboard (star schema, DAX measures, pages).
+- Detailed research notes (Portuguese): [net load D+1](docs/research/carga_liquida_d1.md), [net load D+2](docs/research/carga_liquida_d2.md), [load D+1](docs/research/carga_d1.md), [inflow and daily load](docs/research/modelagem_meteorologia_energia.md), [solar and seasonality](docs/research/solar_e_sazonalidade.md).
+
+**Next step:** link the D+2 net-load forecast to the estimated spot price and test whether it anticipates price moves. A second market module for **Ontario (IESO)** is planned with the same architecture.
 
 ---
-Para estudar o código linha a linha: [docs/guia_de_estudo.md](docs/guia_de_estudo.md) · mapa dos scripts: [scripts/README.md](scripts/README.md) · consultas SQL: [docs/sql_do_projeto.md](docs/sql_do_projeto.md).
-
-*Dados: ONS (dados abertos), CPTEC/INPE (MERGE), NOAA (GFS), INMET e ECMWF Open Data (CC-BY-4.0).*
+*Data: ONS (open data), CPTEC/INPE (MERGE), NOAA (GFS), INMET, ECMWF Open Data (CC-BY-4.0) and Open-Meteo (CC-BY 4.0).*
