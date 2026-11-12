@@ -37,7 +37,7 @@
     "interval_minutes": 360,
     "catalog_url": "https://dadosabertos.ccee.org.br/api/3/action/",
     "datasets": ["pld_horario", "pld_media_diaria", "pld_media_semanal"],
-    "datasets_note": "Nomes a confirmar no catálogo quando o acesso for liberado; o 403 impediu a verificação.",
+    "datasets_note": "Nomes confirmados no catálogo público em 10/11/2026. O catálogo também lista pld_horario_submercado (2023+) e pld_media_mensal. Os arquivos são anuais e as URLs (.../content) não trazem data.",
     "formats": ["CSV", "PARQUET"],
     "lookback_days": 3,
     "max_file_mb": 200

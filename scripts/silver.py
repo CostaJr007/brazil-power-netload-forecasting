@@ -297,7 +297,10 @@ def inmet_frames(path, manifest):
                     raise ValueError("Coluna sem nome contém dados")
                 frame = frame.drop("_trailing_empty")
             datecol, hourcol = names[:2]
-            stamp = pl.concat_str([pl.col(datecol), pl.lit(" "), pl.col(hourcol).str.extract(r"(\d{4})", 1)])
+            # Até ~2019 o INMET publica "2018-01-01;00:00"; depois, "2022/01/01;0000 UTC".
+            day = pl.col(datecol).str.replace_all("-", "/", literal=True)
+            hour = pl.col(hourcol).str.replace(":", "", literal=True).str.extract(r"(\d{4})", 1)
+            stamp = pl.concat_str([day, pl.lit(" "), hour])
             frame = frame.with_columns(stamp.str.to_datetime("%Y/%m/%d %H%M", strict=False).dt.replace_time_zone("UTC").alias("observed_at_utc"))
             rules = [("invalid_timestamp", pl.col("observed_at_utc").is_null())]
             numeric = [n for n in frame.columns if n not in {datecol, hourcol, "observed_at_utc"}]
@@ -315,6 +318,8 @@ def inmet_frames(path, manifest):
                        "temperatura_do_ar_bulbo_seco_horaria_c": "air_temperature_c",
                        "vento_velocidade_horaria_m_s": "wind_speed_m_s"}
             rename = {k: v for k, v in mapping.items() if k in frame.columns}
+            # O nome das duas primeiras colunas também muda entre anos (data_yyyy_mm_dd, hora_utc...).
+            rename |= {datecol: "data", hourcol: "hora_utc"}
             frame = frame.with_columns(pl.lit(metadata.get("CODIGO (WMO)")).alias("station_id"),
                 pl.lit(float(metadata["LATITUDE"].replace(",", "."))).alias("latitude"),
                 pl.lit(float(metadata["LONGITUDE"].replace(",", "."))).alias("longitude"),

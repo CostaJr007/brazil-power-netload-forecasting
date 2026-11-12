@@ -14,6 +14,9 @@ Exemplos (PowerShell, na raiz do projeto):
     # 3) Chuva MERGE de um ano específico
     .\\.venv\\Scripts\\python.exe scripts/backfill.py --sources merge --start 2025-01-01 --end 2025-12-31
 
+    # 4) Estações INMET (um ZIP por ano)
+    .\\.venv\\Scripts\\python.exe scripts/backfill.py --sources inmet --start 2018-01-01 --end 2025-12-31 --execute
+
 GFS não tem backfill: o NOMADS guarda só ~10 dias. Histórico de previsão/reanálise
 exige outra fonte (ex.: ERA5/CDS com conta própria) — ver blocked_sources.
 """
@@ -94,6 +97,16 @@ def plan_merge(start, end):
     return items
 
 
+def plan_inmet(start, end):
+    """Um ZIP anual por ano do período, entre os anunciados na página do INMET."""
+    items = []
+    for url in listing("https://portal.inmet.gov.br/dadoshistoricos"):
+        match = re.search(r"/(20\d{2})\.zip$", url)
+        if match and start.year <= int(match.group(1)) <= end.year:
+            items.append({"source": "inmet", "resource_id": match.group(1), "url": url, "bytes": head_size(url)})
+    return sorted(items, key=lambda i: i["resource_id"])
+
+
 def summarize(items, start, end, sources):
     """Resumo por fonte/conjunto para decidir antes de baixar."""
     groups = {}
@@ -148,6 +161,10 @@ def execute(items, config, contracts, log):
                         log.info("Sem dados na API para %s (fora do histórico disponível?)", item["resource_id"])
                         continue
                     pipeline.transform(manifest)
+                elif item["source"] == "inmet":
+                    manifest = pipeline.obtain("inmet", "automatic_stations_annual", item["resource_id"], item["url"],
+                                               {"role": "station_observations"}, config["inmet"]["max_file_mb"] * 1_000_000)
+                    pipeline.transform(manifest)
                 else:
                     manifest = pipeline.obtain("inpe", "merge_daily", item["resource_id"], item["url"],
                                                {"role": "estimate", "reference": item["resource_id"]})
@@ -177,7 +194,7 @@ def main():
     contracts = json.loads((ROOT / "configs/ons_contracts.json").read_text(encoding="utf-8"))
     settings = config["backfill"]
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--sources", default="ons,load", help="ons, load e/ou merge, separados por vírgula")
+    parser.add_argument("--sources", default="ons,load", help="ons, load, merge e/ou inmet, separados por vírgula")
     parser.add_argument("--start", default=settings["default_start"])
     parser.add_argument("--end", default=None, help="Padrão: ontem (UTC)")
     parser.add_argument("--datasets", default=None, help="Conjuntos ONS; padrão em configs/pipeline.json → backfill")
@@ -189,8 +206,8 @@ def main():
     if start > end:
         raise SystemExit("--start depois de --end")
     sources = args.sources.split(",")
-    if set(sources) - {"ons", "load", "merge"}:
-        raise SystemExit("Fontes válidas: ons, load, merge")
+    if set(sources) - {"ons", "load", "merge", "inmet"}:
+        raise SystemExit("Fontes válidas: ons, load, merge, inmet")
     (DATA_DIR / "runs").mkdir(parents=True, exist_ok=True)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
                         handlers=[logging.StreamHandler(), logging.FileHandler(DATA_DIR / "runs/backfill.log", encoding="utf-8")])
@@ -204,6 +221,8 @@ def main():
                 items += plan_load(settings["load_areas"], start, end)
             if "merge" in sources:
                 items += plan_merge(start, end)
+            if "inmet" in sources:
+                items += plan_inmet(start, end)
             summary = summarize(items, start, end, sources)
             write_plan(summary)
             print(json.dumps({k: summary[k] for k in ("total_files", "total_bytes_known", "errors")}, ensure_ascii=False))

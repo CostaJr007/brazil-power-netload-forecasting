@@ -1,0 +1,582 @@
+{
+  "por_usina": [
+    {
+      "usina": "Conj. Arinos 2 500 kV",
+      "uf": "MG",
+      "capacidade_mw": 1189.9,
+      "horas_diurnas": 11226,
+      "inicio": "2024-04-30",
+      "pct_horas_com_corte": 47.4,
+      "correlacao_todas_as_horas": 0.789,
+      "correlacao_sem_corte": 0.945,
+      "mae_fc_com_irradiancia": 0.0259,
+      "mae_fc_climatologia": 0.2047,
+      "skill_vs_climatologia": 0.874,
+      "horas_teste": 1459
+    },
+    {
+      "usina": "Conj. Assu Sol",
+      "uf": "RN",
+      "capacidade_mw": 752.7,
+      "horas_diurnas": 7755,
+      "inicio": "2025-01-18",
+      "pct_horas_com_corte": 69.0,
+      "correlacao_todas_as_horas": 0.378,
+      "correlacao_sem_corte": 0.57,
+      "mae_fc_com_irradiancia": 0.2463,
+      "mae_fc_climatologia": 0.2339,
+      "skill_vs_climatologia": -0.053,
+      "horas_teste": 917
+    },
+    {
+      "usina": "Conj. Draco",
+      "uf": "MG",
+      "capacidade_mw": 505.2,
+      "horas_diurnas": 3403,
+      "inicio": "2026-01-31",
+      "pct_horas_com_corte": 60.2,
+      "correlacao_todas_as_horas": 0.711,
+      "correlacao_sem_corte": 0.949
+    },
+    {
+      "usina": "Conj. Futura",
+      "uf": "BA",
+      "capacidade_mw": 692.4,
+      "horas_diurnas": 11831,
+      "inicio": "2024-04-01",
+      "pct_horas_com_corte": 48.2,
+      "correlacao_todas_as_horas": 0.759,
+      "correlacao_sem_corte": 0.944,
+      "mae_fc_com_irradiancia": 0.0316,
+      "mae_fc_climatologia": 0.1135,
+      "skill_vs_climatologia": 0.721,
+      "horas_teste": 1473
+    },
+    {
+      "usina": "Conj. Gilbués II 500 kV",
+      "uf": "PI",
+      "capacidade_mw": 790.9,
+      "horas_diurnas": 10268,
+      "inicio": "2024-09-06",
+      "pct_horas_com_corte": 52.6,
+      "correlacao_todas_as_horas": 0.665,
+      "correlacao_sem_corte": 0.959,
+      "mae_fc_com_irradiancia": 0.0267,
+      "mae_fc_climatologia": 0.1052,
+      "skill_vs_climatologia": 0.746,
+      "horas_teste": 1404
+    },
+    {
+      "usina": "Conj. Helio Valgas",
+      "uf": "MG",
+      "capacidade_mw": 500.0,
+      "horas_diurnas": 10900,
+      "inicio": "2024-04-01",
+      "pct_horas_com_corte": 46.4,
+      "correlacao_todas_as_horas": 0.623,
+      "correlacao_sem_corte": 0.853,
+      "mae_fc_com_irradiancia": 0.0978,
+      "mae_fc_climatologia": 0.1591,
+      "skill_vs_climatologia": 0.386,
+      "horas_teste": 1457
+    },
+    {
+      "usina": "Conj. Janaúba",
+      "uf": "MG",
+      "capacidade_mw": 1336.8,
+      "horas_diurnas": 12210,
+      "inicio": "2024-04-01",
+      "pct_horas_com_corte": 50.8,
+      "correlacao_todas_as_horas": 0.671,
+      "correlacao_sem_corte": 0.908,
+      "mae_fc_com_irradiancia": 0.053,
+      "mae_fc_climatologia": 0.1207,
+      "skill_vs_climatologia": 0.561,
+      "horas_teste": 1366
+    },
+    {
+      "usina": "Conj. Jaíba V",
+      "uf": "MG",
+      "capacidade_mw": 500.0,
+      "horas_diurnas": 11942,
+      "inicio": "2024-04-01",
+      "pct_horas_com_corte": 51.2,
+      "correlacao_todas_as_horas": 0.661,
+      "correlacao_sem_corte": 0.844,
+      "mae_fc_com_irradiancia": 0.0416,
+      "mae_fc_climatologia": 0.1531,
+      "skill_vs_climatologia": 0.728,
+      "horas_teste": 1306
+    },
+    {
+      "usina": "Conj. Paracatu 4 500 kV",
+      "uf": "MG",
+      "capacidade_mw": 661.5,
+      "horas_diurnas": 4472,
+      "inicio": "2025-10-30",
+      "pct_horas_com_corte": 43.5,
+      "correlacao_todas_as_horas": 0.82,
+      "correlacao_sem_corte": 0.961,
+      "mae_fc_com_irradiancia": NaN,
+      "mae_fc_climatologia": NaN,
+      "skill_vs_climatologia": NaN,
+      "horas_teste": 0
+    },
+    {
+      "usina": "Conj. Paracatu 4 Piloto",
+      "uf": "MG",
+      "capacidade_mw": 1014.3,
+      "horas_diurnas": 839,
+      "inicio": "2026-09-01",
+      "pct_horas_com_corte": 68.4,
+      "correlacao_todas_as_horas": 0.65,
+      "correlacao_sem_corte": 0.973
+    },
+    {
+      "usina": "Conj. Sol do Cerrado",
+      "uf": "MG",
+      "capacidade_mw": 681.3,
+      "horas_diurnas": 14462,
+      "inicio": "2024-04-01",
+      "pct_horas_com_corte": 42.1,
+      "correlacao_todas_as_horas": 0.801,
+      "correlacao_sem_corte": 0.927,
+      "mae_fc_com_irradiancia": 0.0398,
+      "mae_fc_climatologia": 0.0619,
+      "skill_vs_climatologia": 0.358,
+      "horas_teste": 2399
+    },
+    {
+      "usina": "Conj. Vista Alegre - Janaúba",
+      "uf": "MG",
+      "capacidade_mw": 767.6,
+      "horas_diurnas": 9236,
+      "inicio": "2024-10-09",
+      "pct_horas_com_corte": 62.2,
+      "correlacao_todas_as_horas": 0.645,
+      "correlacao_sem_corte": 0.91,
+      "mae_fc_com_irradiancia": 0.0688,
+      "mae_fc_climatologia": 0.1343,
+      "skill_vs_climatologia": 0.488,
+      "horas_teste": 1307
+    }
+  ],
+  "periodo": [
+    "2024-04-01",
+    "2026-11-09"
+  ],
+  "por_ano_mes": [
+    {
+      "ano_mes": "2024-04",
+      "irradiancia_media_w_m2": 497.65,
+      "pct_horas_com_corte": 5.2,
+      "corte_pct_da_referencia_quando_informada": 10.74
+    },
+    {
+      "ano_mes": "2024-05",
+      "irradiancia_media_w_m2": 339.87,
+      "pct_horas_com_corte": 12.3,
+      "corte_pct_da_referencia_quando_informada": 54.9
+    },
+    {
+      "ano_mes": "2024-06",
+      "irradiancia_media_w_m2": 381.09,
+      "pct_horas_com_corte": 21.01,
+      "corte_pct_da_referencia_quando_informada": 50.74
+    },
+    {
+      "ano_mes": "2024-07",
+      "irradiancia_media_w_m2": 371.16,
+      "pct_horas_com_corte": 19.81,
+      "corte_pct_da_referencia_quando_informada": 62.53
+    },
+    {
+      "ano_mes": "2024-08",
+      "irradiancia_media_w_m2": 417.31,
+      "pct_horas_com_corte": 20.84,
+      "corte_pct_da_referencia_quando_informada": 44.58
+    },
+    {
+      "ano_mes": "2024-09",
+      "irradiancia_media_w_m2": 564.09,
+      "pct_horas_com_corte": 33.65,
+      "corte_pct_da_referencia_quando_informada": 42.02
+    },
+    {
+      "ano_mes": "2024-10",
+      "irradiancia_media_w_m2": 453.56,
+      "pct_horas_com_corte": 27.87,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "ano_mes": "2024-11",
+      "irradiancia_media_w_m2": 442.58,
+      "pct_horas_com_corte": 26.63,
+      "corte_pct_da_referencia_quando_informada": 69.86
+    },
+    {
+      "ano_mes": "2024-12",
+      "irradiancia_media_w_m2": 513.84,
+      "pct_horas_com_corte": 44.04,
+      "corte_pct_da_referencia_quando_informada": 40.11
+    },
+    {
+      "ano_mes": "2025-01",
+      "irradiancia_media_w_m2": 475.17,
+      "pct_horas_com_corte": 25.82,
+      "corte_pct_da_referencia_quando_informada": 48.07
+    },
+    {
+      "ano_mes": "2025-02",
+      "irradiancia_media_w_m2": 602.07,
+      "pct_horas_com_corte": 39.16,
+      "corte_pct_da_referencia_quando_informada": 64.75
+    },
+    {
+      "ano_mes": "2025-03",
+      "irradiancia_media_w_m2": 626.04,
+      "pct_horas_com_corte": 42.05,
+      "corte_pct_da_referencia_quando_informada": 45.0
+    },
+    {
+      "ano_mes": "2025-04",
+      "irradiancia_media_w_m2": 570.0,
+      "pct_horas_com_corte": 39.53,
+      "corte_pct_da_referencia_quando_informada": 24.32
+    },
+    {
+      "ano_mes": "2025-05",
+      "irradiancia_media_w_m2": 540.14,
+      "pct_horas_com_corte": 72.84,
+      "corte_pct_da_referencia_quando_informada": 42.22
+    },
+    {
+      "ano_mes": "2025-06",
+      "irradiancia_media_w_m2": 521.62,
+      "pct_horas_com_corte": 65.38,
+      "corte_pct_da_referencia_quando_informada": 59.34
+    },
+    {
+      "ano_mes": "2025-07",
+      "irradiancia_media_w_m2": 523.74,
+      "pct_horas_com_corte": 68.56,
+      "corte_pct_da_referencia_quando_informada": 59.91
+    },
+    {
+      "ano_mes": "2025-08",
+      "irradiancia_media_w_m2": 595.48,
+      "pct_horas_com_corte": 76.44,
+      "corte_pct_da_referencia_quando_informada": 44.93
+    },
+    {
+      "ano_mes": "2025-09",
+      "irradiancia_media_w_m2": 655.7,
+      "pct_horas_com_corte": 80.01,
+      "corte_pct_da_referencia_quando_informada": 45.2
+    },
+    {
+      "ano_mes": "2025-10",
+      "irradiancia_media_w_m2": 631.48,
+      "pct_horas_com_corte": 69.73,
+      "corte_pct_da_referencia_quando_informada": 36.53
+    },
+    {
+      "ano_mes": "2025-11",
+      "irradiancia_media_w_m2": 528.32,
+      "pct_horas_com_corte": 59.97,
+      "corte_pct_da_referencia_quando_informada": 49.88
+    },
+    {
+      "ano_mes": "2025-12",
+      "irradiancia_media_w_m2": 554.97,
+      "pct_horas_com_corte": 49.37,
+      "corte_pct_da_referencia_quando_informada": 44.09
+    },
+    {
+      "ano_mes": "2026-01",
+      "irradiancia_media_w_m2": 556.74,
+      "pct_horas_com_corte": 50.51,
+      "corte_pct_da_referencia_quando_informada": 26.59
+    },
+    {
+      "ano_mes": "2026-02",
+      "irradiancia_media_w_m2": 531.5,
+      "pct_horas_com_corte": 31.01,
+      "corte_pct_da_referencia_quando_informada": 12.03
+    },
+    {
+      "ano_mes": "2026-03",
+      "irradiancia_media_w_m2": 559.55,
+      "pct_horas_com_corte": 59.21,
+      "corte_pct_da_referencia_quando_informada": 28.17
+    },
+    {
+      "ano_mes": "2026-04",
+      "irradiancia_media_w_m2": 561.27,
+      "pct_horas_com_corte": 62.57,
+      "corte_pct_da_referencia_quando_informada": 47.72
+    },
+    {
+      "ano_mes": "2026-05",
+      "irradiancia_media_w_m2": 514.38,
+      "pct_horas_com_corte": 58.51,
+      "corte_pct_da_referencia_quando_informada": 36.98
+    },
+    {
+      "ano_mes": "2026-06",
+      "irradiancia_media_w_m2": 504.55,
+      "pct_horas_com_corte": 52.55,
+      "corte_pct_da_referencia_quando_informada": 51.17
+    },
+    {
+      "ano_mes": "2026-07",
+      "irradiancia_media_w_m2": 589.69,
+      "pct_horas_com_corte": 72.56,
+      "corte_pct_da_referencia_quando_informada": 42.7
+    },
+    {
+      "ano_mes": "2026-08",
+      "irradiancia_media_w_m2": 671.68,
+      "pct_horas_com_corte": 72.45,
+      "corte_pct_da_referencia_quando_informada": 46.72
+    },
+    {
+      "ano_mes": "2026-09",
+      "irradiancia_media_w_m2": 707.11,
+      "pct_horas_com_corte": 74.61,
+      "corte_pct_da_referencia_quando_informada": 41.16
+    },
+    {
+      "ano_mes": "2026-10",
+      "irradiancia_media_w_m2": 658.75,
+      "pct_horas_com_corte": 63.0,
+      "corte_pct_da_referencia_quando_informada": 39.32
+    },
+    {
+      "ano_mes": "2026-11",
+      "irradiancia_media_w_m2": 625.94,
+      "pct_horas_com_corte": 74.57,
+      "corte_pct_da_referencia_quando_informada": 31.83
+    }
+  ],
+  "sazonal_2025_por_mes": [
+    {
+      "mes": 1,
+      "irradiancia_media_w_m2": 475.17,
+      "pct_horas_com_corte": 25.82,
+      "corte_pct_da_referencia_quando_informada": 48.07
+    },
+    {
+      "mes": 2,
+      "irradiancia_media_w_m2": 602.07,
+      "pct_horas_com_corte": 39.16,
+      "corte_pct_da_referencia_quando_informada": 64.75
+    },
+    {
+      "mes": 3,
+      "irradiancia_media_w_m2": 626.04,
+      "pct_horas_com_corte": 42.05,
+      "corte_pct_da_referencia_quando_informada": 45.0
+    },
+    {
+      "mes": 4,
+      "irradiancia_media_w_m2": 570.0,
+      "pct_horas_com_corte": 39.53,
+      "corte_pct_da_referencia_quando_informada": 24.32
+    },
+    {
+      "mes": 5,
+      "irradiancia_media_w_m2": 540.14,
+      "pct_horas_com_corte": 72.84,
+      "corte_pct_da_referencia_quando_informada": 42.22
+    },
+    {
+      "mes": 6,
+      "irradiancia_media_w_m2": 521.62,
+      "pct_horas_com_corte": 65.38,
+      "corte_pct_da_referencia_quando_informada": 59.34
+    },
+    {
+      "mes": 7,
+      "irradiancia_media_w_m2": 523.74,
+      "pct_horas_com_corte": 68.56,
+      "corte_pct_da_referencia_quando_informada": 59.91
+    },
+    {
+      "mes": 8,
+      "irradiancia_media_w_m2": 595.48,
+      "pct_horas_com_corte": 76.44,
+      "corte_pct_da_referencia_quando_informada": 44.93
+    },
+    {
+      "mes": 9,
+      "irradiancia_media_w_m2": 655.7,
+      "pct_horas_com_corte": 80.01,
+      "corte_pct_da_referencia_quando_informada": 45.2
+    },
+    {
+      "mes": 10,
+      "irradiancia_media_w_m2": 631.48,
+      "pct_horas_com_corte": 69.73,
+      "corte_pct_da_referencia_quando_informada": 36.53
+    },
+    {
+      "mes": 11,
+      "irradiancia_media_w_m2": 528.32,
+      "pct_horas_com_corte": 59.97,
+      "corte_pct_da_referencia_quando_informada": 49.88
+    },
+    {
+      "mes": 12,
+      "irradiancia_media_w_m2": 554.97,
+      "pct_horas_com_corte": 49.37,
+      "corte_pct_da_referencia_quando_informada": 44.09
+    }
+  ],
+  "por_hora": [
+    {
+      "hora": 0,
+      "irradiancia_media_w_m2": 84.41,
+      "pct_horas_com_corte": 0.22,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "hora": 1,
+      "irradiancia_media_w_m2": 83.05,
+      "pct_horas_com_corte": 0.22,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "hora": 2,
+      "irradiancia_media_w_m2": 83.09,
+      "pct_horas_com_corte": 0.23,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "hora": 3,
+      "irradiancia_media_w_m2": 83.1,
+      "pct_horas_com_corte": 0.23,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "hora": 4,
+      "irradiancia_media_w_m2": 111.04,
+      "pct_horas_com_corte": 0.0,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "hora": 5,
+      "irradiancia_media_w_m2": 57.98,
+      "pct_horas_com_corte": 6.57,
+      "corte_pct_da_referencia_quando_informada": 58.67
+    },
+    {
+      "hora": 6,
+      "irradiancia_media_w_m2": 167.16,
+      "pct_horas_com_corte": 27.27,
+      "corte_pct_da_referencia_quando_informada": 35.75
+    },
+    {
+      "hora": 7,
+      "irradiancia_media_w_m2": 462.31,
+      "pct_horas_com_corte": 57.04,
+      "corte_pct_da_referencia_quando_informada": 39.09
+    },
+    {
+      "hora": 8,
+      "irradiancia_media_w_m2": 648.63,
+      "pct_horas_com_corte": 67.6,
+      "corte_pct_da_referencia_quando_informada": 45.99
+    },
+    {
+      "hora": 9,
+      "irradiancia_media_w_m2": 744.79,
+      "pct_horas_com_corte": 72.77,
+      "corte_pct_da_referencia_quando_informada": 50.15
+    },
+    {
+      "hora": 10,
+      "irradiancia_media_w_m2": 798.67,
+      "pct_horas_com_corte": 73.74,
+      "corte_pct_da_referencia_quando_informada": 50.81
+    },
+    {
+      "hora": 11,
+      "irradiancia_media_w_m2": 814.9,
+      "pct_horas_com_corte": 73.99,
+      "corte_pct_da_referencia_quando_informada": 47.87
+    },
+    {
+      "hora": 12,
+      "irradiancia_media_w_m2": 799.59,
+      "pct_horas_com_corte": 73.7,
+      "corte_pct_da_referencia_quando_informada": 45.47
+    },
+    {
+      "hora": 13,
+      "irradiancia_media_w_m2": 756.69,
+      "pct_horas_com_corte": 71.7,
+      "corte_pct_da_referencia_quando_informada": 37.63
+    },
+    {
+      "hora": 14,
+      "irradiancia_media_w_m2": 683.95,
+      "pct_horas_com_corte": 60.38,
+      "corte_pct_da_referencia_quando_informada": 34.22
+    },
+    {
+      "hora": 15,
+      "irradiancia_media_w_m2": 580.98,
+      "pct_horas_com_corte": 46.01,
+      "corte_pct_da_referencia_quando_informada": 31.01
+    },
+    {
+      "hora": 16,
+      "irradiancia_media_w_m2": 381.18,
+      "pct_horas_com_corte": 26.95,
+      "corte_pct_da_referencia_quando_informada": 26.36
+    },
+    {
+      "hora": 17,
+      "irradiancia_media_w_m2": 109.85,
+      "pct_horas_com_corte": 6.4,
+      "corte_pct_da_referencia_quando_informada": 26.27
+    },
+    {
+      "hora": 18,
+      "irradiancia_media_w_m2": 83.63,
+      "pct_horas_com_corte": 0.59,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "hora": 19,
+      "irradiancia_media_w_m2": 117.21,
+      "pct_horas_com_corte": 0.0,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "hora": 20,
+      "irradiancia_media_w_m2": 81.74,
+      "pct_horas_com_corte": 0.36,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "hora": 21,
+      "irradiancia_media_w_m2": 87.48,
+      "pct_horas_com_corte": 0.33,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "hora": 22,
+      "irradiancia_media_w_m2": 85.93,
+      "pct_horas_com_corte": 0.33,
+      "corte_pct_da_referencia_quando_informada": NaN
+    },
+    {
+      "hora": 23,
+      "irradiancia_media_w_m2": 86.09,
+      "pct_horas_com_corte": 0.34,
+      "corte_pct_da_referencia_quando_informada": NaN
+    }
+  ]
+}

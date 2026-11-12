@@ -1,0 +1,449 @@
+{
+  "bacia_contorno": {
+    "revisoes": 1,
+    "dias_observados": 1,
+    "primeira": "2023-11-03 12:06:22-03:00",
+    "ultima": "2023-11-03 12:06:22-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1
+    }
+  },
+  "balanco-energia-subsistema": {
+    "revisoes": 11,
+    "dias_observados": 4,
+    "primeira": "2024-10-20 11:54:21-03:00",
+    "ultima": "2026-11-10 19:00:19-03:00",
+    "revisoes_por_hora_local": {
+      "10": 2,
+      "11": 5,
+      "12": 1,
+      "19": 3
+    }
+  },
+  "balanco_dessem_detalhe": {
+    "revisoes": 5,
+    "dias_observados": 5,
+    "primeira": "2026-11-06 17:18:31-03:00",
+    "ultima": "2026-11-10 15:14:54-03:00",
+    "revisoes_por_hora_local": {
+      "15": 2,
+      "16": 2,
+      "17": 1
+    }
+  },
+  "balanco_dessem_geral": {
+    "revisoes": 5,
+    "dias_observados": 5,
+    "primeira": "2026-11-06 17:18:47-03:00",
+    "ultima": "2026-11-10 15:14:08-03:00",
+    "revisoes_por_hora_local": {
+      "15": 2,
+      "16": 2,
+      "17": 1
+    }
+  },
+  "capacidade-geracao": {
+    "revisoes": 2,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:00:41-03:00",
+    "ultima": "2026-11-10 19:00:28-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "19": 1
+    }
+  },
+  "carga-energia": {
+    "revisoes": 10,
+    "dias_observados": 4,
+    "primeira": "2024-08-26 15:27:25-03:00",
+    "ultima": "2026-11-10 19:00:34-03:00",
+    "revisoes_por_hora_local": {
+      "12": 4,
+      "15": 4,
+      "19": 2
+    }
+  },
+  "carga-energia-programada": {
+    "revisoes": 1,
+    "dias_observados": 1,
+    "primeira": "2025-10-01 15:57:37-03:00",
+    "ultima": "2025-10-01 15:57:37-03:00",
+    "revisoes_por_hora_local": {
+      "15": 1
+    }
+  },
+  "carga-energia-verificada": {
+    "revisoes": 1,
+    "dias_observados": 1,
+    "primeira": "2025-10-01 16:05:48-03:00",
+    "ultima": "2025-10-01 16:05:48-03:00",
+    "revisoes_por_hora_local": {
+      "16": 1
+    }
+  },
+  "cmo-semanal": {
+    "revisoes": 9,
+    "dias_observados": 4,
+    "primeira": "2024-08-26 15:22:43-03:00",
+    "ultima": "2026-11-10 12:00:59-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "15": 7,
+      "19": 1
+    }
+  },
+  "cmo-semi-horario": {
+    "revisoes": 8,
+    "dias_observados": 4,
+    "primeira": "2024-08-26 15:20:46-03:00",
+    "ultima": "2026-11-10 19:00:52-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "15": 5,
+      "19": 2
+    }
+  },
+  "curva-carga": {
+    "revisoes": 10,
+    "dias_observados": 3,
+    "primeira": "2025-10-09 16:35:42-03:00",
+    "ultima": "2026-11-10 19:00:55-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "16": 7,
+      "19": 2
+    }
+  },
+  "cvu-usitermica": {
+    "revisoes": 2,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:01:19-03:00",
+    "ultima": "2026-11-10 19:01:08-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "19": 1
+    }
+  },
+  "dados-hidrologicos-res": {
+    "revisoes": 46,
+    "dias_observados": 4,
+    "primeira": "2026-10-29 06:54:53-03:00",
+    "ultima": "2026-11-10 17:00:37-03:00",
+    "revisoes_por_hora_local": {
+      "6": 1,
+      "8": 7,
+      "9": 1,
+      "12": 25,
+      "14": 11,
+      "17": 1
+    }
+  },
+  "dados_hidrologicos_ho": {
+    "revisoes": 42,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:08:14-03:00",
+    "ultima": "2026-11-10 23:38:18-03:00",
+    "revisoes_por_hora_local": {
+      "12": 3,
+      "13": 3,
+      "14": 4,
+      "15": 4,
+      "16": 3,
+      "17": 4,
+      "18": 4,
+      "19": 2,
+      "20": 4,
+      "21": 4,
+      "22": 4,
+      "23": 3
+    }
+  },
+  "disponibilidade_usina": {
+    "revisoes": 2,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:03:25-03:00",
+    "ultima": "2026-11-10 19:03:15-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "19": 1
+    }
+  },
+  "ear-diario-por-bacia": {
+    "revisoes": 10,
+    "dias_observados": 3,
+    "primeira": "2026-10-29 07:30:08-03:00",
+    "ultima": "2026-11-10 19:01:12-03:00",
+    "revisoes_por_hora_local": {
+      "7": 2,
+      "12": 1,
+      "19": 7
+    }
+  },
+  "ear-diario-por-ree-reservatorio-equivalente-de-energia": {
+    "revisoes": 10,
+    "dias_observados": 3,
+    "primeira": "2026-10-29 07:28:20-03:00",
+    "ultima": "2026-11-10 19:01:19-03:00",
+    "revisoes_por_hora_local": {
+      "7": 2,
+      "12": 1,
+      "19": 7
+    }
+  },
+  "ear-diario-por-reservatorio": {
+    "revisoes": 2,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:01:42-03:00",
+    "ultima": "2026-11-10 19:01:29-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "19": 1
+    }
+  },
+  "ear-diario-por-subsistema": {
+    "revisoes": 11,
+    "dias_observados": 3,
+    "primeira": "2026-10-29 07:30:11-03:00",
+    "ultima": "2026-11-10 19:01:27-03:00",
+    "revisoes_por_hora_local": {
+      "7": 2,
+      "12": 1,
+      "19": 8
+    }
+  },
+  "ena-diario-por-bacia": {
+    "revisoes": 10,
+    "dias_observados": 3,
+    "primeira": "2026-10-29 07:30:36-03:00",
+    "ultima": "2026-11-10 19:01:34-03:00",
+    "revisoes_por_hora_local": {
+      "7": 2,
+      "12": 1,
+      "19": 7
+    }
+  },
+  "ena-diario-por-ree-reservatorio-equivalente-de-energia": {
+    "revisoes": 10,
+    "dias_observados": 3,
+    "primeira": "2026-10-29 07:28:44-03:00",
+    "ultima": "2026-11-10 19:01:38-03:00",
+    "revisoes_por_hora_local": {
+      "7": 2,
+      "12": 1,
+      "19": 7
+    }
+  },
+  "ena-diario-por-reservatorio": {
+    "revisoes": 2,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:02:02-03:00",
+    "ultima": "2026-11-10 19:01:49-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "19": 1
+    }
+  },
+  "ena-diario-por-subsistema": {
+    "revisoes": 11,
+    "dias_observados": 3,
+    "primeira": "2026-10-29 07:30:27-03:00",
+    "ultima": "2026-11-10 19:01:48-03:00",
+    "revisoes_por_hora_local": {
+      "7": 2,
+      "12": 1,
+      "19": 8
+    }
+  },
+  "energia-vertida-turbinavel": {
+    "revisoes": 2,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:04:11-03:00",
+    "ultima": "2026-11-10 19:03:51-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "19": 1
+    }
+  },
+  "fator-capacidade-2": {
+    "revisoes": 64,
+    "dias_observados": 13,
+    "primeira": "2025-08-13 09:13:36-03:00",
+    "ultima": "2026-11-10 19:04:22-03:00",
+    "revisoes_por_hora_local": {
+      "9": 6,
+      "10": 13,
+      "12": 14,
+      "15": 7,
+      "16": 6,
+      "17": 4,
+      "18": 2,
+      "19": 11,
+      "21": 1
+    }
+  },
+  "geracao-termica-despacho-2": {
+    "revisoes": 2,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:04:29-03:00",
+    "ultima": "2026-11-10 19:04:19-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "19": 1
+    }
+  },
+  "geracao-usina-2": {
+    "revisoes": 64,
+    "dias_observados": 28,
+    "primeira": "2024-10-10 14:28:22-03:00",
+    "ultima": "2026-11-10 19:06:16-03:00",
+    "revisoes_por_hora_local": {
+      "12": 2,
+      "13": 2,
+      "14": 8,
+      "15": 13,
+      "16": 16,
+      "17": 1,
+      "19": 22
+    }
+  },
+  "grandezas_fluviometricas": {
+    "revisoes": 26,
+    "dias_observados": 2,
+    "primeira": "2026-10-31 14:36:25-03:00",
+    "ultima": "2026-11-10 19:02:39-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "14": 24,
+      "19": 1
+    }
+  },
+  "intercambio-nacional": {
+    "revisoes": 4,
+    "dias_observados": 3,
+    "primeira": "2025-02-13 15:08:40-03:00",
+    "ultima": "2026-11-10 19:04:19-03:00",
+    "revisoes_por_hora_local": {
+      "15": 2,
+      "19": 2
+    }
+  },
+  "programacao_diaria": {
+    "revisoes": 6,
+    "dias_observados": 6,
+    "primeira": "2025-10-08 19:34:23-03:00",
+    "ultima": "2026-11-10 18:50:22-03:00",
+    "revisoes_por_hora_local": {
+      "17": 1,
+      "18": 1,
+      "19": 1,
+      "20": 3
+    }
+  },
+  "programacao_x_previsao": {
+    "revisoes": 5,
+    "dias_observados": 5,
+    "primeira": "2026-11-06 20:08:24-03:00",
+    "ultima": "2026-11-10 18:48:20-03:00",
+    "revisoes_por_hora_local": {
+      "17": 1,
+      "18": 1,
+      "20": 3
+    }
+  },
+  "res_cotaareavolume": {
+    "revisoes": 1,
+    "dias_observados": 1,
+    "primeira": "2026-10-29 12:05:25-03:00",
+    "ultima": "2026-10-29 12:05:25-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1
+    }
+  },
+  "res_volumeespera": {
+    "revisoes": 1,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 19:05:19-03:00",
+    "ultima": "2026-11-10 19:05:19-03:00",
+    "revisoes_por_hora_local": {
+      "19": 1
+    }
+  },
+  "reservatorio": {
+    "revisoes": 1,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:05:24-03:00",
+    "ultima": "2026-11-10 12:05:24-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1
+    }
+  },
+  "restricao_coff_eolica_detail": {
+    "revisoes": 2,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:06:37-03:00",
+    "ultima": "2026-11-10 19:07:14-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "19": 1
+    }
+  },
+  "restricao_coff_eolica_usi": {
+    "revisoes": 63,
+    "dias_observados": 8,
+    "primeira": "2026-09-04 20:14:02-03:00",
+    "ultima": "2026-11-10 19:06:07-03:00",
+    "revisoes_por_hora_local": {
+      "9": 12,
+      "10": 2,
+      "11": 10,
+      "12": 5,
+      "14": 8,
+      "18": 12,
+      "19": 7,
+      "20": 7
+    }
+  },
+  "restricao_coff_fotovoltaica": {
+    "revisoes": 33,
+    "dias_observados": 7,
+    "primeira": "2026-09-08 09:15:17-03:00",
+    "ultima": "2026-11-10 19:06:14-03:00",
+    "revisoes_por_hora_local": {
+      "9": 7,
+      "12": 11,
+      "14": 8,
+      "19": 7
+    }
+  },
+  "restricao_coff_fotovoltaica_detail": {
+    "revisoes": 33,
+    "dias_observados": 7,
+    "primeira": "2026-09-08 14:01:09-03:00",
+    "ultima": "2026-11-10 19:08:16-03:00",
+    "revisoes_por_hora_local": {
+      "12": 10,
+      "14": 11,
+      "15": 4,
+      "19": 8
+    }
+  },
+  "usina_conjunto": {
+    "revisoes": 2,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 12:05:11-03:00",
+    "ultima": "2026-11-10 19:04:58-03:00",
+    "revisoes_por_hora_local": {
+      "12": 1,
+      "19": 1
+    }
+  },
+  "usina_pqu": {
+    "revisoes": 1,
+    "dias_observados": 1,
+    "primeira": "2026-11-10 19:05:03-03:00",
+    "ultima": "2026-11-10 19:05:03-03:00",
+    "revisoes_por_hora_local": {
+      "19": 1
+    }
+  }
+}

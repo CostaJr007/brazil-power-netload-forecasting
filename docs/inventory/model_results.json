@@ -1,0 +1,1649 @@
+{
+  "ena": {
+    "h1": {
+      "n": 41560,
+      "modelos": {
+        "persistencia": {
+          "mae_mwmed": 146.8,
+          "skill_persistencia": 0.0,
+          "skill_climatologia": 0.848
+        },
+        "climatologia": {
+          "mae_mwmed": 966.6,
+          "skill_persistencia": -5.583,
+          "skill_climatologia": 0.0
+        },
+        "ou": {
+          "mae_mwmed": 144.4,
+          "skill_persistencia": 0.016,
+          "skill_climatologia": 0.851
+        },
+        "ridge_memoria": {
+          "mae_mwmed": 104.0,
+          "skill_persistencia": 0.292,
+          "skill_climatologia": 0.892
+        },
+        "ridge_arx": {
+          "mae_mwmed": 102.0,
+          "skill_persistencia": 0.305,
+          "skill_climatologia": 0.894
+        },
+        "ridge_chuva_placebo": {
+          "mae_mwmed": 112.4,
+          "skill_persistencia": 0.234,
+          "skill_climatologia": 0.884
+        },
+        "ridge_cenario": {
+          "mae_mwmed": 96.5,
+          "skill_persistencia": 0.343,
+          "skill_climatologia": 0.9
+        },
+        "ridge_cenario_placebo": {
+          "mae_mwmed": 112.8,
+          "skill_persistencia": 0.232,
+          "skill_climatologia": 0.883
+        },
+        "kalman_arx": {
+          "mae_mwmed": 138.2,
+          "skill_persistencia": 0.059,
+          "skill_climatologia": 0.857
+        },
+        "gbm_memoria": {
+          "mae_mwmed": 145.5,
+          "skill_persistencia": 0.009,
+          "skill_climatologia": 0.849
+        },
+        "gbm_chuva": {
+          "mae_mwmed": 143.3,
+          "skill_persistencia": 0.024,
+          "skill_climatologia": 0.852
+        },
+        "gbm_chuva_placebo": {
+          "mae_mwmed": 145.4,
+          "skill_persistencia": 0.01,
+          "skill_climatologia": 0.85
+        },
+        "gbm_cenario": {
+          "mae_mwmed": 136.4,
+          "skill_persistencia": 0.071,
+          "skill_climatologia": 0.859
+        },
+        "gbm_cenario_placebo": {
+          "mae_mwmed": 144.6,
+          "skill_persistencia": 0.015,
+          "skill_climatologia": 0.85
+        }
+      },
+      "skill_por_ano": {
+        "2021": {
+          "ou": -0.063,
+          "ridge_arx": 0.22,
+          "ridge_cenario": 0.231,
+          "kalman_arx": 0.098,
+          "gbm_chuva": -0.053,
+          "gbm_cenario": -0.05
+        },
+        "2022": {
+          "ou": 0.021,
+          "ridge_arx": 0.315,
+          "ridge_cenario": 0.358,
+          "kalman_arx": 0.076,
+          "gbm_chuva": -0.055,
+          "gbm_cenario": -0.121
+        },
+        "2023": {
+          "ou": 0.039,
+          "ridge_arx": 0.342,
+          "ridge_cenario": 0.402,
+          "kalman_arx": 0.078,
+          "gbm_chuva": -0.032,
+          "gbm_cenario": 0.055
+        },
+        "2024": {
+          "ou": 0.041,
+          "ridge_arx": 0.299,
+          "ridge_cenario": 0.344,
+          "kalman_arx": -0.018,
+          "gbm_chuva": 0.115,
+          "gbm_cenario": 0.194
+        },
+        "2025": {
+          "ou": -0.018,
+          "ridge_arx": 0.253,
+          "ridge_cenario": 0.236,
+          "kalman_arx": 0.053,
+          "gbm_chuva": 0.126,
+          "gbm_cenario": 0.224
+        },
+        "2026": {
+          "ou": 0.03,
+          "ridge_arx": 0.343,
+          "ridge_cenario": 0.393,
+          "kalman_arx": 0.07,
+          "gbm_chuva": 0.063,
+          "gbm_cenario": 0.136
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ridge_arx - ridge_memoria",
+          "dif_mae": -2.04,
+          "ic95": [
+            -3.17,
+            -0.91
+          ]
+        },
+        {
+          "comparacao": "ridge_arx - ridge_chuva_placebo",
+          "dif_mae": -10.46,
+          "ic95": [
+            -12.67,
+            -8.29
+          ]
+        },
+        {
+          "comparacao": "ridge_cenario - ridge_arx",
+          "dif_mae": -5.57,
+          "ic95": [
+            -8.26,
+            -2.77
+          ]
+        },
+        {
+          "comparacao": "ridge_cenario - ridge_cenario_placebo",
+          "dif_mae": -16.38,
+          "ic95": [
+            -19.68,
+            -13.02
+          ]
+        },
+        {
+          "comparacao": "gbm_chuva - gbm_memoria",
+          "dif_mae": -2.09,
+          "ic95": [
+            -5.57,
+            1.04
+          ]
+        },
+        {
+          "comparacao": "gbm_chuva - gbm_chuva_placebo",
+          "dif_mae": -1.93,
+          "ic95": [
+            -5.1,
+            1.3
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_chuva",
+          "dif_mae": -7.03,
+          "ic95": [
+            -11.95,
+            -1.66
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_cenario_placebo",
+          "dif_mae": -8.23,
+          "ic95": [
+            -14.68,
+            -1.76
+          ]
+        }
+      ]
+    },
+    "h3": {
+      "n": 41480,
+      "modelos": {
+        "persistencia": {
+          "mae_mwmed": 374.6,
+          "skill_persistencia": 0.0,
+          "skill_climatologia": 0.612
+        },
+        "climatologia": {
+          "mae_mwmed": 966.0,
+          "skill_persistencia": -1.579,
+          "skill_climatologia": 0.0
+        },
+        "ou": {
+          "mae_mwmed": 355.2,
+          "skill_persistencia": 0.052,
+          "skill_climatologia": 0.632
+        },
+        "ridge_memoria": {
+          "mae_mwmed": 311.5,
+          "skill_persistencia": 0.168,
+          "skill_climatologia": 0.677
+        },
+        "ridge_arx": {
+          "mae_mwmed": 302.6,
+          "skill_persistencia": 0.192,
+          "skill_climatologia": 0.687
+        },
+        "ridge_chuva_placebo": {
+          "mae_mwmed": 328.2,
+          "skill_persistencia": 0.124,
+          "skill_climatologia": 0.66
+        },
+        "ridge_cenario": {
+          "mae_mwmed": 252.6,
+          "skill_persistencia": 0.326,
+          "skill_climatologia": 0.739
+        },
+        "ridge_cenario_placebo": {
+          "mae_mwmed": 330.0,
+          "skill_persistencia": 0.119,
+          "skill_climatologia": 0.658
+        },
+        "kalman_arx": {
+          "mae_mwmed": 370.5,
+          "skill_persistencia": 0.011,
+          "skill_climatologia": 0.616
+        },
+        "gbm_memoria": {
+          "mae_mwmed": 389.9,
+          "skill_persistencia": -0.041,
+          "skill_climatologia": 0.596
+        },
+        "gbm_chuva": {
+          "mae_mwmed": 377.5,
+          "skill_persistencia": -0.008,
+          "skill_climatologia": 0.609
+        },
+        "gbm_chuva_placebo": {
+          "mae_mwmed": 410.5,
+          "skill_persistencia": -0.096,
+          "skill_climatologia": 0.575
+        },
+        "gbm_cenario": {
+          "mae_mwmed": 308.6,
+          "skill_persistencia": 0.176,
+          "skill_climatologia": 0.681
+        },
+        "gbm_cenario_placebo": {
+          "mae_mwmed": 413.2,
+          "skill_persistencia": -0.103,
+          "skill_climatologia": 0.572
+        }
+      },
+      "skill_por_ano": {
+        "2021": {
+          "ou": -0.068,
+          "ridge_arx": 0.134,
+          "ridge_cenario": 0.255,
+          "kalman_arx": 0.002,
+          "gbm_chuva": -0.116,
+          "gbm_cenario": 0.098
+        },
+        "2022": {
+          "ou": 0.069,
+          "ridge_arx": 0.219,
+          "ridge_cenario": 0.352,
+          "kalman_arx": 0.041,
+          "gbm_chuva": 0.023,
+          "gbm_cenario": 0.142
+        },
+        "2023": {
+          "ou": 0.085,
+          "ridge_arx": 0.219,
+          "ridge_cenario": 0.355,
+          "kalman_arx": 0.028,
+          "gbm_chuva": -0.087,
+          "gbm_cenario": 0.108
+        },
+        "2024": {
+          "ou": 0.089,
+          "ridge_arx": 0.193,
+          "ridge_cenario": 0.352,
+          "kalman_arx": -0.059,
+          "gbm_chuva": 0.068,
+          "gbm_cenario": 0.278
+        },
+        "2025": {
+          "ou": 0.004,
+          "ridge_arx": 0.144,
+          "ridge_cenario": 0.223,
+          "kalman_arx": -0.015,
+          "gbm_chuva": 0.044,
+          "gbm_cenario": 0.286
+        },
+        "2026": {
+          "ou": 0.066,
+          "ridge_arx": 0.201,
+          "ridge_cenario": 0.356,
+          "kalman_arx": 0.049,
+          "gbm_chuva": 0.011,
+          "gbm_cenario": 0.167
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ridge_arx - ridge_memoria",
+          "dif_mae": -8.96,
+          "ic95": [
+            -12.74,
+            -5.4
+          ]
+        },
+        {
+          "comparacao": "ridge_arx - ridge_chuva_placebo",
+          "dif_mae": -25.71,
+          "ic95": [
+            -31.28,
+            -20.25
+          ]
+        },
+        {
+          "comparacao": "ridge_cenario - ridge_arx",
+          "dif_mae": -49.96,
+          "ic95": [
+            -60.74,
+            -39.92
+          ]
+        },
+        {
+          "comparacao": "ridge_cenario - ridge_cenario_placebo",
+          "dif_mae": -77.5,
+          "ic95": [
+            -89.42,
+            -66.31
+          ]
+        },
+        {
+          "comparacao": "gbm_chuva - gbm_memoria",
+          "dif_mae": -12.71,
+          "ic95": [
+            -26.3,
+            -0.12
+          ]
+        },
+        {
+          "comparacao": "gbm_chuva - gbm_chuva_placebo",
+          "dif_mae": -33.29,
+          "ic95": [
+            -44.08,
+            -21.68
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_chuva",
+          "dif_mae": -69.15,
+          "ic95": [
+            -82.61,
+            -56.86
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_cenario_placebo",
+          "dif_mae": -105.33,
+          "ic95": [
+            -122.93,
+            -88.16
+          ]
+        }
+      ]
+    },
+    "h7": {
+      "n": 41320,
+      "modelos": {
+        "persistencia": {
+          "mae_mwmed": 629.1,
+          "skill_persistencia": 0.0,
+          "skill_climatologia": 0.348
+        },
+        "climatologia": {
+          "mae_mwmed": 965.1,
+          "skill_persistencia": -0.534,
+          "skill_climatologia": 0.0
+        },
+        "ou": {
+          "mae_mwmed": 577.9,
+          "skill_persistencia": 0.081,
+          "skill_climatologia": 0.401
+        },
+        "ridge_memoria": {
+          "mae_mwmed": 551.1,
+          "skill_persistencia": 0.124,
+          "skill_climatologia": 0.429
+        },
+        "ridge_arx": {
+          "mae_mwmed": 540.7,
+          "skill_persistencia": 0.141,
+          "skill_climatologia": 0.44
+        },
+        "ridge_chuva_placebo": {
+          "mae_mwmed": 579.0,
+          "skill_persistencia": 0.08,
+          "skill_climatologia": 0.4
+        },
+        "ridge_cenario": {
+          "mae_mwmed": 410.6,
+          "skill_persistencia": 0.347,
+          "skill_climatologia": 0.575
+        },
+        "ridge_cenario_placebo": {
+          "mae_mwmed": 585.3,
+          "skill_persistencia": 0.07,
+          "skill_climatologia": 0.394
+        },
+        "kalman_arx": {
+          "mae_mwmed": 617.7,
+          "skill_persistencia": 0.018,
+          "skill_climatologia": 0.36
+        },
+        "gbm_memoria": {
+          "mae_mwmed": 650.7,
+          "skill_persistencia": -0.034,
+          "skill_climatologia": 0.326
+        },
+        "gbm_chuva": {
+          "mae_mwmed": 630.7,
+          "skill_persistencia": -0.003,
+          "skill_climatologia": 0.346
+        },
+        "gbm_chuva_placebo": {
+          "mae_mwmed": 706.5,
+          "skill_persistencia": -0.123,
+          "skill_climatologia": 0.268
+        },
+        "gbm_cenario": {
+          "mae_mwmed": 449.8,
+          "skill_persistencia": 0.285,
+          "skill_climatologia": 0.534
+        },
+        "gbm_cenario_placebo": {
+          "mae_mwmed": 710.7,
+          "skill_persistencia": -0.13,
+          "skill_climatologia": 0.264
+        }
+      },
+      "skill_por_ano": {
+        "2021": {
+          "ou": -0.042,
+          "ridge_arx": 0.065,
+          "ridge_cenario": 0.307,
+          "kalman_arx": -0.03,
+          "gbm_chuva": -0.128,
+          "gbm_cenario": 0.266
+        },
+        "2022": {
+          "ou": 0.111,
+          "ridge_arx": 0.162,
+          "ridge_cenario": 0.363,
+          "kalman_arx": 0.045,
+          "gbm_chuva": -0.062,
+          "gbm_cenario": 0.255
+        },
+        "2023": {
+          "ou": 0.105,
+          "ridge_arx": 0.177,
+          "ridge_cenario": 0.389,
+          "kalman_arx": 0.035,
+          "gbm_chuva": 0.061,
+          "gbm_cenario": 0.309
+        },
+        "2024": {
+          "ou": 0.131,
+          "ridge_arx": 0.166,
+          "ridge_cenario": 0.383,
+          "kalman_arx": 0.009,
+          "gbm_chuva": 0.1,
+          "gbm_cenario": 0.343
+        },
+        "2025": {
+          "ou": 0.045,
+          "ridge_arx": 0.103,
+          "ridge_cenario": 0.255,
+          "kalman_arx": -0.036,
+          "gbm_chuva": 0.001,
+          "gbm_cenario": 0.341
+        },
+        "2026": {
+          "ou": 0.079,
+          "ridge_arx": 0.123,
+          "ridge_cenario": 0.34,
+          "kalman_arx": 0.054,
+          "gbm_chuva": -0.035,
+          "gbm_cenario": 0.193
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ridge_arx - ridge_memoria",
+          "dif_mae": -10.67,
+          "ic95": [
+            -16.51,
+            -5.0
+          ]
+        },
+        {
+          "comparacao": "ridge_arx - ridge_chuva_placebo",
+          "dif_mae": -38.97,
+          "ic95": [
+            -48.76,
+            -29.72
+          ]
+        },
+        {
+          "comparacao": "ridge_cenario - ridge_arx",
+          "dif_mae": -130.55,
+          "ic95": [
+            -149.99,
+            -112.41
+          ]
+        },
+        {
+          "comparacao": "ridge_cenario - ridge_cenario_placebo",
+          "dif_mae": -176.0,
+          "ic95": [
+            -198.15,
+            -154.43
+          ]
+        },
+        {
+          "comparacao": "gbm_chuva - gbm_memoria",
+          "dif_mae": -21.01,
+          "ic95": [
+            -34.66,
+            -8.44
+          ]
+        },
+        {
+          "comparacao": "gbm_chuva - gbm_chuva_placebo",
+          "dif_mae": -77.83,
+          "ic95": [
+            -104.08,
+            -50.58
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_chuva",
+          "dif_mae": -182.28,
+          "ic95": [
+            -213.4,
+            -154.83
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_cenario_placebo",
+          "dif_mae": -265.0,
+          "ic95": [
+            -303.48,
+            -227.73
+          ]
+        }
+      ]
+    },
+    "h14": {
+      "n": 41040,
+      "modelos": {
+        "persistencia": {
+          "mae_mwmed": 867.9,
+          "skill_persistencia": 0.0,
+          "skill_climatologia": 0.099
+        },
+        "climatologia": {
+          "mae_mwmed": 963.4,
+          "skill_persistencia": -0.11,
+          "skill_climatologia": 0.0
+        },
+        "ou": {
+          "mae_mwmed": 752.8,
+          "skill_persistencia": 0.133,
+          "skill_climatologia": 0.219
+        },
+        "ridge_memoria": {
+          "mae_mwmed": 741.8,
+          "skill_persistencia": 0.145,
+          "skill_climatologia": 0.23
+        },
+        "ridge_arx": {
+          "mae_mwmed": 738.7,
+          "skill_persistencia": 0.149,
+          "skill_climatologia": 0.233
+        },
+        "ridge_chuva_placebo": {
+          "mae_mwmed": 791.4,
+          "skill_persistencia": 0.088,
+          "skill_climatologia": 0.178
+        },
+        "ridge_cenario": {
+          "mae_mwmed": 555.5,
+          "skill_persistencia": 0.36,
+          "skill_climatologia": 0.423
+        },
+        "ridge_cenario_placebo": {
+          "mae_mwmed": 802.0,
+          "skill_persistencia": 0.076,
+          "skill_climatologia": 0.168
+        },
+        "kalman_arx": {
+          "mae_mwmed": 842.0,
+          "skill_persistencia": 0.03,
+          "skill_climatologia": 0.126
+        },
+        "gbm_memoria": {
+          "mae_mwmed": 833.0,
+          "skill_persistencia": 0.04,
+          "skill_climatologia": 0.135
+        },
+        "gbm_chuva": {
+          "mae_mwmed": 814.5,
+          "skill_persistencia": 0.062,
+          "skill_climatologia": 0.155
+        },
+        "gbm_chuva_placebo": {
+          "mae_mwmed": 880.1,
+          "skill_persistencia": -0.014,
+          "skill_climatologia": 0.086
+        },
+        "gbm_cenario": {
+          "mae_mwmed": 557.1,
+          "skill_persistencia": 0.358,
+          "skill_climatologia": 0.422
+        },
+        "gbm_cenario_placebo": {
+          "mae_mwmed": 897.0,
+          "skill_persistencia": -0.034,
+          "skill_climatologia": 0.069
+        }
+      },
+      "skill_por_ano": {
+        "2021": {
+          "ou": 0.032,
+          "ridge_arx": 0.089,
+          "ridge_cenario": 0.364,
+          "kalman_arx": 0.002,
+          "gbm_chuva": -0.059,
+          "gbm_cenario": 0.315
+        },
+        "2022": {
+          "ou": 0.182,
+          "ridge_arx": 0.19,
+          "ridge_cenario": 0.392,
+          "kalman_arx": 0.008,
+          "gbm_chuva": 0.003,
+          "gbm_cenario": 0.382
+        },
+        "2023": {
+          "ou": 0.117,
+          "ridge_arx": 0.145,
+          "ridge_cenario": 0.365,
+          "kalman_arx": 0.011,
+          "gbm_chuva": 0.094,
+          "gbm_cenario": 0.334
+        },
+        "2024": {
+          "ou": 0.18,
+          "ridge_arx": 0.176,
+          "ridge_cenario": 0.395,
+          "kalman_arx": 0.003,
+          "gbm_chuva": 0.153,
+          "gbm_cenario": 0.415
+        },
+        "2025": {
+          "ou": 0.134,
+          "ridge_arx": 0.121,
+          "ridge_cenario": 0.261,
+          "kalman_arx": 0.048,
+          "gbm_chuva": 0.06,
+          "gbm_cenario": 0.412
+        },
+        "2026": {
+          "ou": 0.114,
+          "ridge_arx": 0.142,
+          "ridge_cenario": 0.359,
+          "kalman_arx": 0.126,
+          "gbm_chuva": 0.104,
+          "gbm_cenario": 0.278
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ridge_arx - ridge_memoria",
+          "dif_mae": -3.2,
+          "ic95": [
+            -10.57,
+            3.27
+          ]
+        },
+        {
+          "comparacao": "ridge_arx - ridge_chuva_placebo",
+          "dif_mae": -53.3,
+          "ic95": [
+            -69.42,
+            -38.62
+          ]
+        },
+        {
+          "comparacao": "ridge_cenario - ridge_arx",
+          "dif_mae": -185.02,
+          "ic95": [
+            -212.76,
+            -157.57
+          ]
+        },
+        {
+          "comparacao": "ridge_cenario - ridge_cenario_placebo",
+          "dif_mae": -250.01,
+          "ic95": [
+            -285.52,
+            -216.02
+          ]
+        },
+        {
+          "comparacao": "gbm_chuva - gbm_memoria",
+          "dif_mae": -19.5,
+          "ic95": [
+            -39.61,
+            1.44
+          ]
+        },
+        {
+          "comparacao": "gbm_chuva - gbm_chuva_placebo",
+          "dif_mae": -69.65,
+          "ic95": [
+            -101.39,
+            -39.35
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_chuva",
+          "dif_mae": -258.78,
+          "ic95": [
+            -299.05,
+            -220.26
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_cenario_placebo",
+          "dif_mae": -346.69,
+          "ic95": [
+            -397.09,
+            -298.42
+          ]
+        }
+      ]
+    }
+  },
+  "ena_por_bacia_h7": [
+    {
+      "bacia": "PARANA",
+      "ena_media": 12466,
+      "mae_persistencia": 1695,
+      "ou": 0.037,
+      "ridge_arx": 0.191,
+      "ridge_cenario": 0.297,
+      "gbm_chuva": -0.069,
+      "gbm_cenario": -0.116
+    },
+    {
+      "bacia": "TOCANTINS",
+      "ena_media": 7748,
+      "mae_persistencia": 1163,
+      "ou": 0.123,
+      "ridge_arx": 0.213,
+      "ridge_cenario": 0.356,
+      "gbm_chuva": -0.172,
+      "gbm_cenario": 0.305
+    },
+    {
+      "bacia": "SAO FRANCISCO",
+      "ena_media": 5138,
+      "mae_persistencia": 785,
+      "ou": 0.023,
+      "ridge_arx": 0.111,
+      "ridge_cenario": 0.122,
+      "gbm_chuva": -0.347,
+      "gbm_cenario": -0.297
+    },
+    {
+      "bacia": "IGUACU",
+      "ena_media": 5028,
+      "mae_persistencia": 1901,
+      "ou": 0.09,
+      "ridge_arx": 0.106,
+      "ridge_cenario": 0.46,
+      "gbm_chuva": 0.026,
+      "gbm_cenario": 0.417
+    },
+    {
+      "bacia": "URUGUAI",
+      "ena_media": 4770,
+      "mae_persistencia": 3029,
+      "ou": 0.134,
+      "ridge_arx": 0.153,
+      "ridge_cenario": 0.323,
+      "gbm_chuva": 0.114,
+      "gbm_cenario": 0.401
+    },
+    {
+      "bacia": "GRANDE",
+      "ena_media": 3802,
+      "mae_persistencia": 846,
+      "ou": 0.065,
+      "ridge_arx": 0.224,
+      "ridge_cenario": 0.474,
+      "gbm_chuva": 0.022,
+      "gbm_cenario": 0.312
+    },
+    {
+      "bacia": "PARANAIBA",
+      "ena_media": 3740,
+      "mae_persistencia": 691,
+      "ou": 0.062,
+      "ridge_arx": 0.115,
+      "ridge_cenario": 0.363,
+      "gbm_chuva": 0.025,
+      "gbm_cenario": 0.457
+    },
+    {
+      "bacia": "PARANAPANEMA",
+      "ena_media": 1487,
+      "mae_persistencia": 473,
+      "ou": 0.028,
+      "ridge_arx": 0.095,
+      "ridge_cenario": 0.398,
+      "gbm_chuva": 0.012,
+      "gbm_cenario": 0.385
+    },
+    {
+      "bacia": "JACUI",
+      "ena_media": 1049,
+      "mae_persistencia": 728,
+      "ou": 0.059,
+      "ridge_arx": 0.074,
+      "ridge_cenario": 0.334,
+      "gbm_chuva": 0.091,
+      "gbm_cenario": 0.526
+    },
+    {
+      "bacia": "TIETE",
+      "ena_media": 999,
+      "mae_persistencia": 305,
+      "ou": 0.093,
+      "ridge_arx": 0.137,
+      "ridge_cenario": 0.452,
+      "gbm_chuva": 0.042,
+      "gbm_cenario": 0.406
+    },
+    {
+      "bacia": "PARAIBA DO SUL",
+      "ena_media": 938,
+      "mae_persistencia": 169,
+      "ou": 0.043,
+      "ridge_arx": 0.056,
+      "ridge_cenario": 0.395,
+      "gbm_chuva": 0.01,
+      "gbm_cenario": 0.347
+    },
+    {
+      "bacia": "DOCE",
+      "ena_media": 630,
+      "mae_persistencia": 219,
+      "ou": -0.017,
+      "ridge_arx": -0.006,
+      "ridge_cenario": 0.248,
+      "gbm_chuva": 0.057,
+      "gbm_cenario": 0.5
+    },
+    {
+      "bacia": "ARAGUARI",
+      "ena_media": 522,
+      "mae_persistencia": 101,
+      "ou": 0.062,
+      "ridge_arx": 0.13,
+      "ridge_cenario": 0.288,
+      "gbm_chuva": 0.007,
+      "gbm_cenario": 0.176
+    },
+    {
+      "bacia": "JEQUITINHONHA",
+      "ena_media": 308,
+      "mae_persistencia": 165,
+      "ou": 0.03,
+      "ridge_arx": -0.058,
+      "ridge_cenario": 0.149,
+      "gbm_chuva": 0.093,
+      "gbm_cenario": 0.462
+    },
+    {
+      "bacia": "ITAJAI",
+      "ena_media": 248,
+      "mae_persistencia": 148,
+      "ou": 0.109,
+      "ridge_arx": 0.104,
+      "ridge_cenario": 0.479,
+      "gbm_chuva": 0.068,
+      "gbm_cenario": 0.48
+    },
+    {
+      "bacia": "PARNAIBA",
+      "ena_media": 147,
+      "mae_persistencia": 29,
+      "ou": 0.01,
+      "ridge_arx": 0.055,
+      "ridge_cenario": 0.218,
+      "gbm_chuva": -0.146,
+      "gbm_cenario": 0.181
+    },
+    {
+      "bacia": "CAPIVARI",
+      "ena_media": 133,
+      "mae_persistencia": 63,
+      "ou": 0.195,
+      "ridge_arx": 0.215,
+      "ridge_cenario": 0.446,
+      "gbm_chuva": 0.1,
+      "gbm_cenario": 0.41
+    },
+    {
+      "bacia": "ITABAPOANA",
+      "ena_media": 56,
+      "mae_persistencia": 23,
+      "ou": 0.061,
+      "ridge_arx": 0.08,
+      "ridge_cenario": 0.349,
+      "gbm_chuva": 0.08,
+      "gbm_cenario": 0.483
+    },
+    {
+      "bacia": "PARAGUACU",
+      "ena_media": 55,
+      "mae_persistencia": 33,
+      "ou": -0.184,
+      "ridge_arx": -0.295,
+      "ridge_cenario": -0.267,
+      "gbm_chuva": -0.175,
+      "gbm_cenario": 0.112
+    },
+    {
+      "bacia": "MUCURI",
+      "ena_media": 23,
+      "mae_persistencia": 13,
+      "ou": 0.087,
+      "ridge_arx": 0.054,
+      "ridge_cenario": 0.229,
+      "gbm_chuva": 0.153,
+      "gbm_cenario": 0.455
+    }
+  ],
+  "ou_meia_vida_dias": {
+    "SAO FRANCISCO": 267.7,
+    "TOCANTINS": 151.2,
+    "PARANA": 103.3,
+    "GRANDE": 91.0,
+    "PARANAIBA": 51.4,
+    "ARAGUARI": 45.5,
+    "IGUACU": 36.2,
+    "PARNAIBA": 33.5,
+    "PARANAPANEMA": 26.0,
+    "JEQUITINHONHA": 19.9,
+    "MUCURI": 19.0,
+    "PARAIBA DO SUL": 12.5,
+    "URUGUAI": 10.8,
+    "DOCE": 10.7,
+    "ITAJAI": 10.4,
+    "TIETE": 6.1,
+    "ITABAPOANA": 5.7,
+    "JACUI": 4.6,
+    "CAPIVARI": 4.2,
+    "PARAGUACU": 4.2
+  },
+  "carga": {
+    "N": {
+      "n": 1764,
+      "modelos": {
+        "naive": {
+          "mae_mwmed": 215.7,
+          "mape_pct": 2.86,
+          "skill_ons": -0.294
+        },
+        "ons": {
+          "mae_mwmed": 166.7,
+          "mape_pct": 2.18,
+          "skill_ons": 0.0
+        },
+        "ons_vies28": {
+          "mae_mwmed": 140.1,
+          "mape_pct": 1.85,
+          "skill_ons": 0.16
+        },
+        "gbm_calendario": {
+          "mae_mwmed": 142.2,
+          "mape_pct": 1.89,
+          "skill_ons": 0.147
+        },
+        "gbm_temp": {
+          "mae_mwmed": 142.5,
+          "mape_pct": 1.89,
+          "skill_ons": 0.145
+        },
+        "gbm_cenario": {
+          "mae_mwmed": 113.1,
+          "mape_pct": 1.51,
+          "skill_ons": 0.322
+        },
+        "gbm_cenario_placebo": {
+          "mae_mwmed": 149.7,
+          "mape_pct": 1.99,
+          "skill_ons": 0.102
+        },
+        "ons_corrigido": {
+          "mae_mwmed": 146.5,
+          "mape_pct": 1.93,
+          "skill_ons": 0.121
+        },
+        "ons_corrigido_cenario": {
+          "mae_mwmed": 125.0,
+          "mape_pct": 1.67,
+          "skill_ons": 0.25
+        }
+      },
+      "mae_feriados": {
+        "naive": 435.2,
+        "ons": 177.2,
+        "gbm_calendario": 168.2,
+        "ons_corrigido": 165.5
+      },
+      "skill_ons_por_ano": {
+        "2022": {
+          "ons_vies28": 0.151,
+          "gbm_temp": 0.076,
+          "ons_corrigido": 0.086,
+          "ons_corrigido_cenario": 0.173
+        },
+        "2023": {
+          "ons_vies28": 0.097,
+          "gbm_temp": 0.002,
+          "ons_corrigido": 0.026,
+          "ons_corrigido_cenario": 0.031
+        },
+        "2024": {
+          "ons_vies28": 0.112,
+          "gbm_temp": 0.1,
+          "ons_corrigido": -0.004,
+          "ons_corrigido_cenario": 0.282
+        },
+        "2025": {
+          "ons_vies28": 0.168,
+          "gbm_temp": 0.226,
+          "ons_corrigido": 0.22,
+          "ons_corrigido_cenario": 0.337
+        },
+        "2026": {
+          "ons_vies28": 0.251,
+          "gbm_temp": 0.281,
+          "ons_corrigido": 0.231,
+          "ons_corrigido_cenario": 0.39
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ons_corrigido - ons",
+          "dif_mae": -19.47,
+          "ic95": [
+            -27.14,
+            -12.68
+          ]
+        },
+        {
+          "comparacao": "ons_vies28 - ons",
+          "dif_mae": -26.47,
+          "ic95": [
+            -34.46,
+            -18.85
+          ]
+        },
+        {
+          "comparacao": "ons_corrigido - ons_vies28",
+          "dif_mae": 7.0,
+          "ic95": [
+            1.04,
+            13.23
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_cenario_placebo",
+          "dif_mae": -35.51,
+          "ic95": [
+            -41.66,
+            -29.56
+          ]
+        },
+        {
+          "comparacao": "gbm_temp - gbm_calendario",
+          "dif_mae": -0.25,
+          "ic95": [
+            -3.78,
+            3.47
+          ]
+        }
+      ]
+    },
+    "NE": {
+      "n": 1763,
+      "modelos": {
+        "naive": {
+          "mae_mwmed": 415.5,
+          "mape_pct": 3.23,
+          "skill_ons": -0.245
+        },
+        "ons": {
+          "mae_mwmed": 333.6,
+          "mape_pct": 2.59,
+          "skill_ons": 0.0
+        },
+        "ons_vies28": {
+          "mae_mwmed": 262.3,
+          "mape_pct": 2.03,
+          "skill_ons": 0.214
+        },
+        "gbm_calendario": {
+          "mae_mwmed": 240.6,
+          "mape_pct": 1.86,
+          "skill_ons": 0.279
+        },
+        "gbm_temp": {
+          "mae_mwmed": 232.7,
+          "mape_pct": 1.81,
+          "skill_ons": 0.303
+        },
+        "gbm_cenario": {
+          "mae_mwmed": 200.9,
+          "mape_pct": 1.56,
+          "skill_ons": 0.398
+        },
+        "gbm_cenario_placebo": {
+          "mae_mwmed": 254.4,
+          "mape_pct": 1.97,
+          "skill_ons": 0.238
+        },
+        "ons_corrigido": {
+          "mae_mwmed": 271.0,
+          "mape_pct": 2.12,
+          "skill_ons": 0.188
+        },
+        "ons_corrigido_cenario": {
+          "mae_mwmed": 255.1,
+          "mape_pct": 2.0,
+          "skill_ons": 0.235
+        }
+      },
+      "mae_feriados": {
+        "naive": 1052.7,
+        "ons": 345.8,
+        "gbm_calendario": 293.1,
+        "ons_corrigido": 313.9
+      },
+      "skill_ons_por_ano": {
+        "2022": {
+          "ons_vies28": 0.399,
+          "gbm_temp": 0.427,
+          "ons_corrigido": 0.254,
+          "ons_corrigido_cenario": 0.281
+        },
+        "2023": {
+          "ons_vies28": 0.301,
+          "gbm_temp": 0.344,
+          "ons_corrigido": 0.195,
+          "ons_corrigido_cenario": 0.192
+        },
+        "2024": {
+          "ons_vies28": 0.029,
+          "gbm_temp": 0.134,
+          "ons_corrigido": 0.04,
+          "ons_corrigido_cenario": 0.119
+        },
+        "2025": {
+          "ons_vies28": 0.048,
+          "gbm_temp": 0.245,
+          "ons_corrigido": 0.145,
+          "ons_corrigido_cenario": 0.263
+        },
+        "2026": {
+          "ons_vies28": 0.194,
+          "gbm_temp": 0.288,
+          "ons_corrigido": 0.26,
+          "ons_corrigido_cenario": 0.292
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ons_corrigido - ons",
+          "dif_mae": -62.48,
+          "ic95": [
+            -83.05,
+            -41.79
+          ]
+        },
+        {
+          "comparacao": "ons_vies28 - ons",
+          "dif_mae": -71.09,
+          "ic95": [
+            -94.85,
+            -47.08
+          ]
+        },
+        {
+          "comparacao": "ons_corrigido - ons_vies28",
+          "dif_mae": 8.61,
+          "ic95": [
+            -4.37,
+            22.23
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_cenario_placebo",
+          "dif_mae": -52.82,
+          "ic95": [
+            -61.91,
+            -43.38
+          ]
+        },
+        {
+          "comparacao": "gbm_temp - gbm_calendario",
+          "dif_mae": -8.02,
+          "ic95": [
+            -15.55,
+            -0.91
+          ]
+        }
+      ]
+    },
+    "S": {
+      "n": 1765,
+      "modelos": {
+        "naive": {
+          "mae_mwmed": 794.7,
+          "mape_pct": 5.84,
+          "skill_ons": -0.541
+        },
+        "ons": {
+          "mae_mwmed": 515.8,
+          "mape_pct": 3.81,
+          "skill_ons": 0.0
+        },
+        "ons_vies28": {
+          "mae_mwmed": 423.9,
+          "mape_pct": 3.15,
+          "skill_ons": 0.178
+        },
+        "gbm_calendario": {
+          "mae_mwmed": 503.2,
+          "mape_pct": 3.65,
+          "skill_ons": 0.024
+        },
+        "gbm_temp": {
+          "mae_mwmed": 474.9,
+          "mape_pct": 3.44,
+          "skill_ons": 0.079
+        },
+        "gbm_cenario": {
+          "mae_mwmed": 330.0,
+          "mape_pct": 2.44,
+          "skill_ons": 0.36
+        },
+        "gbm_cenario_placebo": {
+          "mae_mwmed": 508.8,
+          "mape_pct": 3.69,
+          "skill_ons": 0.013
+        },
+        "ons_corrigido": {
+          "mae_mwmed": 411.0,
+          "mape_pct": 3.02,
+          "skill_ons": 0.203
+        },
+        "ons_corrigido_cenario": {
+          "mae_mwmed": 340.4,
+          "mape_pct": 2.53,
+          "skill_ons": 0.34
+        }
+      },
+      "mae_feriados": {
+        "naive": 1849.8,
+        "ons": 645.9,
+        "gbm_calendario": 764.5,
+        "ons_corrigido": 584.8
+      },
+      "skill_ons_por_ano": {
+        "2022": {
+          "ons_vies28": 0.423,
+          "gbm_temp": 0.316,
+          "ons_corrigido": 0.358,
+          "ons_corrigido_cenario": 0.461
+        },
+        "2023": {
+          "ons_vies28": 0.223,
+          "gbm_temp": 0.221,
+          "ons_corrigido": 0.282,
+          "ons_corrigido_cenario": 0.441
+        },
+        "2024": {
+          "ons_vies28": -0.042,
+          "gbm_temp": -0.232,
+          "ons_corrigido": 0.023,
+          "ons_corrigido_cenario": 0.213
+        },
+        "2025": {
+          "ons_vies28": 0.064,
+          "gbm_temp": -0.048,
+          "ons_corrigido": 0.128,
+          "ons_corrigido_cenario": 0.252
+        },
+        "2026": {
+          "ons_vies28": 0.113,
+          "gbm_temp": 0.001,
+          "ons_corrigido": 0.138,
+          "ons_corrigido_cenario": 0.255
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ons_corrigido - ons",
+          "dif_mae": -102.44,
+          "ic95": [
+            -132.91,
+            -73.22
+          ]
+        },
+        {
+          "comparacao": "ons_vies28 - ons",
+          "dif_mae": -91.32,
+          "ic95": [
+            -126.56,
+            -58.67
+          ]
+        },
+        {
+          "comparacao": "ons_corrigido - ons_vies28",
+          "dif_mae": -11.12,
+          "ic95": [
+            -32.81,
+            10.72
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_cenario_placebo",
+          "dif_mae": -178.63,
+          "ic95": [
+            -212.08,
+            -145.49
+          ]
+        },
+        {
+          "comparacao": "gbm_temp - gbm_calendario",
+          "dif_mae": -28.37,
+          "ic95": [
+            -43.53,
+            -14.1
+          ]
+        }
+      ]
+    },
+    "SECO": {
+      "n": 1764,
+      "modelos": {
+        "naive": {
+          "mae_mwmed": 2057.4,
+          "mape_pct": 4.67,
+          "skill_ons": -1.053
+        },
+        "ons": {
+          "mae_mwmed": 1002.1,
+          "mape_pct": 2.29,
+          "skill_ons": 0.0
+        },
+        "ons_vies28": {
+          "mae_mwmed": 773.5,
+          "mape_pct": 1.76,
+          "skill_ons": 0.228
+        },
+        "gbm_calendario": {
+          "mae_mwmed": 1189.0,
+          "mape_pct": 2.7,
+          "skill_ons": -0.187
+        },
+        "gbm_temp": {
+          "mae_mwmed": 1119.5,
+          "mape_pct": 2.53,
+          "skill_ons": -0.117
+        },
+        "gbm_cenario": {
+          "mae_mwmed": 712.3,
+          "mape_pct": 1.62,
+          "skill_ons": 0.289
+        },
+        "gbm_cenario_placebo": {
+          "mae_mwmed": 1220.4,
+          "mape_pct": 2.77,
+          "skill_ons": -0.218
+        },
+        "ons_corrigido": {
+          "mae_mwmed": 837.3,
+          "mape_pct": 1.91,
+          "skill_ons": 0.164
+        },
+        "ons_corrigido_cenario": {
+          "mae_mwmed": 710.5,
+          "mape_pct": 1.63,
+          "skill_ons": 0.291
+        }
+      },
+      "mae_feriados": {
+        "naive": 3991.5,
+        "ons": 1386.5,
+        "gbm_calendario": 1763.8,
+        "ons_corrigido": 1320.4
+      },
+      "skill_ons_por_ano": {
+        "2022": {
+          "ons_vies28": 0.475,
+          "gbm_temp": 0.27,
+          "ons_corrigido": 0.241,
+          "ons_corrigido_cenario": 0.331
+        },
+        "2023": {
+          "ons_vies28": 0.337,
+          "gbm_temp": -0.035,
+          "ons_corrigido": 0.218,
+          "ons_corrigido_cenario": 0.324
+        },
+        "2024": {
+          "ons_vies28": 0.002,
+          "gbm_temp": -0.627,
+          "ons_corrigido": 0.071,
+          "ons_corrigido_cenario": 0.238
+        },
+        "2025": {
+          "ons_vies28": 0.048,
+          "gbm_temp": -0.3,
+          "ons_corrigido": 0.087,
+          "ons_corrigido_cenario": 0.243
+        },
+        "2026": {
+          "ons_vies28": 0.131,
+          "gbm_temp": -0.108,
+          "ons_corrigido": 0.156,
+          "ons_corrigido_cenario": 0.291
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ons_corrigido - ons",
+          "dif_mae": -158.48,
+          "ic95": [
+            -209.35,
+            -105.57
+          ]
+        },
+        {
+          "comparacao": "ons_vies28 - ons",
+          "dif_mae": -226.46,
+          "ic95": [
+            -295.05,
+            -156.8
+          ]
+        },
+        {
+          "comparacao": "ons_corrigido - ons_vies28",
+          "dif_mae": 67.98,
+          "ic95": [
+            24.83,
+            113.4
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_cenario_placebo",
+          "dif_mae": -505.05,
+          "ic95": [
+            -578.29,
+            -435.16
+          ]
+        },
+        {
+          "comparacao": "gbm_temp - gbm_calendario",
+          "dif_mae": -66.47,
+          "ic95": [
+            -109.93,
+            -20.87
+          ]
+        }
+      ]
+    },
+    "TODOS": {
+      "n": 7056,
+      "modelos": {
+        "naive": {
+          "mae_mwmed": 870.9,
+          "mape_pct": 4.15,
+          "skill_ons": -0.726
+        },
+        "ons": {
+          "mae_mwmed": 504.6,
+          "mape_pct": 2.72,
+          "skill_ons": 0.0
+        },
+        "ons_vies28": {
+          "mae_mwmed": 400.0,
+          "mape_pct": 2.2,
+          "skill_ons": 0.207
+        },
+        "gbm_calendario": {
+          "mae_mwmed": 518.8,
+          "mape_pct": 2.53,
+          "skill_ons": -0.028
+        },
+        "gbm_temp": {
+          "mae_mwmed": 492.4,
+          "mape_pct": 2.41,
+          "skill_ons": 0.024
+        },
+        "gbm_cenario": {
+          "mae_mwmed": 339.1,
+          "mape_pct": 1.78,
+          "skill_ons": 0.328
+        },
+        "gbm_cenario_placebo": {
+          "mae_mwmed": 533.4,
+          "mape_pct": 2.61,
+          "skill_ons": -0.057
+        },
+        "ons_corrigido": {
+          "mae_mwmed": 416.5,
+          "mape_pct": 2.25,
+          "skill_ons": 0.175
+        },
+        "ons_corrigido_cenario": {
+          "mae_mwmed": 357.8,
+          "mape_pct": 1.96,
+          "skill_ons": 0.291
+        }
+      },
+      "mae_feriados": {
+        "naive": 1832.3,
+        "ons": 638.9,
+        "gbm_calendario": 747.4,
+        "ons_corrigido": 596.1
+      },
+      "skill_ons_por_ano": {
+        "2022": {
+          "ons_vies28": 0.427,
+          "gbm_temp": 0.295,
+          "ons_corrigido": 0.262,
+          "ons_corrigido_cenario": 0.344
+        },
+        "2023": {
+          "ons_vies28": 0.285,
+          "gbm_temp": 0.094,
+          "ons_corrigido": 0.219,
+          "ons_corrigido_cenario": 0.315
+        },
+        "2024": {
+          "ons_vies28": 0.004,
+          "gbm_temp": -0.339,
+          "ons_corrigido": 0.047,
+          "ons_corrigido_cenario": 0.216
+        },
+        "2025": {
+          "ons_vies28": 0.063,
+          "gbm_temp": -0.094,
+          "ons_corrigido": 0.12,
+          "ons_corrigido_cenario": 0.258
+        },
+        "2026": {
+          "ons_vies28": 0.15,
+          "gbm_temp": 0.027,
+          "ons_corrigido": 0.177,
+          "ons_corrigido_cenario": 0.293
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ons_corrigido - ons",
+          "dif_mae": -85.67,
+          "ic95": [
+            -108.04,
+            -63.17
+          ]
+        },
+        {
+          "comparacao": "ons_vies28 - ons",
+          "dif_mae": -103.81,
+          "ic95": [
+            -132.19,
+            -74.73
+          ]
+        },
+        {
+          "comparacao": "ons_corrigido - ons_vies28",
+          "dif_mae": 18.14,
+          "ic95": [
+            2.82,
+            33.88
+          ]
+        },
+        {
+          "comparacao": "gbm_cenario - gbm_cenario_placebo",
+          "dif_mae": -192.94,
+          "ic95": [
+            -216.64,
+            -170.15
+          ]
+        },
+        {
+          "comparacao": "gbm_temp - gbm_calendario",
+          "dif_mae": -25.68,
+          "ic95": [
+            -38.07,
+            -14.03
+          ]
+        }
+      ]
+    }
+  },
+  "cobertura": {
+    "ena_ate": "2026-11-10",
+    "temperatura_ate": "2026-10-31",
+    "bacias_avaliadas": 20
+  }
+}

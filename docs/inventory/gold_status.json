@@ -1,5 +1,5 @@
 {
-  "refreshed_at": "2026-11-10T21:42:07.943697+00:00",
+  "refreshed_at": "2026-11-12T20:14:39.718089+00:00",
   "database": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\gold\\energia.duckdb",
   "views": [
     "vw_chuva_observada_bacia_diaria",
@@ -9,20 +9,32 @@
     "vw_carga_prevista_vs_verificada",
     "vw_balanco_carga_liquida",
     "vw_ear_subsistema_diaria",
-    "vw_cmo_semanal"
+    "vw_cmo_semanal",
+    "vw_pld_estimado_horario",
+    "vw_pld_estimado_diario",
+    "vw_ena_bacia_sem_dupla_contagem",
+    "vw_hidro_subsistema_diaria",
+    "vw_conferencia_soma_bacias",
+    "vw_ree_diaria",
+    "vw_balanco_horario_sin",
+    "vw_balanco_diario",
+    "vw_renovaveis_diario",
+    "vw_cortes_renovaveis_diario",
+    "vw_painel_energia_diario",
+    "vw_frescor_fontes"
   ],
   "skipped_views": [],
-  "basin_weather_files": 3287,
-  "basin_weather_built": 26,
+  "basin_weather_files": 3342,
+  "basin_weather_built": 0,
   "basins_repaired": 6,
   "ena_mapping": [
     {
-      "match": "manual_spelling",
-      "len": 2
-    },
-    {
       "match": "none",
       "len": 5
+    },
+    {
+      "match": "manual_spelling",
+      "len": 2
     },
     {
       "match": "exact_normalized",

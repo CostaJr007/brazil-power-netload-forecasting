@@ -1,0 +1,401 @@
+{
+  "periodo": [
+    "2026-11-04",
+    "2026-11-10"
+  ],
+  "receitas": {
+    "D+1": {
+      "carga": "media_com_ons_corrigido",
+      "eolica": "media_com_ons_corrigido",
+      "solar": "ons_corrigido"
+    },
+    "D+2": {
+      "carga": "media_ridge_gbm",
+      "eolica": "gbm",
+      "solar": "media_com_ons_ant_semana"
+    }
+  },
+  "passos": {
+    "D+1": {
+      "regua": "ons",
+      "horas_sin": 141,
+      "mae_sin_modelo_mw": 2349,
+      "mae_sin_ons_mw": 2139,
+      "ganho_vs_regua_pct": -9.8,
+      "mape_sin_modelo_pct": 4.14,
+      "dias_vencendo_a_regua": "4/6",
+      "acerto_hora_do_pico": "6/6 (±1 h)",
+      "diario": [
+        {
+          "data": "2026-11-04 (qua)",
+          "real_medio_mw": 62410,
+          "previsto_medio_mw": 59335,
+          "mae_modelo_mw": 3075,
+          "mae_ons_mw": 2109,
+          "vies_modelo_mw": -3075,
+          "pico_real_mw": 84905,
+          "pico_previsto_mw": 82501,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": false
+        },
+        {
+          "data": "2026-11-05 (qui)",
+          "real_medio_mw": 63311,
+          "previsto_medio_mw": 62111,
+          "mae_modelo_mw": 2089,
+          "mae_ons_mw": 2242,
+          "vies_modelo_mw": -1201,
+          "pico_real_mw": 83906,
+          "pico_previsto_mw": 86460,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": true
+        },
+        {
+          "data": "2026-11-06 (sex)",
+          "real_medio_mw": 61158,
+          "previsto_medio_mw": 61319,
+          "mae_modelo_mw": 1166,
+          "mae_ons_mw": 1192,
+          "vies_modelo_mw": 161,
+          "pico_real_mw": 82959,
+          "pico_previsto_mw": 82650,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": true
+        },
+        {
+          "data": "2026-11-07 (sáb)",
+          "real_medio_mw": 57335,
+          "previsto_medio_mw": 57042,
+          "mae_modelo_mw": 924,
+          "mae_ons_mw": 997,
+          "vies_modelo_mw": -293,
+          "pico_real_mw": 76444,
+          "pico_previsto_mw": 77286,
+          "hora_pico_real": 18,
+          "hora_pico_prevista": 19,
+          "venceu_regua": true
+        },
+        {
+          "data": "2026-11-08 (dom)",
+          "real_medio_mw": 57388,
+          "previsto_medio_mw": 53058,
+          "mae_modelo_mw": 4330,
+          "mae_ons_mw": 3542,
+          "vies_modelo_mw": -4330,
+          "pico_real_mw": 78220,
+          "pico_previsto_mw": 75151,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": false
+        },
+        {
+          "data": "2026-11-09 (seg)",
+          "real_medio_mw": 58071,
+          "previsto_medio_mw": 56841,
+          "mae_modelo_mw": 2533,
+          "mae_ons_mw": 2839,
+          "vies_modelo_mw": -1231,
+          "pico_real_mw": 79853,
+          "pico_previsto_mw": 79366,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": true
+        }
+      ],
+      "por_peca_subsistema": {
+        "carga": {
+          "N": {
+            "mae_modelo": 233,
+            "mae_ons": 239,
+            "vies_modelo": 96
+          },
+          "NE": {
+            "mae_modelo": 558,
+            "mae_ons": 309,
+            "vies_modelo": -558
+          },
+          "S": {
+            "mae_modelo": 598,
+            "mae_ons": 658,
+            "vies_modelo": -339
+          },
+          "SE": {
+            "mae_modelo": 1838,
+            "mae_ons": 1792,
+            "vies_modelo": -1518
+          }
+        },
+        "eolica": {
+          "N": {
+            "mae_modelo": 38,
+            "mae_ons": 41,
+            "vies_modelo": -6
+          },
+          "NE": {
+            "mae_modelo": 1476,
+            "mae_ons": 1772,
+            "vies_modelo": -68
+          },
+          "S": {
+            "mae_modelo": 81,
+            "mae_ons": 103,
+            "vies_modelo": -35
+          },
+          "SE": {
+            "mae_modelo": 34,
+            "mae_ons": 34,
+            "vies_modelo": 5
+          }
+        },
+        "solar": {
+          "N": {
+            "mae_modelo": 6,
+            "mae_ons": 73,
+            "vies_modelo": 0
+          },
+          "NE": {
+            "mae_modelo": 551,
+            "mae_ons": 632,
+            "vies_modelo": -162
+          },
+          "S": {
+            "mae_modelo": 42,
+            "mae_ons": 139,
+            "vies_modelo": -10
+          },
+          "SE": {
+            "mae_modelo": 549,
+            "mae_ons": 718,
+            "vies_modelo": -197
+          }
+        }
+      },
+      "por_hora_mae_modelo": {
+        "0": 2198,
+        "1": 2371,
+        "2": 2739,
+        "3": 3198,
+        "4": 3384,
+        "5": 2680,
+        "6": 2227,
+        "7": 1360,
+        "8": 1686,
+        "9": 1774,
+        "10": 2281,
+        "11": 2470,
+        "12": 2816,
+        "13": 2183,
+        "14": 2477,
+        "15": 2976,
+        "16": 3334,
+        "17": 2549,
+        "18": 1566,
+        "19": 1612,
+        "20": 1941,
+        "21": 1957,
+        "22": 2261,
+        "23": 2235
+      }
+    },
+    "D+2": {
+      "regua": "ons_ant_semana",
+      "horas_sin": 165,
+      "mae_sin_modelo_mw": 3329,
+      "mae_sin_ons_ant_semana_mw": 4157,
+      "ganho_vs_regua_pct": 19.9,
+      "mape_sin_modelo_pct": 5.91,
+      "dias_vencendo_a_regua": "4/7",
+      "acerto_hora_do_pico": "7/7 (±1 h)",
+      "diario": [
+        {
+          "data": "2026-11-04 (qua)",
+          "real_medio_mw": 62410,
+          "previsto_medio_mw": 59651,
+          "mae_modelo_mw": 3297,
+          "mae_ons_ant_semana_mw": 6198,
+          "vies_modelo_mw": -2759,
+          "pico_real_mw": 84905,
+          "pico_previsto_mw": 81755,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": true
+        },
+        {
+          "data": "2026-11-05 (qui)",
+          "real_medio_mw": 63311,
+          "previsto_medio_mw": 58475,
+          "mae_modelo_mw": 4837,
+          "mae_ons_ant_semana_mw": 2666,
+          "vies_modelo_mw": -4837,
+          "pico_real_mw": 83906,
+          "pico_previsto_mw": 80607,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": false
+        },
+        {
+          "data": "2026-11-06 (sex)",
+          "real_medio_mw": 61158,
+          "previsto_medio_mw": 59997,
+          "mae_modelo_mw": 1987,
+          "mae_ons_ant_semana_mw": 2928,
+          "vies_modelo_mw": -1162,
+          "pico_real_mw": 82959,
+          "pico_previsto_mw": 82895,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": true
+        },
+        {
+          "data": "2026-11-07 (sáb)",
+          "real_medio_mw": 57335,
+          "previsto_medio_mw": 54894,
+          "mae_modelo_mw": 2730,
+          "mae_ons_ant_semana_mw": 1600,
+          "vies_modelo_mw": -2441,
+          "pico_real_mw": 76444,
+          "pico_previsto_mw": 78086,
+          "hora_pico_real": 18,
+          "hora_pico_prevista": 19,
+          "venceu_regua": false
+        },
+        {
+          "data": "2026-11-08 (dom)",
+          "real_medio_mw": 57388,
+          "previsto_medio_mw": 52059,
+          "mae_modelo_mw": 5330,
+          "mae_ons_ant_semana_mw": 4355,
+          "vies_modelo_mw": -5330,
+          "pico_real_mw": 78220,
+          "pico_previsto_mw": 73676,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": false
+        },
+        {
+          "data": "2026-11-09 (seg)",
+          "real_medio_mw": 59879,
+          "previsto_medio_mw": 57437,
+          "mae_modelo_mw": 3212,
+          "mae_ons_ant_semana_mw": 4255,
+          "vies_modelo_mw": -2442,
+          "pico_real_mw": 79853,
+          "pico_previsto_mw": 78883,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": true
+        },
+        {
+          "data": "2026-11-10 (ter)",
+          "real_medio_mw": 53803,
+          "previsto_medio_mw": 53336,
+          "mae_modelo_mw": 1711,
+          "mae_ons_ant_semana_mw": 7518,
+          "vies_modelo_mw": -467,
+          "pico_real_mw": 77143,
+          "pico_previsto_mw": 76954,
+          "hora_pico_real": 19,
+          "hora_pico_prevista": 19,
+          "venceu_regua": true
+        }
+      ],
+      "por_peca_subsistema": {
+        "carga": {
+          "N": {
+            "mae_modelo": 293,
+            "mae_ons_ant_semana": 346,
+            "vies_modelo": 199
+          },
+          "NE": {
+            "mae_modelo": 604,
+            "mae_ons_ant_semana": 737,
+            "vies_modelo": -561
+          },
+          "S": {
+            "mae_modelo": 606,
+            "mae_ons_ant_semana": 742,
+            "vies_modelo": -378
+          },
+          "SE": {
+            "mae_modelo": 2246,
+            "mae_ons_ant_semana": 2446,
+            "vies_modelo": -1825
+          }
+        },
+        "eolica": {
+          "N": {
+            "mae_modelo": 37,
+            "mae_ons_ant_semana": 49,
+            "vies_modelo": -10
+          },
+          "NE": {
+            "mae_modelo": 1495,
+            "mae_ons_ant_semana": 2658,
+            "vies_modelo": 593
+          },
+          "S": {
+            "mae_modelo": 120,
+            "mae_ons_ant_semana": 237,
+            "vies_modelo": -99
+          },
+          "SE": {
+            "mae_modelo": 41,
+            "mae_ons_ant_semana": 58,
+            "vies_modelo": 6
+          }
+        },
+        "solar": {
+          "N": {
+            "mae_modelo": 39,
+            "mae_ons_ant_semana": 39,
+            "vies_modelo": 18
+          },
+          "NE": {
+            "mae_modelo": 599,
+            "mae_ons_ant_semana": 851,
+            "vies_modelo": -105
+          },
+          "S": {
+            "mae_modelo": 363,
+            "mae_ons_ant_semana": 582,
+            "vies_modelo": -76
+          },
+          "SE": {
+            "mae_modelo": 744,
+            "mae_ons_ant_semana": 776,
+            "vies_modelo": -168
+          }
+        }
+      },
+      "por_hora_mae_modelo": {
+        "0": 3151,
+        "1": 3289,
+        "2": 3592,
+        "3": 4333,
+        "4": 4426,
+        "5": 3847,
+        "6": 3515,
+        "7": 3083,
+        "8": 2883,
+        "9": 3312,
+        "10": 3555,
+        "11": 3259,
+        "12": 2773,
+        "13": 2441,
+        "14": 3410,
+        "15": 4447,
+        "16": 4650,
+        "17": 3864,
+        "18": 2345,
+        "19": 1981,
+        "20": 2147,
+        "21": 3043,
+        "22": 3440,
+        "23": 3054
+      }
+    }
+  }
+}
