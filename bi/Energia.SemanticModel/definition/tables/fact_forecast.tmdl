@@ -1,82 +1,115 @@
 table fact_forecast
+	lineageTag: 63170c07-7d39-49dc-9a96-dee41840c857
 
 	measure 'Latest decision' = CALCULATE(MAX(fact_forecast[decision_date]), ALL(fact_forecast))
 		formatString: yyyy-mm-dd
+		lineageTag: 550fec6f-0735-4cde-8b07-046aa4a5a5d9
 
 	measure 'Average forecast (MW)' = VAR d = [Latest decision] VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_forecast[forecast]), fact_forecast[decision_date] = d, dim_subsystem[subsystem] = _s)
 		formatString: #,0
+		lineageTag: a5ad0232-7a13-44ba-88a2-7cadde7efae9
 
 	measure 'Forecast band low' = VAR d = [Latest decision] VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_forecast[band_low]), fact_forecast[decision_date] = d, dim_subsystem[subsystem] = _s)
 		formatString: #,0
+		lineageTag: 7198f6d2-4d83-4643-bf24-d177628a8a93
 
 	measure 'Forecast band high' = VAR d = [Latest decision] VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_forecast[band_high]), fact_forecast[decision_date] = d, dim_subsystem[subsystem] = _s)
 		formatString: #,0
+		lineageTag: a63788cd-74c1-4aad-8986-5cf588ab6761
 
 	measure 'Forecast benchmark (MW)' = VAR d = [Latest decision] VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_forecast[benchmark]), fact_forecast[decision_date] = d, dim_subsystem[subsystem] = _s)
 		formatString: #,0
+		lineageTag: 5059dd1d-9e20-4a77-b1f1-dbc2ca211206
 
 	measure 'Forecast peak (MW)' = VAR d = [Latest decision] VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(MAX(fact_forecast[forecast]), fact_forecast[decision_date] = d, dim_subsystem[subsystem] = _s)
 		formatString: #,0
+		lineageTag: f358361c-c403-4bcb-a9c9-0532ac16ab77
 
 	measure 'Headline forecast' = VAR d = [Latest decision] RETURN IF(ISBLANK([Average forecast (MW)]), "No forecast for this selection", "Net load expected to average " & FORMAT([Average forecast (MW)] / 1000, "0.0") & " GW, peaking at " & FORMAT([Forecast peak (MW)] / 1000, "0.0") & " GW (decision of " & FORMAT(d, "mmm d") & ")")
+		lineageTag: 9527155c-5485-4c25-84d4-ce7abed18843
 
 	column subsystem
 		dataType: string
+		lineageTag: ae8abfbd-8b64-4c95-a65f-0e28ed3718ee
 		summarizeBy: none
 		sourceColumn: subsystem
 
 	column date
 		dataType: dateTime
 		formatString: yyyy-mm-dd
+		lineageTag: ab7054bf-a8da-4fb3-9dd1-a6e3afeb2f53
 		summarizeBy: none
 		sourceColumn: date
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column hour
 		dataType: int64
+		lineageTag: 2462fda1-49dd-45ac-9bf0-2db1d6bb1112
 		summarizeBy: none
 		sourceColumn: hour
 
 	column forecast
 		dataType: double
+		lineageTag: 8c114703-55a5-4b39-9a4a-1591fc00cb09
 		summarizeBy: sum
 		sourceColumn: forecast
 
 	column benchmark
 		dataType: double
+		lineageTag: 9a82d17a-4efc-481d-9737-091c177a968a
 		summarizeBy: sum
 		sourceColumn: benchmark
 
 	column band_low
 		dataType: double
+		lineageTag: 22f6b000-feaf-4b6c-8b3f-dae9e8e6cf89
 		summarizeBy: sum
 		sourceColumn: band_low
 
 	column band_high
 		dataType: double
+		lineageTag: 1c4d1ba2-bcdc-46db-919b-1a97e9dd1498
 		summarizeBy: sum
 		sourceColumn: band_high
 
 	column decision_date
 		dataType: dateTime
 		formatString: yyyy-mm-dd
+		lineageTag: 235126c8-c3af-41b9-b6b8-91d1908a082f
 		summarizeBy: none
 		sourceColumn: decision_date
 
+		variation Variation
+			isDefault
+			relationship: 21efc89b-f932-491f-8f6d-d656b8342b35
+			defaultHierarchy: LocalDateTable_e2aac4ea-dd26-4028-816c-f9cfd3a6d4c8.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
 	column step
 		dataType: string
+		lineageTag: 3ddf3dff-d8a9-4fe4-ba4a-192952aad30e
 		summarizeBy: none
 		sourceColumn: step
 
 	column horizon
 		dataType: string
+		lineageTag: 64125426-5736-4f2c-8a62-5ec386e1f7d1
 		summarizeBy: none
 		sourceColumn: horizon
 
 	column timestamp
 		dataType: dateTime
 		formatString: yyyy-mm-dd hh:nn
+		lineageTag: 8f17e7ef-9c72-4834-a588-026ac56c7e72
 		summarizeBy: none
 		sourceColumn: timestamp
+
+		variation Variation
+			isDefault
+			relationship: f5250d7e-3267-4fee-b855-e2d1012abca0
+			defaultHierarchy: LocalDateTable_76263bc4-0e9a-405b-b6c4-a453f39c5bf7.'Date Hierarchy'
 
 	partition fact_forecast = m
 		mode: import
@@ -86,3 +119,4 @@ table fact_forecast
 				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"hour", Int64.Type}, {"forecast", type number}, {"benchmark", type number}, {"band_low", type number}, {"band_high", type number}, {"decision_date", type date}, {"step", type text}, {"horizon", type text}, {"timestamp", type datetime}})
 				in
 				    Tipos
+

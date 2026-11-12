@@ -1,67 +1,82 @@
 table dim_date
+	lineageTag: f323de17-3635-4db7-8ad6-aa12801d0d19
 	dataCategory: Time
 
 	column date
 		dataType: dateTime
-		formatString: yyyy-mm-dd
 		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: dc3d1f53-3704-4cd4-b06a-61cbeefc800f
 		summarizeBy: none
 		sourceColumn: date
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column year
 		dataType: int64
+		lineageTag: a546455b-61f9-421e-b0d6-83291324ec54
 		summarizeBy: none
 		sourceColumn: year
 
 	column month
 		dataType: int64
+		lineageTag: 0a6c7be1-e518-49c9-8534-0ee8e9717be9
 		summarizeBy: none
 		sourceColumn: month
 
 	column month_name
 		dataType: string
+		lineageTag: a6d67844-6607-4ed0-8602-02124be1b069
 		summarizeBy: none
 		sourceColumn: month_name
 		sortByColumn: month
 
 	column year_month
 		dataType: string
+		lineageTag: 33173650-59e8-4141-8f6d-39c4da2425db
 		summarizeBy: none
 		sourceColumn: year_month
 
 	column quarter
 		dataType: string
+		lineageTag: ff095dda-274e-443d-bba1-be2939197a24
 		summarizeBy: none
 		sourceColumn: quarter
 
 	column iso_week
 		dataType: int64
+		lineageTag: d050842a-652f-4484-836c-091a518c21c1
 		summarizeBy: none
 		sourceColumn: iso_week
 
 	column weekday_num
 		dataType: int64
+		lineageTag: 78a3f61b-fb96-4705-96fd-f4654433253f
 		summarizeBy: none
 		sourceColumn: weekday_num
 
 	column weekday
 		dataType: string
+		lineageTag: 1fc26ac6-3f24-4128-bb51-0b51bbb2f9e8
 		summarizeBy: none
 		sourceColumn: weekday
 		sortByColumn: weekday_num
 
 	column is_weekend
 		dataType: boolean
+		lineageTag: 1725993f-9cec-490d-952d-d5a9c9618c35
 		summarizeBy: none
 		sourceColumn: is_weekend
 
 	column is_holiday
 		dataType: boolean
+		lineageTag: 33d30d09-fa23-48aa-a4c5-1ea12cf16585
 		summarizeBy: none
 		sourceColumn: is_holiday
 
 	column day_type
 		dataType: string
+		lineageTag: aa12005d-cfe4-4fc5-bfe6-0d7244b6b42f
 		summarizeBy: none
 		sourceColumn: day_type
 
@@ -73,3 +88,4 @@ table dim_date
 				    Tipos = Table.TransformColumnTypes(Fonte, {{"date", type date}, {"year", Int64.Type}, {"month", Int64.Type}, {"month_name", type text}, {"year_month", type text}, {"quarter", type text}, {"iso_week", Int64.Type}, {"weekday_num", Int64.Type}, {"weekday", type text}, {"is_weekend", type logical}, {"is_holiday", type logical}, {"day_type", type text}})
 				in
 				    Tipos
+

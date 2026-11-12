@@ -106,5 +106,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "32e6cce04d02c5bd69e5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_net_load"
+              }
+            },
+            "Property": "Headline scoreboard"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

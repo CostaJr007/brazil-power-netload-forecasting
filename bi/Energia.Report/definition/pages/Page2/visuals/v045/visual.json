@@ -12,25 +12,6 @@
     "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Rows": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_components"
-                    }
-                  },
-                  "Property": "component"
-                }
-              },
-              "queryRef": "fact_components.component",
-              "displayName": "Component",
-              "active": true
-            }
-          ]
-        },
         "Columns": {
           "projections": [
             {
@@ -45,7 +26,27 @@
                 }
               },
               "queryRef": "dim_subsystem.name",
+              "active": true,
               "displayName": "Subsystem"
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_components"
+                    }
+                  },
+                  "Property": "component"
+                }
+              },
+              "queryRef": "fact_components.component",
+              "active": true,
+              "displayName": "Component"
             }
           ]
         },
@@ -69,7 +70,6 @@
         }
       }
     },
-    "objects": {},
     "visualContainerObjects": {
       "title": [
         {
@@ -100,5 +100,51 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "43acc6d5e8936db0381e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_components"
+              }
+            },
+            "Property": "component"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b0ad398643ed93be401a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_subsystem"
+              }
+            },
+            "Property": "name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "15abcd751949d75667a7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_components"
+              }
+            },
+            "Property": "Component error reduction"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

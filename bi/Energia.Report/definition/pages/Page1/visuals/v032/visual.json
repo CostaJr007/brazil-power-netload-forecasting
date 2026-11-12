@@ -26,8 +26,8 @@
                 }
               },
               "queryRef": "dim_hour.hour_label",
-              "displayName": "Hour",
-              "active": true
+              "active": true,
+              "displayName": "Hour"
             }
           ]
         },
@@ -205,5 +205,51 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "07a174e2103c0a4eb0bc",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_hour"
+              }
+            },
+            "Property": "hour_label"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "8fca430c1087e08706d2",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_net_load"
+              }
+            },
+            "Property": "Model MAE (MW)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "eaafbd14616b273ed4cc",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_net_load"
+              }
+            },
+            "Property": "Benchmark MAE (MW)"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

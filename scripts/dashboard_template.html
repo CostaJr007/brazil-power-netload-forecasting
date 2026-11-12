@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brazil net-load forecasting · Model vs grid operator</title>
+<meta name="description" content="Leakage-safe forecasts of Brazil's hourly net load (load − wind − solar) scored against the grid operator's own schedule.">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+<style>
+  :root {
+    --purple: #A100FF; --purple-dark: #7500C0; --lilac: #D2A5FF; --lilac-soft: #EFDDFF;
+    --ink: #000000; --ink-2: #3A3940; --muted: #66646E; --line: #E3E2E6; --surface: #FFFFFF; --bg: #F2F2F2;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif; font-size: 14px; line-height: 1.45; }
+  a { color: inherit; }
+  header { background: #000; color: #fff; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+  .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding: 28px 0 22px; }
+  .kicker { color: var(--purple); font-weight: 700; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+  header h1 { margin: 6px 0 6px; font-size: 30px; font-weight: 700; letter-spacing: -.01em; line-height: 1.15; }
+  header h1 .accent { color: var(--purple); }
+  .sub { color: #B9B8BE; font-size: 13px; }
+  .links { display: flex; gap: 10px; flex-shrink: 0; }
+  .links a { text-decoration: none; border: 1px solid #4A4950; color: #fff; padding: 8px 14px; font-size: 13px; font-weight: 600; }
+  .links a:hover { border-color: var(--purple); color: var(--purple); }
+  .links a.primary { background: var(--purple); border-color: var(--purple); }
+  .links a.primary:hover { background: #fff; color: #000; border-color: #fff; }
+  nav { display: flex; gap: 4px; border-top: 1px solid #222; overflow-x: auto; }
+  nav button { background: none; border: 0; color: #B9B8BE; font: inherit; font-weight: 600; padding: 14px 16px 12px; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; }
+  nav button:hover { color: #fff; }
+  nav button.on { color: #fff; border-bottom-color: var(--purple); }
+  main.wrap { padding-top: 30px; padding-bottom: 40px; }
+  section.tab { display: none; }
+  section.tab.on { display: block; }
+  .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 18px; flex-wrap: wrap; }
+  .head h2 { margin: 6px 0 0; font-size: 22px; font-weight: 700; max-width: 820px; line-height: 1.25; }
+  .filters { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
+  .filter label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 5px; }
+  .seg { display: inline-flex; background: #fff; border: 1px solid var(--line); }
+  .seg button { border: 0; background: none; font: inherit; font-size: 13px; padding: 7px 12px; cursor: pointer; color: var(--ink-2); }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button.on { background: #000; color: #fff; }
+  .seg button:hover:not(.on) { background: var(--lilac-soft); }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 14px; }
+  .kpi { background: var(--surface); padding: 16px 18px 14px; border-top: 3px solid #000; }
+  .kpi.hero { border-top-color: var(--purple); }
+  .kpi .v { font-size: 30px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .kpi .v small { font-size: 15px; font-weight: 600; color: var(--muted); margin-left: 2px; }
+  .kpi .l { font-size: 13px; font-weight: 600; margin-top: 4px; }
+  .kpi .n { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(12, 1fr); }
+  .card { background: var(--surface); padding: 16px 18px 10px; grid-column: span 12; min-width: 0; }
+  .c6 { grid-column: span 6; } .c4 { grid-column: span 4; } .c8 { grid-column: span 8; } .c3 { grid-column: span 3; }
+  .card h3 { margin: 0; font-size: 15px; font-weight: 700; }
+  .card .cap { color: var(--muted); font-size: 12.5px; margin: 2px 0 6px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--ink-2); margin: 4px 0 2px; }
+  .legend span::before { content: ""; display: inline-block; width: 14px; height: 3px; margin-right: 6px; vertical-align: middle; background: var(--c); }
+  .legend span.box::before { height: 10px; width: 12px; opacity: .55; }
+  .legend span.dash::before { background: repeating-linear-gradient(90deg, var(--c) 0 5px, transparent 5px 8px); }
+  .chart { width: 100%; height: 320px; }
+  .chart.tall { height: 400px; } .chart.short { height: 210px; } .chart.mini { height: 170px; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th { text-align: right; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 700; padding: 8px 10px; border-bottom: 2px solid #000; }
+  th:first-child, td:first-child { text-align: left; }
+  td { text-align: right; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+  td.pos { color: var(--purple-dark); font-weight: 700; }
+  td.neg { color: var(--muted); }
+  .heat td.cell { font-weight: 700; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 7px; }
+  .tag.win { background: var(--lilac-soft); color: var(--purple-dark); }
+  .tag.loss { background: #ECECEE; color: var(--muted); }
+  .note { color: var(--muted); font-size: 12px; margin-top: 16px; max-width: 1000px; }
+  .note b { color: var(--ink-2); }
+  .insight { background: #000; color: #fff; padding: 14px 18px; font-size: 13.5px; margin-bottom: 14px; display: flex; gap: 12px; }
+  .insight b { color: var(--purple); text-transform: uppercase; font-size: 11px; letter-spacing: .1em; white-space: nowrap; padding-top: 2px; }
+  footer { border-top: 1px solid var(--line); padding: 18px 0 30px; color: var(--muted); font-size: 12px; }
+  @media (max-width: 900px) { .c6, .c4, .c8, .c3 { grid-column: span 12; } header h1 { font-size: 24px; } .top { flex-direction: column; align-items: flex-start; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <div class="kicker">Brazil power system · Net-load forecasting</div>
+        <h1>Beating the grid operator's net-load schedule <span class="accent">with open data</span></h1>
+        <div class="sub" id="sub"></div>
+      </div>
+      <div class="links">
+        <a class="primary" href="https://github.com/CostaJr007/brazil-power-netload-forecasting/blob/main/docs/paper.md">Technical report</a>
+        <a href="https://github.com/CostaJr007/brazil-power-netload-forecasting">GitHub</a>
+      </div>
+    </div>
+    <nav id="nav">
+      <button data-tab="forecast">Forecast</button>
+      <button data-tab="scoreboard">Model vs ONS</button>
+      <button data-tab="drivers">Error drivers</button>
+      <button data-tab="audit">Live audit</button>
+      <button data-tab="system">System &amp; price</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- FORECAST -->
+  <section class="tab" id="forecast">
+    <div class="head">
+      <div><div class="kicker">Day-ahead forecast · latest decision</div><h2 id="fc-title"></h2></div>
+      <div class="filters">
+        <div class="filter"><label>Subsystem</label><div class="seg" id="fc-sub"></div></div>
+        <div class="filter"><label>Target day</label><div class="seg" id="fc-day"></div></div>
+      </div>
+    </div>
+    <div class="kpis" id="fc-kpis"></div>
+    <div class="grid">
+      <div class="card">
+        <h3>Net load by hour (MW)</h3>
+        <div class="cap">Net load = load − wind − solar: what hydro and thermal plants must cover. The band is an 80% interval from the model's own errors over the previous 120 days.</div>
+        <div class="legend"><span style="--c:#A100FF">Forecast</span><span class="box" style="--c:#D2A5FF">80% band</span><span class="dash" style="--c:#66646E">Benchmark</span></div>
+        <div class="chart tall" id="fc-chart"></div>
+      </div>
+      <div class="card" id="fc-multi-card">
+        <h3>By subsystem</h3>
+        <div class="cap">Same day, each region on its own scale.</div>
+        <div class="grid" id="fc-multi" style="gap:10px"></div>
+      </div>
+    </div>
+    <p class="note"><b>Benchmark:</b> previous-day ONS schedule bias-corrected by hour and weekday when the same-day schedule is not yet out, otherwise the ONS day-ahead schedule. <b>Sources:</b> ONS open data; Open-Meteo forecasts at plant and city locations (CC-BY 4.0).</p>
+  </section>
+
+  <!-- SCOREBOARD -->
+  <section class="tab" id="scoreboard">
+    <div class="head">
+      <div><div class="kicker">Model vs grid operator · walk-forward backtest</div><h2 id="sc-title"></h2></div>
+      <div class="filters">
+        <div class="filter"><label>Horizon</label><div class="seg" id="sc-hz"></div></div>
+        <div class="filter"><label>Period</label><div class="seg" id="sc-per"></div></div>
+        <div class="filter"><label>Subsystem</label><div class="seg" id="sc-sub"></div></div>
+      </div>
+    </div>
+    <div class="kpis" id="sc-kpis"></div>
+    <div class="grid">
+      <div class="card c6">
+        <h3>Mean absolute error by month (MW)</h3>
+        <div class="cap">Lower is better.</div>
+        <div class="legend"><span style="--c:#A100FF">Model</span><span style="--c:#66646E">Benchmark</span></div>
+        <div class="chart" id="sc-month"></div>
+      </div>
+      <div class="card c6">
+        <h3 id="sc-hour-title">Error by hour of day (MW)</h3>
+        <div class="cap" id="sc-hour-cap"></div>
+        <div class="legend"><span style="--c:#A100FF">Model</span><span style="--c:#66646E">Benchmark</span></div>
+        <div class="chart" id="sc-hour"></div>
+      </div>
+      <div class="card c4">
+        <h3>By day type</h3>
+        <div class="cap" id="sc-type-cap"></div>
+        <div id="sc-type"></div>
+      </div>
+      <div class="card c8">
+        <h3>Daily model bias (MW)</h3>
+        <div class="cap" id="sc-bias-cap"></div>
+        <div class="chart short" id="sc-bias"></div>
+      </div>
+    </div>
+    <p class="note"><b>Benchmark:</b> D+1 = ONS day-ahead schedule (DESSEM); D+2 = previous-day ONS schedule bias-corrected by hour and weekday (no same-day schedule exists yet). Model recipes were selected on 2025 and frozen; 2026 is pure out-of-sample validation. MAE = mean absolute error of hourly net load. Research tables score candidates on a common sample (D+1: 11.2%); this view uses every available hour.</p>
+  </section>
+
+  <!-- DRIVERS -->
+  <section class="tab" id="drivers">
+    <div class="head">
+      <div><div class="kicker">Where the error comes from · load, wind and solar</div><h2 id="dr-title"></h2></div>
+      <div class="filters">
+        <div class="filter"><label>Horizon</label><div class="seg" id="dr-hz"></div></div>
+        <div class="filter"><label>Period</label><div class="seg" id="dr-per"></div></div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card c6">
+        <h3>Error reduction vs benchmark</h3>
+        <div class="cap">By component and subsystem. Purple = model better, grey = benchmark better.</div>
+        <div id="dr-matrix"></div>
+      </div>
+      <div class="card c6">
+        <h3>MAE by component, all subsystems (MW)</h3>
+        <div class="cap">Each component is forecast separately; net load = load − wind − solar.</div>
+        <div class="legend"><span style="--c:#A100FF">Model</span><span style="--c:#66646E">Benchmark</span></div>
+        <div class="chart short" id="dr-bars"></div>
+      </div>
+      <div class="card">
+        <h3>Monthly bias by component (MW)</h3>
+        <div class="cap">Above zero = over-forecast. One panel per component, same scale.</div>
+        <div class="grid" style="gap:10px"><div class="c4"><div class="chart mini" id="dr-b-load"></div></div><div class="c4"><div class="chart mini" id="dr-b-wind"></div></div><div class="c4"><div class="chart mini" id="dr-b-solar"></div></div></div>
+      </div>
+    </div>
+    <p class="note"><b>Reading:</b> load gains come mostly from correcting the operator's level bias plus forecast temperature; wind gains grow with the horizon, because yesterday's schedule does not know the wind front two days out.</p>
+  </section>
+
+  <!-- AUDIT -->
+  <section class="tab" id="audit">
+    <div class="head">
+      <div><div class="kicker">Live replay · forecasts as issued at 10 pm the day before</div><h2 id="au-title"></h2></div>
+      <div class="filters">
+        <div class="filter"><label>Step</label><div class="seg" id="au-step"></div></div>
+        <div class="filter"><label>Subsystem</label><div class="seg" id="au-sub"></div></div>
+      </div>
+    </div>
+    <div class="kpis" id="au-kpis"></div>
+    <div class="grid">
+      <div class="card c8">
+        <h3>Net load by hour (MW)</h3>
+        <div class="legend"><span style="--c:#A100FF">Forecast</span><span style="--c:#000000">Actual</span></div>
+        <div class="chart tall" id="au-chart"></div>
+      </div>
+      <div class="card c4">
+        <h3>Day by day</h3>
+        <div class="cap">MAE in MW.</div>
+        <div id="au-days"></div>
+      </div>
+    </div>
+    <div class="insight"><b>What we learned</b><span>During the Nov 3–7 heat wave the operator's bias flipped sign; the 28-day bias correction kept removing the old bias and D+1 lost to the operator. D+2 still won by about 20%. Nothing was retuned: adjusting to one bad week would be overfitting.</span></div>
+    <p class="note">Each forecast was rebuilt with only the data available at 10 pm the night before: data cut at that time, archived weather, frozen recipes. Actuals are today's ONS balance; the most recent day is still preliminary.</p>
+  </section>
+
+  <!-- SYSTEM -->
+  <section class="tab" id="system">
+    <div class="head">
+      <div><div class="kicker">System context · generation, hydrology and price</div><h2 id="sy-title"></h2></div>
+      <div class="filters"><div class="filter"><label>Year</label><div class="seg" id="sy-year"></div></div></div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h3>Generation mix, national grid</h3>
+        <div class="cap">Share of average generation in the selected year.</div>
+        <div class="chart" style="height:120px" id="sy-mix"></div>
+      </div>
+      <div class="card">
+        <h3>Reservoir storage (% of capacity)</h3>
+        <div class="cap">Weekly mean by subsystem. Hydro reservoirs are Brazil's battery: low storage raises the marginal cost.</div>
+        <div class="grid" style="gap:10px" id="sy-storage"></div>
+      </div>
+      <div class="card c6">
+        <h3>Natural inflow, national grid (% of long-term mean)</h3>
+        <div class="cap">Weekly mean. Above 100% = wetter than usual.</div>
+        <div class="chart short" id="sy-inflow"></div>
+      </div>
+      <div class="card c6">
+        <h3>Estimated spot price by subsystem (R$/MWh)</h3>
+        <div class="cap">Weekly mean of the marginal cost clipped to the regulator's floor and cap.</div>
+        <div id="sy-price"></div>
+      </div>
+    </div>
+    <p class="note"><b>Source:</b> ONS open data. The official CCEE spot price was not reachable from the project's network (HTTP 403), so price is estimated from the operator's marginal cost (CMO) with the regulator's limits.</p>
+  </section>
+</main>
+
+<footer><div class="wrap" id="foot"></div></footer>
+
+<script>
+const D = /*__DATA__*/null;
+const C = { purple: "#A100FF", dark: "#7500C0", lilac: "#D2A5FF", grey: "#66646E", ink: "#000000", grid: "#ECEBEF" };
+const SUBS = ["SIN", "SE", "S", "NE", "N"];
+const fmt = (v, d = 0) => v == null ? "–" : Number(v).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const gw = v => v == null ? "–" : (v / 1000).toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const pct = (v, d = 1) => v == null ? "–" : `${fmt(Math.abs(v), d)}%`;
+const hh = h => `${String(h).padStart(2, "0")}:00`;
+const CFG = { displayModeBar: false, responsive: true };
+
+function base(extra = {}) {
+  return Object.assign({
+    margin: { l: 56, r: 16, t: 8, b: 36 }, paper_bgcolor: "#fff", plot_bgcolor: "#fff", showlegend: false,
+    font: { family: "Segoe UI, Inter, Helvetica Neue, Arial, sans-serif", size: 12, color: "#3A3940" },
+    hovermode: "x unified", hoverlabel: { bgcolor: "#fff", bordercolor: "#000", font: { color: "#000", size: 12 } },
+    xaxis: { showgrid: false, linecolor: "#000", ticks: "outside", tickcolor: "#000", ticklen: 4, fixedrange: true },
+    yaxis: { gridcolor: C.grid, zeroline: false, linecolor: "rgba(0,0,0,0)", fixedrange: true, separatethousands: true, tickformat: ",~s" },
+  }, extra);
+}
+const line = (x, y, color, name, extra = {}) => Object.assign({ x, y, name, type: "scatter", mode: "lines", line: { color, width: 2 }, hovertemplate: `${name}: %{y:,.0f}<extra></extra>` }, extra);
+
+function seg(id, options, value, onChange) {
+  const el = document.getElementById(id);
+  el.innerHTML = options.map(([v, t]) => `<button data-v="${v}" class="${v === value ? "on" : ""}">${t}</button>`).join("");
+  el.onclick = e => { const b = e.target.closest("button"); if (!b) return; [...el.children].forEach(c => c.classList.toggle("on", c === b)); onChange(b.dataset.v); };
+}
+const kpi = (v, l, n = "", hero = false) => `<div class="kpi${hero ? " hero" : ""}"><div class="v">${v}</div><div class="l">${l}</div><div class="n">${n}</div></div>`;
+
+/* ---------- Forecast ---------- */
+const fcState = { sub: "SIN", day: null };
+function renderForecast() {
+  const F = D.forecast; if (!F.series) return;
+  const keys = Object.keys(F.series);
+  const days = [...new Set(keys.map(k => k.split("|")[0]))].sort();
+  if (!fcState.day) fcState.day = days[0];
+  seg("fc-day", days.map(d => [d, new Date(d + "T12:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })]), fcState.day, v => { fcState.day = v; renderForecast(); });
+  const key = keys.find(k => k.startsWith(fcState.day + "|") && k.endsWith("|" + fcState.sub));
+  const s = F.series[key]; if (!s) return;
+  const step = key.split("|")[1];
+  const mean = s.f.reduce((a, b) => a + b, 0) / s.f.length, bmean = s.b.reduce((a, b) => a + b, 0) / s.b.length;
+  const ip = s.f.indexOf(Math.max(...s.f));
+  const dayTxt = new Date(fcState.day + "T12:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  document.getElementById("fc-title").textContent = `${D.names[fcState.sub]}: net load expected to average ${gw(mean)} GW on ${dayTxt}, peaking at ${gw(s.f[ip])} GW at ${hh(s.h[ip])}`;
+  document.getElementById("fc-kpis").innerHTML =
+    kpi(`${gw(mean)}<small>GW</small>`, "Average forecast", s.horizon === step ? `${step} forecast` : `${step} target · ${s.horizon} recipe (yesterday's data not yet published)`, true) +
+    kpi(`${gw(s.f[ip])}<small>GW</small>`, "Peak", `at ${hh(s.h[ip])}`) +
+    kpi(`${gw(s.lo[ip])}–${gw(s.hi[ip])}`, "80% band at the peak", "GW") +
+    kpi(`${gw(bmean)}<small>GW</small>`, "Benchmark average", `model is ${fmt(Math.abs(mean - bmean))} MW ${mean >= bmean ? "higher" : "lower"}`) +
+    kpi(D.forecast.decision, "Decision date", "issued the evening before");
+  const x = s.h.map(hh);
+  Plotly.react("fc-chart", [
+    { x, y: s.hi, type: "scatter", mode: "lines", line: { width: 0 }, hoverinfo: "skip" },
+    { x, y: s.lo, type: "scatter", mode: "lines", fill: "tonexty", fillcolor: "rgba(210,165,255,0.45)", line: { width: 0 }, name: "80% band", hovertemplate: "Band: %{y:,.0f}<extra></extra>" },
+    line(x, s.b, C.grey, "Benchmark", { line: { color: C.grey, width: 2, dash: "dash" } }),
+    line(x, s.f, C.purple, "Forecast", { line: { color: C.purple, width: 3 } }),
+  ], base({ yaxis: Object.assign(base().yaxis, { tickformat: ",.0f" }) }), CFG);
+  // small multiples
+  const multi = document.getElementById("fc-multi");
+  multi.innerHTML = ["SE", "S", "NE", "N"].map(sb => `<div class="c3"><div style="font-size:12.5px;font-weight:700">${D.names[sb]}</div><div class="chart mini" id="fc-m-${sb}"></div></div>`).join("");
+  ["SE", "S", "NE", "N"].forEach(sb => {
+    const k = keys.find(kk => kk.startsWith(fcState.day + "|") && kk.endsWith("|" + sb)); const m = F.series[k]; if (!m) return;
+    const xx = m.h.map(hh);
+    Plotly.react(`fc-m-${sb}`, [
+      { x: xx, y: m.hi, type: "scatter", mode: "lines", line: { width: 0 }, hoverinfo: "skip" },
+      { x: xx, y: m.lo, type: "scatter", mode: "lines", fill: "tonexty", fillcolor: "rgba(210,165,255,0.45)", line: { width: 0 }, hoverinfo: "skip" },
+      line(xx, m.b, C.grey, "Benchmark", { line: { color: C.grey, width: 1.5, dash: "dash" } }),
+      line(xx, m.f, C.purple, "Forecast"),
+    ], base({ margin: { l: 44, r: 6, t: 4, b: 26 }, xaxis: Object.assign(base().xaxis, { nticks: 4 }), yaxis: Object.assign(base().yaxis, { nticks: 4 }) }), CFG);
+  });
+}
+
+/* ---------- Scoreboard ---------- */
+const scState = { hz: "D+1", per: "validation (2026)", sub: "SIN" };
+function renderScore() {
+  const s = D.score[`${scState.hz}|${scState.per}|${scState.sub}`]; if (!s) return;
+  const better = s.gain >= 0;
+  document.getElementById("sc-title").textContent =
+    `${D.names[scState.sub]}, ${scState.hz}: model error is ${pct(s.gain)} ${better ? "lower" : "higher"} than the benchmark, beating it on ${s.win}% of ${s.days} days`;
+  document.getElementById("sc-kpis").innerHTML =
+    kpi(`${better ? "−" : "+"}${pct(s.gain)}`, "Error vs benchmark", "MAE reduction", true) +
+    kpi(`${fmt(s.mae_m)}<small>MW</small>`, "Model MAE", "hourly") +
+    kpi(`${fmt(s.mae_b)}<small>MW</small>`, "Benchmark MAE", scState.hz === "D+1" ? "ONS day-ahead schedule" : "corrected T−1 schedule") +
+    kpi(`${s.win}%`, "Days the model wins", `of ${s.days} days`) +
+    kpi(s.cov == null ? "–" : `${fmt(s.cov, 1)}%`, "80% band coverage", "target 80%");
+  Plotly.react("sc-month", [
+    { x: s.month.x, y: s.month.m, type: "bar", name: "Model", marker: { color: C.purple, line: { color: "#fff", width: 2 } }, hovertemplate: "Model: %{y:,.0f}<extra></extra>" },
+    { x: s.month.x, y: s.month.b, type: "bar", name: "Benchmark", marker: { color: C.grey, line: { color: "#fff", width: 2 } }, hovertemplate: "Benchmark: %{y:,.0f}<extra></extra>" },
+  ], base({ barmode: "group", bargap: 0.25, yaxis: Object.assign(base().yaxis, { tickformat: ",.0f" }) }), CFG);
+  const hrs = [...Array(24).keys()].map(hh);
+  const iw = s.hour.m.indexOf(Math.max(...s.hour.m));
+  document.getElementById("sc-hour-cap").textContent = `The model's hardest hour is ${hh(iw)} (${fmt(s.hour.m[iw])} MW).` + (iw >= 9 && iw <= 15 ? " Late morning is when solar ramps and solar forecast errors peak." : "");
+  Plotly.react("sc-hour", [line(hrs, s.hour.b, C.grey, "Benchmark"), line(hrs, s.hour.m, C.purple, "Model", { line: { color: C.purple, width: 3 } })],
+    base({ xaxis: Object.assign(base().xaxis, { nticks: 8 }), yaxis: Object.assign(base().yaxis, { tickformat: ",.0f" }) }), CFG);
+  const rows = s.dtype.map(t => `<tr><td>${t.t}</td><td>${fmt(t.m)}</td><td>${fmt(t.b)}</td><td>${fmt(t.bias)}</td><td>${t.d}</td></tr>`).join("");
+  document.getElementById("sc-type").innerHTML = `<table><tr><th>Day type</th><th>Model</th><th>Bench.</th><th>Bias</th><th>Days</th></tr>${rows}</table>`;
+  const hol = s.dtype.find(t => t.t === "holiday"), wk = s.dtype.find(t => t.t === "weekday");
+  document.getElementById("sc-type-cap").textContent = hol && wk ? (hol.m > wk.m ? `Holidays are harder (${fmt(hol.m)} vs ${fmt(wk.m)} MW)` + (hol.m < hol.b ? ", but the model still beats the benchmark." : ", and the benchmark wins there.") : "No holiday penalty in this selection.") : "MAE in MW.";
+  document.getElementById("sc-bias-cap").textContent = `Below zero = under-forecast. ${s.outages ? s.outages + " day(s) with ONS telemetry outages (Northeast wind missing from the published balance) are excluded." : ""}`;
+  Plotly.react("sc-bias", [line(s.bias.x, s.bias.y, C.purple, "Bias", { line: { color: C.purple, width: 1.5 } })],
+    base({ shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 0, y1: 0, line: { color: "#000", width: 1 } }], yaxis: Object.assign(base().yaxis, { tickformat: ",.0f" }) }), CFG);
+}
+
+/* ---------- Drivers ---------- */
+const drState = { hz: "D+1", per: "validation (2026)" };
+const COMP = { load: "Load", wind: "Wind", solar: "Solar" };
+function renderDrivers() {
+  const s = D.drivers[`${drState.hz}|${drState.per}`]; if (!s) return;
+  const worst = Object.entries(s.total).sort((a, b) => b[1].m - a[1].m)[0];
+  document.getElementById("dr-title").textContent =
+    `${COMP[worst[0]]} is the largest error source (${fmt(worst[1].m)} MW MAE); across components the model ${s.gain_all >= 0 ? "cuts error by" : "adds error of"} ${pct(s.gain_all)} vs the benchmark`;
+  const subs = ["SE", "S", "NE", "N"];
+  const shade = g => g == null ? "" : g >= 0 ? `background:rgba(161,0,255,${Math.min(0.08 + g / 100, 0.6)});color:${g > 35 ? "#fff" : "#3a006b"}` : "background:#ECECEE;color:#66646E";
+  const rows = Object.keys(COMP).map(c => `<tr><td><b>${COMP[c]}</b></td>${subs.map(sb => { const v = s.matrix[c][sb]; return `<td class="cell" style="${shade(v && v.gain)}" title="Model ${v ? fmt(v.m) : "–"} MW · Benchmark ${v ? fmt(v.b) : "–"} MW">${v ? (v.gain >= 0 ? "−" : "+") + pct(v.gain) : "–"}</td>`; }).join("")}</tr>`).join("");
+  document.getElementById("dr-matrix").innerHTML = `<table class="heat"><tr><th></th>${subs.map(sb => `<th>${D.names[sb]}</th>`).join("")}</tr>${rows}</table><div class="cap" style="margin-top:8px">Cell = change in MAE vs benchmark (− = less error). Hover a cell for MW values.</div>`;
+  const comps = Object.keys(COMP);
+  Plotly.react("dr-bars", [
+    { y: comps.map(c => COMP[c]), x: comps.map(c => s.total[c].b), type: "bar", orientation: "h", name: "Benchmark", marker: { color: C.grey, line: { color: "#fff", width: 2 } }, hovertemplate: "Benchmark: %{x:,.0f}<extra></extra>" },
+    { y: comps.map(c => COMP[c]), x: comps.map(c => s.total[c].m), type: "bar", orientation: "h", name: "Model", marker: { color: C.purple, line: { color: "#fff", width: 2 } }, hovertemplate: "Model: %{x:,.0f}<extra></extra>" },
+  ], base({ barmode: "group", hovermode: "y unified", margin: { l: 56, r: 16, t: 4, b: 30 }, xaxis: Object.assign(base().xaxis, { showgrid: true, gridcolor: C.grid, tickformat: ",.0f" }), yaxis: { fixedrange: true, autorange: "reversed" } }), CFG);
+  const all = comps.flatMap(c => s.bias[c] || []).filter(v => v != null);
+  const lim = Math.max(...all.map(Math.abs)) * 1.1;
+  comps.forEach(c => Plotly.react(`dr-b-${c}`, [line(s.bias.x, s.bias[c], C.purple, COMP[c], { mode: "lines+markers", marker: { size: 6, color: C.purple, line: { color: "#fff", width: 1 } } })],
+    base({ margin: { l: 44, r: 8, t: 22, b: 28 }, title: { text: COMP[c], font: { size: 12.5 }, x: 0, xanchor: "left", y: 0.98 }, shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 0, y1: 0, line: { color: "#000", width: 1 } }], xaxis: Object.assign(base().xaxis, { nticks: 4 }), yaxis: Object.assign(base().yaxis, { range: [-lim, lim], tickformat: ",.0f" }) }), CFG));
+}
+
+/* ---------- Audit ---------- */
+const auState = { step: "D+1", sub: "SIN" };
+function renderAudit() {
+  const s = D.audit[`${auState.step}|${auState.sub}`]; if (!s) return;
+  const won = s.gain >= 0;
+  document.getElementById("au-title").textContent = `${s.start}–${s.end}, ${auState.step}: model error ${pct(s.gain)} ${won ? "below" : "above"} the benchmark`;
+  const wins = s.days.filter(d => d.win).length;
+  document.getElementById("au-kpis").innerHTML =
+    kpi(`${won ? "−" : "+"}${pct(s.gain)}`, "Error vs benchmark", won ? "model won the week" : "benchmark won the week", true) +
+    kpi(`${fmt(s.mae_m)}<small>MW</small>`, "Model MAE", "hourly") + kpi(`${fmt(s.mae_b)}<small>MW</small>`, "Benchmark MAE", "hourly") +
+    kpi(`${wins}/${s.days.length}`, "Days the model wins", "");
+  Plotly.react("au-chart", [line(s.x, s.a, C.ink, "Actual"), line(s.x, s.f, C.purple, "Forecast", { line: { color: C.purple, width: 2.5 } })],
+    base({ xaxis: Object.assign(base().xaxis, { type: "date", tickformat: "%a %d" }), yaxis: Object.assign(base().yaxis, { tickformat: ",.0f" }) }), CFG);
+  document.getElementById("au-days").innerHTML = `<table><tr><th>Day</th><th>Model</th><th>Bench.</th><th></th></tr>${s.days.map(d => `<tr><td>${d.d}</td><td>${fmt(d.m)}</td><td>${fmt(d.b)}</td><td><span class="tag ${d.win ? "win" : "loss"}">${d.win ? "Model" : "Bench."}</span></td></tr>`).join("")}</table>`;
+}
+
+/* ---------- System ---------- */
+const syState = { year: null };
+function renderSystem() {
+  const years = Object.keys(D.system).sort();
+  if (!syState.year) syState.year = years[years.length - 1];
+  seg("sy-year", years.map(y => [y, y]), syState.year, v => { syState.year = v; renderSystem(); });
+  const s = D.system[syState.year];
+  const ws = (s.mix.wind || 0) + (s.mix.solar || 0);
+  document.getElementById("sy-title").textContent = `${syState.year}: hydro supplied ${fmt(s.mix.hydro)}% of generation, wind and solar ${fmt(ws)}%, thermal ${fmt(s.mix.thermal)}%`;
+  const order = [["hydro", "Hydro", C.purple], ["wind", "Wind", C.dark], ["solar", "Solar", C.lilac], ["thermal", "Thermal", C.grey]];
+  Plotly.react("sy-mix", order.map(([k, n, c]) => ({
+    y: [""], x: [s.mix[k]], type: "bar", orientation: "h", name: n, marker: { color: c, line: { color: "#fff", width: 2 } },
+    text: [`${n} ${fmt(s.mix[k])}%`], textposition: "inside", insidetextanchor: "middle", textfont: { color: k === "solar" ? "#000" : "#fff", size: 13 },
+    hovertemplate: `${n}: %{x:.1f}% · ${fmt(s.mix_mw[k])} MW avg<extra></extra>`,
+  })), base({ barmode: "stack", hovermode: "closest", margin: { l: 0, r: 0, t: 4, b: 4 }, xaxis: { visible: false, range: [0, 100], fixedrange: true }, yaxis: { visible: false, fixedrange: true } }), CFG);
+  const st = document.getElementById("sy-storage");
+  st.innerHTML = ["SE", "S", "NE", "N"].map(sb => `<div class="c3"><div style="font-size:12.5px;font-weight:700">${D.names[sb]} <span style="color:#66646E;font-weight:400">· now ${fmt(s.storage_last[sb], 0)}%</span></div><div class="chart mini" id="sy-st-${sb}"></div></div>`).join("");
+  ["SE", "S", "NE", "N"].forEach(sb => Plotly.react(`sy-st-${sb}`, [line(s.storage.x, s.storage[sb], C.purple, "Storage %", { fill: "tozeroy", fillcolor: "rgba(161,0,255,0.08)", hovertemplate: "%{y:.0f}%<extra></extra>" })],
+    base({ margin: { l: 36, r: 6, t: 4, b: 26 }, xaxis: Object.assign(base().xaxis, { type: "date", tickformat: "%b", nticks: 4 }), yaxis: Object.assign(base().yaxis, { range: [0, 100], ticksuffix: "%", tickformat: "" }) }), CFG));
+  Plotly.react("sy-inflow", [line(s.inflow.x, s.inflow.y, C.purple, "Inflow", { hovertemplate: "%{y:.0f}% of mean<extra></extra>" })],
+    base({ shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 100, y1: 100, line: { color: "#000", width: 1, dash: "dot" } }], xaxis: Object.assign(base().xaxis, { type: "date", tickformat: "%b" }), yaxis: Object.assign(base().yaxis, { ticksuffix: "%", tickformat: "" }) }), CFG);
+  const pr = document.getElementById("sy-price");
+  pr.innerHTML = `<div class="grid" style="gap:8px">${["SE", "S", "NE", "N"].map(sb => `<div class="c6"><div style="font-size:12px;font-weight:700">${D.names[sb]} <span style="color:#66646E;font-weight:400">· avg R$ ${fmt(s.price_mean[sb])}</span></div><div class="chart" style="height:120px" id="sy-pr-${sb}"></div></div>`).join("")}</div>`;
+  const pmax = Math.max(...["SE", "S", "NE", "N"].flatMap(sb => (s.price[sb] || []).filter(v => v != null))) * 1.08;
+  ["SE", "S", "NE", "N"].forEach(sb => Plotly.react(`sy-pr-${sb}`, [line(s.price.x, s.price[sb], C.purple, "Price", { line: { color: C.purple, width: 1.5 }, hovertemplate: "R$ %{y:,.0f}<extra></extra>" })],
+    base({ margin: { l: 40, r: 6, t: 2, b: 22 }, xaxis: Object.assign(base().xaxis, { type: "date", tickformat: "%b", nticks: 4 }), yaxis: Object.assign(base().yaxis, { range: [0, pmax], tickformat: ",.0f", nticks: 3 }) }), CFG));
+}
+
+/* ---------- Wiring ---------- */
+const SUBOPTS = SUBS.map(s => [s, s === "SIN" ? "National" : s]);
+const RENDER = { forecast: renderForecast, scoreboard: renderScore, drivers: renderDrivers, audit: renderAudit, system: renderSystem };
+function show(tab) {
+  if (!RENDER[tab]) tab = "forecast";
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
+  document.querySelectorAll("section.tab").forEach(s => s.classList.toggle("on", s.id === tab));
+  history.replaceState(null, "", `#tab=${tab}`);
+  RENDER[tab]();
+  window.dispatchEvent(new Event("resize"));
+}
+document.getElementById("nav").onclick = e => { const b = e.target.closest("button"); if (b) show(b.dataset.tab); };
+seg("fc-sub", SUBOPTS, fcState.sub, v => { fcState.sub = v; renderForecast(); });
+seg("sc-hz", [["D+1", "D+1"], ["D+2", "D+2"]], scState.hz, v => { scState.hz = v; renderScore(); });
+seg("sc-per", Object.entries(D.periods), scState.per, v => { scState.per = v; renderScore(); });
+seg("sc-sub", SUBOPTS, scState.sub, v => { scState.sub = v; renderScore(); });
+seg("dr-hz", [["D+1", "D+1"], ["D+2", "D+2"]], drState.hz, v => { drState.hz = v; renderDrivers(); });
+seg("dr-per", Object.entries(D.periods), drState.per, v => { drState.per = v; renderDrivers(); });
+seg("au-step", [["D+1", "D+1"], ["D+2", "D+2"]], auState.step, v => { auState.step = v; renderAudit(); });
+seg("au-sub", SUBOPTS, auState.sub, v => { auState.sub = v; renderAudit(); });
+document.getElementById("sub").textContent = `Walk-forward backtest · recipes selected on 2025, validated on 2026 · data refreshed ${D.generated}`;
+document.getElementById("foot").innerHTML = `Personal portfolio project. Data: ONS open data, Open-Meteo (CC-BY 4.0), CPTEC/INPE MERGE, NOAA GFS, ECMWF Open Data. Not investment advice. · <a href="https://github.com/CostaJr007/brazil-power-netload-forecasting">Source code and methodology</a>`;
+show((location.hash.match(/tab=(\w+)/) || [])[1] || "forecast");
+</script>
+</body>
+</html>

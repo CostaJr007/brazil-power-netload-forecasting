@@ -20,6 +20,7 @@ File and function names follow the Portuguese domain vocabulary of the Brazilian
 | `baixar_previsao_renovaveis.py` | Archived forecasts (48/72/96 h ahead) of wind and radiation at plant cells |
 | `prever_carga_liquida.py` | **Operational forecast** of tomorrow's and the day after's net load, with frozen recipes, current weather and an 80% band |
 | `exportar_bi.py` / `gerar_projeto_bi.py` / `relatorio_bi.py` | Star-schema BI tables (`data/bi/`), Power BI semantic model (TMDL) and report pages (PBIR) in `bi/` |
+| `gerar_dashboard_html.py` / `dashboard_template.html` | Static HTML dashboard (single file, Plotly) in `docs/dashboard/`, from the same BI tables |
 | `auditar_previsoes.py` | Replays the operational forecast over a past week and compares with what happened |
 | `carga_liquida_d1.py` | Net load by component vs the ONS DESSEM schedule: D+1 (default) or `--horizonte 2` (see `docs/research/carga_liquida_d1.md` and `carga_liquida_d2.md`) |
 | `solar_usinas.py` / `solar_irradiancia.py` | Solar plant ranking, NASA POWER radiation and measured irradiance including curtailment |

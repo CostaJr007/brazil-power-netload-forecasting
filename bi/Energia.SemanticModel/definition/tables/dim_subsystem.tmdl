@@ -1,18 +1,22 @@
 table dim_subsystem
+	lineageTag: df5d0e06-7258-478d-99f2-d23a095851f0
 
 	column subsystem
 		dataType: string
+		lineageTag: 7f1d06ea-9c14-45f0-9e8a-d2352a16269d
 		summarizeBy: none
 		sourceColumn: subsystem
 
 	column name
 		dataType: string
+		lineageTag: b96232f2-43a6-42cf-923c-511bf019d7fd
 		summarizeBy: none
 		sourceColumn: name
 		sortByColumn: sort_order
 
 	column sort_order
 		dataType: int64
+		lineageTag: 52e087b4-e78b-432f-9604-24041c721083
 		summarizeBy: none
 		sourceColumn: sort_order
 
@@ -24,3 +28,4 @@ table dim_subsystem
 				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"name", type text}, {"sort_order", Int64.Type}})
 				in
 				    Tipos
+

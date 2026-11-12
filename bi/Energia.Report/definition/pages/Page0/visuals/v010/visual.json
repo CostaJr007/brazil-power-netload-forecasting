@@ -26,8 +26,8 @@
                 }
               },
               "queryRef": "dim_hour.hour_label",
-              "displayName": "Hour",
-              "active": true
+              "active": true,
+              "displayName": "Hour"
             }
           ]
         },
@@ -313,5 +313,79 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "84d59c8ee05488c1a0cb",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_hour"
+              }
+            },
+            "Property": "hour_label"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "948f25682d7054c1ea90",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_forecast"
+              }
+            },
+            "Property": "Average forecast (MW)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f93b9489e587c33e4013",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_forecast"
+              }
+            },
+            "Property": "Forecast benchmark (MW)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "11b34bee3481c0d4776b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_forecast"
+              }
+            },
+            "Property": "Forecast band low"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "d47214b0ec2000a102b1",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_forecast"
+              }
+            },
+            "Property": "Forecast band high"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

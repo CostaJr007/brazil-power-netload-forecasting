@@ -1,17 +1,21 @@
 table dim_hour
+	lineageTag: e8f817ed-5e34-4fd5-bad6-ea9d65923703
 
 	column hour
 		dataType: int64
+		lineageTag: ac6ab938-6ea5-4778-bb45-ea04397ffc11
 		summarizeBy: none
 		sourceColumn: hour
 
 	column hour_label
 		dataType: string
+		lineageTag: 40a690e8-55b4-4367-8628-063c5915c96b
 		summarizeBy: none
 		sourceColumn: hour_label
 
 	column day_part
 		dataType: string
+		lineageTag: a36434ec-e648-4c8d-81a9-f20d1d923b5a
 		summarizeBy: none
 		sourceColumn: day_part
 
@@ -23,3 +27,4 @@ table dim_hour
 				    Tipos = Table.TransformColumnTypes(Fonte, {{"hour", Int64.Type}, {"hour_label", type text}, {"day_part", type text}})
 				in
 				    Tipos
+

@@ -26,8 +26,8 @@
                 }
               },
               "queryRef": "dim_date.day_type",
-              "displayName": "Day type",
-              "active": true
+              "active": true,
+              "displayName": "Day type"
             }
           ]
         },
@@ -93,7 +93,6 @@
         }
       }
     },
-    "objects": {},
     "visualContainerObjects": {
       "title": [
         {

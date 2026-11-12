@@ -150,5 +150,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "fd9d018e54b0c6ac3ed3",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_subsystem"
+              }
+            },
+            "Property": "subsystem"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

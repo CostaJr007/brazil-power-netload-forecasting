@@ -1,27 +1,33 @@
 table run_info
+	lineageTag: 8bcc0e80-d575-4f20-8bb0-601d6b95164d
 
 	column generated_at
 		dataType: string
+		lineageTag: 22a6636e-edb6-4e97-97b9-916e170389d3
 		summarizeBy: none
 		sourceColumn: generated_at
 
 	column recipe_d1
 		dataType: string
+		lineageTag: 7f610410-f3a3-495a-b3a0-b0c4714efd56
 		summarizeBy: none
 		sourceColumn: recipe_d1
 
 	column recipe_d2
 		dataType: string
+		lineageTag: 2b946b76-8231-4fdd-b364-14bd921697b5
 		summarizeBy: none
 		sourceColumn: recipe_d2
 
 	column benchmark_d1
 		dataType: string
+		lineageTag: d04297e7-6f58-4274-9ed5-5f1eb604a648
 		summarizeBy: none
 		sourceColumn: benchmark_d1
 
 	column benchmark_d2
 		dataType: string
+		lineageTag: 6f4eb6dd-23f2-4bdb-8c7d-c71196b66a7c
 		summarizeBy: none
 		sourceColumn: benchmark_d2
 
@@ -33,3 +39,4 @@ table run_info
 				    Tipos = Table.TransformColumnTypes(Fonte, {{"generated_at", type text}, {"recipe_d1", type text}, {"recipe_d2", type text}, {"benchmark_d1", type text}, {"benchmark_d2", type text}})
 				in
 				    Tipos
+

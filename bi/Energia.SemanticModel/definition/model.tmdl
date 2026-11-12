@@ -3,3 +3,33 @@ model Model
 	defaultPowerBIDataSourceVersion: powerBI_V3
 	discourageImplicitMeasures
 	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["dim_date","dim_hour","dim_subsystem","fact_audit","fact_components","fact_forecast","fact_inflow_basin","fact_net_load","fact_price_daily","fact_storage_daily","fact_system_daily","run_info","PastaDados"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_date
+ref table dim_hour
+ref table dim_subsystem
+ref table fact_audit
+ref table fact_components
+ref table fact_forecast
+ref table fact_inflow_basin
+ref table fact_net_load
+ref table fact_price_daily
+ref table fact_storage_daily
+ref table fact_system_daily
+ref table run_info
+ref table DateTableTemplate_3a4c9151-b4b4-4096-a73b-b95f8bc6097c
+ref table LocalDateTable_73ce5628-351e-49fc-bd81-e5e32cf9b873
+ref table LocalDateTable_e2aac4ea-dd26-4028-816c-f9cfd3a6d4c8
+ref table LocalDateTable_76263bc4-0e9a-405b-b6c4-a453f39c5bf7
+ref table LocalDateTable_7bc93dc3-70e2-448a-8c4f-0a21de89b17a
+
+ref cultureInfo en-US
+
