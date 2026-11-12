@@ -84,6 +84,7 @@ especial. Os parâmetros foram escolhidos em ago–dez/2025 e confirmados em 202
 - **Programação DESSEM publicada pela metade** (136 dias-subsistema): entram só horas completas.
 - **Último dia do balanço:** sai preliminar e fica fora do backtest.
 - **Revisões da carga verificada:** cada uma é preservada na Bronze.
+- **Falhas de telemetria do ONS:** em 3 dias de 2026 (16/01, 07/03 e 09/05) o balanço publicado perdeu quase toda a eólica do Nordeste (0,2–0,5 GW contra ~12 GW programados pelo próprio ONS). Eles **continuam** nos números principais, que são portanto conservadores; sem eles, o ganho sobe para 12,6% em D+1 e 27,7% em D+2. O BI marca esses dias e os tira do gráfico de viés diário.
 - **Previsões do tempo:** são as **arquivadas como emitidas** (Open-Meteo Previous Runs), não a reanálise. Assim não há "previsão perfeita" escondida.
 
 ## Limitações honestas

@@ -1,18 +1,18 @@
 table fact_audit
 
-	measure 'Audit model MAE (MW)' = AVERAGEX(fact_audit, ABS(fact_audit[forecast] - fact_audit[actual]))
+	measure 'Audit model MAE (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(fact_audit, ABS(fact_audit[forecast] - fact_audit[actual])), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Audit benchmark MAE (MW)' = AVERAGEX(fact_audit, ABS(fact_audit[benchmark] - fact_audit[actual]))
+	measure 'Audit benchmark MAE (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(fact_audit, ABS(fact_audit[benchmark] - fact_audit[actual])), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
 	measure 'Audit error reduction' = DIVIDE([Audit benchmark MAE (MW)] - [Audit model MAE (MW)], [Audit benchmark MAE (MW)])
 		formatString: 0.0%
 
-	measure 'Audit actual (MW)' = AVERAGE(fact_audit[actual])
+	measure 'Audit actual (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_audit[actual]), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Audit forecast (MW)' = AVERAGE(fact_audit[forecast])
+	measure 'Audit forecast (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_audit[forecast]), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
 	measure 'Headline audit' = IF(ISBLANK([Audit model MAE (MW)]), "No audit for this selection", "Replay of " & FORMAT(MIN(fact_audit[date]), "mmm d") & "–" & FORMAT(MAX(fact_audit[date]), "mmm d") & ": model error " & FORMAT(ABS([Audit error reduction]), "0.0%") & IF([Audit error reduction] >= 0, " below", " above") & " the benchmark")

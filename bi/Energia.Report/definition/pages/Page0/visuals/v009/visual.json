@@ -3,7 +3,7 @@
   "name": "v009",
   "position": {
     "x": 950,
-    "y": 100,
+    "y": 108,
     "z": 900,
     "height": 96,
     "width": 310
@@ -50,6 +50,20 @@
                       "Value": "'#000000'"
                     }
                   }
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1.0D"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
                 }
               }
             }

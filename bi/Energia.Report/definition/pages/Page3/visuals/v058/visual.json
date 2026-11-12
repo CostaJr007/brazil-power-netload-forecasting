@@ -26,6 +26,7 @@
                 }
               },
               "queryRef": "fact_audit.timestamp",
+              "displayName": "Hour",
               "active": true
             }
           ]
@@ -43,7 +44,8 @@
                   "Property": "Audit forecast (MW)"
                 }
               },
-              "queryRef": "fact_audit.Audit forecast (MW)"
+              "queryRef": "fact_audit.Audit forecast (MW)",
+              "displayName": "Forecast"
             },
             {
               "field": {
@@ -56,7 +58,8 @@
                   "Property": "Audit actual (MW)"
                 }
               },
-              "queryRef": "fact_audit.Audit actual (MW)"
+              "queryRef": "fact_audit.Audit actual (MW)",
+              "displayName": "Actual"
             }
           ]
         }

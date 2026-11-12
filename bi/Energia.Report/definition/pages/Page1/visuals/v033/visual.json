@@ -26,6 +26,7 @@
                 }
               },
               "queryRef": "dim_date.day_type",
+              "displayName": "Day type",
               "active": true
             }
           ]
@@ -43,7 +44,8 @@
                   "Property": "Model MAE (MW)"
                 }
               },
-              "queryRef": "fact_net_load.Model MAE (MW)"
+              "queryRef": "fact_net_load.Model MAE (MW)",
+              "displayName": "Model MAE (MW)"
             },
             {
               "field": {
@@ -56,7 +58,8 @@
                   "Property": "Benchmark MAE (MW)"
                 }
               },
-              "queryRef": "fact_net_load.Benchmark MAE (MW)"
+              "queryRef": "fact_net_load.Benchmark MAE (MW)",
+              "displayName": "Benchmark MAE (MW)"
             },
             {
               "field": {
@@ -69,7 +72,8 @@
                   "Property": "Model bias (MW)"
                 }
               },
-              "queryRef": "fact_net_load.Model bias (MW)"
+              "queryRef": "fact_net_load.Model bias (MW)",
+              "displayName": "Bias (MW)"
             },
             {
               "field": {
@@ -82,7 +86,8 @@
                   "Property": "Days evaluated"
                 }
               },
-              "queryRef": "fact_net_load.Days evaluated"
+              "queryRef": "fact_net_load.Days evaluated",
+              "displayName": "Days"
             }
           ]
         }

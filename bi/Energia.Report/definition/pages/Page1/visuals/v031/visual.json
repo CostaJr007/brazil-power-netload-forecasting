@@ -26,6 +26,7 @@
                 }
               },
               "queryRef": "dim_date.year_month",
+              "displayName": "Month",
               "active": true
             }
           ]
@@ -43,7 +44,8 @@
                   "Property": "Model MAE (MW)"
                 }
               },
-              "queryRef": "fact_net_load.Model MAE (MW)"
+              "queryRef": "fact_net_load.Model MAE (MW)",
+              "displayName": "Model"
             },
             {
               "field": {
@@ -56,7 +58,8 @@
                   "Property": "Benchmark MAE (MW)"
                 }
               },
-              "queryRef": "fact_net_load.Benchmark MAE (MW)"
+              "queryRef": "fact_net_load.Benchmark MAE (MW)",
+              "displayName": "Benchmark"
             }
           ]
         }

@@ -1,42 +1,45 @@
 table fact_net_load
 
-	measure 'Model MAE (MW)' = AVERAGEX(fact_net_load, ABS(fact_net_load[forecast] - fact_net_load[actual]))
+	measure 'Model MAE (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(fact_net_load, ABS(fact_net_load[forecast] - fact_net_load[actual])), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Benchmark MAE (MW)' = AVERAGEX(fact_net_load, ABS(fact_net_load[benchmark] - fact_net_load[actual]))
+	measure 'Benchmark MAE (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(fact_net_load, ABS(fact_net_load[benchmark] - fact_net_load[actual])), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'ONS schedule MAE (MW)' = AVERAGEX(FILTER(fact_net_load, NOT ISBLANK(fact_net_load[ons_schedule])), ABS(fact_net_load[ons_schedule] - fact_net_load[actual]))
+	measure 'ONS schedule MAE (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(FILTER(fact_net_load, NOT ISBLANK(fact_net_load[ons_schedule])), ABS(fact_net_load[ons_schedule] - fact_net_load[actual])), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
 	measure 'Error reduction vs benchmark' = DIVIDE([Benchmark MAE (MW)] - [Model MAE (MW)], [Benchmark MAE (MW)])
 		formatString: 0.0%
 
-	measure 'Model bias (MW)' = AVERAGEX(fact_net_load, fact_net_load[forecast] - fact_net_load[actual])
+	measure 'Model bias (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(fact_net_load, fact_net_load[forecast] - fact_net_load[actual]), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'MAPE model' = AVERAGEX(FILTER(fact_net_load, fact_net_load[actual] <> 0), ABS(fact_net_load[forecast] - fact_net_load[actual]) / ABS(fact_net_load[actual]))
+	measure 'MAPE model' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(FILTER(fact_net_load, fact_net_load[actual] <> 0), ABS(fact_net_load[forecast] - fact_net_load[actual]) / ABS(fact_net_load[actual])), dim_subsystem[subsystem] = _s)
 		formatString: 0.00%
 
-	measure 'Actual (MW)' = AVERAGE(fact_net_load[actual])
+	measure 'Actual (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_net_load[actual]), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Forecast (MW)' = AVERAGE(fact_net_load[forecast])
+	measure 'Forecast (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_net_load[forecast]), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Benchmark (MW)' = AVERAGE(fact_net_load[benchmark])
+	measure 'Benchmark (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_net_load[benchmark]), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Band 80% low' = AVERAGE(fact_net_load[band_low])
+	measure 'Band 80% low' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_net_load[band_low]), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Band 80% high' = AVERAGE(fact_net_load[band_high])
+	measure 'Band 80% high' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_net_load[band_high]), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure '80% band coverage' = VAR withBand = FILTER(fact_net_load, NOT ISBLANK(fact_net_load[band_low])) RETURN DIVIDE(COUNTROWS(FILTER(withBand, fact_net_load[actual] >= fact_net_load[band_low] && fact_net_load[actual] <= fact_net_load[band_high])), COUNTROWS(withBand))
+	measure '80% band coverage' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(DIVIDE(COUNTROWS(FILTER(fact_net_load, NOT ISBLANK(fact_net_load[band_low]) && fact_net_load[actual] >= fact_net_load[band_low] && fact_net_load[actual] <= fact_net_load[band_high])), COUNTROWS(FILTER(fact_net_load, NOT ISBLANK(fact_net_load[band_low])))), dim_subsystem[subsystem] = _s)
 		formatString: 0.0%
 
-	measure 'Days evaluated' = DISTINCTCOUNT(fact_net_load[date])
+	measure 'Model bias excl. outages (MW)' = CALCULATE([Model bias (MW)], fact_net_load[telemetry_outage] = FALSE())
+		formatString: #,0
+
+	measure 'Days evaluated' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(DISTINCTCOUNT(fact_net_load[date]), dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
 	measure 'Days model wins' = SUMX(VALUES(dim_date[date]), IF(NOT ISBLANK([Model MAE (MW)]) && [Model MAE (MW)] < [Benchmark MAE (MW)], 1, 0))
@@ -103,6 +106,11 @@ table fact_net_load
 		summarizeBy: none
 		sourceColumn: period
 
+	column telemetry_outage
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: telemetry_outage
+
 	column timestamp
 		dataType: dateTime
 		formatString: yyyy-mm-dd hh:nn
@@ -114,6 +122,6 @@ table fact_net_load
 		source =
 				let
 				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_net_load.parquet")),
-				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"hour", Int64.Type}, {"forecast", type number}, {"actual", type number}, {"benchmark", type number}, {"ons_schedule", type number}, {"band_low", type number}, {"band_high", type number}, {"horizon", type text}, {"period", type text}, {"timestamp", type datetime}})
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"hour", Int64.Type}, {"forecast", type number}, {"actual", type number}, {"benchmark", type number}, {"ons_schedule", type number}, {"band_low", type number}, {"band_high", type number}, {"horizon", type text}, {"period", type text}, {"telemetry_outage", type logical}, {"timestamp", type datetime}})
 				in
 				    Tipos

@@ -69,6 +69,7 @@ to candidate variables before any retraining.
 - **Half-published DESSEM schedules** (136 subsystem-days): only complete hours are used.
 - **Last day of the balance** is preliminary and stays out of the backtest.
 - **Verified-load revisions** are each preserved in Bronze.
+- **ONS telemetry outages:** on 3 days of 2026 (Jan 16, Mar 7, May 9) the published balance lost most Northeast wind (0.2–0.5 GW reported vs ~12 GW scheduled by ONS itself). They are **kept** in the headline numbers, which are therefore conservative; excluding them, the gain rises to 12.6% at D+1 and 27.7% at D+2. The dashboard flags these days and leaves them out of the daily bias chart.
 - **Weather forecasts** are **archived as issued** (Open-Meteo Previous Runs), not reanalysis, so there is no hidden "perfect forecast".
 
 ## Honest limitations

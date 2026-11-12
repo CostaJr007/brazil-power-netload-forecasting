@@ -94,7 +94,7 @@ def _container(n, x, y, w, h, visual):
             "position": {"x": x, "y": y, "z": n * 100, "height": h, "width": w}, "visual": visual}
 
 
-GRAFICOS = {"lineChart", "clusteredColumnChart", "stackedAreaChart"}
+GRAFICOS = {"lineChart", "clusteredColumnChart", "clusteredBarChart", "stackedAreaChart"}
 
 
 def visual(medidas, n, tipo, x, y, w, h, papeis, titulo=None, ordem=None, selecionado=None, objetos=None, cores=None, finas=None):
@@ -104,8 +104,11 @@ def visual(medidas, n, tipo, x, y, w, h, papeis, titulo=None, ordem=None, seleci
     for papel, refs in papeis.items():
         proj = []
         for k, r in enumerate(refs):
+            r, rotulo = r if isinstance(r, tuple) else (r, None)
             item = {"field": q.campo(r), "queryRef": r}
-            if k == 0 and papel in ("Category", "Rows", "Values") and tipo in ("slicer", "lineChart", "clusteredColumnChart", "stackedAreaChart", "pivotTable"):
+            if rotulo:
+                item["displayName"] = rotulo
+            if k == 0 and papel in ("Category", "Rows", "Values") and tipo in ("slicer", "lineChart", "clusteredColumnChart", "clusteredBarChart", "stackedAreaChart", "pivotTable"):
                 if papel != "Values" or tipo == "slicer":
                     item["active"] = True
             proj.append(item)
@@ -134,12 +137,14 @@ def visual(medidas, n, tipo, x, y, w, h, papeis, titulo=None, ordem=None, seleci
     return _container(n, x, y, w, h, visual)
 
 
-def texto(n, x, y, w, h, partes):
-    """Caixa de texto; partes = [(texto, tamanho, cor, negrito)]."""
+def texto(n, x, y, w, h, partes, fundo=None):
+    """Caixa de texto; partes = [(texto, tamanho, cor, negrito)]; fundo = cor de fundo opcional."""
     paragrafos = [{"textRuns": [{"value": t, "textStyle": {"fontSize": f"{tam}pt", "color": cor, **({"fontWeight": "bold"} if negrito else {})}}]}
                   for t, tam, cor, negrito in partes]
     visual = {"visualType": "textbox", "objects": {"general": [{"properties": {"paragraphs": paragrafos}}]},
-              "visualContainerObjects": {"background": _props(show=False)}, "drillFilterOtherVisuals": True}
+              "visualContainerObjects": {"background": _props(show=True, color=_cor(fundo), transparency=0.0) if fundo else _props(show=False),
+                                         **({"padding": _props(left=20.0, top=8.0)} if fundo else {})},
+              "drillFilterOtherVisuals": True}
     return _container(n, x, y, w, h, visual)
 
 
@@ -148,11 +153,13 @@ def paginas(medidas):
     v = lambda *a, **k: visual(medidas, *a, **k)  # noqa: E731
 
     def cabecalho(n, rotulo, manchete_medida):
-        manchete = v(n + 1, "card", 14, 30, 880, 46, {"Values": [manchete_medida]},
-                     objetos={"labels": _props(fontSize=14.0, color=_cor(PRETO), fontFamily="Segoe UI Semibold"),
+        manchete = v(n + 1, "card", 14, 32, 880, 54, {"Values": [manchete_medida]},
+                     objetos={"labels": _props(fontSize=15.0, color=_cor("#FFFFFF"), fontFamily="Segoe UI Semibold"),
                               "categoryLabels": _props(show=False)})
         manchete["visual"]["visualContainerObjects"]["background"] = _props(show=False)
-        return [texto(n, 20, 6, 880, 28, [(rotulo.upper(), 9, ROXO, True)]), manchete]
+        rotulo_faixa = texto(n, 0, 0, LARGURA, 96, [(rotulo.upper(), 9, ROXO, True)], fundo=PRETO)
+        rotulo_faixa["position"]["z"] = 0   # faixa preta atrás da manchete e dos filtros
+        return [rotulo_faixa, manchete]
 
     def rodape(n, pagina):
         return texto(n, 20, 688, 1240, 30, [(RODAPES[pagina], 7, CINZA, False)])
@@ -162,7 +169,7 @@ def paginas(medidas):
 
     def kpi(n, x, y, ref, w):
         return v(n, "card", x, y, w, 96, {"Values": [ref]},
-                 objetos={"labels": _props(fontSize=22.0, color=_cor(PRETO)),
+                 objetos={"labels": _props(fontSize=22.0, color=_cor(PRETO), labelDisplayUnits=1.0, labelPrecision=0),
                           "categoryLabels": _props(show=True, color=_cor(CINZA), fontSize=9.0)})
 
     sin = ["SIN"]
@@ -174,13 +181,13 @@ def paginas(medidas):
         segmentacao(3, 900, "dim_subsystem.subsystem", "Subsystem", sin, 120),
         segmentacao(4, 1030, fc + "date", "Target day", w=120),
         segmentacao(5, 1160, fc + "step", "Step", w=100),
-        kpi(6, 20, 100, fc + "Latest decision", 300),
-        kpi(7, 330, 100, fc + "Average forecast (MW)", 300),
-        kpi(8, 640, 100, fc + "Forecast peak (MW)", 300),
-        kpi(9, 950, 100, fc + "Forecast benchmark (MW)", 310),
+        kpi(6, 20, 108, fc + "Latest decision", 300),
+        kpi(7, 330, 108, fc + "Average forecast (MW)", 300),
+        kpi(8, 640, 108, fc + "Forecast peak (MW)", 300),
+        kpi(9, 950, 108, fc + "Forecast benchmark (MW)", 310),
         v(10, "lineChart", 20, 210, 1240, 470,
-          {"Category": ["dim_hour.hour_label"], "Y": [fc + "Average forecast (MW)", fc + "Forecast benchmark (MW)",
-                                                      fc + "Forecast band low", fc + "Forecast band high"]},
+          {"Category": [("dim_hour.hour_label", "Hour")], "Y": [(fc + "Average forecast (MW)", "Forecast"), (fc + "Forecast benchmark (MW)", "Benchmark"),
+                                                                (fc + "Forecast band low", "80% band, low"), (fc + "Forecast band high", "80% band, high")]},
           "Net load (load − wind − solar), MW by hour: forecast (purple), 80% band (lilac), benchmark (grey)", ordem="dim_hour.hour_label",
           cores={fc + "Average forecast (MW)": ROXO, fc + "Forecast benchmark (MW)": CINZA, fc + "Forecast band low": LILAS, fc + "Forecast band high": LILAS},
           finas=[fc + "Forecast band low", fc + "Forecast band high", fc + "Forecast benchmark (MW)"]),
@@ -196,25 +203,31 @@ def paginas(medidas):
         kpi(28, 520, 100, nl + "Error reduction vs benchmark", 240),
         kpi(29, 770, 100, nl + "Days model wins (%)", 240),
         kpi(30, 1020, 100, nl + "80% band coverage", 240),
-        v(31, "clusteredColumnChart", 20, 206, 620, 236, {"Category": ["dim_date.year_month"], "Y": list(modelo_regua)},
+        v(31, "clusteredColumnChart", 20, 206, 620, 236, {"Category": [("dim_date.year_month", "Month")], "Y": [(nl + "Model MAE (MW)", "Model"), (nl + "Benchmark MAE (MW)", "Benchmark")]},
           "MAE by month (MW): model (purple) vs benchmark (grey)", ordem="dim_date.year_month", cores=modelo_regua),
-        v(32, "lineChart", 660, 206, 600, 236, {"Category": ["dim_hour.hour"], "Y": list(modelo_regua)},
-          "MAE by hour of day (MW): late morning, when solar ramps, is the hardest", ordem="dim_hour.hour", cores=modelo_regua),
-        v(33, "pivotTable", 20, 452, 620, 230, {"Rows": ["dim_date.day_type"], "Values": [nl + "Model MAE (MW)", nl + "Benchmark MAE (MW)",
-                                                                                        nl + "Model bias (MW)", nl + "Days evaluated"]},
+        v(32, "lineChart", 660, 206, 600, 236, {"Category": [("dim_hour.hour_label", "Hour")], "Y": [(nl + "Model MAE (MW)", "Model"), (nl + "Benchmark MAE (MW)", "Benchmark")]},
+          "MAE by hour of day (MW): late morning, when solar ramps, is the hardest", ordem="dim_hour.hour_label", cores=modelo_regua),
+        v(33, "pivotTable", 20, 452, 620, 230, {"Rows": [("dim_date.day_type", "Day type")], "Values": [(nl + "Model MAE (MW)", "Model MAE (MW)"),
+                                                                                                    (nl + "Benchmark MAE (MW)", "Benchmark MAE (MW)"),
+                                                                                                    (nl + "Model bias (MW)", "Bias (MW)"), (nl + "Days evaluated", "Days")]},
           "By day type: holidays and weekends are harder, but the model still beats the benchmark"),
-        v(34, "lineChart", 660, 452, 600, 230, {"Category": ["dim_date.date"], "Y": [nl + "Model bias (MW)"]},
-          "Daily model bias (MW; below zero = under-forecast)", ordem="dim_date.date", cores={nl + "Model bias (MW)": ROXO}),
+        v(34, "lineChart", 660, 452, 600, 230, {"Category": [("dim_date.date", "Date")], "Y": [(nl + "Model bias excl. outages (MW)", "Bias")]},
+          "Daily model bias (MW; below zero = under-forecast), ONS telemetry-outage days excluded", ordem="dim_date.date",
+          cores={nl + "Model bias excl. outages (MW)": ROXO}),
         rodape(35, "Model vs ONS"),
     ]
     componentes = [
         *cabecalho(41, "Where the error comes from · load, wind and solar", cp + "Headline components"),
         segmentacao(43, 1020, cp + "horizon", "Horizon", ["D+1"], 90),
         segmentacao(44, 1120, cp + "period", "Period", ["validation (2026)"], 140),
-        v(45, "pivotTable", 20, 100, 1240, 260, {"Rows": [cp + "component"], "Columns": ["dim_subsystem.name"],
-                                                 "Values": [cp + "Component model MAE (MW)", cp + "Component benchmark MAE (MW)", cp + "Component error reduction"]},
-          "MAE by component and subsystem (MW) and error reduction vs the benchmark"),
-        v(46, "lineChart", 20, 372, 1240, 310, {"Category": ["dim_date.year_month"], "Y": [cp + "Component bias (MW)"], "Series": [cp + "component"]},
+        v(45, "pivotTable", 20, 108, 620, 252, {"Rows": [(cp + "component", "Component")], "Columns": [("dim_subsystem.name", "Subsystem")],
+                                                "Values": [(cp + "Component error reduction", "Error reduction")]},
+          "Error reduction vs the benchmark, by component and subsystem"),
+        v(48, "clusteredBarChart", 660, 108, 600, 252, {"Category": [(cp + "component", "Component")],
+                                                         "Y": [(cp + "Component model MAE (MW)", "Model"), (cp + "Component benchmark MAE (MW)", "Benchmark")]},
+          "MAE by component, all subsystems (MW): model (purple) vs benchmark (grey)",
+          cores={cp + "Component model MAE (MW)": ROXO, cp + "Component benchmark MAE (MW)": CINZA_CLARO}),
+        v(46, "lineChart", 20, 372, 1240, 310, {"Category": [("dim_date.year_month", "Month")], "Y": [(cp + "Component bias (MW)", "Bias")], "Series": [(cp + "component", "Component")]},
           "Monthly bias by component (MW; above zero = over-forecast)", ordem="dim_date.year_month"),
         rodape(47, "Error drivers"),
     ]
@@ -225,7 +238,7 @@ def paginas(medidas):
         kpi(55, 20, 100, au + "Audit model MAE (MW)", 405),
         kpi(56, 437, 100, au + "Audit benchmark MAE (MW)", 405),
         kpi(57, 855, 100, au + "Audit error reduction", 405),
-        v(58, "lineChart", 20, 210, 1240, 470, {"Category": [au + "timestamp"], "Y": [au + "Audit forecast (MW)", au + "Audit actual (MW)"]},
+        v(58, "lineChart", 20, 210, 1240, 470, {"Category": [(au + "timestamp", "Hour")], "Y": [(au + "Audit forecast (MW)", "Forecast"), (au + "Audit actual (MW)", "Actual")]},
           "Net load by hour (MW): forecast (purple) vs actual (black)", ordem=au + "timestamp",
           cores={au + "Audit forecast (MW)": ROXO, au + "Audit actual (MW)": PRETO}),
         rodape(59, "Live audit"),
@@ -233,7 +246,7 @@ def paginas(medidas):
     sistema = [
         *cabecalho(61, "System context · generation, hydrology and price", sy + "Headline system"),
         segmentacao(63, 1060, "dim_date.year", "Year", [2026], 200),
-        v(64, "stackedAreaChart", 20, 100, 620, 290, {"Category": ["dim_date.year_month"], "Y": [sy + "Hydro (MW)", sy + "Wind (MW)", sy + "Solar (MW)", sy + "Thermal (MW)"]},
+        v(64, "stackedAreaChart", 20, 100, 620, 290, {"Category": [("dim_date.year_month", "Month")], "Y": [(sy + "Hydro (MW)", "Hydro"), (sy + "Wind (MW)", "Wind"), (sy + "Solar (MW)", "Solar"), (sy + "Thermal (MW)", "Thermal")]},
           "Monthly generation by source, national grid (average MW)", ordem="dim_date.year_month",
           cores={sy + "Hydro (MW)": ROXO, sy + "Wind (MW)": LILAS, sy + "Solar (MW)": CINZA_CLARO, sy + "Thermal (MW)": CINZA}),
         v(65, "lineChart", 660, 100, 600, 290, {"Category": ["dim_date.date"], "Y": ["fact_storage_daily.Reservoir storage %"], "Series": ["dim_subsystem.name"]},

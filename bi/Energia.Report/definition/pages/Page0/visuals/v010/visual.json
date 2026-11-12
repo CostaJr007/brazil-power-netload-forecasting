@@ -26,6 +26,7 @@
                 }
               },
               "queryRef": "dim_hour.hour_label",
+              "displayName": "Hour",
               "active": true
             }
           ]
@@ -43,7 +44,8 @@
                   "Property": "Average forecast (MW)"
                 }
               },
-              "queryRef": "fact_forecast.Average forecast (MW)"
+              "queryRef": "fact_forecast.Average forecast (MW)",
+              "displayName": "Forecast"
             },
             {
               "field": {
@@ -56,7 +58,8 @@
                   "Property": "Forecast benchmark (MW)"
                 }
               },
-              "queryRef": "fact_forecast.Forecast benchmark (MW)"
+              "queryRef": "fact_forecast.Forecast benchmark (MW)",
+              "displayName": "Benchmark"
             },
             {
               "field": {
@@ -69,7 +72,8 @@
                   "Property": "Forecast band low"
                 }
               },
-              "queryRef": "fact_forecast.Forecast band low"
+              "queryRef": "fact_forecast.Forecast band low",
+              "displayName": "80% band, low"
             },
             {
               "field": {
@@ -82,7 +86,8 @@
                   "Property": "Forecast band high"
                 }
               },
-              "queryRef": "fact_forecast.Forecast band high"
+              "queryRef": "fact_forecast.Forecast band high",
+              "displayName": "80% band, high"
             }
           ]
         }

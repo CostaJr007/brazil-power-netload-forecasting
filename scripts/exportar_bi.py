@@ -54,7 +54,7 @@ COLUNAS_EN = {"subsistema": "subsystem", "data": "date", "hora": "hour", "previs
               "dia_semana_num": "weekday_num", "dia_semana": "weekday", "fim_de_semana": "is_weekend", "feriado": "is_holiday",
               "tipo_dia": "day_type", "hora_texto": "hour_label", "faixa": "day_part", "nome": "name", "ordem": "sort_order",
               "gerado_em": "generated_at", "receita_d1": "recipe_d1", "receita_d2": "recipe_d2", "regua_d1": "benchmark_d1",
-              "regua_d2": "benchmark_d2"}
+              "regua_d2": "benchmark_d2", "falha_telemetria": "telemetry_outage"}
 PECAS_EN = {"carga": "load", "eolica": "wind", "solar": "solar"}
 
 
@@ -86,6 +86,16 @@ def fatos_backtest():
     pec = pd.concat(pecas, ignore_index=True)
     pec["periodo"] = periodo(pec["data"])
     return liq, pec, info
+
+
+def dias_falha_telemetria(pec, limite=0.15, minimo_mw=1000, horas=6):
+    """Dias em que o balanço do ONS perdeu usinas: eólica/solar verificada < 15% da programação do próprio ONS
+    (com programação > 1 GW) em 6+ horas de um subsistema. Detectado em D+1, onde a régua é a programação do dia.
+    Ex.: 16/01, 07/03 e 09/05/2026, eólica do NE com 0,2–0,5 GW contra ~12 GW programados."""
+    r = pec[(pec["horizonte"] == "D+1") & pec["peca"].isin(["eolica", "solar"])]
+    suspeitas = r[(r["real"] < limite * r["regua"]) & (r["regua"] > minimo_mw)]
+    contagem = suspeitas.groupby(["subsistema", "data"]).size()
+    return set(contagem[contagem >= horas].index.get_level_values("data"))
 
 
 def fato_previsao():
@@ -149,6 +159,10 @@ def dimensoes(datas):
 def main():
     DESTINO.mkdir(parents=True, exist_ok=True)
     liq, pec, info = fatos_backtest()
+    falhas = dias_falha_telemetria(pec)
+    print(f"Dias com falha de telemetria no balanço do ONS: {sorted(str(d.date()) for d in falhas)}")
+    liq["falha_telemetria"] = liq["data"].isin(falhas)
+    pec["falha_telemetria"] = pec["data"].isin(falhas)
     tabelas = {"fato_carga_liquida": liq, "fato_pecas": pec, "fato_previsao": fato_previsao(), "fato_auditoria": fato_auditoria(), **views_gold()}
     datas = pd.concat([t["data"] for t in tabelas.values() if len(t)])
     dim_data, dim_hora, dim_sub = dimensoes(datas)

@@ -3,19 +3,19 @@ table fact_forecast
 	measure 'Latest decision' = CALCULATE(MAX(fact_forecast[decision_date]), ALL(fact_forecast))
 		formatString: yyyy-mm-dd
 
-	measure 'Average forecast (MW)' = VAR d = [Latest decision] RETURN CALCULATE(AVERAGE(fact_forecast[forecast]), fact_forecast[decision_date] = d)
+	measure 'Average forecast (MW)' = VAR d = [Latest decision] VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_forecast[forecast]), fact_forecast[decision_date] = d, dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Forecast band low' = VAR d = [Latest decision] RETURN CALCULATE(AVERAGE(fact_forecast[band_low]), fact_forecast[decision_date] = d)
+	measure 'Forecast band low' = VAR d = [Latest decision] VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_forecast[band_low]), fact_forecast[decision_date] = d, dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Forecast band high' = VAR d = [Latest decision] RETURN CALCULATE(AVERAGE(fact_forecast[band_high]), fact_forecast[decision_date] = d)
+	measure 'Forecast band high' = VAR d = [Latest decision] VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_forecast[band_high]), fact_forecast[decision_date] = d, dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Forecast benchmark (MW)' = VAR d = [Latest decision] RETURN CALCULATE(AVERAGE(fact_forecast[benchmark]), fact_forecast[decision_date] = d)
+	measure 'Forecast benchmark (MW)' = VAR d = [Latest decision] VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_forecast[benchmark]), fact_forecast[decision_date] = d, dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
-	measure 'Forecast peak (MW)' = VAR d = [Latest decision] RETURN CALCULATE(MAX(fact_forecast[forecast]), fact_forecast[decision_date] = d)
+	measure 'Forecast peak (MW)' = VAR d = [Latest decision] VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(MAX(fact_forecast[forecast]), fact_forecast[decision_date] = d, dim_subsystem[subsystem] = _s)
 		formatString: #,0
 
 	measure 'Headline forecast' = VAR d = [Latest decision] RETURN IF(ISBLANK([Average forecast (MW)]), "No forecast for this selection", "Net load expected to average " & FORMAT([Average forecast (MW)] / 1000, "0.0") & " GW, peaking at " & FORMAT([Forecast peak (MW)] / 1000, "0.0") & " GW (decision of " & FORMAT(d, "mmm d") & ")")

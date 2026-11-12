@@ -3,9 +3,9 @@
   "name": "v002",
   "position": {
     "x": 14,
-    "y": 30,
+    "y": 32,
     "z": 200,
-    "height": 46,
+    "height": 54,
     "width": 880
   },
   "visual": {
@@ -38,7 +38,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14.0D"
+                  "Value": "15.0D"
                 }
               }
             },
@@ -47,7 +47,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#000000'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }

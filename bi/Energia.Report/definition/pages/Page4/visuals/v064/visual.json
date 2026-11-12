@@ -26,6 +26,7 @@
                 }
               },
               "queryRef": "dim_date.year_month",
+              "displayName": "Month",
               "active": true
             }
           ]
@@ -43,7 +44,8 @@
                   "Property": "Hydro (MW)"
                 }
               },
-              "queryRef": "fact_system_daily.Hydro (MW)"
+              "queryRef": "fact_system_daily.Hydro (MW)",
+              "displayName": "Hydro"
             },
             {
               "field": {
@@ -56,7 +58,8 @@
                   "Property": "Wind (MW)"
                 }
               },
-              "queryRef": "fact_system_daily.Wind (MW)"
+              "queryRef": "fact_system_daily.Wind (MW)",
+              "displayName": "Wind"
             },
             {
               "field": {
@@ -69,7 +72,8 @@
                   "Property": "Solar (MW)"
                 }
               },
-              "queryRef": "fact_system_daily.Solar (MW)"
+              "queryRef": "fact_system_daily.Solar (MW)",
+              "displayName": "Solar"
             },
             {
               "field": {
@@ -82,7 +86,8 @@
                   "Property": "Thermal (MW)"
                 }
               },
-              "queryRef": "fact_system_daily.Thermal (MW)"
+              "queryRef": "fact_system_daily.Thermal (MW)",
+              "displayName": "Thermal"
             }
           ]
         }

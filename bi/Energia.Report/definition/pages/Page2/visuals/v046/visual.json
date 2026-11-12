@@ -26,6 +26,7 @@
                 }
               },
               "queryRef": "dim_date.year_month",
+              "displayName": "Month",
               "active": true
             }
           ]
@@ -43,7 +44,8 @@
                   "Property": "Component bias (MW)"
                 }
               },
-              "queryRef": "fact_components.Component bias (MW)"
+              "queryRef": "fact_components.Component bias (MW)",
+              "displayName": "Bias"
             }
           ]
         },
@@ -60,7 +62,8 @@
                   "Property": "component"
                 }
               },
-              "queryRef": "fact_components.component"
+              "queryRef": "fact_components.component",
+              "displayName": "Component"
             }
           ]
         }

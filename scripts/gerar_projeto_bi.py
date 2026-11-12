@@ -43,8 +43,9 @@ MEDIDAS = {
         "Benchmark (MW)": (f"AVERAGE({NL}[benchmark])", "#,0"),
         "Band 80% low": (f"AVERAGE({NL}[band_low])", "#,0"),
         "Band 80% high": (f"AVERAGE({NL}[band_high])", "#,0"),
-        "80% band coverage": (f"VAR withBand = FILTER({NL}, NOT ISBLANK({NL}[band_low])) RETURN DIVIDE(COUNTROWS(FILTER(withBand, "
-                              f"{NL}[actual] >= {NL}[band_low] && {NL}[actual] <= {NL}[band_high])), COUNTROWS(withBand))", "0.0%"),
+        "80% band coverage": (f"DIVIDE(COUNTROWS(FILTER({NL}, NOT ISBLANK({NL}[band_low]) && {NL}[actual] >= {NL}[band_low] && "
+                              f"{NL}[actual] <= {NL}[band_high])), COUNTROWS(FILTER({NL}, NOT ISBLANK({NL}[band_low]))))", "0.0%"),
+        "Model bias excl. outages (MW)": ("CALCULATE([Model bias (MW)], " + NL + "[telemetry_outage] = FALSE())", "#,0"),
         "Days evaluated": (f"DISTINCTCOUNT({NL}[date])", "#,0"),
         "Days model wins": ("SUMX(VALUES(dim_date[date]), IF(NOT ISBLANK([Model MAE (MW)]) && [Model MAE (MW)] < [Benchmark MAE (MW)], 1, 0))", "#,0"),
         "Days model wins (%)": ("DIVIDE([Days model wins], [Days evaluated])", "0%"),
@@ -53,11 +54,11 @@ MEDIDAS = {
                                 'FORMAT([Days model wins (%)], "0%") & " of days")', ""),
     },
     "fact_components": {
-        "Headline components": ('VAR top = TOPN(1, VALUES(fact_components[component]), [Component model MAE (MW)]) '
-                                'VAR comp = MAXX(top, fact_components[component]) VAR r = [Component error reduction] '
-                                'RETURN IF(ISBLANK([Component model MAE (MW)]), "No data for this selection", "Largest error source: " & comp & " (" & '
-                                'FORMAT(MAXX(top, [Component model MAE (MW)]), "#,0") & " MW MAE). Across components the model " & '
-                                'IF(r >= 0, "cuts error by ", "adds error of ") & FORMAT(ABS(r), "0.0%") & " vs the benchmark")', ""),
+        "Headline components": ('VAR mx = MAXX(VALUES(fact_components[component]), [Component model MAE (MW)]) '
+                                'VAR comp = CONCATENATEX(FILTER(VALUES(fact_components[component]), [Component model MAE (MW)] = mx), fact_components[component], ", ") '
+                                'VAR r = [Component error reduction] '
+                                'RETURN IF(ISBLANK(mx), "No data for this selection", "Largest error source: " & comp & " (" & FORMAT(mx, "#,0") & '
+                                '" MW MAE). Across components the model " & IF(r >= 0, "cuts error by ", "adds error of ") & FORMAT(ABS(r), "0.0%") & " vs the benchmark")', ""),
         "Component model MAE (MW)": ("AVERAGEX(fact_components, " + ERRO.format(t="fact_components") + ")", "#,0"),
         "Component benchmark MAE (MW)": ("AVERAGEX(fact_components, ABS(fact_components[benchmark] - fact_components[actual]))", "#,0"),
         "Component error reduction": ("DIVIDE([Component benchmark MAE (MW)] - [Component model MAE (MW)], [Component benchmark MAE (MW)])", "0.0%"),
@@ -107,6 +108,19 @@ MEDIDAS = {
     "fact_inflow_basin": {"Basin inflow % of mean": ("AVERAGE(fact_inflow_basin[inflow_pct_ltm]) / 100", "0%"),
                           "Basin inflow (MW)": ("SUM(fact_inflow_basin[inflow_mw])", "#,0")},
 }
+SIN_PADRAO = 'VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE({}, dim_subsystem[subsystem] = _s)'
+BASE_SIN = {NL: ["Model MAE (MW)", "Benchmark MAE (MW)", "ONS schedule MAE (MW)", "Model bias (MW)", "MAPE model", "Actual (MW)", "Forecast (MW)",
+                 "Benchmark (MW)", "Band 80% low", "Band 80% high", "80% band coverage", "Days evaluated"],
+            "fact_audit": ["Audit model MAE (MW)", "Audit benchmark MAE (MW)", "Audit actual (MW)", "Audit forecast (MW)"]}
+# Sem subsistema escolhido, as tabelas horárias somariam SIN + regiões: as medidas-base passam a usar o SIN.
+for _t, _nomes in BASE_SIN.items():
+    for _n in _nomes:
+        _dax, _fmt = MEDIDAS[_t][_n]
+        MEDIDAS[_t][_n] = (SIN_PADRAO.format(_dax), _fmt)
+for _n, (_dax, _fmt) in list(MEDIDAS["fact_forecast"].items()):
+    if _dax.startswith("VAR d = [Latest decision] RETURN CALCULATE("):
+        _dax = _dax.replace("RETURN CALCULATE(", 'VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(', 1)
+        MEDIDAS["fact_forecast"][_n] = (_dax[:-1] + ", dim_subsystem[subsystem] = _s)", _fmt)
 CHAVES = {"date": "dim_date", "hour": "dim_hour", "subsystem": "dim_subsystem"}
 ORDEM = {"dim_subsystem": {"name": "sort_order"}, "dim_date": {"month_name": "month", "weekday": "weekday_num"}}
 

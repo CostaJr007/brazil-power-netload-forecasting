@@ -3,10 +3,10 @@
   "name": "v045",
   "position": {
     "x": 20,
-    "y": 100,
+    "y": 108,
     "z": 4500,
-    "height": 260,
-    "width": 1240
+    "height": 252,
+    "width": 620
   },
   "visual": {
     "visualType": "pivotTable",
@@ -26,6 +26,7 @@
                 }
               },
               "queryRef": "fact_components.component",
+              "displayName": "Component",
               "active": true
             }
           ]
@@ -43,7 +44,8 @@
                   "Property": "name"
                 }
               },
-              "queryRef": "dim_subsystem.name"
+              "queryRef": "dim_subsystem.name",
+              "displayName": "Subsystem"
             }
           ]
         },
@@ -57,36 +59,11 @@
                       "Entity": "fact_components"
                     }
                   },
-                  "Property": "Component model MAE (MW)"
-                }
-              },
-              "queryRef": "fact_components.Component model MAE (MW)"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_components"
-                    }
-                  },
-                  "Property": "Component benchmark MAE (MW)"
-                }
-              },
-              "queryRef": "fact_components.Component benchmark MAE (MW)"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "fact_components"
-                    }
-                  },
                   "Property": "Component error reduction"
                 }
               },
-              "queryRef": "fact_components.Component error reduction"
+              "queryRef": "fact_components.Component error reduction",
+              "displayName": "Error reduction"
             }
           ]
         }
@@ -107,7 +84,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'MAE by component and subsystem (MW) and error reduction vs the benchmark'"
+                  "Value": "'Error reduction vs the benchmark, by component and subsystem'"
                 }
               }
             },

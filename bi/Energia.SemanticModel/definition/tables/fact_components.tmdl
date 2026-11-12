@@ -1,6 +1,6 @@
 table fact_components
 
-	measure 'Headline components' = VAR top = TOPN(1, VALUES(fact_components[component]), [Component model MAE (MW)]) VAR comp = MAXX(top, fact_components[component]) VAR r = [Component error reduction] RETURN IF(ISBLANK([Component model MAE (MW)]), "No data for this selection", "Largest error source: " & comp & " (" & FORMAT(MAXX(top, [Component model MAE (MW)]), "#,0") & " MW MAE). Across components the model " & IF(r >= 0, "cuts error by ", "adds error of ") & FORMAT(ABS(r), "0.0%") & " vs the benchmark")
+	measure 'Headline components' = VAR mx = MAXX(VALUES(fact_components[component]), [Component model MAE (MW)]) VAR comp = CONCATENATEX(FILTER(VALUES(fact_components[component]), [Component model MAE (MW)] = mx), fact_components[component], ", ") VAR r = [Component error reduction] RETURN IF(ISBLANK(mx), "No data for this selection", "Largest error source: " & comp & " (" & FORMAT(mx, "#,0") & " MW MAE). Across components the model " & IF(r >= 0, "cuts error by ", "adds error of ") & FORMAT(ABS(r), "0.0%") & " vs the benchmark")
 
 	measure 'Component model MAE (MW)' = AVERAGEX(fact_components, ABS(fact_components[forecast] - fact_components[actual]))
 		formatString: #,0
@@ -60,11 +60,16 @@ table fact_components
 		summarizeBy: none
 		sourceColumn: period
 
+	column telemetry_outage
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: telemetry_outage
+
 	partition fact_components = m
 		mode: import
 		source =
 				let
 				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_components.parquet")),
-				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"hour", Int64.Type}, {"component", type text}, {"forecast", type number}, {"actual", type number}, {"benchmark", type number}, {"horizon", type text}, {"period", type text}})
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"hour", Int64.Type}, {"component", type text}, {"forecast", type number}, {"actual", type number}, {"benchmark", type number}, {"horizon", type text}, {"period", type text}, {"telemetry_outage", type logical}})
 				in
 				    Tipos

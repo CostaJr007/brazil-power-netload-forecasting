@@ -26,6 +26,7 @@
                 }
               },
               "queryRef": "dim_date.date",
+              "displayName": "Date",
               "active": true
             }
           ]
@@ -40,10 +41,11 @@
                       "Entity": "fact_net_load"
                     }
                   },
-                  "Property": "Model bias (MW)"
+                  "Property": "Model bias excl. outages (MW)"
                 }
               },
-              "queryRef": "fact_net_load.Model bias (MW)"
+              "queryRef": "fact_net_load.Model bias excl. outages (MW)",
+              "displayName": "Bias"
             }
           ]
         }
@@ -83,7 +85,7 @@
             }
           },
           "selector": {
-            "metadata": "fact_net_load.Model bias (MW)"
+            "metadata": "fact_net_load.Model bias excl. outages (MW)"
           }
         }
       ],
@@ -155,7 +157,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Daily model bias (MW; below zero = under-forecast)'"
+                  "Value": "'Daily model bias (MW; below zero = under-forecast), ONS telemetry-outage days excluded'"
                 }
               }
             },
