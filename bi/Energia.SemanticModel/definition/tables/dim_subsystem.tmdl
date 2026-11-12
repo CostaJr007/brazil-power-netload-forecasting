@@ -1,0 +1,26 @@
+table dim_subsystem
+
+	column subsystem
+		dataType: string
+		summarizeBy: none
+		sourceColumn: subsystem
+
+	column name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: name
+		sortByColumn: sort_order
+
+	column sort_order
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: sort_order
+
+	partition dim_subsystem = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "dim_subsystem.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"name", type text}, {"sort_order", Int64.Type}})
+				in
+				    Tipos

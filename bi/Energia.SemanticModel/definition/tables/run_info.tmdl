@@ -1,0 +1,35 @@
+table run_info
+
+	column generated_at
+		dataType: string
+		summarizeBy: none
+		sourceColumn: generated_at
+
+	column recipe_d1
+		dataType: string
+		summarizeBy: none
+		sourceColumn: recipe_d1
+
+	column recipe_d2
+		dataType: string
+		summarizeBy: none
+		sourceColumn: recipe_d2
+
+	column benchmark_d1
+		dataType: string
+		summarizeBy: none
+		sourceColumn: benchmark_d1
+
+	column benchmark_d2
+		dataType: string
+		summarizeBy: none
+		sourceColumn: benchmark_d2
+
+	partition run_info = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "run_info.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"generated_at", type text}, {"recipe_d1", type text}, {"recipe_d2", type text}, {"benchmark_d1", type text}, {"benchmark_d2", type text}})
+				in
+				    Tipos

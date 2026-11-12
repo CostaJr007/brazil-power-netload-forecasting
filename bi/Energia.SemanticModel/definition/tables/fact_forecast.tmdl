@@ -1,0 +1,88 @@
+table fact_forecast
+
+	measure 'Latest decision' = CALCULATE(MAX(fact_forecast[decision_date]), ALL(fact_forecast))
+		formatString: yyyy-mm-dd
+
+	measure 'Average forecast (MW)' = VAR d = [Latest decision] RETURN CALCULATE(AVERAGE(fact_forecast[forecast]), fact_forecast[decision_date] = d)
+		formatString: #,0
+
+	measure 'Forecast band low' = VAR d = [Latest decision] RETURN CALCULATE(AVERAGE(fact_forecast[band_low]), fact_forecast[decision_date] = d)
+		formatString: #,0
+
+	measure 'Forecast band high' = VAR d = [Latest decision] RETURN CALCULATE(AVERAGE(fact_forecast[band_high]), fact_forecast[decision_date] = d)
+		formatString: #,0
+
+	measure 'Forecast benchmark (MW)' = VAR d = [Latest decision] RETURN CALCULATE(AVERAGE(fact_forecast[benchmark]), fact_forecast[decision_date] = d)
+		formatString: #,0
+
+	measure 'Forecast peak (MW)' = VAR d = [Latest decision] RETURN CALCULATE(MAX(fact_forecast[forecast]), fact_forecast[decision_date] = d)
+		formatString: #,0
+
+	measure 'Headline forecast' = VAR d = [Latest decision] RETURN IF(ISBLANK([Average forecast (MW)]), "No forecast for this selection", "Net load expected to average " & FORMAT([Average forecast (MW)] / 1000, "0.0") & " GW, peaking at " & FORMAT([Forecast peak (MW)] / 1000, "0.0") & " GW (decision of " & FORMAT(d, "mmm d") & ")")
+
+	column subsystem
+		dataType: string
+		summarizeBy: none
+		sourceColumn: subsystem
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: date
+
+	column hour
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: hour
+
+	column forecast
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: forecast
+
+	column benchmark
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: benchmark
+
+	column band_low
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: band_low
+
+	column band_high
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: band_high
+
+	column decision_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: decision_date
+
+	column step
+		dataType: string
+		summarizeBy: none
+		sourceColumn: step
+
+	column horizon
+		dataType: string
+		summarizeBy: none
+		sourceColumn: horizon
+
+	column timestamp
+		dataType: dateTime
+		formatString: yyyy-mm-dd hh:nn
+		summarizeBy: none
+		sourceColumn: timestamp
+
+	partition fact_forecast = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_forecast.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"hour", Int64.Type}, {"forecast", type number}, {"benchmark", type number}, {"band_low", type number}, {"band_high", type number}, {"decision_date", type date}, {"step", type text}, {"horizon", type text}, {"timestamp", type datetime}})
+				in
+				    Tipos

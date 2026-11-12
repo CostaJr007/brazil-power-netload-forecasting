@@ -1,0 +1,71 @@
+relationship fact_audit_date
+	fromColumn: fact_audit.date
+	toColumn: dim_date.date
+
+relationship fact_audit_hour
+	fromColumn: fact_audit.hour
+	toColumn: dim_hour.hour
+
+relationship fact_audit_subsystem
+	fromColumn: fact_audit.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_components_date
+	fromColumn: fact_components.date
+	toColumn: dim_date.date
+
+relationship fact_components_hour
+	fromColumn: fact_components.hour
+	toColumn: dim_hour.hour
+
+relationship fact_components_subsystem
+	fromColumn: fact_components.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_forecast_date
+	fromColumn: fact_forecast.date
+	toColumn: dim_date.date
+
+relationship fact_forecast_hour
+	fromColumn: fact_forecast.hour
+	toColumn: dim_hour.hour
+
+relationship fact_forecast_subsystem
+	fromColumn: fact_forecast.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_inflow_basin_date
+	fromColumn: fact_inflow_basin.date
+	toColumn: dim_date.date
+
+relationship fact_net_load_date
+	fromColumn: fact_net_load.date
+	toColumn: dim_date.date
+
+relationship fact_net_load_hour
+	fromColumn: fact_net_load.hour
+	toColumn: dim_hour.hour
+
+relationship fact_net_load_subsystem
+	fromColumn: fact_net_load.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_price_daily_date
+	fromColumn: fact_price_daily.date
+	toColumn: dim_date.date
+
+relationship fact_price_daily_subsystem
+	fromColumn: fact_price_daily.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_storage_daily_date
+	fromColumn: fact_storage_daily.date
+	toColumn: dim_date.date
+
+relationship fact_storage_daily_subsystem
+	fromColumn: fact_storage_daily.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_system_daily_date
+	fromColumn: fact_system_daily.date
+	toColumn: dim_date.date

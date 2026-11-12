@@ -1,0 +1,2 @@
+expression PastaDados = "D:\EnergyData\data\bi\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	annotation PBI_ResultType = Text

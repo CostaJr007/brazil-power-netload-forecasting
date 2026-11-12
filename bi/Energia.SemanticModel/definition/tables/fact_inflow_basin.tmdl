@@ -1,0 +1,37 @@
+table fact_inflow_basin
+
+	measure 'Basin inflow % of mean' = AVERAGE(fact_inflow_basin[inflow_pct_ltm]) / 100
+		formatString: 0%
+
+	measure 'Basin inflow (MW)' = SUM(fact_inflow_basin[inflow_mw])
+		formatString: #,0
+
+	column basin
+		dataType: string
+		summarizeBy: none
+		sourceColumn: basin
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: date
+
+	column inflow_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: inflow_mw
+
+	column inflow_pct_ltm
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: inflow_pct_ltm
+
+	partition fact_inflow_basin = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_inflow_basin.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"basin", type text}, {"date", type date}, {"inflow_mw", type number}, {"inflow_pct_ltm", type number}})
+				in
+				    Tipos

@@ -1,0 +1,70 @@
+table fact_components
+
+	measure 'Headline components' = VAR top = TOPN(1, VALUES(fact_components[component]), [Component model MAE (MW)]) VAR comp = MAXX(top, fact_components[component]) VAR r = [Component error reduction] RETURN IF(ISBLANK([Component model MAE (MW)]), "No data for this selection", "Largest error source: " & comp & " (" & FORMAT(MAXX(top, [Component model MAE (MW)]), "#,0") & " MW MAE). Across components the model " & IF(r >= 0, "cuts error by ", "adds error of ") & FORMAT(ABS(r), "0.0%") & " vs the benchmark")
+
+	measure 'Component model MAE (MW)' = AVERAGEX(fact_components, ABS(fact_components[forecast] - fact_components[actual]))
+		formatString: #,0
+
+	measure 'Component benchmark MAE (MW)' = AVERAGEX(fact_components, ABS(fact_components[benchmark] - fact_components[actual]))
+		formatString: #,0
+
+	measure 'Component error reduction' = DIVIDE([Component benchmark MAE (MW)] - [Component model MAE (MW)], [Component benchmark MAE (MW)])
+		formatString: 0.0%
+
+	measure 'Component bias (MW)' = AVERAGEX(fact_components, fact_components[forecast] - fact_components[actual])
+		formatString: #,0
+
+	column subsystem
+		dataType: string
+		summarizeBy: none
+		sourceColumn: subsystem
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: date
+
+	column hour
+		dataType: int64
+		summarizeBy: none
+		sourceColumn: hour
+
+	column component
+		dataType: string
+		summarizeBy: none
+		sourceColumn: component
+
+	column forecast
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: forecast
+
+	column actual
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: actual
+
+	column benchmark
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: benchmark
+
+	column horizon
+		dataType: string
+		summarizeBy: none
+		sourceColumn: horizon
+
+	column period
+		dataType: string
+		summarizeBy: none
+		sourceColumn: period
+
+	partition fact_components = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_components.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"hour", Int64.Type}, {"component", type text}, {"forecast", type number}, {"actual", type number}, {"benchmark", type number}, {"horizon", type text}, {"period", type text}})
+				in
+				    Tipos

@@ -1,0 +1,150 @@
+table fact_system_daily
+
+	measure 'Total generation (MW)' = [Hydro (MW)] + [Thermal (MW)] + [Wind (MW)] + [Solar (MW)]
+		formatString: #,0
+
+	measure 'Hydro share' = DIVIDE([Hydro (MW)], [Total generation (MW)])
+		formatString: 0.0%
+
+	measure 'Thermal share' = DIVIDE([Thermal (MW)], [Total generation (MW)])
+		formatString: 0.0%
+
+	measure 'Wind + solar share' = DIVIDE([Wind (MW)] + [Solar (MW)], [Total generation (MW)])
+		formatString: 0.0%
+
+	measure 'Headline system' = IF(ISBLANK([Hydro (MW)]), "No data for this selection", "Hydro supplied " & FORMAT([Hydro share], "0%") & " of generation in this period, wind and solar " & FORMAT([Wind + solar share], "0%") & ", thermal " & FORMAT([Thermal share], "0%"))
+
+	measure 'Load (MW)' = AVERAGE(fact_system_daily[load_mw])
+		formatString: #,0
+
+	measure 'Wind (MW)' = AVERAGE(fact_system_daily[wind_mw])
+		formatString: #,0
+
+	measure 'Solar (MW)' = AVERAGE(fact_system_daily[solar_mw])
+		formatString: #,0
+
+	measure 'Hydro (MW)' = AVERAGE(fact_system_daily[hydro_mw])
+		formatString: #,0
+
+	measure 'Thermal (MW)' = AVERAGE(fact_system_daily[thermal_mw])
+		formatString: #,0
+
+	measure 'Net load (MW)' = AVERAGE(fact_system_daily[net_load_mw])
+		formatString: #,0
+
+	measure 'Inflow % of long-term mean' = AVERAGE(fact_system_daily[inflow_pct_ltm]) / 100
+		formatString: 0%
+
+	measure 'Wind curtailment (MW)' = AVERAGE(fact_system_daily[wind_curtailment_mw])
+		formatString: #,0
+
+	measure 'Solar curtailment (MW)' = AVERAGE(fact_system_daily[solar_curtailment_mw])
+		formatString: #,0
+
+	measure 'Marginal cost SE (R$/MWh)' = AVERAGE(fact_system_daily[cmo_se])
+		formatString: #,0.00
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: date
+
+	column hours
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: hours
+
+	column load_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: load_mw
+
+	column wind_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: wind_mw
+
+	column solar_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: solar_mw
+
+	column hydro_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: hydro_mw
+
+	column thermal_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: thermal_mw
+
+	column net_load_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: net_load_mw
+
+	column net_load_ramp_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: net_load_ramp_mw
+
+	column inflow_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: inflow_mw
+
+	column inflow_pct_ltm
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: inflow_pct_ltm
+
+	column storage_pct
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: storage_pct
+
+	column wind_curtailment_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: wind_curtailment_mw
+
+	column solar_curtailment_mw
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: solar_curtailment_mw
+
+	column cmo_se
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: cmo_se
+
+	column cmo_s
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: cmo_s
+
+	column cmo_ne
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: cmo_ne
+
+	column cmo_n
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: cmo_n
+
+	column price_est_se
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: price_est_se
+
+	partition fact_system_daily = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_system_daily.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"date", type date}, {"hours", Int64.Type}, {"load_mw", type number}, {"wind_mw", type number}, {"solar_mw", type number}, {"hydro_mw", type number}, {"thermal_mw", type number}, {"net_load_mw", type number}, {"net_load_ramp_mw", type number}, {"inflow_mw", type number}, {"inflow_pct_ltm", type number}, {"storage_pct", type number}, {"wind_curtailment_mw", type number}, {"solar_curtailment_mw", type number}, {"cmo_se", type number}, {"cmo_s", type number}, {"cmo_ne", type number}, {"cmo_n", type number}, {"price_est_se", type number}})
+				in
+				    Tipos
