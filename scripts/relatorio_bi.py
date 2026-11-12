@@ -15,7 +15,7 @@ ROXO, ROXO_ESCURO, LILAS, CINZA, CINZA_CLARO, PRETO, FUNDO = "#A100FF", "#7500C0
 TEMA_PROPRIO = "ConsultingPurple.json"
 TEMA = {
     "name": "Consulting Purple",
-    "dataColors": [ROXO, CINZA, LILAS, ROXO_ESCURO, PRETO, CINZA_CLARO, "#5A0090", "#E9D2FF"],
+    "dataColors": [ROXO, CINZA, LILAS, PRETO, CINZA_CLARO, ROXO_ESCURO, "#5A0090", "#E9D2FF"],   # séries vizinhas bem distintas
     "background": "#FFFFFF", "foreground": PRETO, "tableAccent": ROXO,
     "good": "#1B7F3B", "bad": "#C62828", "neutral": CINZA,
     "textClasses": {"callout": {"fontFace": "Segoe UI Semibold", "fontSize": 26, "color": PRETO},
@@ -44,91 +44,103 @@ RODAPES = {
 }
 
 
+SCHEMA = "https://developer.microsoft.com/json-schemas/fabric/item/report/definition"
+
+
 def _lit(valor):
+    """Valor de propriedade no formato do Power BI: {"expr": {"Literal": ...}} (sem o "expr" o Desktop descarta)."""
     if isinstance(valor, bool):
-        return {"Literal": {"Value": "true" if valor else "false"}}
-    if isinstance(valor, int):
-        return {"Literal": {"Value": f"{valor}L"}}
-    if isinstance(valor, float):
-        return {"Literal": {"Value": f"{valor}D"}}
-    return {"Literal": {"Value": "'" + str(valor).replace("'", "''") + "'"}}
+        v = "true" if valor else "false"
+    elif isinstance(valor, int):
+        v = f"{valor}L"
+    elif isinstance(valor, float):
+        v = f"{valor}D"
+    else:
+        v = "'" + str(valor).replace("'", "''") + "'"
+    return {"expr": {"Literal": {"Value": v}}}
 
 
 def _cor(hexa):
     return {"solid": {"color": _lit(hexa)}}
 
 
+def _props(**kw):
+    return [{"properties": {k: (v if isinstance(v, dict) else _lit(v)) for k, v in kw.items()}}]
+
+
 class Consulta:
-    """Monta o prototypeQuery: um apelido por tabela, Select de colunas e medidas, OrderBy opcional."""
+    """queryState do PBIR: projeções por papel, com Measure/Column distinguidos pelo dicionário de medidas."""
 
     def __init__(self, medidas):
-        self.medidas, self.de, self.sel = medidas, {}, []
-
-    def _alias(self, tabela):
-        if tabela not in self.de:
-            self.de[tabela] = f"t{len(self.de)}"
-        return self.de[tabela]
+        self.medidas = medidas
 
     def campo(self, ref):
         tabela, nome = ref.split(".", 1)
-        expr = {"Expression": {"SourceRef": {"Source": self._alias(tabela)}}, "Property": nome}
+        expr = {"Expression": {"SourceRef": {"Entity": tabela}}, "Property": nome}
         return {("Measure" if nome in self.medidas.get(tabela, {}) else "Column"): expr}
-
-    def selecionar(self, ref):
-        if ref not in [s["Name"] for s in self.sel]:
-            self.sel.append({**self.campo(ref), "Name": ref})
-        return {"queryRef": ref}
-
-    def json(self, ordem=None):
-        q = {"Version": 2, "From": [{"Name": a, "Entity": t, "Type": 0} for t, a in self.de.items()], "Select": self.sel}
-        if ordem:
-            q["OrderBy"] = [{"Direction": 1, "Expression": self.campo(ordem)}]
-        return q
 
 
 def filtro_in(ref, valores):
     """Filtro categórico 'campo em (valores)', usado em segmentações com seleção padrão."""
     tabela, nome = ref.split(".", 1)
     coluna = {"Column": {"Expression": {"SourceRef": {"Source": "f"}}, "Property": nome}}
+    valores_lit = [[{"Literal": _lit(v)["expr"]["Literal"]}] for v in valores]
     return {"Version": 2, "From": [{"Name": "f", "Entity": tabela, "Type": 0}],
-            "Where": [{"Condition": {"In": {"Expressions": [coluna], "Values": [[_lit(v)] for v in valores]}}}]}
+            "Where": [{"Condition": {"In": {"Expressions": [coluna], "Values": valores_lit}}}]}
 
 
-def _container(n, x, y, w, h, sv):
-    config = {"name": f"v{n:03d}", "layouts": [{"id": 0, "position": {"x": x, "y": y, "z": n, "width": w, "height": h}}], "singleVisual": sv}
-    return {"x": x, "y": y, "z": n, "width": w, "height": h, "config": json.dumps(config, ensure_ascii=False), "filters": "[]"}
+def _container(n, x, y, w, h, visual):
+    return {"$schema": f"{SCHEMA}/visualContainer/2.14.0/schema.json", "name": f"v{n:03d}",
+            "position": {"x": x, "y": y, "z": n * 100, "height": h, "width": w}, "visual": visual}
 
 
-def visual(medidas, n, tipo, x, y, w, h, papeis, titulo=None, ordem=None, selecionado=None, objetos=None, cores=None):
-    """cores: {"tabela.medida": "#hex"} fixa a cor de cada série (a legenda do título passa a valer sempre)."""
+GRAFICOS = {"lineChart", "clusteredColumnChart", "stackedAreaChart"}
+
+
+def visual(medidas, n, tipo, x, y, w, h, papeis, titulo=None, ordem=None, selecionado=None, objetos=None, cores=None, finas=None):
+    """cores: {"tabela.medida": "#hex"} fixa a cor de cada série; finas: séries com traço fino (ex.: a banda)."""
     q = Consulta(medidas)
-    projecoes = {papel: [q.selecionar(r) for r in refs] for papel, refs in papeis.items()}
-    for papel in ("Category", "Rows"):
-        if papel in projecoes:
-            projecoes[papel][0]["active"] = True
-    sv = {"visualType": tipo, "projections": projecoes, "prototypeQuery": q.json(ordem), "drillFilterOtherVisuals": True}
+    estado = {}
+    for papel, refs in papeis.items():
+        proj = []
+        for k, r in enumerate(refs):
+            item = {"field": q.campo(r), "queryRef": r}
+            if k == 0 and papel in ("Category", "Rows", "Values") and tipo in ("slicer", "lineChart", "clusteredColumnChart", "stackedAreaChart", "pivotTable"):
+                if papel != "Values" or tipo == "slicer":
+                    item["active"] = True
+            proj.append(item)
+        estado[papel] = {"projections": proj}
+    query = {"queryState": estado}
+    if ordem:
+        query["sortDefinition"] = {"sort": [{"field": q.campo(ordem), "direction": "Ascending"}]}
     obj = dict(objetos or {})
     if cores:
         obj["dataPoint"] = [{"properties": {"fill": _cor(c)}, "selector": {"metadata": ref}} for ref, c in cores.items()]
+    if finas:
+        obj["lineStyles"] = [{"properties": {"strokeWidth": _lit(1)}, "selector": {"metadata": ref}} for ref in finas]
+    if tipo in GRAFICOS:
+        obj.setdefault("categoryAxis", _props(showAxisTitle=False))
+        obj.setdefault("valueAxis", _props(showAxisTitle=False))
+        obj.setdefault("legend", _props(show=True, position="Top", showTitle=False))
     if tipo == "slicer":
-        obj["data"] = [{"properties": {"mode": _lit("Dropdown")}}]
+        obj["data"] = _props(mode="Dropdown")
+        obj["header"] = _props(show=False)
         if selecionado:
             ref, valores = selecionado
             obj["general"] = [{"properties": {"filter": {"filter": filtro_in(ref, valores)}}}]
-            obj["selection"] = [{"properties": {"singleSelect": _lit(True)}}]
-    if obj:
-        sv["objects"] = obj
-    sv["vcObjects"] = {"title": [{"properties": {"show": _lit(bool(titulo)), **({"text": _lit(titulo)} if titulo else {})}}]}
-    return _container(n, x, y, w, h, sv)
+            obj["selection"] = _props(singleSelect=True)
+    vc = {"title": _props(show=bool(titulo), **({"text": titulo, "fontSize": 10.0 if tipo == "slicer" else 11.0} if titulo else {}))}
+    visual = {"visualType": tipo, "query": query, "objects": obj, "visualContainerObjects": vc, "drillFilterOtherVisuals": True}
+    return _container(n, x, y, w, h, visual)
 
 
 def texto(n, x, y, w, h, partes):
     """Caixa de texto; partes = [(texto, tamanho, cor, negrito)]."""
     paragrafos = [{"textRuns": [{"value": t, "textStyle": {"fontSize": f"{tam}pt", "color": cor, **({"fontWeight": "bold"} if negrito else {})}}]}
                   for t, tam, cor, negrito in partes]
-    sv = {"visualType": "textbox", "drillFilterOtherVisuals": True, "objects": {"general": [{"properties": {"paragraphs": paragrafos}}]},
-          "vcObjects": {"background": [{"properties": {"show": _lit(False)}}]}}
-    return _container(n, x, y, w, h, sv)
+    visual = {"visualType": "textbox", "objects": {"general": [{"properties": {"paragraphs": paragrafos}}]},
+              "visualContainerObjects": {"background": _props(show=False)}, "drillFilterOtherVisuals": True}
+    return _container(n, x, y, w, h, visual)
 
 
 def paginas(medidas):
@@ -136,11 +148,11 @@ def paginas(medidas):
     v = lambda *a, **k: visual(medidas, *a, **k)  # noqa: E731
 
     def cabecalho(n, rotulo, manchete_medida):
-        manchete = v(n + 1, "card", 20, 34, 860, 52, {"Values": [manchete_medida]},
-                     objetos={"labels": [{"properties": {"fontSize": _lit(15.0), "color": _cor(PRETO)}}],
-                              "categoryLabels": [{"properties": {"show": _lit(False)}}],
-                              "background": [{"properties": {"show": _lit(False)}}]})
-        return [texto(n, 20, 6, 860, 30, [(rotulo.upper(), 9, ROXO, True)]), manchete]
+        manchete = v(n + 1, "card", 14, 30, 880, 46, {"Values": [manchete_medida]},
+                     objetos={"labels": _props(fontSize=14.0, color=_cor(PRETO), fontFamily="Segoe UI Semibold"),
+                              "categoryLabels": _props(show=False)})
+        manchete["visual"]["visualContainerObjects"]["background"] = _props(show=False)
+        return [texto(n, 20, 6, 880, 28, [(rotulo.upper(), 9, ROXO, True)]), manchete]
 
     def rodape(n, pagina):
         return texto(n, 20, 688, 1240, 30, [(RODAPES[pagina], 7, CINZA, False)])
@@ -150,8 +162,8 @@ def paginas(medidas):
 
     def kpi(n, x, y, ref, w):
         return v(n, "card", x, y, w, 96, {"Values": [ref]},
-                 objetos={"labels": [{"properties": {"fontSize": _lit(24.0), "color": _cor(PRETO)}}],
-                          "categoryLabels": [{"properties": {"color": _cor(CINZA)}}]})
+                 objetos={"labels": _props(fontSize=22.0, color=_cor(PRETO)),
+                          "categoryLabels": _props(show=True, color=_cor(CINZA), fontSize=9.0)})
 
     sin = ["SIN"]
     fc, nl, cp, au, sy = "fact_forecast.", "fact_net_load.", "fact_components.", "fact_audit.", "fact_system_daily."
@@ -170,7 +182,8 @@ def paginas(medidas):
           {"Category": ["dim_hour.hour_label"], "Y": [fc + "Average forecast (MW)", fc + "Forecast benchmark (MW)",
                                                       fc + "Forecast band low", fc + "Forecast band high"]},
           "Net load (load − wind − solar), MW by hour: forecast (purple), 80% band (lilac), benchmark (grey)", ordem="dim_hour.hour_label",
-          cores={fc + "Average forecast (MW)": ROXO, fc + "Forecast benchmark (MW)": CINZA, fc + "Forecast band low": LILAS, fc + "Forecast band high": LILAS}),
+          cores={fc + "Average forecast (MW)": ROXO, fc + "Forecast benchmark (MW)": CINZA, fc + "Forecast band low": LILAS, fc + "Forecast band high": LILAS},
+          finas=[fc + "Forecast band low", fc + "Forecast band high", fc + "Forecast benchmark (MW)"]),
         rodape(11, "Forecast"),
     ]
     placar = [
@@ -220,9 +233,9 @@ def paginas(medidas):
     sistema = [
         *cabecalho(61, "System context · generation, hydrology and price", sy + "Headline system"),
         segmentacao(63, 1060, "dim_date.year", "Year", [2026], 200),
-        v(64, "stackedAreaChart", 20, 100, 620, 290, {"Category": ["dim_date.date"], "Y": [sy + "Hydro (MW)", sy + "Thermal (MW)", sy + "Wind (MW)", sy + "Solar (MW)"]},
-          "Daily generation by source, national grid (average MW)", ordem="dim_date.date",
-          cores={sy + "Hydro (MW)": ROXO, sy + "Thermal (MW)": CINZA, sy + "Wind (MW)": LILAS, sy + "Solar (MW)": ROXO_ESCURO}),
+        v(64, "stackedAreaChart", 20, 100, 620, 290, {"Category": ["dim_date.year_month"], "Y": [sy + "Hydro (MW)", sy + "Wind (MW)", sy + "Solar (MW)", sy + "Thermal (MW)"]},
+          "Monthly generation by source, national grid (average MW)", ordem="dim_date.year_month",
+          cores={sy + "Hydro (MW)": ROXO, sy + "Wind (MW)": LILAS, sy + "Solar (MW)": CINZA_CLARO, sy + "Thermal (MW)": CINZA}),
         v(65, "lineChart", 660, 100, 600, 290, {"Category": ["dim_date.date"], "Y": ["fact_storage_daily.Reservoir storage %"], "Series": ["dim_subsystem.name"]},
           "Reservoir storage by subsystem (% of capacity)", ordem="dim_date.date"),
         v(66, "lineChart", 20, 400, 620, 282, {"Category": ["dim_date.date"], "Y": ["fact_price_daily.Spot price est. (R$/MWh)"], "Series": ["dim_subsystem.name"]},
@@ -231,18 +244,40 @@ def paginas(medidas):
           "Natural inflow, national grid (% of long-term mean)", ordem="dim_date.date", cores={sy + "Inflow % of long-term mean": ROXO}),
         rodape(68, "System & price"),
     ]
-    nomes = [("Forecast", previsao), ("Model vs ONS", placar), ("Error drivers", componentes), ("Live audit", auditoria), ("System & price", sistema)]
-    return [{"config": "{}", "displayName": nome, "displayOption": 1, "filters": "[]", "height": ALTURA, "name": f"Page{i}",
-             "ordinal": i, "visualContainers": vis, "width": LARGURA} for i, (nome, vis) in enumerate(nomes)]
+    return [("Forecast", previsao), ("Model vs ONS", placar), ("Error drivers", componentes), ("Live audit", auditoria), ("System & price", sistema)]
 
 
-def report_json(medidas, tema_base):
-    """Tema base (obrigatório: sem ele o Desktop falha com "reading 'customTheme'") + tema próprio da paleta."""
-    config = {"version": "5.70", "activeSectionIndex": 0,
-              "themeCollection": {"baseTheme": {"name": tema_base, "version": "5.70", "type": 2},
-                                  "customTheme": {"name": TEMA_PROPRIO, "version": "5.70", "type": 1}}}
-    pacotes = [{"resourcePackage": {"name": "SharedResources", "type": 2, "disabled": False,
-                                    "items": [{"type": 202, "path": f"BaseThemes/{tema_base}.json", "name": tema_base}]}},
-               {"resourcePackage": {"name": "RegisteredResources", "type": 1, "disabled": False,
-                                    "items": [{"type": 201, "path": TEMA_PROPRIO, "name": TEMA_PROPRIO}]}}]
-    return {"config": json.dumps(config), "layoutOptimization": 0, "resourcePackages": pacotes, "sections": paginas(medidas)}
+def _json(caminho, dados):
+    caminho.parent.mkdir(parents=True, exist_ok=True)
+    caminho.write_text(json.dumps(dados, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+
+
+def escrever_pbir(relatorio, medidas, tema_base):
+    """Relatório no formato PBIR (o que o Desktop grava): definition/report.json, pages/*/page.json, visuals/*/visual.json."""
+    import shutil
+    definicao = relatorio / "definition"
+    if definicao.exists():
+        shutil.rmtree(definicao)
+    (relatorio / "report.json").unlink(missing_ok=True)   # formato antigo
+    versao = {"visual": "2.6.0", "report": "3.1.0", "page": "2.3.0"}
+    _json(definicao / "version.json", {"$schema": f"{SCHEMA}/versionMetadata/1.0.0/schema.json", "version": "2.0.0"})
+    _json(definicao / "report.json", {
+        "$schema": f"{SCHEMA}/report/3.3.0/schema.json",
+        "themeCollection": {"baseTheme": {"name": tema_base, "reportVersionAtImport": versao, "type": "SharedResources"},
+                            "customTheme": {"name": TEMA_PROPRIO, "reportVersionAtImport": versao, "type": "RegisteredResources"}},
+        "resourcePackages": [{"name": "SharedResources", "type": "SharedResources",
+                              "items": [{"name": tema_base, "path": f"BaseThemes/{tema_base}.json", "type": "BaseTheme"}]},
+                             {"name": "RegisteredResources", "type": "RegisteredResources",
+                              "items": [{"name": TEMA_PROPRIO, "path": TEMA_PROPRIO, "type": "CustomTheme"}]}]})
+    _json(relatorio / "StaticResources" / "RegisteredResources" / TEMA_PROPRIO, TEMA)
+    ordem, total = [], 0
+    for i, (nome, visuais) in enumerate(paginas(medidas)):
+        pagina = f"Page{i}"
+        ordem.append(pagina)
+        _json(definicao / "pages" / pagina / "page.json", {"$schema": f"{SCHEMA}/page/2.1.0/schema.json", "name": pagina,
+                                                          "displayName": nome, "displayOption": "FitToPage", "height": ALTURA, "width": LARGURA})
+        for vis in visuais:
+            _json(definicao / "pages" / pagina / "visuals" / vis["name"] / "visual.json", vis)
+            total += 1
+    _json(definicao / "pages" / "pages.json", {"$schema": f"{SCHEMA}/pagesMetadata/1.1.0/schema.json", "pageOrder": ordem, "activePageName": ordem[0]})
+    return total

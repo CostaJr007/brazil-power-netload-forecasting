@@ -15,7 +15,7 @@ import pyarrow.parquet as pq
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from acquire import DATA_DIR  # noqa: E402
-from relatorio_bi import TEMA, TEMA_PROPRIO, report_json  # noqa: E402
+from relatorio_bi import escrever_pbir  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parents[1]
 BI = RAIZ / "bi"
@@ -204,15 +204,13 @@ def main():
              f'expression PastaDados = "{pasta}" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]\n'
              f"{T}annotation PBI_ResultType = Text\n")
     escrever(MODELO / "definition.pbism", json.dumps({"version": "4.0", "settings": {}}, indent=2) + "\n")
-    escrever(RELATORIO / "definition.pbir", json.dumps({"version": "1.0", "datasetReference": {"byPath": {"path": "../Energia.SemanticModel"}}}, indent=2) + "\n")
-    # Páginas: (re)geradas só com --relatorio ou se ainda não existem, para não apagar ajustes feitos no Desktop.
-    if "--relatorio" in sys.argv or not (RELATORIO / "report.json").exists():
-        tema = copiar_tema()
-        escrever(RELATORIO / "StaticResources" / "RegisteredResources" / TEMA_PROPRIO, json.dumps(TEMA, indent=2) + "\n")
-        escrever(RELATORIO / "report.json", json.dumps(report_json(MEDIDAS, tema.stem), ensure_ascii=False, indent=2) + "\n")
+    escrever(RELATORIO / "definition.pbir", json.dumps({"version": "4.0", "datasetReference": {"byPath": {"path": "../Energia.SemanticModel"}}}, indent=2) + "\n")
+    # Páginas (formato PBIR): (re)geradas só com --relatorio ou se ainda não existem, para não apagar ajustes feitos no Desktop.
+    if "--relatorio" in sys.argv or not (RELATORIO / "definition" / "pages").exists():
+        print(f"Relatório PBIR: {escrever_pbir(RELATORIO, MEDIDAS, copiar_tema().stem)} visuais")
     escrever(BI / "Energia.pbip", json.dumps({"version": "1.0", "artifacts": [{"report": {"path": "Energia.Report"}}],
                                               "settings": {"enableAutoRecovery": True}}, indent=2) + "\n")
-    escrever(BI / ".gitignore", "**/.pbi/localSettings.json\n**/.pbi/cache.abf\n")
+    escrever(BI / ".gitignore", "**/.pbi/\n")   # configurações locais e cache do Desktop
     print(f"Projeto gerado em {BI} ({len(arquivos)} tabelas, {len(relacoes) // 4} relações, "
           f"{sum(len(v) for v in MEDIDAS.values())} medidas). Abra bi/Energia.pbip no Power BI Desktop e clique em Atualizar.")
     return 0

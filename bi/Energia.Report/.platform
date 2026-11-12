@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Energia"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6bf70932-d9ff-4b5b-8b16-97af5bc1aaae"
+  }
+}
