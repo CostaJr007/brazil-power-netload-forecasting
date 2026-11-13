@@ -27,7 +27,7 @@ from shapely import is_valid_reason
 import sys as _sys
 from pathlib import Path as _Path
 _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
-from acquire import DATA_DIR, ROOT, Store, atomic_json, gfs_url, utcnow
+from acquire import DATA_DIR, ROOT, Store, atomic_json, gfs_url, resolve_data_path, utcnow
 from discover_weather import listing
 
 
@@ -78,7 +78,7 @@ def grib_inventory(path):
 
 def inspect_basins(discovery):
     """Publica apenas metadados espaciais e motivos de invalidez da origem."""
-    frame = gpd.read_file("zip://" + discovery["basins"]["access_copy"].replace("\\", "/"))
+    frame = gpd.read_file("zip://" + str(resolve_data_path(discovery["basins"]["access_copy"])).replace("\\", "/"))
     frame = frame.to_crs("EPSG:4326")
     frame["source_geometry_valid"] = frame.geometry.is_valid
     frame["source_geometry_reason"] = frame.geometry.map(is_valid_reason)

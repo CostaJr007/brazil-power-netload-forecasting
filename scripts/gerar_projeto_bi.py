@@ -225,7 +225,7 @@ def main():
                                               "settings": {"enableAutoRecovery": True}}, indent=2) + "\n")
     escrever(BI / ".gitignore", "**/.pbi/\n")   # Desktop local settings and cache
     print(f"Project generated in {BI} ({len(arquivos)} tables, {len(relacoes) // 4} relationships, "
-          f"{sum(len(v) for v in MEDIDAS.values())} medidas). Abra bi/Energia.pbip no Power BI Desktop e clique em Atualizar.")
+          f"{sum(len(v) for v in MEDIDAS.values())} measures). Open bi/Energia.pbip in Power BI Desktop and click Refresh.")
     return 0
 
 

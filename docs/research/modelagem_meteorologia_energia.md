@@ -33,22 +33,25 @@ The modules were rewritten for this problem, with no dependency on those reposit
 
 ## Inflow by basin (20 basins, 2021–2026)
 
-Skill = share of the persistence error removed. The forecast is issued at t, with data up to t, for t+h.
+Skill = share of the persistence error removed. The forecast uses data up to day t (the last published ENA) for
+t+h. ONS publishes daily ENA the next morning, so in practice the forecast is issued on t+1 and its effective lead
+is h−1 days (h=1 is a same-day nowcast). Each yearly fold trains only on targets known on the issue day of its
+first target (t ≤ start−h), including the scaling and climatology.
 
 | Model | h=1 | h=3 | h=7 | h=14 |
 |---|---|---|---|---|
-| Persistence MAE (average MW) | 147 | 374 | 629 | 867 |
-| OU (current anomaly only) | 1.6% | 5.1% | 8.1% | 13.2% |
-| Ridge, memory | 29.1% | 16.8% | 12.4% | 14.5% |
-| **Ridge, memory + observed rain** | **30.5%** | **19.2%** | **14.1%** | **14.9%** |
-| Kalman ARX | 5.9% | 1.0% | 1.8% | 3.0% |
-| Boosting, memory + observed rain | 2.2% | −0.8% | −0.3% | 6.1% |
-| *Bound: Ridge + perfect future rain* | *34.2%* | *32.6%* | *34.7%* | *36.0%* |
+| Persistence MAE (average MW) | 147 | 375 | 629 | 868 |
+| OU (current anomaly only) | 1.6% | 5.3% | 8.1% | 13.1% |
+| Ridge, memory | 29.1% | 16.9% | 12.4% | 14.4% |
+| **Ridge, memory + observed rain** | **30.5%** | **19.3%** | **14.1%** | **14.8%** |
+| Kalman ARX | 5.9% | 1.1% | 1.8% | 2.8% |
+| Boosting, memory + observed rain | 2.5% | −0.3% | 0.2% | 7.9% |
+| *Bound: Ridge + perfect future rain* | *34.2%* | *32.6%* | *34.8%* | *36.0%* |
 
 - **The per-basin linear model is the best achievable one,** with positive skill in every year and horizon. Pooled boosting loses: there are only ~8 years and trees do not extrapolate anomalies larger than those in training.
 - **Observed rain helps a little:** 0.4–2.4 points over memory; significant at h=1, 3 and 7, not at h=14.
-- **Rain forecasts have the largest potential:** perfect future rain lifts h=14 skill from 14.9% to 36.0%. Real gains will be smaller, because forecasts err, especially at long leads.
-- **Heterogeneity:** at h=7 the achievable Ridge gain ranges from 22.5% (Grande) to −29.5% (Paraguaçu); Doce and Jequitinhonha sit near zero.
+- **Rain forecasts have the largest potential:** perfect future rain lifts h=14 skill from 14.8% to 36.0%. Real gains will be smaller, because forecasts err, especially at long leads.
+- **Heterogeneity:** at h=7 the achievable Ridge gain ranges from 22.5% (Grande) to −30.1% (Paraguaçu); Doce and Jequitinhonha sit near zero.
 - **Placebo:** shuffling the rain lowers 1-day skill from 30.5% to 23.4%. The fairest control is the memory model, because the placebo loses two training years and adds noise.
 
 ## Daily load by subsystem (2022 – Oct 2026)
@@ -60,14 +63,14 @@ the ONS scheduled load, with a mean error (MAPE) of 2.72%.
 |---|---|---|
 | Same weekday last week | 4.15% | −72.6% |
 | **ONS + mean error of the last 28 days** | **2.20%** | **20.7%** |
-| ONS corrected by boosting | 2.25% | 17.4% |
-| Boosting with calendar and past temperature | 2.42% | 2.2% |
-| *Bound: corrected ONS + perfect temperature* | *1.96%* | *29.0%* |
-| *Bound: boosting + perfect temperature* | *1.78%* | *32.8%* |
+| ONS corrected by boosting | 2.25% | 17.7% |
+| Boosting with calendar and past temperature | 2.42% | 2.5% |
+| *Bound: corrected ONS + perfect temperature* | *1.96%* | *29.1%* |
+| *Bound: boosting + perfect temperature* | *1.78%* | *32.7%* |
 
-- **The simple rule beat machine learning.** Correcting the recent bias of the schedule beat the boosting model that corrects ONS (difference of 18 average MW, 95% CI 3 to 34).
+- **The simple rule beat machine learning.** Correcting the recent bias of the schedule beat the boosting model that corrects ONS (difference of 17 average MW, 95% CI 2 to 32).
 - **The advantage is concentrated in 2022 and 2023:** the rule cut error by 42.7% and 28.5% in those years and only 0.4% in 2024. The ONS bias shrank, so future gains should not be extrapolated from the average.
-- **Without ONS, the model is not enough in SE/CO:** boosting with calendar and past temperature is 12% worse than ONS in the largest subsystem.
+- **Without ONS, the model is not enough in SE/CO:** boosting with calendar and past temperature is 11.5% worse than ONS in the largest subsystem.
 - **Target-day temperature is what is missing.** It lowers boosting MAPE from 2.42% to 1.78%, but only with perfect foresight; the hourly D+1 model later confirmed the value of *forecast* temperature ([carga_d1.md](carga_d1.md)).
 
 ## Limitations

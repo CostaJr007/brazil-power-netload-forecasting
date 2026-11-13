@@ -1,13 +1,16 @@
-# Entrada: acquisition_validation.json e caminhos de arquivos nele registrados.
+# Input: acquisition_validation.json and the file paths recorded in it.
 # Output: sample_coverage.json. The SQL queries never modify the original data.
 
 """Read-only coverage inspection of downloaded CSV samples using DuckDB."""
 import json
+import sys
 from pathlib import Path
-# Importa duckdb: consulta CSV/Parquet usando SQL em processo local.
+
 import duckdb
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts"))
+from acquire import resolve_data_path  # noqa: E402
 
 
 def main():
@@ -21,7 +24,7 @@ def main():
         if item["format"] != "CSV" or item["dataset"] not in dates:
             continue
         name = dates[item["dataset"]]
-        con.read_csv(item["manifest"]["path"], delimiter=";", sample_size=-1).create_view("sample", replace=True)
+        con.read_csv(str(resolve_data_path(item["manifest"]["path"])), delimiter=";", sample_size=-1).create_view("sample", replace=True)
         result = con.execute(f'SELECT id_subsistema, count(*), min("{name}"), max("{name}"), count(DISTINCT "{name}") FROM sample GROUP BY 1 ORDER BY 1').fetchall()
         duplicates = con.execute(f'SELECT count(*) FROM (SELECT id_subsistema,"{name}" FROM sample GROUP BY 1,2 HAVING count(*)>1)').fetchone()[0]
         # Acrescenta este resultado ao fim da lista, preservando os resultados anteriores.

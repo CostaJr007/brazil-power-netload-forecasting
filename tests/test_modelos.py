@@ -97,7 +97,8 @@ def test_ena_cenario_de_chuva_cobre_exatamente_o_horizonte():
     x = preparar_bacia(serie, inicio, 7)
     t = pd.Timestamp("2022-03-01")
     janela = serie["chuva"].loc[t + pd.Timedelta(days=1):t + pd.Timedelta(days=7)]
-    assert x.loc[t, "futura_total"] == pytest.approx(janela.mean() / serie.loc[serie.index < inicio, "chuva"].mean())
+    escala = serie.loc[serie.index <= inicio - pd.Timedelta(days=7), "chuva"].mean()  # only data known at issue time
+    assert x.loc[t, "futura_total"] == pytest.approx(janela.mean() / escala)
 
 
 def test_ena_escalas_nao_dependem_do_periodo_de_teste():

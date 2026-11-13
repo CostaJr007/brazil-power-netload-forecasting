@@ -21,6 +21,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 from models.carga import calendario
+from models.validation import train_cutoff
 
 GAP = 2
 CAL = ["feriado", "vespera", "pos_feriado", "ponte", "sen", "cos"] + [f"dia_{i}" for i in range(6)]
@@ -106,7 +107,7 @@ def backtest_d1(carga, temperatura, folds, log=print):
         x = preparar_d1(grupo.set_index("instante")[["carga", "programada"]], temp)
         for inicio, fim in folds:
             datas = x.index
-            treino = x[(datas < inicio) & x["programada"].notna()]
+            treino = x[(datas < train_cutoff(inicio, GAP)) & x["programada"].notna()]
             exigidas = ["carga", "programada", "nivel", "e_m28", "t_prev"]
             teste = x[(datas >= inicio) & (datas < fim) & x[exigidas].notna().all(axis=1)].copy()
             if teste.empty or treino.empty:

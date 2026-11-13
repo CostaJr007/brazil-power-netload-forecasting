@@ -6,7 +6,7 @@ Palette: purple #A100FF as the only accent, black/white/grey #66646E neutrals, d
 for series, #F2F2F2 background. No third-party logos or names.
 
 Every chart title was checked against the data (2026, national grid): the hardest hour is late morning (solar ramp),
-not the evening peak; on holidays the model errs more than on weekdays but still beats the benchmark.
+not the evening peak; holidays are the hardest day type, and at D+1 weekends are roughly a tie with the benchmark.
 """
 import json
 
@@ -30,15 +30,15 @@ TEMA = {
         "page": {"*": {"background": [{"color": {"solid": {"color": FUNDO}}, "transparency": 0}]}},
     },
 }
-BENCH = ("Benchmark: D+1 = ONS day-ahead schedule (DESSEM); D+2 = previous-day ONS schedule bias-corrected by hour and weekday. "
-         "Walk-forward backtest: recipes selected on 2025, validated on 2026. MAE = mean absolute error of hourly values.")
+BENCH = ("Benchmark: D+1 = ONS day-ahead schedule (DESSEM) corrected by its 28-day bias; D+2 = previous-day ONS schedule "
+         "bias-corrected by hour and weekday. Walk-forward: recipes selected on 2025, validated on 2026. MAE = mean absolute error.")
 RODAPES = {
     "Forecast": ("Source: ONS open data and Open-Meteo weather forecasts at plant and city locations. Benchmark: previous-day ONS schedule "
                  "bias-corrected by hour and weekday. Band: 80% interval from the model's errors over the previous 120 days."),
     "Model vs ONS": "Source: ONS open data. " + BENCH,
     "Error drivers": "Source: ONS open data. Each component is forecast separately; net load = load − wind − solar. " + BENCH,
-    "Live audit": ("Each forecast rebuilt with only the data available at 10 pm the day before (archived weather, frozen recipes). "
-                   "Actuals: latest ONS balance; the most recent day is still preliminary."),
+    "Week replay": ("Each forecast rebuilt with data cut at 10 pm the day before (archived weather, frozen recipes). Inputs are "
+                    "today's revised ONS values, not the exact vintages of that night. Actuals: latest ONS balance."),
     "System & price": ("Source: ONS open data. Spot price estimated from the marginal cost (CMO) with the regulator's floor and cap; "
                        "the official CCEE price was not accessible. Inflow = natural energy inflow vs long-term mean."),
 }
@@ -210,7 +210,7 @@ def paginas(medidas):
         v(33, "pivotTable", 20, 452, 620, 230, {"Rows": [("dim_date.day_type", "Day type")], "Values": [(nl + "Model MAE (MW)", "Model MAE (MW)"),
                                                                                                     (nl + "Benchmark MAE (MW)", "Benchmark MAE (MW)"),
                                                                                                     (nl + "Model bias (MW)", "Bias (MW)"), (nl + "Days evaluated", "Days")]},
-          "By day type: holidays and weekends are harder, but the model still beats the benchmark"),
+          "By day type: holidays are hardest; at D+1 the model only ties the benchmark on weekends"),
         v(34, "lineChart", 660, 452, 600, 230, {"Category": [("dim_date.date", "Date")], "Y": [(nl + "Model bias excl. outages (MW)", "Bias")]},
           "Daily model bias (MW; below zero = under-forecast), ONS telemetry-outage days excluded", ordem="dim_date.date",
           cores={nl + "Model bias excl. outages (MW)": ROXO}),
@@ -232,7 +232,7 @@ def paginas(medidas):
         rodape(47, "Error drivers"),
     ]
     auditoria = [
-        *cabecalho(51, "Live replay · forecasts as issued at 10 pm the day before", au + "Headline audit"),
+        *cabecalho(51, "Replay · forecasts rebuilt with data cut at 10 pm the day before", au + "Headline audit"),
         segmentacao(53, 1020, "dim_subsystem.subsystem", "Subsystem", sin, 110),
         segmentacao(54, 1140, au + "step", "Step", ["D+1"], 120),
         kpi(55, 20, 100, au + "Audit model MAE (MW)", 405),
@@ -241,7 +241,7 @@ def paginas(medidas):
         v(58, "lineChart", 20, 210, 1240, 470, {"Category": [(au + "timestamp", "Hour")], "Y": [(au + "Audit forecast (MW)", "Forecast"), (au + "Audit actual (MW)", "Actual")]},
           "Net load by hour (MW): forecast (purple) vs actual (black)", ordem=au + "timestamp",
           cores={au + "Audit forecast (MW)": ROXO, au + "Audit actual (MW)": PRETO}),
-        rodape(59, "Live audit"),
+        rodape(59, "Week replay"),
     ]
     sistema = [
         *cabecalho(61, "System context · generation, hydrology and price", sy + "Headline system"),
@@ -257,7 +257,7 @@ def paginas(medidas):
           "Natural inflow, national grid (% of long-term mean)", ordem="dim_date.date", cores={sy + "Inflow % of long-term mean": ROXO}),
         rodape(68, "System & price"),
     ]
-    return [("Forecast", previsao), ("Model vs ONS", placar), ("Error drivers", componentes), ("Live audit", auditoria), ("System & price", sistema)]
+    return [("Forecast", previsao), ("Model vs ONS", placar), ("Error drivers", componentes), ("Week replay", auditoria), ("System & price", sistema)]
 
 
 def _json(caminho, dados):

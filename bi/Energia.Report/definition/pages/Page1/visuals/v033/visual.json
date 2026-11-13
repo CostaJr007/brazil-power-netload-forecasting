@@ -107,7 +107,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'By day type: holidays and weekends are harder, but the model still beats the benchmark'"
+                  "Value": "'By day type: holidays are hardest; at D+1 the model only ties the benchmark on weekends'"
                 }
               }
             },

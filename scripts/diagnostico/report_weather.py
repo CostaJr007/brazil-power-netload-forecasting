@@ -13,7 +13,7 @@ from pypdf import PdfReader
 import sys as _sys
 from pathlib import Path as _Path
 _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
-from acquire import DATA_DIR, ROOT, atomic_json, utcnow
+from acquire import DATA_DIR, ROOT, atomic_json, resolve_data_path, utcnow
 
 
 def main():
@@ -23,7 +23,7 @@ def main():
     files = report["files"]
     manual = next(f for f in files if f["dataset"] == "merge_documentation" and f["url"].endswith(".pdf"))
     # Extracted text only helps reading; the original PDF stays in Bronze.
-    reader = PdfReader(manual["manifest"]["path"])
+    reader = PdfReader(resolve_data_path(manual["manifest"]["path"]))
     pages = [page.extract_text() or "" for page in reader.pages]
     documentation = DATA_DIR / "weather_documentation"
     documentation.mkdir(parents=True, exist_ok=True)

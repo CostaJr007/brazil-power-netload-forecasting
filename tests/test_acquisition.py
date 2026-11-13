@@ -3,7 +3,6 @@
 
 import importlib.util
 import json
-# Importa tempfile: cria pastas de teste removidas ao sair do contexto.
 import tempfile
 import unittest
 from io import BytesIO

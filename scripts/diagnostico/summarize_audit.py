@@ -1,17 +1,16 @@
-# Entrada: endpoints_audit.json, load_api_probe.json e arquivos locais da auditoria.
+# Input: endpoints_audit.json, load_api_probe.json and the local audit files.
 # Output: updates the audit JSON and Markdown. Makes no new HTTP requests.
 
 """Finalize observed endpoint evidence without inferring cadastral freshness."""
 import json
 from pathlib import Path
-# Importa duckdb: consulta CSV/Parquet usando SQL em processo local.
 import duckdb
 
 # Scripts in this subfolder reuse the modules in scripts/ (acquire, pipeline...).
 import sys as _sys
 from pathlib import Path as _Path
 _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
-from acquire import ROOT, atomic_json
+from acquire import ROOT, atomic_json, resolve_data_path
 
 
 def main():
@@ -31,7 +30,7 @@ def main():
             item["api_probe"] = next(p for p in probes if p["kind"] == kind)
             item["status"] = "http_200_empty_response_without_area"
         if item["dataset"] in {"programacao_x_previsao", "grandezas_fluviometricas"}:
-            con.read_parquet(content["path"]).create_view("sample", replace=True)
+            con.read_parquet(str(resolve_data_path(content["path"]))).create_view("sample", replace=True)
             names = [r[0] for r in con.execute("DESCRIBE sample").fetchall() if r[0].startswith(("dat_", "din_"))]
             for name in names:
                 escaped = '"' + name.replace('"', '""') + '"'

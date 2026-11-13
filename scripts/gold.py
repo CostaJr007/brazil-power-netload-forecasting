@@ -97,14 +97,19 @@ FULL JOIN (SELECT * FROM p WHERE rn = 1) p
   ON v.cod_areacarga = p.cod_areacarga AND v.interval_end_utc = p.interval_end_utc;
 
 -- Hourly balance per subsystem with net load (load − wind − solar). Excludes the SIN aggregate.
+-- One row per subsystem/hour: the most recently published revision (all columns from the same row).
+-- A missing component leaves net load missing; it is never treated as zero.
 CREATE VIEW vw_balanco_carga_liquida AS
+WITH r AS (
+    SELECT *, row_number() OVER (PARTITION BY id_subsistema, _event_time_source
+                                 ORDER BY _available_at_utc DESC, _source_sha256) AS rn
+    FROM silver_balanco_energia_subsistema
+    WHERE NOT _is_sin_aggregate)
 SELECT id_subsistema AS subsistema, _event_time_source AS instante_fonte,
-       max(val_carga) AS carga_mwmed, max(val_gereolica) AS eolica_mwmed, max(val_gersolar) AS solar_mwmed,
-       max(val_gerhidraulica) AS hidraulica_mwmed, max(val_gertermica) AS termica_mwmed,
-       max(val_carga) - coalesce(max(val_gereolica), 0) - coalesce(max(val_gersolar), 0) AS carga_liquida_mwmed
-FROM silver_balanco_energia_subsistema
-WHERE NOT _is_sin_aggregate
-GROUP BY ALL;
+       val_carga AS carga_mwmed, val_gereolica AS eolica_mwmed, val_gersolar AS solar_mwmed,
+       val_gerhidraulica AS hidraulica_mwmed, val_gertermica AS termica_mwmed,
+       val_carga - val_gereolica - val_gersolar AS carga_liquida_mwmed
+FROM r WHERE rn = 1;
 
 -- Daily EAR per subsystem and weekly CMO: system state and shadow price.
 CREATE VIEW vw_ear_subsistema_diaria AS
@@ -184,11 +189,11 @@ ear AS (
     FROM silver_ear_diario_por_ree_reservatorio_equivalente_de_energia GROUP BY ALL)
 SELECT * FROM ena FULL JOIN ear USING (ree, data_referencia);
 
--- Hourly SIN balance: sum of the 4 subsystems, complete hours only.
+-- Hourly SIN balance: sum of the 4 subsystems, only hours where all 4 have net load (SUM would skip gaps).
 CREATE VIEW vw_balanco_horario_sin AS
 SELECT instante_fonte, sum(carga_mwmed) AS carga_mwmed, sum(eolica_mwmed) AS eolica_mwmed, sum(solar_mwmed) AS solar_mwmed,
        sum(hidraulica_mwmed) AS hidraulica_mwmed, sum(termica_mwmed) AS termica_mwmed, sum(carga_liquida_mwmed) AS carga_liquida_mwmed
-FROM vw_balanco_carga_liquida GROUP BY instante_fonte HAVING count(*) = 4;
+FROM vw_balanco_carga_liquida GROUP BY instante_fonte HAVING count(*) = 4 AND count(carga_liquida_mwmed) = 4;
 
 -- Daily balance per subsystem and SIN, in average MW.
 CREATE VIEW vw_balanco_diario AS

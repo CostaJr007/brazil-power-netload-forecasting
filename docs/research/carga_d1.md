@@ -24,7 +24,7 @@ Reference: the ONS scheduled load errs 3.09% against verified load over the same
 - **Forecast temperature is the decisive variable.** In SE/CO the error falls from 3.16% to 2.22%.
 - **Reservoirs and generation do not explain load,** which makes physical sense: consumption depends on weather and calendar, not on how much water is in the reservoirs. These data matter for price, not for load.
 - **Best model: one Ridge per hour of the day.** It beat gradient boosting on both targets.
-- **Blend with ONS:** the mean of corrected ONS, Ridge and boosting was best in 2023 and 2024 and confirmed in 2025 and 2026 (MAE 12.5% below ONS and 4.6% below the bias rule, 95% CI excluding zero).
+- **Blend with ONS:** the mean of corrected ONS, Ridge and boosting was best in 2023 and 2024 and confirmed in 2025 and 2026 (MAE 12.5% below ONS and 4.7% below the bias rule, 95% CI excluding zero).
 
 ## Limits
 

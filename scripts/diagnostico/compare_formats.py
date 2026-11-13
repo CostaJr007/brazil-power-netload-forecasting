@@ -12,7 +12,6 @@ from pathlib import Path
 
 
 def main():
-    # Importa duckdb: consulta CSV/Parquet usando SQL em processo local.
     import duckdb
 
     parser = argparse.ArgumentParser(description=__doc__)

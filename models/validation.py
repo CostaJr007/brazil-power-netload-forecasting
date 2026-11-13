@@ -20,6 +20,15 @@ def annual_folds(first_year, last_date):
     return folds
 
 
+def train_cutoff(start, gap):
+    """Exclusive end of the training rows for a fold whose first test day is `start`.
+
+    When day `start` is forecast, verified data only reach start−gap, so later targets are not known yet.
+    Training on rows dated < start−(gap−1) keeps a fold boundary from leaking one or two days of the future.
+    """
+    return pd.Timestamp(start) - pd.Timedelta(days=gap - 1)
+
+
 def placebo_shift(series, days=730):
     """Shift the series by 2 years: keeps seasonality and destroys that day's real-time information."""
     return series.shift(days)

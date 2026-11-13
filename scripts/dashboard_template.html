@@ -84,7 +84,7 @@
     <div class="top">
       <div>
         <div class="kicker">Brazil power system · Net-load forecasting</div>
-        <h1>Beating the grid operator's net-load schedule <span class="accent">with open data</span></h1>
+        <h1>Net-load forecasts against the grid operator's schedule, <span class="accent">with open data</span></h1>
         <div class="sub" id="sub"></div>
       </div>
       <div class="links">
@@ -96,7 +96,7 @@
       <button data-tab="forecast">Forecast</button>
       <button data-tab="scoreboard">Model vs ONS</button>
       <button data-tab="drivers">Error drivers</button>
-      <button data-tab="audit">Live audit</button>
+      <button data-tab="audit">Week replay</button>
       <button data-tab="system">System &amp; price</button>
     </nav>
   </div>
@@ -164,7 +164,7 @@
         <div class="chart short" id="sc-bias"></div>
       </div>
     </div>
-    <p class="note"><b>Benchmark:</b> D+1 = ONS day-ahead schedule (DESSEM); D+2 = previous-day ONS schedule bias-corrected by hour and weekday (no same-day schedule exists yet). Model recipes were selected on 2025 and frozen; 2026 is pure out-of-sample validation. MAE = mean absolute error of hourly net load. Research tables score candidates on a common sample (D+1: 11.2%); this view uses every available hour.</p>
+    <p class="note"><b>Benchmark</b> (what a desk already gets for free): D+1 = ONS day-ahead schedule (DESSEM) corrected by its own mean error over the last 28 days at the same hour; against the raw schedule the D+1 gain roughly doubles, but most of that is the bias correction. D+2 = previous-day ONS schedule bias-corrected by hour and weekday (no same-day schedule exists yet). Recipes were selected on 2025 and frozen; 2026 is out of sample but was also used for later diagnostics, so treat it as validation. MAE = mean absolute error of hourly net load; this view uses every available hour.</p>
   </section>
 
   <!-- DRIVERS -->
@@ -200,7 +200,7 @@
   <!-- AUDIT -->
   <section class="tab" id="audit">
     <div class="head">
-      <div><div class="kicker">Live replay · forecasts as issued at 10 pm the day before</div><h2 id="au-title"></h2></div>
+      <div><div class="kicker">Replay · forecasts rebuilt with data cut at 10 pm the day before (revised values)</div><h2 id="au-title"></h2></div>
       <div class="filters">
         <div class="filter"><label>Step</label><div class="seg" id="au-step"></div></div>
         <div class="filter"><label>Subsystem</label><div class="seg" id="au-sub"></div></div>
@@ -220,7 +220,7 @@
       </div>
     </div>
     <div class="insight"><b>What we learned</b><span>During the Nov 3–7 heat wave the operator's bias flipped sign; the 28-day bias correction kept removing the old bias and D+1 lost to the operator. D+2 still won by about 20%. Nothing was retuned: adjusting to one bad week would be overfitting.</span></div>
-    <p class="note">Each forecast was rebuilt with only the data available at 10 pm the night before: data cut at that time, archived weather, frozen recipes. Actuals are today's ONS balance; the most recent day is still preliminary.</p>
+    <p class="note">Each forecast was rebuilt with data cut at 10 pm the night before, archived weather and frozen recipes. This is a replay, not a true as-of run: inputs are today's revised ONS values cut by date. Actuals are today's ONS balance; the most recent day is still preliminary.</p>
   </section>
 
   <!-- SYSTEM -->
@@ -338,7 +338,7 @@ function renderScore() {
   document.getElementById("sc-kpis").innerHTML =
     kpi(`${better ? "−" : "+"}${pct(s.gain)}`, "Error vs benchmark", "MAE reduction", true) +
     kpi(`${fmt(s.mae_m)}<small>MW</small>`, "Model MAE", "hourly") +
-    kpi(`${fmt(s.mae_b)}<small>MW</small>`, "Benchmark MAE", scState.hz === "D+1" ? "ONS day-ahead schedule" : "corrected T−1 schedule") +
+    kpi(`${fmt(s.mae_b)}<small>MW</small>`, "Benchmark MAE", scState.hz === "D+1" ? "bias-corrected DESSEM" : "corrected T−1 schedule") +
     kpi(`${s.win}%`, "Days the model wins", `of ${s.days} days`) +
     kpi(s.cov == null ? "–" : `${fmt(s.cov, 1)}%`, "80% band coverage", "target 80%");
   Plotly.react("sc-month", [

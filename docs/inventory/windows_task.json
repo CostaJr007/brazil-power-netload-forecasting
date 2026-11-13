@@ -29,7 +29,7 @@
                                                                                    ],
                                                                "CimSystemProperties":  {
                                                                                            "Namespace":  "ROOT/Microsoft/Windows/TaskScheduler",
-                                                                                           "ServerName":  "COSTA",
+                                                                                           "ServerName":  "<machine>",
                                                                                            "ClassName":  "MSFT_TaskAction",
                                                                                            "Path":  null
                                                                                        }
@@ -84,7 +84,7 @@
                                                              ],
                                          "CimSystemProperties":  {
                                                                      "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
-                                                                     "ServerName":  "COSTA",
+                                                                     "ServerName":  "<machine>",
                                                                      "ClassName":  "MSFT_TaskExecAction",
                                                                      "Path":  null
                                                                  }
@@ -99,7 +99,7 @@
                                                       },
                                                       {
                                                           "Name":  "Arguments",
-                                                          "Value":  "-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File \"C:\\Users\\adeil\\PycharmProjects\\Energy\\scripts\\run_pipeline.ps1\"",
+                                                          "Value":  "-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File \"<project>\\scripts\\run_pipeline.ps1\"",
                                                           "CimType":  14,
                                                           "Flags":  "Property, NotModified",
                                                           "IsValueModified":  false
@@ -121,7 +121,7 @@
                                                   ],
                         "CimSystemProperties":  {
                                                     "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
-                                                    "ServerName":  "COSTA",
+                                                    "ServerName":  "<machine>",
                                                     "ClassName":  "MSFT_TaskExecAction",
                                                     "Path":  null
                                                 }
@@ -192,7 +192,7 @@
                                                                                     ],
                                                                 "CimSystemProperties":  {
                                                                                             "Namespace":  "ROOT/Microsoft/Windows/TaskScheduler",
-                                                                                            "ServerName":  "COSTA",
+                                                                                            "ServerName":  "<machine>",
                                                                                             "ClassName":  "MSFT_TaskTrigger",
                                                                                             "Path":  null
                                                                                         }
@@ -277,7 +277,7 @@
                                                               ],
                                           "CimSystemProperties":  {
                                                                       "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
-                                                                      "ServerName":  "COSTA",
+                                                                      "ServerName":  "<machine>",
                                                                       "ClassName":  "MSFT_TaskTimeTrigger",
                                                                       "Path":  null
                                                                   }
@@ -329,7 +329,7 @@
                                                                                                    ],
                                                                          "CimSystemProperties":  {
                                                                                                      "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
-                                                                                                     "ServerName":  "COSTA",
+                                                                                                     "ServerName":  "<machine>",
                                                                                                      "ClassName":  "MSFT_TaskRepetitionPattern",
                                                                                                      "Path":  null
                                                                                                  }
@@ -355,7 +355,7 @@
                                                    ],
                          "CimSystemProperties":  {
                                                      "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
-                                                     "ServerName":  "COSTA",
+                                                     "ServerName":  "<machine>",
                                                      "ClassName":  "MSFT_TaskTimeTrigger",
                                                      "Path":  null
                                                  }
@@ -424,7 +424,7 @@
                                                                                     ],
                                                                 "CimSystemProperties":  {
                                                                                             "Namespace":  "ROOT/Microsoft/Windows/TaskScheduler",
-                                                                                            "ServerName":  "COSTA",
+                                                                                            "ServerName":  "<machine>",
                                                                                             "ClassName":  "MSFT_TaskTrigger",
                                                                                             "Path":  null
                                                                                         }
@@ -519,7 +519,7 @@
                                                               ],
                                           "CimSystemProperties":  {
                                                                       "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
-                                                                      "ServerName":  "COSTA",
+                                                                      "ServerName":  "<machine>",
                                                                       "ClassName":  "MSFT_TaskLogonTrigger",
                                                                       "Path":  null
                                                                   }
@@ -571,7 +571,7 @@
                                                                                                    ],
                                                                          "CimSystemProperties":  {
                                                                                                      "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
-                                                                                                     "ServerName":  "COSTA",
+                                                                                                     "ServerName":  "<machine>",
                                                                                                      "ClassName":  "MSFT_TaskRepetitionPattern",
                                                                                                      "Path":  null
                                                                                                  }
@@ -596,7 +596,7 @@
                                                        },
                                                        {
                                                            "Name":  "UserId",
-                                                           "Value":  "COSTA\\adeil",
+                                                           "Value":  "<machine>\\<user>",
                                                            "CimType":  14,
                                                            "Flags":  "Property, NotModified",
                                                            "IsValueModified":  false
@@ -604,7 +604,7 @@
                                                    ],
                          "CimSystemProperties":  {
                                                      "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
-                                                     "ServerName":  "COSTA",
+                                                     "ServerName":  "<machine>",
                                                      "ClassName":  "MSFT_TaskLogonTrigger",
                                                      "Path":  null
                                                  }
@@ -688,7 +688,7 @@
                                                                                  ],
                                                              "CimSystemProperties":  {
                                                                                          "Namespace":  "ROOT/Microsoft/Windows/TaskScheduler",
-                                                                                         "ServerName":  "COSTA",
+                                                                                         "ServerName":  "<machine>",
                                                                                          "ClassName":  "MSFT_TaskPrincipal",
                                                                                          "Path":  null
                                                                                      }
@@ -817,7 +817,7 @@
                                                            ],
                                        "CimSystemProperties":  {
                                                                    "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
-                                                                   "ServerName":  "COSTA",
+                                                                   "ServerName":  "<machine>",
                                                                    "ClassName":  "MSFT_TaskPrincipal2",
                                                                    "Path":  null
                                                                }
@@ -860,7 +860,7 @@
                                                     },
                                                     {
                                                         "Name":  "UserId",
-                                                        "Value":  "adeil",
+                                                        "Value":  "<user>",
                                                         "CimType":  14,
                                                         "Flags":  "Property, NotModified",
                                                         "IsValueModified":  false
@@ -882,7 +882,7 @@
                                                 ],
                       "CimSystemProperties":  {
                                                   "Namespace":  "Root/Microsoft/Windows/TaskScheduler",
-                                                  "ServerName":  "COSTA",
+                                                  "ServerName":  "<machine>",
                                                   "ClassName":  "MSFT_TaskPrincipal2",
                                                   "Path":  null
                                               }

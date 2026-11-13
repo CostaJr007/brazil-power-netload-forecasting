@@ -7,7 +7,8 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from models.carga_d1 import LAGS, TEMP, preparar_d1  # noqa: E402
-from models.renovaveis import corrigir_vies, corrigir_vies_semana, folds_trimestrais, preparar_fonte, referencias_ons  # noqa: E402
+from models.renovaveis import corrigir_vies, corrigir_vies_semana, folds_trimestrais, preparar_fonte, prever_fonte, referencias_ons  # noqa: E402
+from models.validation import train_cutoff  # noqa: E402
 
 INDICE = pd.date_range("2024-02-01", "2025-06-30 23:00", freq="h")
 RNG = np.random.default_rng(9)
@@ -105,3 +106,23 @@ def test_nivel_zero_nao_gera_alvo():
     serie, previsoes = dados()
     x = preparar_fonte(serie * 0, previsoes)
     assert x["alvo"].notna().sum() == 0
+
+
+def test_fronteira_do_fold_nao_treina_com_alvos_ainda_desconhecidos():
+    """When the first fold day T is forecast, targets after T−gap are unknown: changing them must not move the forecast."""
+    serie, previsoes = dados()
+    inicio, fim = pd.Timestamp("2025-04-01"), pd.Timestamp("2025-04-08")
+    for gap in (2, 3):
+        x = preparar_fonte(serie, previsoes, gap=gap)
+        assert train_cutoff(inicio, gap) == inicio - pd.Timedelta(days=gap - 1)
+        alterado = x.copy()
+        desconhecidos = (alterado.index >= train_cutoff(inicio, gap)) & (alterado.index < inicio)
+        alterado.loc[desconhecidos, "alvo"] *= 5
+        a = prever_fonte(x, ["vento"], inicio, fim, gap=gap)
+        b = prever_fonte(alterado, ["vento"], inicio, fim, gap=gap)
+        pd.testing.assert_frame_equal(a[["ridge", "gbm"]], b[["ridge", "gbm"]])
+        # Sanity check: the last known day (T−gap) does enter training.
+        conhecido = x.copy()
+        conhecido.loc[conhecido.index == inicio - pd.Timedelta(days=gap), "alvo"] *= 5
+        c = prever_fonte(conhecido, ["vento"], inicio, fim, gap=gap)
+        assert not np.allclose(a["ridge"], c["ridge"])

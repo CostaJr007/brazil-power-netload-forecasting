@@ -5,15 +5,15 @@
 import importlib
 import importlib.metadata
 import json
-# Importa platform: identifica sistema operacional e arquitetura.
 import platform
 import subprocess
 import sys
-# Importa tempfile: cria pastas de teste removidas ao sair do contexto.
 import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts"))
+from acquire import atomic_json  # noqa: E402
 
 
 def main():
@@ -42,7 +42,6 @@ def main():
             report["errors"].append(f"{package}: {exc}")
     with tempfile.TemporaryDirectory() as tmp:
         import numpy as np
-        # Importa pandas: manipula tabelas e escreve o Parquet de teste.
         import pandas as pd
         import polars as pl
         import xarray as xr
@@ -50,7 +49,6 @@ def main():
         import geopandas as gpd
         import rasterio
         from rasterio.transform import from_origin
-        # De shapely.geometry, importa Point: cria geometrias de teste, como pontos.
         from shapely.geometry import Point
 
         folder = Path(tmp)
@@ -119,7 +117,7 @@ def main():
         report["errors"].append("pip check failed")
     frozen = subprocess.run([sys.executable, "-m", "pip", "freeze", "--all"], capture_output=True, text=True, check=True)
     (ROOT / "requirements-lock-windows.txt").write_text(frozen.stdout, encoding="utf-8")
-    (ROOT / "docs/environment.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+    atomic_json(ROOT / "docs/environment.json", report)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return int(bool(report["errors"]))
 

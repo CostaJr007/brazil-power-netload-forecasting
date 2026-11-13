@@ -7,5 +7,5 @@ seaborn>=0.13,<1
 plotly>=6,<7
 pytest>=8,<10
 ruff>=0.11,<1
-# Leitura da documentação técnica que acompanha os produtos meteorológicos.
+# Reads the technical documentation shipped with the weather products.
 pypdf>=6,<8

@@ -48,5 +48,5 @@ always keep a subsystem filter, otherwise averages mix regions and the total.
 | **Forecast** | What net load should we expect tomorrow, hour by hour, and how uncertain is it? |
 | **Model vs ONS** | Does the model beat the grid operator? By month, by hour, by day type, and its bias over time |
 | **Error drivers** | Which component (load, wind, solar) and which region the error comes from |
-| **Live audit** | How the forecasts issued at 10 pm the day before did in the audited week |
+| **Week replay** | How the forecasts, rebuilt with data cut at 10 pm the day before, did in the replayed week (inputs are today's revised values) |
 | **System & price** | Generation mix, reservoir storage, inflows and the estimated spot price |
