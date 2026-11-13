@@ -116,7 +116,7 @@ def fato_auditoria():
     a = pd.read_parquet(arquivo)
     partes = []
     for passo, g in a.groupby("passo"):
-        regua = "ons" if passo == 1 else "ons_ant_semana"
+        regua = "ons_corrigido" if passo == 1 else "ons_ant_semana"  # same fair benchmarks as the backtest
         f = carga_liquida(g, "previsto")
         for coluna in ("real", regua):
             f = f.merge(carga_liquida(g, coluna), on=["subsistema", "data", "hora"], how="left")

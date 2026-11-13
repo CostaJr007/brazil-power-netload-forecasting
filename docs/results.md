@@ -61,7 +61,7 @@ inputs are today's revised ONS values cut by date, not the exact vintages that e
 
 | | Model (national MAE) | Benchmark | Result | Days beating | Peak hour (±1 h) |
 |---|---|---|---|---|---|
-| **D+1** | 2,349 MW | ONS 2,139 MW | **lost 9.8%** | 4 of 6 | 6 of 6 |
+| **D+1** | 2,349 MW | bias-corrected ONS 2,232 MW (raw 2,139 MW) | **lost 5.2%** (9.8% vs raw) | 4 of 6 | 6 of 6 |
 | **D+2** | 3,329 MW | bias-corrected T−1 schedule 4,157 MW | **won 19.9%** | 4 of 7 | 7 of 7 |
 
 - **What went wrong at D+1:** the model under-forecast all week, mostly Southeast load (−1.5 GW). Southeast capitals hit 33–37 °C between Nov 3 and 7; load responded to heat more than history taught, and ONS under-forecast too. The temperature forecast itself was accurate (±0.7 °C/day).
@@ -74,10 +74,10 @@ inputs are today's revised ONS values cut by date, not the exact vintages that e
 `scripts/diagnostico/residuos_2026.py` relates the out-of-sample error of the current recipe (304 days of 2026)
 to candidate variables before any retraining.
 
-- **Heat:** a Southeast pattern exists (under-forecast on the hottest days: −294 MW at D+1, −641 MW at D+2), but the relationship is weak (|correlation| ≤ 0.17).
-- **Operator bias flip:** errors are 23–33% larger on those days, but the direction is not predictable.
-- **Second-stage walk-forward model with these variables:** worse national MAE (+4.0% with weather at D+1, 95% CI +11 to +167 MW). Only an hour/calendar recalibration helped slightly at D+2 (−3%, CI −164 to −4 MW).
-- **Fuzzy logic** (`scripts/diagnostico/fuzzy_banda.py`): a fuzzy risk score (heat, bias flip, holiday) neither separated large errors nationally nor improved the band (Winkler score +120 MW at D+1 and +432 MW at D+2, both significant). The simple per-hour band stays.
+- **Heat:** a Southeast pattern exists (under-forecast on the hottest days: −297 MW at D+1, −654 MW at D+2), but the relationship is weak (|correlation| ≤ 0.18).
+- **Operator bias flip:** errors are 23–34% larger on those days, but the direction is not predictable.
+- **Second-stage walk-forward model with these variables:** worse national MAE (+3.9% with weather at D+1, 95% CI +5 to +163 MW). Only an hour/calendar recalibration helped slightly at D+2 (−2.9%, CI −160 to −5 MW).
+- **Fuzzy logic** (`scripts/diagnostico/fuzzy_banda.py`): a fuzzy risk score (heat, bias flip, holiday) neither separated large errors nationally nor improved the band (Winkler score +125 MW at D+1 and +472 MW at D+2, both significant). The simple per-hour band stays.
 - **Conclusion:** the temperature terms already in the model capture almost all the signal. Heat build-up and bias regime are useful as **risk alerts**, not as corrections. The next real gain needs **new information** (fresher weather runs, state holidays), not a different regression.
 
 ## Data quality (before any model)

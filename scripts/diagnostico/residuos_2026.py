@@ -147,7 +147,7 @@ def analisar(horizonte):
         datas = s.index.get_level_values("data")
         d, lo, hi = block_bootstrap_diff(datas, (s["x"] - s["real"]).abs(), (s["x0"] - s["real"]).abs())
         resultados[nome] = {"mae": round(mae), "dif": round(d), "ic": [round(lo), round(hi)]}
-        print(f"   {nome:42s} MAE {mae:,.0f} MW  ({100 * (mae / mae0 - 1):+.1f}%)  dif {d:+.0f} MW, IC95 [{lo:+.0f}, {hi:+.0f}]")
+        print(f"   {nome:42s} MAE {mae:,.0f} MW  ({100 * (mae / mae0 - 1):+.1f}%)  dif {d:+.0f} MW, 95% CI [{lo:+.0f}, {hi:+.0f}]")
 
     # 3. Empirical Monte Carlo: 80% interval resampling past residuals of the same hour
     print("\n3) 80% prediction interval by resampling residuals (national), coverage in 2026:")

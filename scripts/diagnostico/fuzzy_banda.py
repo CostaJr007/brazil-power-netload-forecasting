@@ -78,9 +78,9 @@ def testar_banda(horizonte):
         "previsto": g["previsto"].sum(), "real": g["real"].sum(),
         "risco": np.average(g["risco"].fillna(0), weights=g["w"])}), include_groups=False).reset_index()
     sin["res"] = sin["previsto"] - sin["real"]
-    print(f"\n===== D+{horizonte}: banda de 80% =====")
+    print(f"\n===== D+{horizonte}: 80% band =====")
     t = sin[sin["data"] >= CONFIRMACAO]
-    t = t.assign(faixa=pd.cut(t["risco"], [-0.01, 0.2, 0.6, 1.0], labels=["baixo", "médio", "alto"]))
+    t = t.assign(faixa=pd.cut(t["risco"], [-0.01, 0.2, 0.6, 1.0], labels=["low", "medium", "high"]))
     print("Does the fuzzy risk separate the errors? Mean national |error| in 2026 by risk band:")
     print(t.groupby("faixa", observed=True)["res"].agg(mae=lambda s: s.abs().mean(), horas="count").round(0).to_string())
     grade = [0.0, 0.5, 1.0, 2.0, 3.0]
@@ -88,16 +88,16 @@ def testar_banda(horizonte):
     k = min(sel, key=sel.get)
     print("Selection (Aug–Dec 2025), mean Winkler score by k:", {kk: round(v) for kk, v in sel.items()}, f"-> k = {k}")
     fim = sin["data"].max() + pd.Timedelta(days=1)
-    for nome, kk in (("fixed per-hour band (k = 0)", 0.0), (f"banda fuzzy (k = {k})", k)):
+    for nome, kk in (("fixed per-hour band (k = 0)", 0.0), (f"fuzzy band (k = {k})", k)):
         b = banda(sin, kk, CONFIRMACAO, fim)
-        b = b.assign(faixa=pd.cut(b["risco"], [-0.01, 0.2, 0.6, 1.0], labels=["baixo", "médio", "alto"]))
+        b = b.assign(faixa=pd.cut(b["risco"], [-0.01, 0.2, 0.6, 1.0], labels=["low", "medium", "high"]))
         por = b.groupby("faixa", observed=True)["dentro"].mean().mul(100).round(0).to_dict()
-        print(f"  2026 {nome:28s} cobertura {100 * b['dentro'].mean():.1f}% | largura {b['largura'].mean():,.0f} MW | "
-              f"Winkler {b['winkler'].mean():,.0f} | cobertura por risco {por}")
+        print(f"  2026 {nome:28s} coverage {100 * b['dentro'].mean():.1f}% | width {b['largura'].mean():,.0f} MW | "
+              f"Winkler {b['winkler'].mean():,.0f} | coverage by risk {por}")
         if kk == 0:
             base = b
     d, lo, hi = block_bootstrap_diff(b["data"], b["winkler"], base["winkler"])
-    print(f"  Winkler fuzzy − fixa: {d:+.0f} MW, IC95 [{lo:+.0f}, {hi:+.0f}]")
+    print(f"  Winkler fuzzy − fixed: {d:+.0f} MW, 95% CI [{lo:+.0f}, {hi:+.0f}]")
 
 
 def testar_pontual():
@@ -122,9 +122,9 @@ def testar_pontual():
     melhor = min(resultados, key=lambda v: resultados[v]["2025"][0])
     m, b, f = resultados[melhor]["2026"]
     d, lo, hi = block_bootstrap_diff(f["data"], (f["previsto_fz"] - f["real"]).abs(), (f["previsto"] - f["real"]).abs())
-    print(f"  escolhida {melhor} -> 2026 MAE {m:,.0f} vs receita {b:,.0f} MW ({100 * (m / b - 1):+.1f}%), dif {d:+.0f}, IC95 [{lo:+.0f}, {hi:+.0f}]")
+    print(f"  chosen {melhor} -> 2026 MAE {m:,.0f} vs recipe {b:,.0f} MW ({100 * (m / b - 1):+.1f}%), dif {d:+.0f}, 95% CI [{lo:+.0f}, {hi:+.0f}]")
     s = f[(f["data"] >= "2026-11-04") & (f["data"] <= "2026-11-07")]
-    print(f"  semana auditada (04–07/11): MAE {(s['previsto_fz'] - s['real']).abs().mean():,.0f} vs receita {(s['previsto'] - s['real']).abs().mean():,.0f} MW")
+    print(f"  replayed week (Nov 4–7): MAE {(s['previsto_fz'] - s['real']).abs().mean():,.0f} vs recipe {(s['previsto'] - s['real']).abs().mean():,.0f} MW")
 
 
 if __name__ == "__main__":
