@@ -100,7 +100,8 @@ with extreme values and check that the forecast does not change.
 Each component is modelled separately per subsystem, and net load is assembled as load − wind − solar.
 
 - **Ratio targets:** load is modelled as `log(load / level)` and renewables as `output / level`, capped at 3, where *level* is the 28-day mean of the same hour known at decision time. This removes trend and installed-capacity growth (and absorbs curtailment), so the model learns deviations.
-- **Features:** recent ratios (2, 7 and 14 days), a 7-day trend, operator error lags (2, 3, 7, 14 days and 7/28-day means), weather features (§2.4), and a calendar with national holidays, eves, days after, bridge days and weekday dummies.
+- **Features, load:** ratios 2, 7 and 14 days back, a 7-day trend, temperature features (§2.4) and a calendar with national holidays, eves, days after, bridge days, weekday dummies and the annual cycle.
+- **Features, wind and solar:** ratios 2 and 7 days back, a 7-day trend and the weather features of §2.4. No operator data enters the ML models; the operator schedule only enters through the 50/50 blends below.
 - **Ridge per hour:** standardised features, α = 10, one model per hour of the day.
 - **Gradient boosting** (scikit-learn HistGradientBoosting): 300 iterations, learning rate 0.05, 31 leaves, min. 40 samples per leaf, L2 = 1, pooled across hours.
 - **Operator references:** the DESSEM value (`ons`); the same value corrected by the 28-day mean error at the same hour (`ons_corrected`); for D+2, the previous day's schedule corrected by the mean error of the last four same-weekday, same-hour occurrences (`ons_prev_weekday`).
@@ -117,8 +118,8 @@ Models are refit every quarter, because archived weather forecasts only start in
 ### 3.4 Prediction band
 
 For each subsystem and hour, the 10th and 90th percentiles of the model's errors over the previous 120 days,
-using only errors already known at decision time, define an 80% band. This is the limit of a Monte Carlo resampling of past
-errors. It is recomputed monthly in the backtest and at every decision in operations.
+using only errors already known at decision time, define an 80% band. This is the limit of a Monte Carlo
+resampling of past errors. It is recomputed monthly in the backtest and at every decision in operations.
 
 ### 3.5 Recipes selected on 2025
 
@@ -140,7 +141,9 @@ operator has not yet seen the weather for the target day, and pure ML wins for l
 | D+1 | 2,097 MW | 2,207 MW (bias-corrected DESSEM) | **5.0%** | 95% CI of the difference [−172, −21] MW; vs raw DESSEM (2,364 MW): 11.3% |
 | D+2 | 2,602 MW | 3,500 MW (weekday-corrected T−1) | **25.7%** | 95% CI of the difference [−1,186, −575] MW; anticipates the not-yet-published DESSEM with MAE 2,264 vs 3,021 MW |
 
-These figures use the common sample where every candidate model has a value; recomputed on every available hour, as in the dashboard, they are 2,102 vs 2,209 MW (4.9%) and 2,614 vs 3,534 MW (26.0%). Once ONS publishes its D+1 schedule, that schedule (bias-corrected, 2,211 MW) beats our D+2 forecast, as expected.
+The confidence interval comes from the block bootstrap of daily mean differences, which weights each day
+equally, so its centre (−95 MW) differs slightly from the hourly MAE difference (−110 MW). These figures use the
+common sample where every candidate model has a value; recomputed on every available hour, as in the dashboard, they are 2,102 vs 2,209 MW (4.9%) and 2,614 vs 3,534 MW (26.0%). Once ONS publishes its D+1 schedule, that schedule (bias-corrected, 2,211 MW) beats our D+2 forecast, as expected.
 
 The model beats the benchmark on 59% of days at D+1 and 68% at D+2. Errors peak in the late morning
 (11 am at D+1), when solar ramps and solar forecast errors are largest, not at the evening load peak; between
@@ -178,10 +181,10 @@ Before retraining with new variables, we checked whether the 2026 out-of-sample 
 
 | Idea | Test | Outcome |
 |---|---|---|
-| Heat build-up, degree-days, consecutive hot days | Correlation with residuals; walk-forward second-stage GBM on residuals | Weak relation (abs. correlation ≤ 0.17); second stage **worsened** D+1 MAE by 4.0% (95% CI +11 to +167 MW) |
-| Operator-bias regime (3-day vs 28-day bias) | Same second stage | Errors are 23–33% larger after a sign flip, but the direction is not predictable; no gain |
-| Hour/calendar recalibration | Same second stage, calendar only | Small gain at D+2 only (−3%, 95% CI −164 to −4 MW) |
-| Fuzzy-logic risk score (heat, bias flip, holiday) | Adaptive band width; fuzzy weight on the bias correction | Band worse on the Winkler score (+120 MW at D+1, +432 MW at D+2, both significant); weight neutral (+0.2%) |
+| Heat build-up, degree-days, consecutive hot days | Correlation with residuals; walk-forward second-stage GBM on residuals | Weak relation (abs. correlation ≤ 0.18); second stage **worsened** D+1 MAE by 3.9% (95% CI +5 to +163 MW) |
+| Operator-bias regime (3-day vs 28-day bias) | Same second stage | Errors are 23–34% larger after a sign flip, but the direction is not predictable; no gain |
+| Hour/calendar recalibration | Same second stage, calendar only | Small gain at D+2 only (−2.9%, 95% CI −160 to −5 MW) |
+| Fuzzy-logic risk score (heat, bias flip, holiday) | Adaptive band width; fuzzy weight on the bias correction | Band worse on the Winkler score (+125 MW at D+1, +472 MW at D+2, both significant); weight neutral (+0.1%) |
 | Shorter bias-correction windows (7, 14 days) | Re-selection on 2025 and 2026 | The 28-day window remained best in both years |
 
 The interpretation is that the temperature terms already in the model capture most of the weather signal,
@@ -192,12 +195,12 @@ such as fresher weather runs or state-level holidays, rather than a different re
 
 Each day was re-forecast with data cut at 10 pm the night before, archived weather and frozen recipes. This is
 a replay, not a true as-of run: the inputs are today's revised ONS values cut by date, not the exact vintages
-that existed that night. The D+1 benchmark here is the raw DESSEM schedule.
+that existed that night.
 
 | | Model MAE | Benchmark MAE | Result | Days won | Peak hour (±1 h) |
 |---|---|---|---|---|---|
-| D+1 | 2,349 MW | 2,139 MW | lost 9.8% | 4 of 6 | 6 of 6 |
-| D+2 | 3,329 MW | 4,157 MW | won 19.9% | 4 of 7 | 7 of 7 |
+| D+1 | 2,349 MW | 2,232 MW (bias-corrected DESSEM); 2,139 MW (raw) | lost 5.2% (9.8% vs raw) | 4 of 6 | 6 of 6 |
+| D+2 | 3,329 MW | 4,157 MW (weekday-corrected T−1) | won 19.9% | 4 of 7 | 7 of 7 |
 
 **What happened at D+1:**
 - **A heat wave:** Southeast capitals reached 33–37 °C, and load responded more strongly than history suggested.
@@ -223,11 +226,11 @@ between the 3-day and 28-day operator bias is reported as a **risk alert** for t
 All steps run from scripts on a laptop:
 
 - **Ingestion:** `pipeline.py` (scheduled every 15 minutes).
-- **Backtests:** `carga_liquida_d1.py`, with `--horizonte 2` for D+2.
+- **Backtests:** `carga_liquida_d1.py`, with `--horizonte 2` for D+2 and `--ate 2026-11-07` to reproduce the reported period.
 - **Operational forecast:** `prever_carga_liquida.py`.
 - **Week replay:** `auditar_previsoes.py`.
 - **Diagnostics:** `scripts/diagnostico/`.
-- **Dashboard:** a Power BI project kept as code (PBIP + TMDL, star schema, 54 DAX measures, 5 pages), generated by `exportar_bi.py` and `gerar_projeto_bi.py`.
+- **Dashboards:** a single-file HTML dashboard (`docs/dashboard/index.html`, `gerar_dashboard_html.py`) and a Power BI project kept as code (PBIP + TMDL, star schema, 54 DAX measures, 5 pages), generated by `exportar_bi.py` and `gerar_projeto_bi.py`.
 - **Tests:** 92 offline tests, including leakage tests (also at fold boundaries), run in CI.
 
 ## 9. Conclusion and future work

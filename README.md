@@ -90,7 +90,7 @@ Details and limitations: [docs/sources.md](docs/sources.md), [docs/pipeline_diar
 - **Weather forecasts carry the ML skill:** with the same Ridge model, archived weather forecasts cut D+1 error by 32% (wind), 22% (solar) and 17% (load).
 - **80% prediction band** by resampling past errors: 79.3% (D+1) and 79.5% (D+2) coverage in 2026.
 - **Honest negatives:** extra heat features, a second-stage residual model and fuzzy-logic risk bands were tested and **did not** beat the simpler model out of sample; they are documented, not shipped.
-- **Week replay:** forecasts rebuilt with data cut at 10 pm the day before (Nov 4–10, 2026; inputs are today's revised values, so this is a replay, not a true as-of run): D+2 beat its benchmark by 20%; D+1 lost 9.8% during a heat wave when the operator's bias flipped sign.
+- **Week replay:** forecasts rebuilt with data cut at 10 pm the day before (Nov 4–10, 2026; inputs are today's revised values, so this is a replay, not a true as-of run): D+2 beat its benchmark by 20%; D+1 lost 5.2% to the bias-corrected schedule during a heat wave, when the operator's bias flipped sign.
 - **2026 is a validation year, not a pristine test set:** several design checks (bias-correction window, residual models, fuzzy bands) were run on it. The recipes are now frozen; the stored daily operational forecasts from Nov 2026 onwards are the clean out-of-sample test.
 
 ## How to run
