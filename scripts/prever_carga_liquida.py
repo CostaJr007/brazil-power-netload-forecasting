@@ -42,7 +42,7 @@ BACKTEST = {1: "previsoes_carga_liquida", 2: "previsoes_carga_liquida_dmais2"}
 
 
 def banda_operacional(atual, receitas, decisao):
-    """Carga líquida prevista com banda de 80%: quantis dos erros do backtest do horizonte usado, até a decisão."""
+    """Forecast net load with an 80% band: quantiles of the backtest errors of the horizon used, up to the decision."""
     partes = []
     for (passo, h), pecas in atual.groupby(["passo", "horizonte"]):
         liq = carga_liquida(pecas).merge(carga_liquida(pecas, "ons_ant_semana"), on=["subsistema", "data", "hora"], how="left")
@@ -62,12 +62,12 @@ def buscar(store, recurso, parametros):
         except (OSError, json.JSONDecodeError) as erro:
             if tentativa == 4:
                 raise
-            print(f"{recurso}: {type(erro).__name__}, nova tentativa em 30 s", flush=True)
+            print(f"{recurso}: {type(erro).__name__}, retrying in 30 s", flush=True)
             time.sleep(30)
 
 
 def previsao_atual(store, locais, decisao):
-    """Vento, radiação e nuvens (GFS e ECMWF) nos pontos das usinas e capitais; temperatura (GFS) nas capitais."""
+    """Wind, radiation and cloud cover (GFS and ECMWF) at plant points and capitals; temperature (GFS) at capitals."""
     comum = {"forecast_days": 4, "past_days": 2, "timezone": "UTC"}
     partes = []
     for inicio in range(0, len(locais), LOTE):
@@ -93,7 +93,7 @@ def previsao_atual(store, locais, decisao):
 
 
 def juntar_previsoes(arquivadas, atuais):
-    """Arquivo (rodadas de N dias antes) onde existe; previsão atual só para as horas que o arquivo ainda não cobre."""
+    """Archive (runs from N days before) where it exists; live forecast only for hours the archive does not cover yet."""
     saida = {}
     for chave in set(arquivadas) | set(atuais):
         a, b = arquivadas.get(chave), atuais.get(chave)
@@ -112,17 +112,17 @@ def juntar_temperatura(arquivada, atual, coluna):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--decisao", default=date.today().isoformat(), help="dia D da decisão; prevê D+1 e D+2")
+    parser.add_argument("--decisao", default=date.today().isoformat(), help="decision day D; forecasts D+1 and D+2")
     decisao = pd.Timestamp(parser.parse_args().decisao)
     con = conectar()
     balanco, dessem, locais = carregar_balanco_horario(con), carregar_dessem(con), celulas(con)
     con.close()
-    # Nada posterior à decisão entra: simula exatamente o que existia na noite de D.
+    # Nothing after the decision enters: simulates exactly what existed on the evening of D.
     balanco = balanco[balanco["instante"] < decisao]
     dessem = dessem[dessem["instante"] < decisao + 2 * UM_DIA]
     verificados = dias_completos(balanco, "carga")
     programados = dias_completos(dessem, "demanda")
-    print(f"Decisão em {decisao.date()} | balanço completo até {max(verificados).date()} | DESSEM publicado até {max(programados).date()}", flush=True)
+    print(f"Decision on {decisao.date()} | balance complete up to {max(verificados).date()} | DESSEM published up to {max(programados).date()}", flush=True)
     store = Store(DATA_DIR)
     try:
         renovaveis_atual, temperatura_atual = previsao_atual(store, locais, decisao.date().isoformat())
@@ -136,16 +136,16 @@ def main():
         alvo = decisao + passo * UM_DIA
         h = horizonte_efetivo(alvo, verificados, programados)
         if h is None:
-            print(f"{alvo.date()}: dados insuficientes para os horizontes treinados (D+1, D+2); dia não previsto.")
+            print(f"{alvo.date()}: not enough data for the trained horizons (D+1, D+2); day not forecast.")
             continue
-        dia = h + 1  # rodada do tempo emitida h+1 dias antes, como no treino
+        dia = h + 1  # weather run issued h+1 days before, as in training
         previsoes = juntar_previsoes(carregar_previsao_renovaveis(dia), atuais)
         arquivada = carregar_temperatura_prevista(dia)
         coluna = "temp_prev_48h" if dia == 2 else "temp_prev"
         temperatura = juntar_temperatura(arquivada, temperatura_atual, coluna)
         pecas = prever_dia(alvo, h, balanco, dessem, previsoes, temperatura, receitas[h])
         resultados.append(pecas.assign(decisao=decisao, alvo=alvo, passo=passo))
-        print(f"{alvo.date()} (D+{passo}) previsto com o horizonte treinado D+{h}: receitas {receitas[h]}", flush=True)
+        print(f"{alvo.date()} (D+{passo}) forecast with the trained horizon D+{h}: recipes {receitas[h]}", flush=True)
     if not resultados:
         return 1
     tabela = pd.concat(resultados, ignore_index=True)
@@ -167,8 +167,8 @@ def main():
                                                         hora_do_maximo=("previsto", lambda s: int(liquida.loc[s.idxmax(), "hora"])),
                                                         banda80_inf_media=("banda_inf", "mean"), banda80_sup_media=("banda_sup", "mean"),
                                                         regua_media_mw=("ons_ant_semana", "mean"), horizonte=("horizonte", "first")).round(0)
-    print("\nCarga líquida prevista (MW médios; banda de 80% pelos erros dos 120 dias anteriores do backtest;")
-    print("régua = programação de T−1 corrigida por hora e dia da semana):")
+    print("\nForecast net load (average MW; 80% band from the backtest errors of the previous 120 days;")
+    print("benchmark = T−1 schedule corrected by hour and weekday):")
     print(resumo.to_string())
     return 0
 

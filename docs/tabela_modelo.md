@@ -1,18 +1,18 @@
-# Tabela única de modelagem
+# Single modeling table
 
-`scripts/tabela_modelo.py` junta as fontes em `data/gold/tabela_modelo.parquet` (e `.csv`): **uma linha por subsistema × hora local (UTC−3)**. Um modelo novo só precisa ler esse arquivo.
+`scripts/tabela_modelo.py` joins the sources into `data/gold/tabela_modelo.parquet` (and `.csv`): **one row per subsystem × local hour (UTC−3)**. A new model only needs to read this file.
 
-Cada coluna traz o valor do próprio instante. A última coluna abaixo diz quando o valor fica disponível: para prever o dia T na véspera, use a defasagem indicada.
+Each column holds the value for its own timestamp. The last column below says when the value becomes available: to forecast day T on the day before, apply the indicated lag.
 
-| Colunas | Origem | Quando se sabe |
+| Columns | Source | When it is known |
 |---|---|---|
-| `carga` | ONS, carga verificada | Assumido T+2 (defasagem de 2 dias) |
-| `programada` | ONS, carga programada | Véspera (T−1); o horário exato de publicação não foi confirmado |
-| `temp_prev_48h`, `radiacao_prev`, `vento_prev`, `umidade_prev`, `nuvens_prev` | GFS via Open-Meteo, média das capitais do subsistema | Previsão emitida 48 h antes; pode usar sem defasagem. As quatro últimas só existem desde fev/2024 |
-| `temp_analise` | Open-Meteo, análise | Só depois do fato: use apenas para medir o limite de uma previsão perfeita |
-| `temp`, `temp_max`, `radiacao`, `vento`, `umidade`, `chuva` | INMET, estações dos 3 estados de maior carga (diário) | Defasagem de 2 dias no backtest; o pacote anual do INMET é publicado com mais atraso |
-| `ear`, `ena_pct` | ONS (diário) | Defasagem de 2 dias |
-| `eolica`, `solar`, `hidraulica`, `termica` | ONS, balanço por subsistema (média diária) | Defasagem de 2 dias |
-| `dia_semana`, `mes`, `feriado`, `vespera`, `pos_feriado`, `ponte` | Calendário | Conhecido com antecedência |
+| `carga` | ONS, verified load | Assumed T+2 (2-day lag) |
+| `programada` | ONS, scheduled load | Day before (T−1); exact publication time not confirmed |
+| `temp_prev_48h`, `radiacao_prev`, `vento_prev`, `umidade_prev`, `nuvens_prev` | GFS via Open-Meteo, mean of the subsystem's state capitals | Forecast issued 48 h ahead; usable without lag. The last four only exist since Feb/2024 |
+| `temp_analise` | Open-Meteo, analysis | Only after the fact: use only to measure the perfect-forecast bound |
+| `temp`, `temp_max`, `radiacao`, `vento`, `umidade`, `chuva` | INMET, stations in the 3 highest-load states (daily) | 2-day lag in the backtest; INMET's yearly package is published with a longer delay |
+| `ear`, `ena_pct` | ONS (daily) | 2-day lag |
+| `eolica`, `solar`, `hidraulica`, `termica` | ONS, balance per subsystem (daily mean) | 2-day lag |
+| `dia_semana`, `mes`, `feriado`, `vespera`, `pos_feriado`, `ponte` | Calendar | Known in advance |
 
-Chuva e ENA **por bacia** continuam em `vw_chuva_x_ena_bacia`, porque o grão é outro (bacia × dia).
+Rain and ENA **per basin** stay in `vw_chuva_x_ena_bacia`, because the grain is different (basin × day).

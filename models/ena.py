@@ -24,16 +24,16 @@ MIN_DIAS_TREINO = 1000
 
 
 def harmonicos(datas):
-    """Senos e cossenos do dia do ano: uma climatologia suave, sem o ruído de médias por dia."""
+    """Sines and cosines of the day of year: a smooth climatology without the noise of per-day means."""
     t = 2 * np.pi * pd.DatetimeIndex(datas).day_of_year.to_numpy() / 365.25
     return np.column_stack([np.ones(len(t))] + [f(k * t) for k in range(1, HARMONICOS + 1) for f in (np.sin, np.cos)])
 
 
 def preparar_bacia(serie, inicio_teste, h, placebo=False):
-    """Variáveis de uma bacia. serie: índice diário com colunas ena e chuva. Só o treino define as escalas."""
+    """Features for one basin. serie: daily index with columns ena and chuva. Only training data define the scales."""
     treino = serie[serie.index < inicio_teste]
     media = treino["ena"].mean()
-    # Dias sem dado ficam de fora do ajuste: um único NaN contaminaria todos os coeficientes.
+    # Days without data are left out of the fit: a single NaN would contaminate every coefficient.
     observado = treino["ena"].notna().to_numpy()
     beta = np.linalg.lstsq(harmonicos(treino.index[observado]), (treino["ena"] / media).to_numpy()[observado], rcond=None)[0]
     clima = pd.Series(harmonicos(serie.index) @ beta, index=serie.index)
@@ -45,7 +45,7 @@ def preparar_bacia(serie, inicio_teste, h, placebo=False):
                       "a7": a.rolling(7, min_periods=5).mean(), "a30": a.rolling(30, min_periods=20).mean(),
                       "r1": chuva, "r3": chuva.rolling(3).mean(), "r7": chuva.rolling(7).mean(),
                       "r15": chuva.rolling(15).mean(), "r30": chuva.rolling(30).mean(),
-                      # Chuva entre a emissão (exclusive) e o alvo: é o que uma previsão perfeita informaria.
+                      # Rain between issue time (exclusive) and the target: what a perfect forecast would provide.
                       "futura_total": chuva.rolling(h).mean().shift(-h),
                       "futura_final": chuva.rolling(min(3, h)).mean().shift(-h)}, index=serie.index)
     t = 2 * np.pi * x.index.day_of_year.to_numpy() / 365.25
@@ -57,7 +57,7 @@ def preparar_bacia(serie, inicio_teste, h, placebo=False):
 
 
 def backtest_ena(painel, folds, horizontes=HORIZONTES, log=print):
-    """Walk-forward anual. Devolve as previsões (linha = bacia × alvo × horizonte) e as meias-vidas OU."""
+    """Yearly walk-forward. Returns the forecasts (row = basin × target × horizon) and the OU half-lives."""
     series = {b: g.set_index("data").asfreq("D")[["ena", "chuva"]] for b, g in painel.groupby("bacia")}
     resultados, meias_vidas = [], []
     for inicio, fim in folds:
@@ -79,7 +79,7 @@ def backtest_ena(painel, folds, horizontes=HORIZONTES, log=print):
             teste["persistencia"] = teste["y"]
             teste["climatologia"] = teste["media"] * teste["clima_alvo"]
 
-            # Modelos por bacia: OU (só memória), Ridge ARX e Kalman ARX.
+            # Per-basin models: OU (memory only), Ridge ARX and Kalman ARX.
             ou, ridge, kalman = {}, {}, {}
             for bacia, grupo in dados.groupby("bacia"):
                 valido = grupo["a0"].notna() & grupo["alvo"].notna()
@@ -96,7 +96,7 @@ def backtest_ena(painel, folds, horizontes=HORIZONTES, log=print):
                 residuo = float(np.var(tr.loc[ok, "alvo"] - modelo.predict(tr.loc[ok, colunas])))
                 ok_te = te[colunas].notna().all(axis=1)
                 ridge.update(zip(te.index[ok_te].map(lambda d: (bacia, d)), modelo.predict(te.loc[ok_te, colunas])))
-                # Kalman percorre tudo até o fim do fold: o alvo de t só é usado depois de t+h.
+                # Kalman runs to the end of the fold: the target of t is only used after t+h.
                 ate = grupo[grupo["data_alvo"] < fim]
                 matriz = np.column_stack([np.ones(len(ate)), ate["a0"], ate["a7"], ate["r7"]])
                 previsto, _ = kalman_regression(matriz, ate["alvo"].to_numpy(), h, residuo)
@@ -107,7 +107,7 @@ def backtest_ena(painel, folds, horizontes=HORIZONTES, log=print):
             for nome, mapa in (("ou", ou), ("ridge_arx", ridge), ("kalman_arx", kalman)):
                 teste[nome] = desfazer(np.array([mapa.get(c, np.nan) for c in chaves], dtype=float), teste)
 
-            # Mesma regressão por bacia em cada conjunto de variáveis, para isolar o valor da chuva.
+            # Same per-basin regression for each feature set, to isolate the value of rain.
             ridges = {"ridge_memoria": (MEMORIA, dados),
                       "ridge_cenario": (MEMORIA + CHUVA_PASSADA + CENARIO, dados),
                       "ridge_chuva_placebo": (MEMORIA + CHUVA_PASSADA, dados_placebo),
@@ -126,7 +126,7 @@ def backtest_ena(painel, folds, horizontes=HORIZONTES, log=print):
                     saida[posicoes[valido]] = modelo.predict(matriz[valido])
                 teste[nome] = desfazer(saida, teste)
 
-            # Boosting com todas as bacias juntas: cada bacia empresta padrão às outras.
+            # Boosting with all basins pooled: each basin lends its pattern to the others.
             conjuntos = {"gbm_memoria": (MEMORIA + SAZONAL + ["codigo"], dados),
                          "gbm_chuva": (MEMORIA + CHUVA_PASSADA + SAZONAL + ["codigo"], dados),
                          "gbm_cenario": (MEMORIA + CHUVA_PASSADA + CENARIO + SAZONAL + ["codigo"], dados),
@@ -141,5 +141,5 @@ def backtest_ena(painel, folds, horizontes=HORIZONTES, log=print):
                 teste[nome] = desfazer(modelo.predict(te[colunas]), teste)
             teste["h"], teste["ano"] = h, inicio.year
             resultados.append(teste.reset_index(drop=True))
-            log(f"ENA {inicio.year} h={h}: {len(teste)} previsões")
+            log(f"ENA {inicio.year} h={h}: {len(teste)} forecasts")
     return pd.concat(resultados, ignore_index=True), pd.DataFrame(meias_vidas)

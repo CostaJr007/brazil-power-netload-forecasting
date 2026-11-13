@@ -1,4 +1,4 @@
-"""A tabela única não pode duplicar nem perder linhas ao juntar as fontes."""
+"""The single table must neither duplicate nor lose rows when joining sources."""
 import sys
 from pathlib import Path
 

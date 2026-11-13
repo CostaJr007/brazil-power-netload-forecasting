@@ -1,4 +1,4 @@
-"""Peças da carga líquida: previsão só com o que existe na noite de T−1."""
+"""Net-load components: forecasts use only what exists on the evening of T−1."""
 import sys
 from pathlib import Path
 
@@ -76,18 +76,18 @@ def test_ons_ant_em_d_mais_2_e_a_programacao_de_t_menos_1():
     ref = referencias_ons(d, "eolica", horizonte=2).set_index(["data", "hora"])
     linha = ref.loc[(pd.Timestamp("2025-06-03"), 5)]
     assert linha["ons"] == 53.0 and linha["ons_ant"] == 29.0  # 03/06 05h e 02/06 05h
-    assert ref.loc[(pd.Timestamp("2025-06-01"), 5), "ons_ant"] != ref.loc[(pd.Timestamp("2025-06-01"), 5), "ons_ant"]  # NaN: não há véspera
+    assert ref.loc[(pd.Timestamp("2025-06-01"), 5), "ons_ant"] != ref.loc[(pd.Timestamp("2025-06-01"), 5), "ons_ant"]  # NaN: there is no day before
 
 
 def test_vies_por_dia_da_semana_remove_efeito_de_segunda_sem_usar_o_proprio_dia():
-    datas = pd.date_range("2025-01-06", periods=70, freq="D")  # começa numa segunda
+    datas = pd.date_range("2025-01-06", periods=70, freq="D")  # starts on a Monday
     real = np.where(datas.day_of_week == 0, 80.0, 100.0)
     g = pd.DataFrame({"data": datas, "hora": 12, "ons_ant": 100.0, "real": real})
     corrigido = corrigir_vies_semana(g, gap=3)
     segunda = g.index[(datas.day_of_week == 0)][-1]
-    assert abs(corrigido.loc[segunda] - 80.0) < 1e-9  # aprendeu que segunda fica 20 abaixo
+    assert abs(corrigido.loc[segunda] - 80.0) < 1e-9  # learned that Monday runs 20 below
     alterado = g.copy()
-    alterado.loc[segunda - 2:segunda, "real"] = 0.0  # T−2, T−1 e T não podem mudar a correção de T
+    alterado.loc[segunda - 2:segunda, "real"] = 0.0  # T−2, T−1 and T must not change the correction for T
     assert abs(corrigir_vies_semana(alterado, gap=3).loc[segunda] - corrigido.loc[segunda]) < 1e-9
 
 
@@ -95,9 +95,9 @@ def test_correcao_de_vies_usa_so_erros_ate_t_menos_2():
     datas = pd.date_range("2025-01-01", periods=60, freq="D")
     g = pd.DataFrame({"data": datas, "hora": 12, "ons": 110.0, "real": 100.0})
     corrigido = corrigir_vies(g)
-    assert abs(corrigido.iloc[40] - 100.0) < 1e-9  # viés constante de +10 removido
+    assert abs(corrigido.iloc[40] - 100.0) < 1e-9  # constant +10 bias removed
     alterado = g.copy()
-    alterado.loc[39:40, "real"] = 0.0  # erros de T−1 e de T não podem mudar a correção de T
+    alterado.loc[39:40, "real"] = 0.0  # errors of T−1 and T must not change the correction for T
     assert abs(corrigir_vies(alterado).iloc[40] - corrigido.iloc[40]) < 1e-9
 
 

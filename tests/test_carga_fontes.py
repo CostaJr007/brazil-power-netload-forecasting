@@ -1,4 +1,4 @@
-"""Reservatórios, geração e clima observado só podem entrar com defasagem de 2 dias."""
+"""Reservoirs, generation and observed weather may only enter with a 2-day lag."""
 import sys
 from pathlib import Path
 

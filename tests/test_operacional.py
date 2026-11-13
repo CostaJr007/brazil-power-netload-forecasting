@@ -1,4 +1,4 @@
-"""Previsão operacional: escolhe o horizonte pelo que já foi publicado e soma as peças corretamente."""
+"""Operational forecast: picks the horizon from what is already published and sums the components correctly."""
 import sys
 from pathlib import Path
 
@@ -78,14 +78,14 @@ def test_banda_nao_usa_o_futuro():
     f = _historico()
     ate = pd.Timestamp("2026-05-01")
     q1 = quantis_residuo(f, ate)
-    f.loc[f["data"] >= ate - DIA, "previsto"] += 1e6   # estraga a véspera e o futuro
+    f.loc[f["data"] >= ate - DIA, "previsto"] += 1e6   # corrupt the day before and the future
     pd.testing.assert_frame_equal(q1, quantis_residuo(f, ate))
 
 
 def test_banda_desloca_quando_o_modelo_tem_vies():
     f = _historico()
-    f["previsto"] += 300                                # modelo sempre 300 acima
+    f["previsto"] += 300                                # model always 300 above
     ate = pd.Timestamp("2026-05-01")
     b = aplicar_banda(f[f["data"] == ate], quantis_residuo(f, ate))
-    centro = abs(((b["banda_inf"] + b["banda_sup"]) / 2 - b["real"]).mean())   # viés médio do centro
+    centro = abs(((b["banda_inf"] + b["banda_sup"]) / 2 - b["real"]).mean())   # mean bias of the band centre
     assert centro < 30                                  # a banda volta a centrar no real

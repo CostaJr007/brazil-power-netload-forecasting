@@ -16,7 +16,7 @@ def pld_views():
 
 @pytest.fixture
 def con():
-    """Em 2024: piso 61,07; teto horário 1.470,57; teto estrutural 716,80."""
+    """In 2024: floor 61.07; hourly cap 1,470.57; structural cap 716.80."""
     connection = duckdb.connect()
     connection.execute("""
         CREATE TABLE silver_cmo_semi_horario AS

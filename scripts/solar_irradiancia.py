@@ -1,9 +1,9 @@
-"""Irradiância medida nas maiores usinas solares (ONS) e efeito dos cortes de geração.
+"""Measured irradiance at the largest solar plants (ONS) and the effect of curtailment.
 
-Usa restricao_coff_fotovoltaica_detail: irradiância da própria usina, geração verificada, geração de
-referência (o que produziria sem corte) e o indicador de hora restrita. Grava docs/inventory/solar_irradiancia.json.
+Uses restricao_coff_fotovoltaica_detail: the plant's own irradiance, verified generation, reference
+generation (what it would produce without curtailment) and the restricted-hour flag. Writes docs/inventory/solar_irradiancia.json.
 
-Executar: .\\.venv\\Scripts\\python.exe scripts/solar_irradiancia.py
+Run: .\\.venv\\Scripts\\python.exe scripts/solar_irradiancia.py
 """
 import json
 import sys
@@ -52,7 +52,7 @@ def analisar(d, capacidade):
              "correlacao_sem_corte": round(float(livre["fc"].corr(livre["irradiancia"])), 3)}
     if len(treino) < 300 or len(teste) < 100:
         return saida
-    # Física simples: proporcional à irradiância até o limite do inversor. Parâmetros só com o treino.
+    # Simple physics: proportional to irradiance up to the inverter limit. Parameters from training data only.
     baixa = treino[treino["irradiancia"] < 600]
     b = float((baixa["irradiancia"] * baixa["fc"]).sum() / (baixa["irradiancia"] ** 2).sum())
     teto = float(treino["fc"].quantile(0.995))
@@ -72,16 +72,16 @@ def main():
     dados = carregar(con, tabela["usina"].tolist())
     con.close()
     capacidades = tabela.set_index("usina")["capacidade_mw"]
-    por_usina = [{"usina": u, "uf": tabela.set_index("usina").loc[u, "uf"], "capacidade_mw": float(capacidades[u]), **(analisar(g, capacidades[u]) or {"aviso": "poucas horas"})}
+    por_usina = [{"usina": u, "uf": tabela.set_index("usina").loc[u, "uf"], "capacidade_mw": float(capacidades[u]), **(analisar(g, capacidades[u]) or {"aviso": "few hours"})}
                  for u, g in dados.groupby("usina")]
     dia = dados[(dados["irradiancia"] > LIMIAR_DIA) & dados["geracao"].notna()].copy()
     dia["ano_mes"], dia["mes"], dia["hora"] = dia["instante"].dt.strftime("%Y-%m"), dia["instante"].dt.month, dia["instante"].dt.hour
-    # A referência só vem preenchida em parte das horas (em geral as com corte): a razão abaixo NÃO é a perda anual.
+    # The reference is filled only in part of the hours (mostly curtailed ones): the ratio below is NOT the yearly loss.
     dia = dia.assign(perda=(dia["referencia"] - dia["geracao"]).clip(lower=0).where(dia["referencia"].notna()))
     def sumario(grupo):
         return pd.Series({"irradiancia_media_w_m2": grupo["irradiancia"].mean(), "pct_horas_com_corte": (grupo["restrita"] > 0).mean() * 100,
                           "corte_pct_da_referencia_quando_informada": grupo["perda"].sum() / grupo["referencia"].sum() * 100})
-    # Só anos completos para a sazonalidade; o histórico começa no meio de 2024.
+    # Only complete years for seasonality; the history starts in mid-2024.
     completo = dia[dia["instante"].dt.year == 2025]
     resultado = {"por_usina": por_usina, "periodo": [str(dia["instante"].min().date()), str(dia["instante"].max().date())],
                  "por_ano_mes": dia.groupby("ano_mes").apply(sumario, include_groups=False).round(2).reset_index().to_dict(orient="records"),

@@ -1,7 +1,7 @@
-"""Baixa vento, radiação solar, umidade e nuvens PREVISTOS 48 h antes (GFS via Open-Meteo), desde fev/2024.
+"""Download wind, solar radiation, humidity and cloud cover FORECAST 48 h ahead (GFS via Open-Meteo), from Feb 2024.
 
-Mesma lógica de baixar_temperatura_prevista.py; antes de 2024 essas variáveis não estão arquivadas.
-Dados: Open-Meteo, CC-BY 4.0, API gratuita para uso não comercial.
+Same logic as baixar_temperatura_prevista.py; these variables are not archived before 2024.
+Data: Open-Meteo, CC-BY 4.0, free API for non-commercial use.
 """
 import json
 import sys
@@ -28,7 +28,7 @@ def ler_corpo(manifesto):
 
 
 def ja_baixado(recurso, url):
-    """Reaproveita uma resposta válida da Bronze para a mesma URL, evitando repetir chamadas à API."""
+    """Reuse a valid Bronze response for the same URL, avoiding repeated API calls."""
     for caminho in sorted((DATA_DIR / "bronze/open_meteo/gfs_previous_runs_extras" / recurso).glob("*.manifest.json"), reverse=True):
         manifesto = json.loads(caminho.read_text(encoding="utf-8"))
         if manifesto.get("url") == url:
@@ -40,7 +40,7 @@ def ja_baixado(recurso, url):
 
 
 def baixar(store, recurso, url, tentativas=5, espera=30):
-    """A API às vezes falha de forma transitória (timeout de rede ou erro em texto com HTTP 200): tenta de novo."""
+    """The API sometimes fails transiently (network timeout or an error text with HTTP 200): retry."""
     pronto = ja_baixado(recurso, url)
     if pronto is not None:
         return pronto
@@ -51,7 +51,7 @@ def baixar(store, recurso, url, tentativas=5, espera=30):
         except (json.JSONDecodeError, KeyError, OSError) as erro:
             if tentativa == tentativas:
                 raise
-            print(f"{recurso}: {type(erro).__name__}, nova tentativa em {espera} s", flush=True)
+            print(f"{recurso}: {type(erro).__name__}, retrying in {espera} s", flush=True)
             time.sleep(espera)
 
 

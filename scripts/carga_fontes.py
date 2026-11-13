@@ -1,6 +1,6 @@
-"""Ablação de fontes para a carga de D+1; grava docs/inventory/carga_fontes_results.json.
+"""Data-source ablation for D+1 load; writes docs/inventory/carga_fontes_results.json.
 
-Rode antes baixar_temperatura_prevista.py e baixar_vento_sol_previstos.py. Lê a Gold; não acessa a internet.
+Run baixar_temperatura_prevista.py and baixar_vento_sol_previstos.py first. Reads Gold; no network.
 """
 import json
 import sys
@@ -43,7 +43,7 @@ def main():
     con.close()
     temperatura = carregar_temperatura_prevista()
     ultimo = carga.dropna(subset=["carga"])["instante"].max().normalize() - pd.Timedelta(days=1)
-    # A previsão de vento e sol é opcional: sem o arquivo, roda o restante da ablação.
+    # The wind and sun forecast is optional: without the file, the rest of the ablation runs.
     previstas = carregar_previstas_extras() if (DATA_DIR / "gold/previsao_vento_sol.parquet").exists() else None
     previsoes = backtest_fontes(carga, temperatura, extras, previstas, annual_folds(2023, ultimo))
     resultado = {}

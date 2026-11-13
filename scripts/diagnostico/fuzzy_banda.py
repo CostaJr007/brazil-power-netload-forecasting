@@ -1,16 +1,16 @@
-"""Lógica fuzzy agrega valor? Dois usos testados com escolha em 2025 e confirmação em 2026.
+"""Does fuzzy logic add value? Two uses tested, selected on 2025 and confirmed on 2026.
 
-Risco fuzzy por subsistema e dia (graus de pertinência de 0 a 1, combinados por OU = máximo):
-  - "calor acumulado alto": rampa da anomalia de 3 dias da temperatura prevista;
-  - "viés do ONS mudou":    rampa de |viés 3 dias − viés 28 dias| em desvios-padrão (conhecido até T−gap);
-  - "dia especial":         feriado, véspera, dia seguinte ou ponte.
+Fuzzy risk per subsystem and day (membership degrees from 0 to 1, combined by OR = maximum):
+  - "high accumulated heat": ramp of the 3-day anomaly of forecast temperature;
+  - "ONS bias changed":      ramp of |3-day bias − 28-day bias| in standard deviations (known up to T−gap);
+  - "special day":           holiday, eve, day after or bridge day.
 
-A) Banda de 80%: a largura cresce com o risco. Reamostra-se o resíduo padronizado r / (1 + k·risco),
-   o que mantém a calibração. Métrica: Winkler (largura + penalidade de 10× o quanto o real sai da banda).
-B) Previsão pontual (D+1, carga): quanto maior o risco do viés, menos se confia na correção de 28 dias:
+A) 80% band: its width grows with risk. The standardised residual r / (1 + k·risk) is resampled,
+   which keeps calibration. Metric: Winkler score (width + 10× penalty for how far the actual falls outside).
+B) Point forecast (D+1, load): the higher the bias risk, the less the 28-day correction is trusted:
    ons_fuzzy = μ·ons + (1 − μ)·ons_corrigido.
 
-Executar: .\\.venv\\Scripts\\python.exe scripts/diagnostico/fuzzy_banda.py
+Run: .\\.venv\\Scripts\\python.exe scripts/diagnostico/fuzzy_banda.py
 """
 import sys
 from pathlib import Path
@@ -30,13 +30,13 @@ ALFA = 0.2
 
 
 def rampa(x, a, b):
-    """Pertinência: 0 abaixo de a, 1 acima de b, linear entre os dois."""
+    """Membership: 0 below a, 1 above b, linear in between."""
     return ((x - a) / (b - a)).clip(0, 1)
 
 
 def pertinencias(x, calor=(0.5, 3.0), vies=(0.5, 2.0)):
     x = x.copy()
-    # Escala do viés: desvio-padrão só do período de seleção (nada de 2026 entra na régua).
+    # Bias scale: standard deviation of the selection period only (nothing from 2026 enters the scale).
     escala = x["subsistema"].map(x[x["data"] < SELECAO[1]].groupby("subsistema")["vies_div"].std())
     x["mu_calor"] = rampa(x["calor_3d"], *calor).fillna(0)
     x["mu_vies"] = rampa(x["vies_div"].abs() / escala, *vies).fillna(0)
@@ -50,7 +50,7 @@ def winkler(real, lo, hi):
 
 
 def banda(sin, k, inicio, fim):
-    """Intervalo de 80% por reamostragem dos resíduos padronizados dos 120 dias anteriores (mesma hora)."""
+    """80% interval by resampling the standardised residuals of the previous 120 days (same hour)."""
     linhas = []
     for mes in pd.date_range(inicio, fim, freq="MS", inclusive="left"):
         hist = sin[(sin["data"] < mes - pd.Timedelta(days=1)) & (sin["data"] >= mes - pd.Timedelta(days=120))]
@@ -71,7 +71,7 @@ def testar_banda(horizonte):
     x = pertinencias(variaveis(p, horizonte))
     subs = liq[liq["subsistema"] != "SIN"].merge(x[["subsistema", "data", "hora", "risco"]], on=["subsistema", "data", "hora"], how="left")
     subs["peso"] = (subs["previsto"] - subs["real"]).abs()
-    # Risco do SIN: média dos subsistemas ponderada pelo erro típico de cada um (SE pesa mais).
+    # National risk: mean of the subsystems weighted by each one's typical error (SE weighs most).
     pesos = subs[subs["data"] < SELECAO[1]].groupby("subsistema")["peso"].mean()
     subs["w"] = subs["subsistema"].map(pesos)
     sin = subs.groupby(["data", "hora"]).apply(lambda g: pd.Series({
@@ -81,14 +81,14 @@ def testar_banda(horizonte):
     print(f"\n===== D+{horizonte}: banda de 80% =====")
     t = sin[sin["data"] >= CONFIRMACAO]
     t = t.assign(faixa=pd.cut(t["risco"], [-0.01, 0.2, 0.6, 1.0], labels=["baixo", "médio", "alto"]))
-    print("O risco fuzzy separa os erros? |erro| médio do SIN em 2026 por faixa de risco:")
+    print("Does the fuzzy risk separate the errors? Mean national |error| in 2026 by risk band:")
     print(t.groupby("faixa", observed=True)["res"].agg(mae=lambda s: s.abs().mean(), horas="count").round(0).to_string())
     grade = [0.0, 0.5, 1.0, 2.0, 3.0]
     sel = {k: banda(sin, k, *SELECAO)["winkler"].mean() for k in grade}
     k = min(sel, key=sel.get)
-    print("Seleção (ago–dez/2025), Winkler médio por k:", {kk: round(v) for kk, v in sel.items()}, f"-> k = {k}")
+    print("Selection (Aug–Dec 2025), mean Winkler score by k:", {kk: round(v) for kk, v in sel.items()}, f"-> k = {k}")
     fim = sin["data"].max() + pd.Timedelta(days=1)
-    for nome, kk in (("banda fixa por hora (k = 0)", 0.0), (f"banda fuzzy (k = {k})", k)):
+    for nome, kk in (("fixed per-hour band (k = 0)", 0.0), (f"banda fuzzy (k = {k})", k)):
         b = banda(sin, kk, CONFIRMACAO, fim)
         b = b.assign(faixa=pd.cut(b["risco"], [-0.01, 0.2, 0.6, 1.0], labels=["baixo", "médio", "alto"]))
         por = b.groupby("faixa", observed=True)["dentro"].mean().mul(100).round(0).to_dict()
@@ -103,7 +103,7 @@ def testar_banda(horizonte):
 def testar_pontual():
     p, liq, escolhas = previsoes(1)
     x = variaveis(p, 1)
-    print("\n===== D+1: peso fuzzy da correção do viés do ONS na carga =====")
+    print("\n===== D+1: fuzzy weight of the ONS bias correction on load =====")
     resultados = {}
     for vies in [(0.5, 2.0), (1.0, 3.0), (2.0, 4.0)]:
         mu = pertinencias(x, vies=vies)[["subsistema", "data", "hora", "mu_vies"]]
@@ -118,7 +118,7 @@ def testar_pontual():
         for periodo, f in (("2025", s[(s["data"] >= SELECAO[0]) & (s["data"] < SELECAO[1])]), ("2026", s[s["data"] >= CONFIRMACAO])):
             resultados.setdefault(vies, {})[periodo] = ((f["previsto_fz"] - f["real"]).abs().mean(), (f["previsto"] - f["real"]).abs().mean(), f)
         m25, b25, _ = resultados[vies]["2025"]
-        print(f"  rampa {vies}: seleção 2025 MAE {m25:,.0f} vs receita {b25:,.0f} MW")
+        print(f"  ramp {vies}: 2025 selection MAE {m25:,.0f} vs recipe {b25:,.0f} MW")
     melhor = min(resultados, key=lambda v: resultados[v]["2025"][0])
     m, b, f = resultados[melhor]["2026"]
     d, lo, hi = block_bootstrap_diff(f["data"], (f["previsto_fz"] - f["real"]).abs(), (f["previsto"] - f["real"]).abs())

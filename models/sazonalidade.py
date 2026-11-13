@@ -28,7 +28,7 @@ def faixa_horaria(hora):
 
 
 def _por_fatia(treino, teste, fatias_treino, fatias_teste, colunas):
-    """Treina um modelo para cada fatia presente no teste. Cada fatia de teste indica quais rótulos usa no treino."""
+    """Train one model per slice present in the test set. Each test slice says which labels it trains on."""
     saida = np.full(len(teste), np.nan)
     for rotulo in pd.unique(fatias_teste):
         marca = np.asarray(fatias_teste == rotulo)
@@ -57,7 +57,7 @@ def backtest_sazonal(carga, temperatura, folds, log=print):
             est_tr, est_te = treino.index.month.map(ESTACOES).to_numpy(), teste.index.month.map(ESTACOES).to_numpy()
             teste["por_estacao"] = n * np.exp(_por_fatia(treino, teste, est_tr, est_te, COLUNAS))
             mes_tr, mes_te = treino.index.month.to_numpy(), teste.index.month.to_numpy()
-            # Mês alvo mais os dois vizinhos: janela móvel de 3 meses, para não perder exemplos demais.
+            # Target month plus its two neighbours: a moving 3-month window, so as not to lose too many examples.
             vizinhos = np.array([tuple(((m + d - 1) % 12) + 1 for d in (-1, 0, 1)) for m in mes_te], dtype=object)
             saida = np.full(len(teste), np.nan)
             for m in np.unique(mes_te):
@@ -67,7 +67,7 @@ def backtest_sazonal(carga, temperatura, folds, log=print):
             teste["por_mes_janela"] = n * np.exp(saida)
             teste["subsistema"], teste["ano"] = subsistema, inicio.year
             resultados.append(teste.reset_index())
-            log(f"Sazonal {subsistema} {inicio.year}: {len(teste)} horas")
+            log(f"Seasonal {subsistema} {inicio.year}: {len(teste)} hours")
     saida = pd.concat(resultados, ignore_index=True)
     saida["estacao"] = saida["data"].dt.month.map(ESTACOES)
     saida["mes"] = saida["data"].dt.month

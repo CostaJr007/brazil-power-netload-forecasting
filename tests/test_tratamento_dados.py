@@ -1,4 +1,4 @@
-"""Tratamento do balanço antes do ML: impossível ou congelado vira ausente, o resto fica intacto."""
+"""Balance cleaning before ML: impossible or frozen values become missing, the rest stays intact."""
 import sys
 from pathlib import Path
 

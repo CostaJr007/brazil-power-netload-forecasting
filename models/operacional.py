@@ -15,7 +15,7 @@ UM_DIA = pd.Timedelta(days=1)
 
 
 def dias_completos(frame, coluna, horas=24):
-    """Dias em que os 4 subsistemas têm todas as horas de `coluna`."""
+    """Days on which all 4 subsystems have every hour of `coluna`."""
     f = frame.dropna(subset=[coluna])
     contagem = f.groupby([f["instante"].dt.normalize(), "subsistema"]).size().unstack()
     if contagem.shape[1] < SUBSISTEMAS:
@@ -24,7 +24,7 @@ def dias_completos(frame, coluna, horas=24):
 
 
 def horizonte_efetivo(alvo, dias_verificados, dias_dessem, maximo=2):
-    """Menor horizonte h com o verificado de alvo−(h+1) e a programação de alvo−(h−1) já publicados."""
+    """Smallest horizon h with verified data for target−(h+1) and the schedule for target−(h−1) already published."""
     ultimo = max(dias_verificados) if dias_verificados else None
     for h in range(1, maximo + 1):
         if ultimo is not None and ultimo >= alvo - (h + 1) * UM_DIA and (alvo - (h - 1) * UM_DIA) in dias_dessem:
@@ -33,7 +33,7 @@ def horizonte_efetivo(alvo, dias_verificados, dias_dessem, maximo=2):
 
 
 def estender_balanco(balanco, ate):
-    """Acrescenta horas vazias até `ate` (exclusivo), para que o modelo tenha onde escrever o futuro."""
+    """Append empty hours up to `ate` (exclusive), so the model has somewhere to write the future."""
     partes = [balanco]
     for subsistema, g in balanco.groupby("subsistema"):
         futuras = pd.date_range(g["instante"].max() + pd.Timedelta(hours=1), ate - pd.Timedelta(hours=1), freq="h")
@@ -43,7 +43,7 @@ def estender_balanco(balanco, ate):
 
 
 def referencias_corrigidas(balanco, dessem, horizonte):
-    """Programação do ONS e suas versões corrigidas pelo viés, com erros conhecidos só até a decisão."""
+    """ONS schedule and its bias-corrected versions, with errors known only up to the decision."""
     saidas = []
     for subsistema, bal in balanco.groupby("subsistema"):
         d = dessem[dessem["subsistema"] == subsistema].set_index("instante").sort_index().rename(columns={"demanda": "carga"})
@@ -61,7 +61,7 @@ def referencias_corrigidas(balanco, dessem, horizonte):
 
 
 def aplicar_receitas(pecas, escolhas):
-    """Combinações usadas nas receitas e a coluna `previsto` com o modelo escolhido para cada peça."""
+    """Blends used by the recipes and the `previsto` column with the model chosen for each component."""
     ml = pecas[["ridge", "gbm"]].mean(axis=1)
     pecas = pecas.assign(media_com_ons=0.5 * ml + 0.5 * pecas["ons"],
                          media_com_ons_corrigido=0.5 * ml + 0.5 * pecas["ons_corrigido"],
@@ -75,7 +75,7 @@ def aplicar_receitas(pecas, escolhas):
 
 
 def prever_dia(alvo, horizonte, balanco, dessem, previsoes, temperatura, escolhas):
-    """Previsão hora a hora de `alvo` por subsistema e peça, com a receita congelada do horizonte."""
+    """Hour-by-hour forecast of `alvo` per subsystem and component, with the horizon's frozen recipe."""
     fim = alvo + UM_DIA
     estendido = estender_balanco(balanco, fim)
     pecas = backtest_pecas(estendido, dessem, previsoes, temperatura, [(alvo, fim)], log=lambda *_: None,
@@ -86,7 +86,7 @@ def prever_dia(alvo, horizonte, balanco, dessem, previsoes, temperatura, escolha
 
 
 def historico_liquido(pecas_backtest, escolhas, regua=None):
-    """Carga líquida do backtest (subsistemas e SIN) com a receita congelada: previsto, real e, se pedida, a régua."""
+    """Backtest net load (subsystems and national grid) with the frozen recipe: forecast, actual and, if requested, the benchmark."""
     p = pecas_backtest.copy()
     p["previsto"] = float("nan")
     for peca, receita in escolhas.items():
@@ -98,10 +98,10 @@ def historico_liquido(pecas_backtest, escolhas, regua=None):
 
 
 def quantis_residuo(historico, ate, janela=120, nivel=0.8):
-    """Quantis do erro (previsto − real) por subsistema e hora nos `janela` dias antes de `ate` (exclusivo, com folga de 1 dia).
+    """Quantiles of the error (forecast − actual) per subsystem and hour over the `janela` days before `ate` (exclusive, 1-day margin).
 
-    É o limite de uma simulação de Monte Carlo que reamostra os erros passados: em 2026 a banda de 80% cobriu
-    79–80% das horas (scripts/diagnostico/residuos_2026.py). `historico`: colunas subsistema, data, hora, previsto, real.
+    It is the limit of a Monte Carlo simulation that resamples past errors: in 2026 the 80% band covered
+    79–80% of hours (scripts/diagnostico/residuos_2026.py). `historico`: columns subsistema, data, hora, previsto, real.
     """
     h = historico[(historico["data"] < ate - UM_DIA) & (historico["data"] >= ate - pd.Timedelta(days=janela))]
     erro = (h["previsto"] - h["real"]).rename("erro")
@@ -112,13 +112,13 @@ def quantis_residuo(historico, ate, janela=120, nivel=0.8):
 
 
 def aplicar_banda(frame, quantis):
-    """banda_inf/banda_sup: o real fica dentro com a probabilidade do nível (previsto − erro alto, previsto − erro baixo)."""
+    """banda_inf/banda_sup: the actual falls inside with the level's probability (forecast − high error, forecast − low error)."""
     f = frame.merge(quantis, on=["subsistema", "hora"], how="left")
     return f.assign(banda_inf=f["previsto"] - f["q_sup"], banda_sup=f["previsto"] - f["q_inf"]).drop(columns=["q_inf", "q_sup"])
 
 
 def banda_walk_forward(historico, inicio, janela=120, nivel=0.8):
-    """Banda para cada mês a partir de `inicio`, com quantis só dos dias anteriores ao mês (sem olhar o futuro)."""
+    """Band for each month from `inicio`, with quantiles from days before that month only (no look-ahead)."""
     partes = []
     for mes in pd.date_range(inicio, historico["data"].max(), freq="MS"):
         alvo = historico[(historico["data"] >= mes) & (historico["data"] < mes + pd.offsets.MonthBegin(1))]
@@ -127,7 +127,7 @@ def banda_walk_forward(historico, inicio, janela=120, nivel=0.8):
 
 
 def carga_liquida(pecas, coluna="previsto"):
-    """Carga líquida por subsistema e hora, e a soma do SIN (só horas com os 4 subsistemas)."""
+    """Net load per subsystem and hour, plus the national sum (only hours with all 4 subsystems)."""
     largura = pecas.pivot_table(index=["subsistema", "data", "hora"], columns="peca", values=coluna, dropna=False).reindex(columns=list(SINAIS))
     liquida = sum(sinal * largura[peca] for peca, sinal in SINAIS.items()).rename(coluna).reset_index()
     sin = liquida.groupby(["data", "hora"]).filter(lambda g: g[coluna].notna().sum() == SUBSISTEMAS)

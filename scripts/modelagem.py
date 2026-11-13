@@ -1,7 +1,7 @@
-"""Roda o backtest dos modelos de ENA e carga e grava docs/inventory/model_results.json.
+"""Run the inflow and load model backtests and write docs/inventory/model_results.json.
 
-Executar: .\\.venv\\Scripts\\python.exe scripts/modelagem.py
-Lê data/gold/energia.duckdb; não acessa a internet nem altera a Gold.
+Run: .\\.venv\\Scripts\\python.exe scripts/modelagem.py
+Reads data/gold/energia.duckdb; no network and no changes to Gold.
 """
 import json
 import sys
@@ -27,7 +27,7 @@ def erro_abs(frame, coluna, alvo):
 
 
 def intervalo(frame, a, b, alvo, data):
-    """IC 95% da diferença de MAE entre dois modelos, com blocos de 14 dias."""
+    """95% CI of the MAE difference between two models, with 14-day blocks."""
     v = frame.dropna(subset=[a, b])
     media, baixo, alto = block_bootstrap_diff(v[data], erro_abs(v, a, alvo), erro_abs(v, b, alvo))
     return {"comparacao": f"{a} - {b}", "dif_mae": round(media, 2), "ic95": [round(baixo, 2), round(alto, 2)]}

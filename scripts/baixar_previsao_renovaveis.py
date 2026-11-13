@@ -1,11 +1,11 @@
-"""Baixa previsões arquivadas (GFS e ECMWF, 48 h antes) onde estão as usinas eólicas e solares.
+"""Download archived forecasts (GFS and ECMWF, 48 h ahead) where the wind and solar plants are.
 
-As usinas são agrupadas em células de 1 grau, e cada célula guarda a capacidade instalada, que serve de peso.
-Capitais entram como aproximação da geração distribuída (telhados). As variáveis arquivadas começam em fev/2024.
-Dados: Open-Meteo, CC-BY 4.0, API gratuita para uso não comercial. Saída: data/gold/previsao_renovaveis.parquet.
+Plants are grouped into 1-degree cells, and each cell keeps its installed capacity, used as the weight.
+Capitals approximate distributed (rooftop) generation. Archived variables start in Feb 2024.
+Data: Open-Meteo, CC-BY 4.0, free API for non-commercial use. Output: data/gold/previsao_renovaveis.parquet.
 
-Executar: .\\.venv\\Scripts\\python.exe scripts/baixar_previsao_renovaveis.py [--dias 3 4]
-Com --dias N (N ≠ 2), grava data/gold/previsao_renovaveis_dN.parquet com rodadas emitidas N dias antes (para D+2, D+3...).
+Run: .\\.venv\\Scripts\\python.exe scripts/baixar_previsao_renovaveis.py [--dias 3 4]
+With --dias N (N ≠ 2), writes data/gold/previsao_renovaveis_dN.parquet with runs issued N days before (for D+2, D+3...).
 """
 import argparse
 import json
@@ -40,7 +40,7 @@ MAX_CELULAS = 15
 
 
 def celulas(con):
-    """Maiores células de 1 grau por fonte e subsistema, com a capacidade atual como peso."""
+    """Largest 1-degree cells per source and subsystem, with current capacity as the weight."""
     tabela = con.sql("""
         WITH u AS (
             SELECT nom_tipousina AS tipo, id_subsistema AS subsistema, nom_usina_conjunto AS usina, ceg,
@@ -73,7 +73,7 @@ def baixar(store, recurso, url, tentativas=6, espera=45):
             manifesto = store.fetch("open_meteo", DATASET, recurso, url, context={"role": "archived_forecast", "licence": "CC-BY-4.0"})
             return json.loads(Path(resolve_data_path(manifesto["path"])).read_text(encoding="utf-8"))["hourly"]
         except HTTPError as erro:
-            # 429: limite por minuto/hora da API gratuita (pedidos longos contam como várias chamadas). Espera e retoma.
+            # 429: per-minute/hour limit of the free API (long requests count as several calls). Wait and resume.
             if erro.code == 429 and limite_estourado < 12:
                 limite_estourado += 1
                 print(f"{recurso}: limite da API (429), aguardando 15 min ({limite_estourado}/12)", flush=True)
@@ -81,18 +81,18 @@ def baixar(store, recurso, url, tentativas=6, espera=45):
                 continue
             if tentativa >= tentativas:
                 raise
-            print(f"{recurso}: HTTP {erro.code}, nova tentativa em {espera} s", flush=True)
+            print(f"{recurso}: HTTP {erro.code}, retrying in {espera} s", flush=True)
             time.sleep(espera)
         except (json.JSONDecodeError, KeyError, OSError) as erro:
             if tentativa >= tentativas:
                 raise
-            print(f"{recurso}: {type(erro).__name__}, nova tentativa em {espera} s", flush=True)
+            print(f"{recurso}: {type(erro).__name__}, retrying in {espera} s", flush=True)
             time.sleep(espera)
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dias", type=int, nargs="+", default=[2], help="rodadas emitidas N dias antes de cada hora")
+    parser.add_argument("--dias", type=int, nargs="+", default=[2], help="runs issued N days before each hour")
     dias = parser.parse_args().dias
     pedidas = {k: v for dia in dias for k, v in variaveis(dia).items()}
     con = conectar()
@@ -115,7 +115,7 @@ def main():
                         for modelo, sufixo in MODELOS.items():
                             d[f"{curto}_{sufixo}"] = corpo.get(f"{origem}_{modelo}", [None] * len(corpo["time"]))
                     partes[dia].append(pd.DataFrame(d).assign(fonte=local.fonte, subsistema=local.subsistema, lat=local.lat, lon=local.lon, peso=local.peso))
-                time.sleep(3)  # pedidos de um ano com várias variáveis pesam como dezenas de chamadas
+                time.sleep(3)  # one-year requests with several variables count as dozens of calls
             print(f"{i + 1}/{len(locais)}", flush=True)
     finally:
         store.close()

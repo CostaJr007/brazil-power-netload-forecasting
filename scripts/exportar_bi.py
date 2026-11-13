@@ -31,9 +31,9 @@ RAIZ = Path(__file__).resolve().parents[1]
 DESTINO = DATA_DIR / "bi"
 HORIZONTES = {"D+1": ("previsoes_carga_liquida", "carga_liquida_results.json", "ons"),
               "D+2": ("previsoes_carga_liquida_dmais2", "carga_liquida_dmais2_results.json", "ons_ant_semana")}
-INICIO_BANDA = pd.Timestamp("2025-10-01")      # 120 dias de erros acumulados antes da primeira banda
+INICIO_BANDA = pd.Timestamp("2025-10-01")      # 120 days of accumulated errors before the first band
 INICIO_CONFIRMACAO = pd.Timestamp("2026-01-01")
-# O BI sai em inglês (portfólio): nomes de tabelas, colunas e valores traduzidos só na gravação.
+# BI output is in English: table, column and value names are translated only when writing.
 SUBSISTEMAS = [("SIN", "National grid (SIN)", 0), ("SE", "Southeast/Center-West", 1), ("S", "South", 2),
                ("NE", "Northeast", 3), ("N", "North", 4)]
 NOMES_MES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -75,7 +75,7 @@ def fatos_backtest():
         info[horizonte] = {"receitas": escolhas, "regua": regua}
         liq = historico_liquido(p, escolhas, regua)
         liq = liq.merge(carga_liquida(p, "ons").rename(columns={"ons": "ons"}), on=["subsistema", "data", "hora"], how="left")
-        liq = banda_walk_forward(liq, INICIO_BANDA).merge(liq, how="right")  # banda só a partir de out/2025
+        liq = banda_walk_forward(liq, INICIO_BANDA).merge(liq, how="right")  # band only from Oct 2025
         liquidas.append(liq.assign(horizonte=horizonte))
         q = p.assign(previsto=float("nan"))
         for peca, receita in escolhas.items():
@@ -90,9 +90,9 @@ def fatos_backtest():
 
 
 def dias_falha_telemetria(pec, limite=0.15, minimo_mw=1000, horas=6):
-    """Dias em que o balanço do ONS perdeu usinas: eólica/solar verificada < 15% da programação do próprio ONS
-    (com programação > 1 GW) em 6+ horas de um subsistema. Detectado em D+1, onde a régua é a programação do dia.
-    Ex.: 16/01, 07/03 e 09/05/2026, eólica do NE com 0,2–0,5 GW contra ~12 GW programados."""
+    """Days when the ONS balance lost plants: verified wind/solar < 15% of ONS's own schedule
+    (with schedule > 1 GW) in 6+ hours of a subsystem. Detected at D+1, where the benchmark is the same-day schedule.
+    E.g. 2026-01-16, 03-07 and 05-09: Northeast wind at 0.2–0.5 GW against ~12 GW scheduled."""
     r = pec[(pec["horizonte"] == "D+1") & pec["peca"].isin(["eolica", "solar"])]
     suspeitas = r[(r["real"] < limite * r["regua"]) & (r["regua"] > minimo_mw)]
     contagem = suspeitas.groupby(["subsistema", "data"]).size()
@@ -161,7 +161,7 @@ def main():
     DESTINO.mkdir(parents=True, exist_ok=True)
     liq, pec, info = fatos_backtest()
     falhas = dias_falha_telemetria(pec)
-    print(f"Dias com falha de telemetria no balanço do ONS: {sorted(str(d.date()) for d in falhas)}")
+    print(f"Days with ONS balance telemetry outages: {sorted(str(d.date()) for d in falhas)}")
     liq["falha_telemetria"] = liq["data"].isin(falhas)
     pec["falha_telemetria"] = pec["data"].isin(falhas)
     tabelas = {"fato_carga_liquida": liq, "fato_pecas": pec, "fato_previsao": fato_previsao(), "fato_auditoria": fato_auditoria(), **views_gold()}
@@ -173,7 +173,7 @@ def main():
                                               "receita_d2": json.dumps(info["D+2"]["receitas"], ensure_ascii=False),
                                               "regua_d1": "ONS day-ahead schedule (DESSEM)",
                                               "regua_d2": "previous-day ONS schedule, bias-corrected by hour and weekday"}])
-    for nome in ("fato_previsao", "fato_auditoria", "fato_carga_liquida"):   # eixo contínuo hora a hora nos gráficos
+    for nome in ("fato_previsao", "fato_auditoria", "fato_carga_liquida"):   # continuous hourly axis in charts
         t = tabelas[nome]
         if len(t):
             t["instante"] = pd.to_datetime(t["data"]) + pd.to_timedelta(t["hora"], unit="h")
@@ -183,7 +183,7 @@ def main():
         nome = TABELAS_EN[nome]
         for c in tabela.columns:
             if pd.api.types.is_datetime64_any_dtype(tabela[c]):
-                tabela[c] = tabela[c].astype("datetime64[ms]")   # Power BI lê datas em ms sem problema
+                tabela[c] = tabela[c].astype("datetime64[ms]")   # Power BI reads millisecond timestamps fine
         tabela.to_parquet(DESTINO / f"{nome}.parquet", index=False)
         print(f"{nome:22s} {len(tabela):>9,} linhas  {list(tabela.columns)}")
     print(f"\nPasta: {DESTINO}")

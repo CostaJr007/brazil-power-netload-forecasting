@@ -1,4 +1,4 @@
-"""Garantias matemáticas e, principalmente, ausência de vazamento do futuro. Sem rede e sem dados reais."""
+"""Mathematical guarantees and, above all, no look-ahead leakage. No network and no real data."""
 import sys
 from datetime import date
 from pathlib import Path
@@ -57,7 +57,7 @@ def test_kalman_aprende_coeficiente_e_nao_olha_o_futuro():
     y = 0.5 + 2.0 * x[:, 1] + RNG.normal(0, 0.1, n)
     previsto, _ = kalman_regression(x, y, h, r=0.01)
     assert np.mean(np.abs(previsto[-500:] - y[-500:])) < 0.15
-    # y[t] é o valor observado em t+h: só pode influenciar previsões a partir de t+h.
+    # y[t] is the value observed at t+h: it may only influence forecasts from t+h onwards.
     t = 2000
     alterado = y.copy()
     alterado[t:] += 100
@@ -121,7 +121,7 @@ def test_carga_variaveis_disponiveis_nao_usam_t_menos_1_nem_t():
     t = pd.Timestamp("2023-05-10")
     x, passada, _ = preparar_subsistema(serie, temp)
     alterada, temp2 = serie.copy(), temp.copy()
-    # Altera exatamente o que ainda não se sabe na manhã de T−1: a verificada de T−1 e T, e a temperatura.
+    # Change exactly what is still unknown on the morning of T−1: verified load for T−1 and T, and temperature.
     alterada.loc[t - pd.Timedelta(days=1):t, "carga"] *= 3
     temp2.loc[t - pd.Timedelta(days=1):t] += 15
     novo, _, _ = preparar_subsistema(alterada, temp2)
@@ -130,7 +130,7 @@ def test_carga_variaveis_disponiveis_nao_usam_t_menos_1_nem_t():
 
 
 def test_feriados_moveis_e_consciencia_negra():
-    assert date(2024, 2, 13) in feriados_nacionais(2024)  # terça de Carnaval
+    assert date(2024, 2, 13) in feriados_nacionais(2024)  # Carnival Tuesday
     assert date(2024, 3, 29) in feriados_nacionais(2024)  # Sexta-feira Santa
     assert date(2024, 11, 20) in feriados_nacionais(2024)
     assert date(2022, 11, 20) not in feriados_nacionais(2022)

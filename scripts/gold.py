@@ -27,17 +27,17 @@ KEYS = ["variable", "unit", "source_variable", "level_type", "level", "step_type
         "valid_time_utc", "run_time_utc", "interval_start_utc", "interval_end_utc"]
 
 VIEWS = r"""
--- Chuva OBSERVADA por bacia (MERGE/CPTEC: satélite GPM + pluviômetros), um valor por dia.
--- valid_time_utc do MERGE marca o fechamento do acumulado diário; a janela exata
--- (convenção 12 UTC→12 UTC) ainda não foi confirmada no contrato: ver interval_status na Silver.
+-- OBSERVED rain per basin (MERGE/CPTEC: GPM satellite + rain gauges), one value per day.
+-- MERGE valid_time_utc marks the end of the daily accumulation; the exact window
+-- (12 UTC→12 UTC convention) is not yet confirmed in the contract: see interval_status in Silver.
 CREATE VIEW vw_chuva_observada_bacia_diaria AS
 SELECT basin_id, basin_name, CAST(valid_time_utc AS DATE) AS data_referencia,
        value AS chuva_mm, coverage AS cobertura_area, cells AS celulas, _source_sha256
 FROM gold_basin_weather
 WHERE source = 'merge' AND variable = 'precipitation_mm';
 
--- Chuva PREVISTA por bacia, por rodada e horizonte. ECMWF e GFS acumulam desde o início da rodada;
--- a chuva de cada período é a diferença entre horizontes consecutivos.
+-- FORECAST rain per basin, per run and lead time. ECMWF and GFS accumulate from the start of the run;
+-- the rain of each period is the difference between consecutive lead times.
 CREATE VIEW vw_previsao_chuva_bacia AS
 WITH acc AS (
     SELECT source AS modelo, basin_id, basin_name, run_time_utc AS rodada_utc,
@@ -53,7 +53,7 @@ SELECT *,
 FROM acc
 WINDOW w AS (PARTITION BY modelo, basin_id, rodada_utc ORDER BY horizonte_h);
 
--- ENA diária por bacia (ONS). Último snapshot atual de cada arquivo; data como publicada (fuso não declarado).
+-- Daily ENA per basin (ONS). Latest current snapshot of each file; date as published (time zone not declared).
 CREATE VIEW vw_ena_bacia_diaria AS
 SELECT nom_bacia, CAST(_event_time_source AS DATE) AS data_referencia,
        max(ena_bruta_bacia_mwmed) AS ena_bruta_mwmed,
@@ -62,8 +62,8 @@ SELECT nom_bacia, CAST(_event_time_source AS DATE) AS data_referencia,
 FROM silver_ena_diario_por_bacia
 GROUP BY ALL;
 
--- A tabela da hipótese: chuva observada na bacia × ENA da mesma bacia, por dia.
--- Só bacias com correspondência explícita de nome (ver basin_ena_mapping).
+-- The hypothesis table: observed rain over the basin × ENA of the same basin, per day.
+-- Only basins with an explicit name match (see basin_ena_mapping).
 CREATE VIEW vw_chuva_x_ena_bacia AS
 SELECT m.basin_id, m.basin_name, m.ena_nom_bacia, m.match AS tipo_correspondencia,
        coalesce(c.data_referencia, e.data_referencia) AS data_referencia,
@@ -73,9 +73,9 @@ JOIN vw_chuva_observada_bacia_diaria c USING (basin_id)
 FULL JOIN vw_ena_bacia_diaria e ON e.nom_bacia = m.ena_nom_bacia AND e.data_referencia = c.data_referencia
 WHERE m.ena_nom_bacia IS NOT NULL;
 
--- Carga semi-horária: previsão do ONS × realizado (UTC declarado pela fonte).
--- Para cada área/intervalo fica a versão mais recente de cada série. ATENÇÃO para backtest:
--- a programada "mais recente" pode ter sido revisada; use silver_* e _available_at_utc para a visão "como era no dia".
+-- Half-hourly load: ONS forecast × actual (UTC declared by the source).
+-- For each area/interval the latest version of each series is kept. WARNING for backtests:
+-- the "latest" schedule may have been revised; use silver_* and _available_at_utc for the "as of that day" view.
 CREATE VIEW vw_carga_prevista_vs_verificada AS
 WITH v AS (
     SELECT *, row_number() OVER (PARTITION BY cod_areacarga, interval_end_utc
@@ -96,7 +96,7 @@ FROM (SELECT * FROM v WHERE rn = 1) v
 FULL JOIN (SELECT * FROM p WHERE rn = 1) p
   ON v.cod_areacarga = p.cod_areacarga AND v.interval_end_utc = p.interval_end_utc;
 
--- Balanço horário por subsistema com carga líquida (carga − eólica − solar). Exclui o agregado SIN.
+-- Hourly balance per subsystem with net load (load − wind − solar). Excludes the SIN aggregate.
 CREATE VIEW vw_balanco_carga_liquida AS
 SELECT id_subsistema AS subsistema, _event_time_source AS instante_fonte,
        max(val_carga) AS carga_mwmed, max(val_gereolica) AS eolica_mwmed, max(val_gersolar) AS solar_mwmed,
@@ -106,7 +106,7 @@ FROM silver_balanco_energia_subsistema
 WHERE NOT _is_sin_aggregate
 GROUP BY ALL;
 
--- EAR diária por subsistema e CMO semanal: estado do sistema e preço-sombra.
+-- Daily EAR per subsystem and weekly CMO: system state and shadow price.
 CREATE VIEW vw_ear_subsistema_diaria AS
 SELECT id_subsistema AS subsistema, CAST(_event_time_source AS DATE) AS data_referencia,
        max(ear_verif_subsistema_percentual) AS ear_pct, max(ear_verif_subsistema_mwmes) AS ear_mwmes
@@ -118,9 +118,9 @@ SELECT id_subsistema AS subsistema, CAST(_event_time_source AS DATE) AS semana,
        max(val_cmomedia) AS cmo_medio_patamar, max(val_cmopesada) AS cmo_pesada
 FROM silver_cmo_semanal GROUP BY ALL;
 
--- PLD ESTIMADO (não é a série oficial da CCEE, bloqueada neste ambiente): CMO do ONS limitado
--- ao piso e ao teto horário da ANEEL. O PLD horário existe desde 2021, por isso o JOIN descarta 2020.
--- A hora vem da média das duas meias horas; fuso como publicado pelo ONS (não declarado).
+-- ESTIMATED PLD (not the official CCEE series, blocked in this environment): ONS CMO clipped
+-- to the ANEEL floor and hourly cap. Hourly PLD exists since 2021, so the JOIN drops 2020.
+-- The hour is the mean of the two half-hours; time zone as published by ONS (not declared).
 CREATE VIEW vw_pld_estimado_horario AS
 WITH h AS (
     SELECT id_subsistema AS subsistema, date_trunc('hour', _event_time_source) AS hora,
@@ -135,7 +135,7 @@ SELECT h.subsistema, h.hora, CAST(h.hora AS DATE) AS data_referencia, h.cmo_medi
             ELSE 'cmo' END AS origem
 FROM h JOIN pld_limites l ON l.ano = year(h.hora);
 
--- Média diária do PLD estimado, limitada ao teto estrutural. A view horária não redistribui esse corte entre as horas.
+-- Daily mean of the estimated PLD, clipped to the structural cap. The hourly view does not redistribute this cut across hours.
 CREATE VIEW vw_pld_estimado_diario AS
 SELECT e.subsistema, e.data_referencia, count(*) AS horas,
        least(avg(e.pld_estimado), l.pld_max_estrutural) AS pld_estimado,
@@ -143,14 +143,14 @@ SELECT e.subsistema, e.data_referencia, count(*) AS horas,
 FROM vw_pld_estimado_horario e JOIN pld_limites l ON l.ano = year(e.data_referencia)
 GROUP BY e.subsistema, e.data_referencia, l.pld_max_estrutural;
 
--- ENA por bacia pronta para somar. Desde 2026 o ONS publica as sub-bacias da Amazônia (Madeira, Xingu, Teles Pires...)
--- além da linha AMAZONAS, que é o agregado delas. Nos dias em que há sub-bacias, a linha agregada sai.
+-- ENA per basin, ready to sum. Since 2026 ONS publishes the Amazon sub-basins (Madeira, Xingu, Teles Pires...)
+-- besides the AMAZONAS row, which is their aggregate. On days with sub-basins, the aggregate row is dropped.
 CREATE VIEW vw_ena_bacia_sem_dupla_contagem AS
 SELECT nom_bacia, data_referencia, ena_bruta_mwmed, ena_bruta_pct_mlt, ena_armazenavel_mwmed
 FROM vw_ena_bacia_diaria
 WHERE NOT (nom_bacia = 'AMAZONAS' AND data_referencia IN (SELECT data_referencia FROM vw_ena_bacia_diaria WHERE nom_bacia = 'MADEIRA'));
 
--- Hidrologia por subsistema e SIN. O percentual do SIN é ponderado: não se tira média de percentuais.
+-- Hydrology per subsystem and SIN. The SIN percentage is weighted: never average percentages.
 CREATE VIEW vw_hidro_subsistema_diaria AS
 WITH ena AS (
     SELECT id_subsistema AS subsistema, CAST(_event_time_source AS DATE) AS data_referencia,
@@ -168,13 +168,13 @@ SELECT 'SIN', data_referencia, sum(ena_mwmed), sum(ena_mwmed) / nullif(sum(ena_m
        sum(ear_mwmes), sum(ear_max_mwmes), 100.0 * sum(ear_mwmes) / nullif(sum(ear_max_mwmes), 0)
 FROM s GROUP BY data_referencia;
 
--- Conferência diária: a soma das bacias tem de fechar com a ENA do SIN.
+-- Daily check: the sum of basins must match the SIN ENA.
 CREATE VIEW vw_conferencia_soma_bacias AS
 WITH b AS (SELECT data_referencia, sum(ena_bruta_mwmed) AS soma_bacias_mwmed, count(*) AS bacias FROM vw_ena_bacia_sem_dupla_contagem GROUP BY 1)
 SELECT b.data_referencia, b.bacias, b.soma_bacias_mwmed, h.ena_mwmed AS ena_sin_mwmed, b.soma_bacias_mwmed - h.ena_mwmed AS diferenca_mwmed
 FROM b JOIN vw_hidro_subsistema_diaria h ON h.subsistema = 'SIN' AND h.data_referencia = b.data_referencia;
 
--- ENA e EAR por reservatório equivalente (REE), partição sem sobreposição usada no planejamento.
+-- ENA and EAR per equivalent reservoir (REE), the non-overlapping partition used in planning.
 CREATE VIEW vw_ree_diaria AS
 WITH ena AS (
     SELECT nom_reservatorioee AS ree, CAST(_event_time_source AS DATE) AS data_referencia, max(ena_bruta_ree_mwmed) AS ena_mwmed, max(ena_bruta_ree_percentualmlt) AS ena_pct_mlt
@@ -184,13 +184,13 @@ ear AS (
     FROM silver_ear_diario_por_ree_reservatorio_equivalente_de_energia GROUP BY ALL)
 SELECT * FROM ena FULL JOIN ear USING (ree, data_referencia);
 
--- Balanço horário do SIN: soma dos 4 subsistemas, só em horas completas.
+-- Hourly SIN balance: sum of the 4 subsystems, complete hours only.
 CREATE VIEW vw_balanco_horario_sin AS
 SELECT instante_fonte, sum(carga_mwmed) AS carga_mwmed, sum(eolica_mwmed) AS eolica_mwmed, sum(solar_mwmed) AS solar_mwmed,
        sum(hidraulica_mwmed) AS hidraulica_mwmed, sum(termica_mwmed) AS termica_mwmed, sum(carga_liquida_mwmed) AS carga_liquida_mwmed
 FROM vw_balanco_carga_liquida GROUP BY instante_fonte HAVING count(*) = 4;
 
--- Balanço diário por subsistema e SIN, em MW médios.
+-- Daily balance per subsystem and SIN, in average MW.
 CREATE VIEW vw_balanco_diario AS
 WITH t AS (
     SELECT subsistema, instante_fonte, carga_mwmed, eolica_mwmed, solar_mwmed, hidraulica_mwmed, termica_mwmed, carga_liquida_mwmed FROM vw_balanco_carga_liquida
@@ -201,7 +201,7 @@ SELECT subsistema, CAST(instante_fonte AS DATE) AS data_referencia, count(*) AS 
        min(carga_liquida_mwmed) AS carga_liquida_min_mwmed, max(carga_liquida_mwmed) AS carga_liquida_max_mwmed
 FROM t GROUP BY 1, 2;
 
--- Eólica e solar somadas por estado: geração, capacidade e fator de capacidade.
+-- Wind and solar summed per state: generation, capacity and capacity factor.
 CREATE VIEW vw_renovaveis_diario AS
 WITH h AS (
     SELECT nom_tipousina AS fonte, id_subsistema AS subsistema, id_estado AS uf, _event_time_source AS instante,
@@ -211,7 +211,7 @@ SELECT fonte, subsistema, uf, CAST(instante AS DATE) AS data_referencia, count(*
        avg(geracao) / nullif(avg(capacidade), 0) AS fator_capacidade
 FROM h GROUP BY ALL;
 
--- Cortes de geração (constrained-off) por dia: ENE energético, CNF confiabilidade, REL elétrico.
+-- Generation curtailment (constrained-off) per day: ENE energy, CNF reliability, REL electrical.
 CREATE VIEW vw_cortes_renovaveis_diario AS
 WITH u AS (
     SELECT 'Solar' AS fonte, id_subsistema AS subsistema, _event_time_source AS instante, cod_razaorestricao AS razao, val_geracao, val_geracaonaorealizadaapurada AS corte FROM silver_restricao_coff_fotovoltaica
@@ -226,7 +226,7 @@ SELECT fonte, subsistema, data_referencia, periodos, g / periodos AS geracao_mwm
        coalesce(c, 0) / nullif(g + coalesce(c, 0), 0) AS corte_pct_do_potencial
 FROM d;
 
--- Painel diário do SIN: uma linha por dia com balanço, hidrologia, cortes e preço.
+-- Daily SIN panel: one row per day with balance, hydrology, curtailment and price.
 CREATE VIEW vw_painel_energia_diario AS
 WITH cmo AS (
     SELECT CAST(_event_time_source AS DATE) AS data_referencia,
@@ -247,7 +247,7 @@ LEFT JOIN cmo ON cmo.data_referencia = b.data_referencia
 LEFT JOIN pld p ON p.data_referencia = b.data_referencia
 WHERE b.subsistema = 'SIN';
 
--- Cada fonte chega em um ritmo: última data publicada e última coleta, para saber o que já está disponível hoje.
+-- Each source arrives at its own pace: latest published date and latest collection, to know what is available today.
 CREATE VIEW vw_frescor_fontes AS
 WITH f AS (
     SELECT 'carga_verificada' AS fonte, CAST(max(timezone('UTC', interval_end_utc)) - INTERVAL 3 HOUR - INTERVAL 1 SECOND AS DATE) AS ultima_referencia, max(_available_at_utc) AS ultima_coleta FROM silver_carga_energia_verificada
@@ -271,7 +271,7 @@ def snake(name):
 
 
 def create_pld_limits(con):
-    """Expõe configs/pld_limits.json como a view pld_limites (consumida pelas views de PLD estimado)."""
+    """Expose configs/pld_limits.json as the pld_limites view (used by the estimated-price views)."""
     limits = json.loads((ROOT / "configs/pld_limits.json").read_text(encoding="utf-8"))["limits"]
     rows = ", ".join(f"({r['ano']}, {r['pld_min']}, {r['pld_max_estrutural']}, {r['pld_max_horario']})" for r in limits)
     con.execute("CREATE VIEW pld_limites AS SELECT * FROM (VALUES " + rows +
@@ -283,7 +283,7 @@ def current_snapshots():
 
 
 def build_basin_weather(snapshots, basins, log=print):
-    """Um Parquet por snapshot meteorológico; reprocessa só o que ainda não existe."""
+    """One Parquet per weather snapshot; only what does not exist yet is processed."""
     out_dir = DATA_DIR / "gold/basin_weather"
     files, built = [], 0
     for snapshot in snapshots:
@@ -316,7 +316,7 @@ def sql_list(paths):
 
 
 def refresh(log=print):
-    """Atualiza agregados e recria as views. Devolve um resumo para o relatório."""
+    """Update aggregates and rebuild the views. Returns a summary for the report."""
     snapshots = current_snapshots()
     basins = load_basins()
     weather_files, built = build_basin_weather(snapshots, basins, log)
@@ -333,9 +333,9 @@ def refresh(log=print):
     mapping.write_parquet(gold / "basin_ena_mapping.parquet")
     pl.from_pandas(basins.drop(columns="geometry")).write_parquet(gold / "basins.parquet")
     database = gold / "energia.duckdb"
-    # Nome temporário único: backfill e coleta agendada podem atualizar a Gold ao mesmo tempo.
+    # Unique temporary name: backfill and the scheduled collection may update Gold at the same time.
     temporary = gold / f"energia.{uuid.uuid4().hex[:8]}.duckdb.part"
-    # Banco novo a cada execução e troca no fim: quem estiver lendo nunca vê views pela metade.
+    # A new database each run, swapped at the end: readers never see half-built views.
     con = duckdb.connect(str(temporary))
     try:
         for dataset, files in sorted(by_dataset.items()):
@@ -348,7 +348,7 @@ def refresh(log=print):
         con.execute(f"CREATE VIEW basins AS SELECT * FROM read_parquet('{(gold / 'basins.parquet').as_posix()}')")
         create_pld_limits(con)
         created, skipped = [], []
-        # Comentários "--" saem antes de separar por ";" (eles podem conter ponto e vírgula).
+        # "--" comments are removed before splitting on ";" (they may contain semicolons).
         code = "\n".join(line for line in VIEWS.splitlines() if not line.strip().startswith("--"))
         for statement in [s.strip() for s in code.split(";") if s.strip()]:
             name = re.search(r"CREATE VIEW (\w+)", statement).group(1)
@@ -357,7 +357,7 @@ def refresh(log=print):
                 con.execute(f"SELECT * FROM {name} LIMIT 0")
                 created.append(name)
             except duckdb.Error as exc:
-                # View depende de conjunto ainda ausente (ex.: sem backfill): registra e segue.
+                # A view depends on a dataset that is still missing (e.g. no backfill): log it and continue.
                 con.execute(f"DROP VIEW IF EXISTS {name}")
                 skipped.append({"view": name, "reason": str(exc).splitlines()[0][:200]})
     except Exception:

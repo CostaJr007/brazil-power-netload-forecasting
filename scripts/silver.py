@@ -21,13 +21,13 @@ from acquire import atomic_json, utcnow
 
 
 def snake(value):
-    """Remove acentos e pontuação de nomes de colunas, sem alterar os dados brutos."""
+    """Remove accents and punctuation from column names, without changing raw data."""
     text = unicodedata.normalize("NFKD", str(value)).encode("ascii", "ignore").decode()
     return re.sub(r"[^a-z0-9]+", "_", text.lower()).strip("_")
 
 
 def lineage(frame, manifest):
-    """Anexa proveniência; disponibilidade é a coleta comprovada, não uma data presumida."""
+    """Attach provenance; availability is the proven collection time, not an assumed date."""
     seen = datetime.fromisoformat(manifest["ingested_at"])
     return frame.with_columns(
         pl.lit(manifest["source"]).alias("_source"),
@@ -38,7 +38,7 @@ def lineage(frame, manifest):
 
 
 def split_quality(frame, rules):
-    """Regras retornam máscaras de erro; nunca substituímos valores inválidos por zero."""
+    """Rules return error masks; invalid values are never replaced by zero."""
     reasons = [pl.when(mask.fill_null(False)).then(pl.lit(name)).otherwise(pl.lit(None))
                for name, mask in rules]
     if reasons:
@@ -50,17 +50,17 @@ def split_quality(frame, rules):
 
 
 def ons_frame(path, manifest, contract):
-    """Tipa ONS, normaliza chaves e valida conversões; mantém todas as colunas da origem."""
+    """Type ONS files, normalise keys and validate conversions; keep every source column."""
     fmt = manifest.get("context", {}).get("format", "PARQUET").upper()
     frame = pl.read_csv(path, separator=";", infer_schema=False) if fmt == "CSV" else pl.read_parquet(path)
     source_rows = frame.height
     required = contract.get("required", [])
-    # "optional": colunas que a fonte só passou a publicar a partir de certa data
-    # (arquivos antigos não as têm). Ausência delas não reprova o arquivo.
+    # "optional": columns the source only started publishing from a certain date
+    # (older files do not have them). Their absence does not fail the file.
     missing = sorted(set(required) - set(frame.columns) - set(contract.get("optional", [])))
     if missing:
-        raise ValueError(f"Schema incompatível, colunas ausentes: {missing}")
-    # Só duplicatas exatamente iguais são removidas. Conflitos entre chaves ficam visíveis.
+        raise ValueError(f"Incompatible schema, missing columns: {missing}")
+    # Only exactly identical duplicates are removed. Conflicts between keys stay visible.
     frame = frame.unique(maintain_order=True)
     duplicate_rows = source_rows - frame.height
     rules, transforms = [], []
@@ -70,7 +70,7 @@ def ons_frame(path, manifest, contract):
         elif dtype == pl.String:
             transforms.append(pl.col(name).str.strip_chars().alias(name))
     frame = frame.with_columns(transforms)
-    # O contrato descreve campos numéricos observados no schema auditado.
+    # The contract describes the numeric fields observed in the audited schema.
     for name in contract.get("numeric", []):
         if name not in frame.columns:
             continue
@@ -81,7 +81,7 @@ def ons_frame(path, manifest, contract):
                                    value.alias(name))
         rules.append(("invalid_numeric:" + name, pl.col("_bad_" + name)))
         rules.append(("nonfinite:" + name, pl.col(name).is_not_null() & ~pl.col(name).is_finite()))
-    # Hora da fonte é preservada sem inventar UTC; o dicionário de cada fonte pode diferir.
+    # Source time is preserved without inventing UTC; each source's dictionary may differ.
     event = contract.get("event_column")
     if event and event in frame.columns:
         text = pl.col(event).cast(pl.String)
@@ -98,18 +98,18 @@ def ons_frame(path, manifest, contract):
                                    .replace({"SE/CO": "SE"}).alias("id_subsistema"))
         rules.append(("unknown_subsystem", ~pl.col("id_subsistema").is_in(["SE", "S", "NE", "N", "SIN"])))
         frame = frame.with_columns((pl.col("id_subsistema") == "SIN").alias("_is_sin_aggregate"))
-    # ENA percentual da MLT pode superar 100: não aplicamos o limite de reservatório a ela.
+    # Inflow as % of the long-term mean can exceed 100: the reservoir limit does not apply to it.
     warnings = []
     for name in ["ear_verif_subsistema_percentual", "ear_verif_bacia_percentual",
                  "ear_verif_ree_percentual", "ear_reservatorio_percentual"]:
         if name in frame.columns:
-            # A própria fonte tem valores acima de 100 (ex.: volume acima da referência).
-            # Sinalizamos investigação sem truncar ou declarar que o dado é inválido.
+            # The source itself has values above 100 (e.g. volume above the reference).
+            # Flag for investigation without truncating or declaring the value invalid.
             warnings.append(pl.when(~pl.col(name).is_between(0, 100)).then(
                 pl.lit("outside_nominal_range:" + name)).otherwise(pl.lit(None)))
     frame = frame.with_columns((pl.concat_list(warnings).list.drop_nulls() if warnings else
                                 pl.lit([], dtype=pl.List(pl.String))).alias("_quality_warnings"))
-    # Após normalizar espaços/tipos, linhas antes distintas podem se tornar iguais.
+    # After normalising spaces/types, rows that were distinct may become identical.
     frame = frame.unique(maintain_order=True)
     duplicate_rows = source_rows - frame.height
     frame = lineage(frame, manifest)
@@ -127,12 +127,12 @@ LOAD_DATASETS = {"carga-energia-programada", "carga-energia-verificada"}
 
 
 def parse_load_json(path):
-    """Lê a resposta da API de carga tolerando um defeito conhecido da fonte.
+    """Read the load-API response, tolerating a known source defect.
 
-    Em períodos antigos (ex.: 2018 a início de 2019) a API escreve campos sem valor
-    como  "val_cargammgd": ,  — isso não é JSON válido. Só esse padrão (dois-pontos
-    seguido direto de vírgula, } ou ]) vira null; nenhum valor é inventado e os
-    bytes originais continuam intactos na Bronze.
+    For old periods (e.g. 2018 to early 2019) the API writes empty fields
+    as  "val_cargammgd": ,  — which is not valid JSON. Only that pattern (a colon
+    followed directly by a comma, } or ]) becomes null; no value is invented and the
+    original bytes stay intact in Bronze.
     """
     text = Path(path).read_text(encoding="utf-8-sig")
     try:
@@ -142,25 +142,25 @@ def parse_load_json(path):
 
 
 def load_frame(path, manifest, contract):
-    """Tipa a resposta JSON da API de carga do ONS (apicarga).
+    """Type the JSON response of the ONS load API (apicarga).
 
-    O dicionário oficial declara din_referenciautc em UTC+0 e como FINAL do
-    intervalo de meia hora; por isso o início é calculado subtraindo 30 minutos.
-    Esta é a única fonte ONS do projeto com fuso horário declarado.
+    The official dictionary declares din_referenciautc in UTC+0 and as the END of the
+    half-hour interval, so the start is computed by subtracting 30 minutes.
+    This is the project's only ONS source with a declared time zone.
     """
     payload = parse_load_json(path)
     if not isinstance(payload, list):
-        raise ValueError("Resposta da API de carga não é uma lista JSON")
+        raise ValueError("Load API response is not a JSON list")
     if not payload:
         raise ValueError("Resposta da API de carga vazia")
-    # Todos os campos entram como texto; a conversão abaixo registra falhas.
+    # Every field enters as text; the conversion below records failures.
     columns = sorted({key for row in payload for key in row})
     frame = pl.DataFrame([{k: (None if row.get(k) is None else str(row.get(k))) for k in columns} for row in payload],
                          schema={k: pl.String for k in columns})
     source_rows = frame.height
     missing = sorted(set(contract.get("required", [])) - set(frame.columns))
     if missing:
-        raise ValueError(f"Schema incompatível, colunas ausentes: {missing}")
+        raise ValueError(f"Incompatible schema, missing columns: {missing}")
     frame = frame.unique(maintain_order=True)
     rules = []
     for name in [c for c in frame.columns if c.startswith("val_")]:
@@ -174,14 +174,14 @@ def load_frame(path, manifest, contract):
                                pl.col("cod_areacarga").str.strip_chars().alias("cod_areacarga"),
                                pl.lit("declared_utc_by_source_dictionary").alias("_timezone_status"))
     if "din_atualizacao" in frame.columns:
-        # Data de atualização da fonte: a carga verificada é revisada depois do dia.
+        # Source update date: verified load is revised after the day.
         frame = frame.with_columns(pl.col("din_atualizacao").str.to_datetime(
             "%Y-%m-%dT%H:%M:%S%.fZ", strict=False, time_zone="UTC").alias("source_updated_at_utc"))
     rules.append(("invalid_interval_end", pl.col("interval_end_utc").is_null()))
-    # Mesma área e mesmo intervalo duas vezes na mesma resposta é conflito, não revisão.
+    # The same area and interval twice in one response is a conflict, not a revision.
     rules.append(("duplicate_key", pl.struct("cod_areacarga", "din_referenciautc").is_duplicated()))
-    # Carga global zero é fisicamente implausível para uma área inteira. A fonte publica
-    # assim (ex.: área SIN em 10/11/2026); sinalizamos sem apagar nem corrigir.
+    # Zero total load is physically implausible for a whole area. The source publishes
+    # it this way (e.g. area SIN on 2026-11-10); flagged without deleting or fixing.
     total = next((c for c in ("val_cargaglobal", "val_cargaglobalprogramada") if c in frame.columns), None)
     warning = (pl.when(pl.col(total) == 0).then(pl.lit(["zero_total_load"])).otherwise(pl.lit([], dtype=pl.List(pl.String)))
                if total else pl.lit([], dtype=pl.List(pl.String)))
@@ -197,7 +197,7 @@ def load_frame(path, manifest, contract):
 
 
 def grib_frames(path, manifest, bbox):
-    """Converte mensagens meteorológicas em tabela longa, preservando rodada e intervalo."""
+    """Convert weather messages into a long table, preserving run and interval."""
     parts = []
     with Path(path).open("rb") as stream:
         while True:
@@ -218,25 +218,25 @@ def grib_frames(path, manifest, bbox):
                 mask = (lon >= west) & (lon <= east) & (lat >= south) & (lat <= north)
                 values = values[mask].copy()
                 values[(~np.isfinite(values)) | (values == get("missingValue"))] = np.nan
-                # dataDate/dataTime descrevem o GRIB. Em MERGE não são uma rodada de previsão.
+                # dataDate/dataTime describe the GRIB. For MERGE they are not a forecast run.
                 reference = datetime.strptime(f"{get('dataDate'):08d}{get('dataTime'):04d}", "%Y%m%d%H%M").replace(tzinfo=timezone.utc)
                 valid = datetime.strptime(f"{get('validityDate'):08d}{get('validityTime'):04d}", "%Y%m%d%H%M").replace(tzinfo=timezone.utc)
                 merge = manifest["dataset"] == "merge_daily"
                 variable = name
                 if merge:
-                    # Interpretação vem do CTL, e não do rótulo genérico do ecCodes.
+                    # Interpretation comes from the CTL descriptor, not from ecCodes' generic label.
                     codes = (get("discipline"), get("parameterCategory"), get("parameterNumber"))
                     mapping = {(0, 15, 5): ("precipitation_mm", "mm"), (0, 3, 1): ("station_count", "count")}
                     if codes not in mapping:
-                        raise ValueError(f"Campo MERGE não documentado no contrato: {codes}")
+                        raise ValueError(f"MERGE field not documented in the contract: {codes}")
                     variable, unit = mapping[codes]
                 elif name in {"tp", "ro"} and unit == "m":
-                    # ECMWF: chuva total e escoamento em METROS de água acumulados desde o início
-                    # da rodada. 1 m = 1000 mm. (No GFS a chuva vem em kg/m², que já equivale a mm.)
+                    # ECMWF: total rain and runoff in METRES of water accumulated since the start
+                    # of the run. 1 m = 1000 mm. (In GFS rain comes in kg/m², already equivalent to mm.)
                     variable = "precipitation_mm" if name == "tp" else "runoff_mm"
                     unit, values = "mm", values * 1000
                 elif name == "ssrd":
-                    # Radiação solar descendente ACUMULADA (energia por área), não fluxo instantâneo.
+                    # ACCUMULATED downward solar radiation (energy per area), not instantaneous flux.
                     variable, unit = "solar_radiation_accum_j_m2", "J m**-2"
                 elif unit == "K":
                     variable, unit, values = "temperature_c", "degC", values - 273.15
@@ -246,10 +246,10 @@ def grib_frames(path, manifest, bbox):
                     variable, unit = "wind_u", "m/s"
                 elif name in {"v", "10v", "100v"}:
                     variable, unit = "wind_v", "m/s"
-                # Os intervalos GFS vêm dos passos em horas. Não atribuimos janela diária ao MERGE.
+                # GFS intervals come from the steps in hours. No daily window is assigned to MERGE.
                 start, end = get("startStep", 0), get("endStep", 0)
                 if not merge and get("stepUnits") != 1:
-                    raise ValueError("Unidade de passo GRIB ainda não suportada; esperado horas")
+                    raise ValueError("GRIB step unit not supported yet; hours expected")
                 part = pl.DataFrame({"latitude": lat[mask], "longitude": lon[mask], "value": values}, nan_to_null=True)
                 part = part.with_columns(pl.lit(variable).alias("variable"), pl.lit(name).alias("source_variable"),
                     pl.lit(unit).alias("unit"), pl.lit(get("units")).alias("source_unit"),
@@ -264,9 +264,9 @@ def grib_frames(path, manifest, bbox):
             finally:
                 eccodes.codes_release(handle)
     if not parts:
-        raise ValueError("GRIB sem mensagens")
+        raise ValueError("GRIB without messages")
     frame = lineage(pl.concat(parts, how="vertical_relaxed"), manifest)
-    # Ausência é mantida como null e sinalizada. Não imputamos chuva/vento ausentes.
+    # Missing values stay null and are flagged. Missing rain/wind is never imputed.
     frame = frame.with_columns(pl.col("value").is_null().alias("_is_missing"))
     rules = [("negative_precipitation", (pl.col("variable") == "precipitation_mm") & (pl.col("value") < 0)),
              ("negative_station_count", (pl.col("variable") == "station_count") & (pl.col("value") < 0))]
@@ -275,7 +275,7 @@ def grib_frames(path, manifest, bbox):
 
 
 def inmet_frames(path, manifest):
-    """Produz uma estação de cada vez para limitar memória durante o ZIP anual."""
+    """Yields one station at a time to limit memory over the yearly ZIP."""
     with ZipFile(path) as archive:
         for member in sorted(m for m in archive.namelist() if m.lower().endswith(".csv")):
             with archive.open(member) as raw:
@@ -288,16 +288,16 @@ def inmet_frames(path, manifest):
                 header = next(reader)
                 names = [snake(n) or "_trailing_empty" for n in header]
                 if len(names) != len(set(names)):
-                    raise ValueError(f"Colunas duplicadas após normalização: {member}")
+                    raise ValueError(f"Duplicated columns after normalisation: {member}")
                 rows = list(reader)
-            # O schema explícito impede que colunas vazias sejam inferidas como Null.
+            # The explicit schema prevents empty columns from being inferred as Null.
             frame = pl.DataFrame(rows, schema={n: pl.String for n in names}, orient="row")
             if "_trailing_empty" in frame.columns:
                 if frame["_trailing_empty"].str.len_chars().sum() != 0:
-                    raise ValueError("Coluna sem nome contém dados")
+                    raise ValueError("Unnamed column contains data")
                 frame = frame.drop("_trailing_empty")
             datecol, hourcol = names[:2]
-            # Até ~2019 o INMET publica "2018-01-01;00:00"; depois, "2022/01/01;0000 UTC".
+            # Until ~2019 INMET publishes "2018-01-01;00:00"; later, "2022/01/01;0000 UTC".
             day = pl.col(datecol).str.replace_all("-", "/", literal=True)
             hour = pl.col(hourcol).str.replace(":", "", literal=True).str.extract(r"(\d{4})", 1)
             stamp = pl.concat_str([day, pl.lit(" "), hour])
@@ -313,12 +313,12 @@ def inmet_frames(path, manifest):
                 rules.append(("nonfinite:" + name, pl.col(name).is_not_null() & ~pl.col(name).is_finite()))
                 if name.startswith("umidade"):
                     rules.append(("humidity_outside_0_100:" + name, ~pl.col(name).is_between(0, 100)))
-            # Nomes/unidades comuns sem tratar radiação acumulada como fluxo instantâneo.
+            # Common names/units, without treating accumulated radiation as instantaneous flux.
             mapping = {"precipitacao_total_horario_mm": "precipitation_mm",
                        "temperatura_do_ar_bulbo_seco_horaria_c": "air_temperature_c",
                        "vento_velocidade_horaria_m_s": "wind_speed_m_s"}
             rename = {k: v for k, v in mapping.items() if k in frame.columns}
-            # O nome das duas primeiras colunas também muda entre anos (data_yyyy_mm_dd, hora_utc...).
+            # The names of the first two columns also change across years (data_yyyy_mm_dd, hora_utc...).
             rename |= {datecol: "data", hourcol: "hora_utc"}
             frame = frame.with_columns(pl.lit(metadata.get("CODIGO (WMO)")).alias("station_id"),
                 pl.lit(float(metadata["LATITUDE"].replace(",", "."))).alias("latitude"),
@@ -328,17 +328,17 @@ def inmet_frames(path, manifest):
             valid, rejected = split_quality(frame, rules)
             helpers = [n for n in frame.columns if n.startswith("_bad_")]
             missing_cells = {mapping.get(n, n): frame[n].null_count() for n in numeric}
-            # Missing não significa zero: a contagem fica no relatório de qualidade.
+            # Missing does not mean zero: the count goes to the quality report.
             yield snake(Path(member).stem), valid.drop(helpers).rename(rename), rejected.drop(helpers).rename(rename), {
                 "input_rows": frame.height, "member": member, "missing_measurements": missing_cells,
                 "max_observed_at_utc": str(frame["observed_at_utc"].max())}
 
 
 def build_silver(root, manifest, contract, version, bbox, max_invalid=0.01):
-    """Publica snapshot por hash e versão; nunca mistura revisões na mesma tabela."""
+    """Publish a snapshot by hash and version; revisions are never mixed in one table."""
     dataset = manifest["dataset"]
     destination = Path(root) / "silver" / manifest["source"] / dataset / manifest["resource_id"] / version / manifest["sha256"]
-    # O manifesto é o marcador de publicação: arquivos sem ele não estão prontos para consumo.
+    # The manifest is the publication marker: files without it are not ready for use.
     success = destination / "snapshot.json"
     if success.exists():
         previous = json.loads(success.read_text(encoding="utf-8"))
@@ -357,7 +357,7 @@ def build_silver(root, manifest, contract, version, bbox, max_invalid=0.01):
     elif manifest["source"] == "inmet":
         batches = inmet_frames(manifest["path"], manifest)
     else:
-        raise ValueError(f"Adaptador Silver não habilitado: {dataset}")
+        raise ValueError(f"Silver adapter not enabled: {dataset}")
     files, reports = [], []
     for name, valid, rejected, stats in batches:
         for kind, table in [("valid", valid), ("quarantine", rejected)]:

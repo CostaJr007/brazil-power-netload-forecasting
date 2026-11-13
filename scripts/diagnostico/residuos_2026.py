@@ -1,15 +1,15 @@
-"""Vale a pena uma nova modelagem? Diagnóstico dos resíduos de 2026 antes de qualquer novo treino.
+"""Is a new model worth it? Diagnosis of the 2026 residuals before any retraining.
 
-Ideia: se o erro da receita atual (já fora da amostra, do backtest walk-forward) não tiver relação com
-nenhuma variável nova, treinar de novo com ela não vai ganhar nada. Se tiver, a relação mostra quanto dá
-para ganhar. Três testes:
-  1. Correlação e médias por faixa: resíduo × variáveis candidatas (calor acumulado, viés recente do ONS...).
-  2. Segundo estágio walk-forward mensal em 2026: um GBM aprende o resíduo só com meses anteriores e
-     corrige a previsão. Variantes: só calendário (controle), + tempo, + regime do viés do ONS.
-  3. Intervalo de previsão por reamostragem dos resíduos passados (Monte Carlo empírico): cobertura em 2026.
+Idea: if the error of the current recipe (already out of sample, from the walk-forward backtest) is unrelated
+to any new variable, retraining with it will gain nothing. If it is related, the relationship shows how much
+could be gained. Three tests:
+  1. Correlation and band means: residual × candidate variables (accumulated heat, recent ONS bias...).
+  2. Monthly walk-forward second stage in 2026: a GBM learns the residual from earlier months only and
+     corrects the forecast. Variants: calendar only (control), + weather, + ONS bias regime.
+  3. Prediction interval by resampling past residuals (empirical Monte Carlo): coverage in 2026.
 
-Tudo usa só o que existia às 22h da véspera (viés do ONS conhecido até T−gap; temperatura prevista
-arquivada). Executar: .\\.venv\\Scripts\\python.exe scripts/diagnostico/residuos_2026.py
+Everything uses only what existed at 10 pm the day before (ONS bias known up to T−gap; archived forecast
+temperature). Run: .\\.venv\\Scripts\\python.exe scripts/diagnostico/residuos_2026.py
 """
 import json
 import sys
@@ -47,7 +47,7 @@ def previsoes(horizonte):
 
 
 def variaveis(p, horizonte):
-    """Candidatas por subsistema × dia × hora, todas conhecidas na hora da decisão."""
+    """Candidates per subsystem × day × hour, all known at decision time."""
     gap = CONFIG[horizonte][2]
     t = carregar_temperatura_prevista(horizonte + 1)
     col = "temp_prev_48h" if horizonte == 1 else "temp_prev"
@@ -57,15 +57,15 @@ def variaveis(p, horizonte):
     saida = []
     for sub, g in dia.groupby("subsistema"):
         g = g.set_index("data").asfreq("D")
-        normal = g["tmed"].shift(gap).rolling(30, min_periods=20).mean()   # clima recente que o modelo já conhece
+        normal = g["tmed"].shift(gap).rolling(30, min_periods=20).mean()   # recent climate the model already knows
         anom = g["tmed"] - normal
         g = g.assign(anom_dia=anom,
-                     calor_3d=anom.rolling(3, min_periods=2).mean(),          # calor acumulado (previsto para os 3 dias)
+                     calor_3d=anom.rolling(3, min_periods=2).mean(),          # accumulated heat (forecast for the 3 days)
                      dias_quentes=(g["tmax"] >= 32).astype(int).groupby((g["tmax"] < 32).cumsum()).cumsum(),
                      subsistema=sub)
         saida.append(g.reset_index())
     dia = pd.concat(saida)
-    # Regime do viés do ONS na carga: erro diário (ONS − real), conhecido só até T−gap.
+    # ONS load-bias regime: daily error (ONS − actual), known only up to T−gap.
     c = p[p["peca"] == "carga"].assign(erro=lambda f: f["ons"] - f["real"])
     vies = []
     for sub, g in c.groupby("subsistema"):
@@ -80,13 +80,13 @@ def variaveis(p, horizonte):
     return x.merge(cal, left_on="data", right_index=True, how="left")
 
 
-GRUPOS = {"controle (hora, dia da semana, feriado)": ["hora", "dia_semana", "feriado", "vespera", "pos_feriado", "ponte"]}
-GRUPOS["+ tempo (calor, calor acumulado)"] = GRUPOS["controle (hora, dia da semana, feriado)"] + ["temp", "tmax", "anom_dia", "calor_3d", "dias_quentes"]
-GRUPOS["+ regime do viés do ONS"] = GRUPOS["+ tempo (calor, calor acumulado)"] + ["vies_3d", "vies_28d", "vies_div", "vies_virou"]
+GRUPOS = {"control (hour, weekday, holiday)": ["hora", "dia_semana", "feriado", "vespera", "pos_feriado", "ponte"]}
+GRUPOS["+ tempo (calor, calor acumulado)"] = GRUPOS["control (hour, weekday, holiday)"] + ["temp", "tmax", "anom_dia", "calor_3d", "dias_quentes"]
+GRUPOS["+ ONS bias regime"] = GRUPOS["+ tempo (calor, calor acumulado)"] + ["vies_3d", "vies_28d", "vies_div", "vies_virou"]
 
 
 def segundo_estagio(base, colunas):
-    """Walk-forward mensal: aprende o resíduo com os meses anteriores e corrige o mês seguinte."""
+    """Monthly walk-forward: learns the residual from earlier months and corrects the next month."""
     corr = pd.Series(np.nan, index=base.index)
     for mes in pd.date_range(INICIO_TESTE, base["data"].max(), freq="MS"):
         treino = base[base["data"] < mes - pd.Timedelta(days=1)]
@@ -115,27 +115,27 @@ def analisar(horizonte):
     base = base.sort_values(["data", "subsistema", "hora"], ignore_index=True)
     teste = base[base["data"] >= INICIO_TESTE]
     print(f"\n================ D+{horizonte}  (receitas {escolhas}) ================")
-    print(f"2026: {teste['data'].min().date()} a {teste['data'].max().date()}, {teste['data'].nunique()} dias")
+    print(f"2026: {teste['data'].min().date()} to {teste['data'].max().date()}, {teste['data'].nunique()} days")
 
-    # 1. Relação do resíduo com as candidatas (2026, carga líquida por subsistema)
-    print("\n1) Correlação do resíduo (previsto − real) com cada variável, 2026:")
+    # 1. Relationship between residual and candidates (2026, net load per subsystem)
+    print("\n1) Correlation of the residual (forecast − actual) with each variable, 2026:")
     cand = ["temp", "anom_dia", "calor_3d", "dias_quentes", "vies_3d", "vies_div", "vies_virou", "feriado"]
     tab = teste.groupby("subsistema").apply(lambda g: g[cand].corrwith(g["residuo"]), include_groups=False).round(2)
     print(tab.to_string())
     se = teste[teste["subsistema"] == "SE"].copy()
     se["faixa_calor"] = pd.qcut(se["calor_3d"], 5, labels=["muito frio", "frio", "normal", "quente", "muito quente"])
-    print("\n   SE, resíduo médio por faixa de calor acumulado (MW; negativo = previu abaixo):")
+    print("\n   SE, mean residual by accumulated-heat band (MW; negative = under-forecast):")
     print(se.groupby("faixa_calor", observed=True)["residuo"].agg(["mean", "count"]).round(0).to_string())
-    se["vies_regime"] = np.where(se["vies_virou"] == 1, "viés virou", "viés estável")
-    print("\n   SE, |erro| médio por regime do viés do ONS:")
+    se["vies_regime"] = np.where(se["vies_virou"] == 1, "bias flipped", "bias stable")
+    print("\n   SE, mean |error| by ONS bias regime:")
     print(se.groupby("vies_regime")["residuo"].agg(mae=lambda s: s.abs().mean(), vies="mean", n="count").round(0).to_string())
 
-    # 2. Segundo estágio: dá para corrigir o resíduo com essas variáveis?
-    print("\n2) Segundo estágio walk-forward mensal em 2026 (SIN, carga líquida horária):")
+    # 2. Second stage: can these variables correct the residual?
+    print("\n2) Monthly walk-forward second stage in 2026 (national, hourly net load):")
     s0 = sin(teste.assign(x=teste["previsto"]), "x")
     mae0 = (s0["x"] - s0["real"]).abs().mean()
     r = sin(liq[(liq["subsistema"] != "SIN") & (liq["data"] >= INICIO_TESTE)], regua)
-    print(f"   receita atual: MAE {mae0:,.0f} MW | régua {regua}: {(r[regua] - r['real']).abs().mean():,.0f} MW")
+    print(f"   current recipe: MAE {mae0:,.0f} MW | benchmark {regua}: {(r[regua] - r['real']).abs().mean():,.0f} MW")
     resultados = {}
     for nome, colunas in GRUPOS.items():
         corrigido = segundo_estagio(base, colunas)
@@ -149,8 +149,8 @@ def analisar(horizonte):
         resultados[nome] = {"mae": round(mae), "dif": round(d), "ic": [round(lo), round(hi)]}
         print(f"   {nome:42s} MAE {mae:,.0f} MW  ({100 * (mae / mae0 - 1):+.1f}%)  dif {d:+.0f} MW, IC95 [{lo:+.0f}, {hi:+.0f}]")
 
-    # 3. Monte Carlo empírico: intervalo de 80% reamostrando resíduos passados da mesma hora
-    print("\n3) Intervalo de previsão de 80% por reamostragem dos resíduos (SIN), cobertura em 2026:")
+    # 3. Empirical Monte Carlo: 80% interval resampling past residuals of the same hour
+    print("\n3) 80% prediction interval by resampling residuals (national), coverage in 2026:")
     sin_all = sin(base.assign(x=base["previsto"]), "x").reset_index()
     sin_all["res"] = sin_all["x"] - sin_all["real"]
     cobre, larg = [], []
@@ -164,7 +164,7 @@ def analisar(horizonte):
             # real dentro de [prev − hi, prev − lo]
             cobre += list((a["real"] >= a["x"] - hi) & (a["real"] <= a["x"] - lo))
             larg.append(hi - lo)
-    print(f"   cobertura {100 * np.mean(cobre):.1f}% (alvo 80%), largura média {np.mean(larg):,.0f} MW")
+    print(f"   coverage {100 * np.mean(cobre):.1f}% (target 80%), mean width {np.mean(larg):,.0f} MW")
     return resultados
 
 

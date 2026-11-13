@@ -1,4 +1,4 @@
-"""Testes da API de carga, backfill, trava e detecção de páginas de bloqueio. Sem rede."""
+"""Tests for the load API, backfill, lock and block-page detection. No network."""
 import json
 import sys
 from datetime import date, datetime, timedelta, timezone
@@ -57,7 +57,7 @@ def test_load_frame_declares_utc_interval_and_rejects_duplicates(tmp_path):
     assert valid.height == 1 and rejected.height == 3
     row = valid.row(0, named=True)
     assert row["cod_areacarga"] == "SECO"
-    # Fim do intervalo é o valor da fonte; início = fim - 30 min, ambos em UTC.
+    # The interval end is the source value; start = end - 30 min, both in UTC.
     assert row["interval_end_utc"] == datetime(2026, 11, 8, 3, 30, tzinfo=timezone.utc)
     assert row["interval_start_utc"] == datetime(2026, 11, 8, 3, 0, tzinfo=timezone.utc)
     reasons = sorted(r for errs in rejected["_quality_errors"].to_list() for r in errs)
@@ -65,7 +65,7 @@ def test_load_frame_declares_utc_interval_and_rejects_duplicates(tmp_path):
 
 
 def test_zero_total_load_is_flagged_not_dropped(tmp_path):
-    """A área SIN da API publica zeros; o valor fica, com alerta explícito."""
+    """The API's SIN area publishes zeros; the value stays, with an explicit warning."""
     path = tmp_path / "sin.json"
     path.write_text(json.dumps([{"cod_areacarga": "SIN", "din_referenciautc": "2026-11-08T03:30:00.000Z",
                                  "val_cargaglobal": 0}]), encoding="utf-8")
@@ -83,7 +83,7 @@ def test_load_frame_rejects_empty_payload(tmp_path):
 
 
 def test_load_slots_do_not_collide_between_areas(tmp_path):
-    """URLs da API têm o mesmo caminho; cada área/dia precisa do próprio slot no índice atual."""
+    """API URLs share the same path; each area/day needs its own slot in the current index."""
     job = Pipeline(tmp_path, CONFIG, {})
     try:
         for area in ("SECO", "S"):
@@ -104,7 +104,7 @@ def test_empty_load_at_publication_edge_is_not_an_error(tmp_path, monkeypatch):
     def fake_fetch(kind, area, start, end, resource_id, role):
         calls.append(start)
         today = datetime.now(timezone(timedelta(hours=-3))).date()
-        # Amanhã ainda não publicado; hoje publicado.
+        # Tomorrow not published yet; today published.
         rows = [] if start > today else [{"cod_areacarga": area}]
         return {"dataset": "carga-energia-" + kind}, rows
 
@@ -123,7 +123,7 @@ def test_empty_load_outside_edge_is_an_error(tmp_path, monkeypatch):
     monkeypatch.setattr(job, "fetch_load", lambda *a: ({}, []))
     try:
         job.ons_load("verificada")
-        # D-1 é borda (pode não ter saído); D-2 vazio é problema.
+        # D-1 is the edge (may not be out); an empty D-2 is a problem.
         assert len(job.report["errors"]) == 1
         assert "verificada" in job.report["errors"][0]["task"]
     finally:
@@ -147,7 +147,7 @@ def test_previous_manifest_uses_latest_acquisition(tmp_path):
 
 
 def test_resolve_data_path_rebases_moved_data_folder(tmp_path, monkeypatch):
-    """Manifesto gravado com caminho de outro disco continua encontrando o arquivo."""
+    """A manifest saved with a path from another drive still finds the file."""
     new_root = tmp_path / "novo_disco" / "data"
     target = new_root / "bronze" / "ons" / "x" / "abc"
     target.parent.mkdir(parents=True)
@@ -213,5 +213,5 @@ def test_optional_contract_column_may_be_absent_in_old_files(tmp_path):
     meta = {**load_manifest(path), "dataset": "intercambio-nacional", "context": {"format": "PARQUET"}}
     valid, rejected, _ = ons_frame(path, meta, contract)
     assert valid.height == 1 and valid["val_intercambiomwmed"][0] == 1.5
-    with pytest.raises(ValueError, match="ausentes"):
+    with pytest.raises(ValueError, match="missing columns"):
         ons_frame(path, meta, {**contract, "optional": []})

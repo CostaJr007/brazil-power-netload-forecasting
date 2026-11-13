@@ -8,7 +8,7 @@ own schedule and published in a **Power BI dashboard**.
 
 > **Interactive dashboard: [docs/dashboard/index.html](docs/dashboard/index.html)** — a single HTML file; download it and open it in any browser (preview below).
 >
-> Personal study and portfolio project. **Technical report: [docs/paper.md](docs/paper.md) · One-page results: [docs/results.md](docs/results.md).** · [Português](README.pt-BR.md)
+> Personal study and portfolio project. **Technical report: [docs/paper.md](docs/paper.md) · One-page results: [docs/results.md](docs/results.md).**
 
 | Forecast (walk-forward backtest, validated on 2026) | Benchmark | MAE reduction |
 |---|---|---|

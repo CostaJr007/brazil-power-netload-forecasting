@@ -33,16 +33,16 @@ def calendario(datas):
     t = 2 * np.pi * indice.day_of_year.to_numpy() / 365.25
     dow = indice.day_of_week.to_numpy()
     feriado, vespera, pos = marca(0), marca(1), marca(-1)
-    # Ponte: segunda antes de feriado na terça ou sexta depois de feriado na quinta.
+    # Bridge day: Monday before a Tuesday holiday or Friday after a Thursday holiday.
     ponte = ((dow == 0) & (vespera == 1)) | ((dow == 4) & (pos == 1))
     return pd.DataFrame({"dia_semana": dow, "mes": indice.month, "sen": np.sin(t), "cos": np.cos(t),
                          "feriado": feriado, "vespera": vespera, "pos_feriado": pos, "ponte": ponte.astype(int)}, index=indice)
 
 
 def preparar_subsistema(serie, temperatura, placebo=False):
-    """serie: índice diário com carga e programada. temperatura: colunas tmed_UF/tmax_UF."""
+    """serie: daily index with load and scheduled load. temperatura: columns tmed_UF/tmax_UF."""
     carga = serie["carga"]
-    # Média móvel terminando em T−2: nada de T−1 ou T entra aqui.
+    # Moving average ending at T−2: nothing from T−1 or T enters here.
     nivel = carga.shift(GAP).rolling(28, min_periods=21).mean()
     x = calendario(serie.index)
     x["nivel"], x["carga"], x["programada"] = nivel, carga, serie["programada"]
@@ -51,7 +51,7 @@ def preparar_subsistema(serie, temperatura, placebo=False):
     for lag in (2, 3, 7, 14):
         x[f"r{lag}"] = carga.shift(lag) / nivel
     x["tend"] = carga.shift(GAP).rolling(7).mean() / nivel
-    # Erros passados do ONS: só dias com a verificada já publicada (T−2 para trás).
+    # Past ONS errors: only days whose verified load is already published (T−2 and earlier).
     erro = carga / serie["programada"] - 1
     for lag in (2, 3, 7, 14):
         x[f"e{lag}"] = erro.shift(lag)
@@ -89,7 +89,7 @@ def backtest_carga(carga, temperatura, folds, log=print):
             base = x["alvo"].notna() & x["nivel"].notna()
             treino_m = base & (x.index < inicio)
             teste_m = base & (x.index >= inicio) & (x.index < fim) & x["naive"].notna() & x["programada"].notna()
-            # Compara só dias em que todos os modelos têm dado.
+            # Compare only days where every model has a value.
             teste_m &= x[cenario].notna().any(axis=1)
             teste = x[teste_m].copy()
             if teste.empty:
@@ -101,10 +101,10 @@ def backtest_carga(carga, temperatura, folds, log=print):
                 modelo = _gbm().fit(origem.loc[treino_m, colunas], origem.loc[treino_m, "alvo"])
                 teste[nome] = teste["nivel"] * modelo.predict(origem.loc[teste_m, colunas])
             teste["ons"] = teste["programada"]
-            # Baseline trivial: programada corrigida pelo erro médio dos últimos 28 dias conhecidos.
-            # Um modelo só tem mérito próprio se ganhar disto, não apenas da programada crua.
+            # Trivial baseline: schedule corrected by the mean error of the last 28 known days.
+            # A model only has merit of its own if it beats this, not just the raw schedule.
             teste["ons_vies28"] = teste["programada"] * (1 + teste["e_media28"])
-            # Correção do ONS: treina só onde a programada existia antes do ano de teste.
+            # ONS correction: train only where the schedule existed before the test year.
             treino_ons = treino_m & x["alvo_ons"].notna()
             colunas_ons = ERROS_ONS + CALENDARIO + passada
             if treino_ons.sum() >= 200:
@@ -118,5 +118,5 @@ def backtest_carga(carga, temperatura, folds, log=print):
             colunas_saida = ["subsistema", "ano", "carga", "naive", "ons", "ons_vies28", "ons_corrigido", "ons_corrigido_cenario",
                              "gbm_calendario", "gbm_temp", "gbm_cenario", "gbm_cenario_placebo", "feriado"]
             resultados.append(teste[colunas_saida].rename_axis("data").reset_index())
-            log(f"Carga {subsistema} {inicio.year}: {len(teste)} dias")
+            log(f"Load {subsistema} {inicio.year}: {len(teste)} days")
     return pd.concat(resultados, ignore_index=True)

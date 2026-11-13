@@ -2,7 +2,7 @@
 
 What the project delivers, how it was measured and where the details are. All model numbers come from a
 **walk-forward backtest**: the model "recipe" is chosen on one period (2025) and confirmed on a later one
-(2026). 95% intervals come from a 14-day block bootstrap. Portuguese version: [resultados.md](resultados.md).
+(2026). 95% intervals come from a 14-day block bootstrap.
 
 ## The question
 

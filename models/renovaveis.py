@@ -19,7 +19,7 @@ LAGS_FONTE = ["r2", "r7", "tend"]
 
 
 def folds_trimestrais(primeiro_ano, ultimo):
-    """Retreina a cada trimestre, porque as previsões arquivadas só começam em 2024."""
+    """Refit every quarter, because archived forecasts only start in 2024."""
     ultimo = pd.Timestamp(ultimo)
     folds = []
     for inicio in pd.date_range(pd.Timestamp(primeiro_ano, 1, 1), ultimo, freq="QS"):
@@ -29,10 +29,10 @@ def folds_trimestrais(primeiro_ano, ultimo):
 
 
 def corrigir_vies(g, janela=28, coluna="ons", gap=GAP):
-    """`coluna` menos o seu erro médio recente na mesma hora, com erros conhecidos até T−gap.
+    """`coluna` minus its recent mean error at the same hour, with errors known up to T−gap.
 
-    g: linhas de um só subsistema e peça, com colunas data, hora, `coluna` e real. O DESSEM tem viés de nível
-    contra o balanço (no Sudeste, +1,1 GW na carga em 2026), e uma mesa corrigiria isso antes de qualquer ML.
+    g: rows of one subsystem and component, with columns data, hora, `coluna` and real. DESSEM has a level bias
+    against the balance (Southeast load +1.1 GW in 2026), and a desk would correct it before any ML.
     """
     saida = pd.Series(np.nan, index=g.index)
     for _, h in g.groupby("hora"):
@@ -43,16 +43,16 @@ def corrigir_vies(g, janela=28, coluna="ons", gap=GAP):
 
 
 def corrigir_vies_semana(g, coluna="ons_ant", gap=GAP, semanas=4):
-    """Como corrigir_vies, mas o viés é medido por hora E dia da semana (últimas `semanas` ocorrências conhecidas).
+    """Like corrigir_vies, but the bias is measured per hour AND weekday (last `semanas` known occurrences).
 
-    Em D+2 a programação disponível é a de T−1: na segunda-feira, ela é a de domingo. O erro sistemático
-    dessa troca de dia (domingo → segunda, sexta → sábado) só aparece separando por dia da semana.
+    At D+2 the available schedule is T−1's: on a Monday it is Sunday's. The systematic error of that day
+    switch (Sunday → Monday, Friday → Saturday) only shows up when split by weekday.
     """
     saida = pd.Series(np.nan, index=g.index)
     dia_semana = g["data"].dt.day_of_week
     for _, h in g.groupby([g["hora"], dia_semana]):
         erro = (h[coluna] - h["real"]).set_axis(h["data"]).asfreq("7D")
-        # Ocorrência anterior do mesmo dia da semana = 7 dias antes; só serve se 7 ≥ gap (sempre, até D+6).
+        # Previous occurrence of the same weekday = 7 days earlier; valid only if 7 ≥ gap (always, up to D+6).
         passos = int(np.ceil(gap / 7))
         vies = erro.shift(passos).rolling(semanas, min_periods=2).mean().reindex(h["data"]).to_numpy()
         saida.loc[h.index] = h[coluna].to_numpy() - vies
@@ -60,9 +60,9 @@ def corrigir_vies_semana(g, coluna="ons_ant", gap=GAP, semanas=4):
 
 
 def preparar_fonte(serie, previsoes, gap=GAP):
-    """serie: gerada por hora. previsoes: índice horário, uma coluna por variável prevista. Devolve linhas data × hora.
+    """serie: hourly generation. previsoes: hourly index, one column per forecast variable. Returns date × hour rows.
 
-    gap: dia mais recente com geração verificada (2 para D+1, 3 para D+2). r2 guarda o nome, mas usa o lag max(2, gap).
+    gap: most recent day with verified generation (2 for D+1, 3 for D+2). r2 keeps its name but uses lag max(2, gap).
     """
     base = pd.DataFrame({"y": serie}).join(previsoes, how="left")
     base["data"], base["hora"] = base.index.normalize(), base.index.hour
@@ -74,13 +74,13 @@ def preparar_fonte(serie, previsoes, gap=GAP):
         y = g["y"]
         nivel = y.shift(gap).rolling(28, min_periods=14).mean()
         valido = nivel > NIVEL_MINIMO
-        # Razão limitada a 3: no amanhecer o nível é quase zero e a razão explode, dominando o GBM (que junta as horas).
+        # Ratio capped at 3: at dawn the level is near zero and the ratio explodes, dominating the GBM (which pools hours).
         x = pd.DataFrame({"y": y, "nivel": nivel, "alvo": (y / nivel).where(valido).clip(upper=RAZAO_MAXIMA),
                           "r2": (y.shift(recente) / nivel).where(valido), "r7": (y.shift(max(7, gap)) / nivel).where(valido),
                           "tend": (y.shift(gap).rolling(7, min_periods=4).mean() / nivel).where(valido),
                           "persistencia": y.shift(recente), "media7": y.shift(gap).rolling(7, min_periods=4).mean()}, index=g.index)
         for coluna in colunas_prev:
-            # Compara a previsão com previsões anteriores (já conhecidas) da mesma hora.
+            # Compare the forecast with earlier (already known) forecasts for the same hour.
             media = g[coluna].shift(1).rolling(28, min_periods=14).mean()
             x[coluna] = g[coluna]
             x[coluna + "_a"] = g[coluna] - media
@@ -95,9 +95,9 @@ def variaveis_previsao(previsoes, fonte):
 
 
 def prever_fonte(x, colunas_prev, inicio, fim, operacional=False):
-    """Treina até `inicio` e prevê [inicio, fim). Noites (nível ~0) ficam com previsão zero.
+    """Train up to `inicio` and forecast [inicio, fim). Night hours (level ~0) get a zero forecast.
 
-    operacional=True prevê dias cujo valor real ainda não existe (uso em produção, não em backtest).
+    operacional=True forecasts days whose actual value does not exist yet (production use, not backtest).
     """
     treino = x[(x.index < inicio) & x["alvo"].notna()]
     periodo = (x.index >= inicio) & (x.index < fim) & x["persistencia"].notna()
@@ -122,21 +122,21 @@ SAIDA = ["data", "hora", "real", "persistencia", "media7", "ons", "ons_ant", "ri
 
 
 def referencias_ons(d, peca, horizonte):
-    """ons: programação do próprio dia T (só existe na véspera de T).
-    ons_ant: a programação mais recente que existe na hora da decisão, a de T−(horizonte−1). Em D+1 é a mesma."""
+    """ons: the schedule for day T itself (only exists the day before T).
+    ons_ant: the most recent schedule available at decision time, T−(horizonte−1)'s. At D+1 it is the same."""
     serie = d[peca].rename("ons")
-    # União dos índices: em D+2 a programação de T ainda não existe, mas a de T−1 (ons_ant) sim.
+    # Union of indexes: at D+2 the schedule for T does not exist yet, but T−1's (ons_ant) does.
     ref = pd.concat([serie, serie.shift(freq=pd.Timedelta(days=horizonte - 1)).rename("ons_ant")], axis=1)
     ref = ref.rename_axis("instante").reset_index()
     return ref.assign(data=ref["instante"].dt.normalize(), hora=ref["instante"].dt.hour)[["data", "hora", "ons", "ons_ant"]]
 
 
 def backtest_pecas(balanco, dessem, previsoes, temperatura, folds, log=print, horizonte=1, operacional=False):
-    """Devolve uma tabela longa: data, hora, subsistema, peca (carga/eolica/solar), real e cada modelo.
+    """Returns a long table: data, hora, subsistema, peca (carga/eolica/solar), real and each model.
 
-    horizonte: 1 = D+1 (decisão na véspera), 2 = D+2... Os dados verificados vão até T−(horizonte+1), e
-    `previsoes` e `temperatura` devem vir da rodada emitida horizonte+1 dias antes de cada hora.
-    operacional: prevê também dias sem valor real (o balanço deve ter linhas vazias para esses dias).
+    horizonte: 1 = D+1 (decided the day before), 2 = D+2... Verified data run up to T−(horizonte+1), and
+    `previsoes` and `temperatura` must come from the run issued horizonte+1 days before each hour.
+    operacional: also forecasts days without an actual value (the balance must have empty rows for them).
     """
     gap = horizonte + 1
     coluna_temp = "temp_prev_48h" if "temp_prev_48h" in temperatura else "temp_prev"
@@ -164,7 +164,7 @@ def backtest_pecas(balanco, dessem, previsoes, temperatura, folds, log=print, ho
                     continue
                 unido = teste.reset_index().merge(referencia, on=["data", "hora"], how="left").rename(columns={"y": "real"})
                 saidas.append(unido[SAIDA].assign(subsistema=subsistema, peca=peca))
-        # Carga: mesma estrutura do modelo de D+1, agora com a carga do balanço como alvo.
+        # Load: same structure as the D+1 load model, now with the balance's load as target.
         temp = (temperatura[temperatura["subsistema"] == ("SECO" if subsistema == "SE" else subsistema)]
                 .groupby("instante")[[coluna_temp, "temp_analise"]].mean().rename(columns={coluna_temp: "temp_prev"}))
         x = preparar_d1(bal[["carga"]].assign(programada=np.nan), temp, gap=gap)
@@ -184,5 +184,5 @@ def backtest_pecas(balanco, dessem, previsoes, temperatura, folds, log=print, ho
             teste = teste.reset_index().rename(columns={"carga": "real"}).merge(referencia, on=["data", "hora"], how="left")
             teste["persistencia"], teste["media7"] = teste["nivel"] * teste["r2"], teste["nivel"] * teste["tend"]
             saidas.append(teste[SAIDA].assign(subsistema=subsistema, peca="carga"))
-        log(f"Peças {subsistema} ok")
+        log(f"Components {subsistema} ok")
     return pd.concat(saidas, ignore_index=True)

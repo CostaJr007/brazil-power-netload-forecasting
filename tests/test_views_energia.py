@@ -59,9 +59,9 @@ def test_conferencia_fecha_com_sin(con):
 def test_percentuais_do_sin_sao_ponderados(con):
     ena, pct_mlt, ear_pct = con.execute("SELECT ena_mwmed, ena_pct_mlt, ear_pct FROM vw_hidro_subsistema_diaria WHERE subsistema = 'SIN' AND data_referencia = '2026-01-01'").fetchone()
     assert ena == 150.0
-    # MLT implícita: 90/0,9 + 60/0,6 = 200 MWmed; 150/200 = 75%.
+    # Implied long-term mean: 90/0.9 + 60/0.6 = 200 average MW; 150/200 = 75%.
     assert pct_mlt == pytest.approx(75.0)
-    # (300 + 90) / (1000 + 100), e não a média simples de 30% e 90%.
+    # (300 + 90) / (1000 + 100), not the simple mean of 30% and 90%.
     assert ear_pct == pytest.approx(100 * 390 / 1100)
 
 

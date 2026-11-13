@@ -11,7 +11,7 @@ import pandas as pd
 
 
 def annual_folds(first_year, last_date):
-    """Devolve (início, fim_exclusivo) de cada ano de teste, cortando o último em last_date."""
+    """Returns (start, exclusive_end) for each test year, cutting the last one at last_date."""
     last = pd.Timestamp(last_date)
     folds = []
     for year in range(first_year, last.year + 1):
@@ -21,7 +21,7 @@ def annual_folds(first_year, last_date):
 
 
 def placebo_shift(series, days=730):
-    """Desloca a série 2 anos: mantém a sazonalidade e destrói a informação do tempo real daquele dia."""
+    """Shift the series by 2 years: keeps seasonality and destroys that day's real-time information."""
     return series.shift(days)
 
 
@@ -30,12 +30,12 @@ def mae(y, pred):
 
 
 def skill(mae_model, mae_baseline):
-    """Fração do erro do baseline eliminada: 0 empata, 1 é perfeito, negativo é pior que o baseline."""
+    """Share of the baseline error removed: 0 ties, 1 is perfect, negative is worse than the baseline."""
     return 1.0 - mae_model / mae_baseline
 
 
 def block_bootstrap_diff(dates, abs_err_a, abs_err_b, block_days=14, n=2000, seed=0):
-    """IC 95% de MAE(a) − MAE(b). Blocos preservam a autocorrelação dos erros, que uma reamostragem simples ignoraria."""
+    """95% CI of MAE(a) − MAE(b). Blocks preserve the autocorrelation of errors, which a simple resample would ignore."""
     frame = pd.DataFrame({"d": pd.to_datetime(dates), "x": np.asarray(abs_err_a) - np.asarray(abs_err_b)})
     daily = frame.groupby("d")["x"].mean()
     blocks = daily.groupby((daily.index - daily.index[0]).days // block_days).mean().to_numpy()

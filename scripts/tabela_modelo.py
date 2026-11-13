@@ -1,10 +1,10 @@
-"""Junta todas as fontes numa única tabela: uma linha por subsistema × hora.
+"""Join every source into a single table: one row per subsystem × hour.
 
-Saída: data/gold/tabela_modelo.parquet e .csv (dicionário em docs/tabela_modelo.md).
-As colunas ficam com o valor do próprio instante, SEM defasagem: quem treina um modelo precisa
-aplicar a defasagem indicada no dicionário, senão usa informação que ainda não existia.
+Output: data/gold/tabela_modelo.parquet and .csv (dictionary in docs/tabela_modelo.md).
+Columns hold the value of the instant itself, WITHOUT lag: anyone training a model must
+apply the lag given in the dictionary, or they will use information that did not exist yet.
 
-Executar: .\\.venv\\Scripts\\python.exe scripts/tabela_modelo.py
+Run: .\\.venv\\Scripts\\python.exe scripts/tabela_modelo.py
 """
 import sys
 from pathlib import Path
@@ -22,7 +22,7 @@ COLUNAS_CALENDARIO = ["dia_semana", "mes", "feriado", "vespera", "pos_feriado", 
 
 
 def montar_tabela(carga, extras, temperatura, previstas=None):
-    """Junções sempre à esquerda da carga: cada subsistema × hora continua sendo exatamente uma linha."""
+    """Always left joins onto load: each subsystem × hour stays exactly one row."""
     tabela = carga.copy()
     tabela["data"] = tabela["instante"].dt.normalize()
     tabela["hora"] = tabela["instante"].dt.hour

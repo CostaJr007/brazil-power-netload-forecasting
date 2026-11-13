@@ -21,7 +21,7 @@ The project imitates the problem, not a known company method.
 | Athena-SDA | Kalman filter with innovation (NIS) | Time-varying-coefficient regression | **Worse than fixed Ridge** at every horizon |
 | Athena-SDA | Past-only walk-forward, placebo tests | `models/validation.py` | **The most valuable item:** it overturned a wrong conclusion (see Load) |
 | Volatility engine | GARCH | Not used | Inflow and load are level problems, not volatility problems |
-| Options GEX project | Convexity | Deferred to the price stage | See `modelos_dos_repositorios.md`, section 4 |
+| Options GEX project | Convexity | Deferred to the price stage | Not yet applied |
 
 The modules were rewritten for this problem, with no dependency on those repositories.
 

@@ -1,11 +1,11 @@
-# Plano de backfill histórico
+# Historical backfill plan
 
-Gerado em 2026-11-11T14:50:42.483331+00:00. Período: 2023-01-01 a 2026-11-10. Fontes: ons.
+Generated at 2026-11-11T14:50:42.483331+00:00. Period: 2023-01-01 to 2026-11-10. Sources: ons.
 
-| Conjunto | Arquivos/chamadas | Tamanho conhecido (MB) | Sem tamanho |
+| Dataset | Files/calls | Known size (MB) | No size |
 |---|---:|---:|---:|
 | balanco_dessem_detalhe | 529 | 8.6 | 0 |
 
-**Total:** 529 arquivos/chamadas, ~0.01 GB conhecidos.
+**Total:** 529 files/calls, ~0.01 GB known.
 
-Bytes de carga e MERGE são estimativas; ONS vem do Content-Length de cada arquivo. Silver ocupa espaço adicional (Parquet zstd, em geral menor que a origem).
+Load and MERGE bytes are estimates; ONS comes from each file's Content-Length. Silver takes additional space (zstd Parquet, usually smaller than the source).

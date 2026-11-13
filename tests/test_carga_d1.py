@@ -1,4 +1,4 @@
-"""D+1: nada do dia alvo ou da véspera pode entrar nas variáveis, exceto programada e previsão de temperatura."""
+"""D+1: nothing from the target day or the day before may enter the features, except the schedule and the temperature forecast."""
 import sys
 from pathlib import Path
 

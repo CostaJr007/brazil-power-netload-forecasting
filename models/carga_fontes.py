@@ -26,7 +26,7 @@ GRUPOS_PREVISAO = {"historico": [], "temp_prevista": TEMP, "vento_sol_previstos"
 
 
 def variaveis_diarias(extras):
-    """extras: índice diário com clima, ear, ena_pct e geração. Nada posterior a T−2 sai daqui."""
+    """extras: daily index with weather, storage, inflow % and generation. Nothing after T−2 leaves here."""
     x = pd.DataFrame(index=extras.index)
     for coluna in COLUNAS_CLIMA:
         passado = extras[coluna].shift(2)
@@ -44,7 +44,7 @@ def variaveis_diarias(extras):
 
 
 def adicionar_programada(x):
-    """Variáveis para prever a programada de T: as programadas até T−1 já foram publicadas."""
+    """Features to forecast T's schedule: schedules up to T−1 are already published."""
     partes = []
     for hora, g in x.groupby("hora"):
         p = g["programada"]
@@ -55,7 +55,7 @@ def adicionar_programada(x):
 
 
 def adicionar_previstas(x, previstas):
-    """previstas: índice horário. Anomalia contra a média de 30 dias anteriores, na mesma hora."""
+    """previstas: hourly index. Anomaly against the mean of the previous 30 days at the same hour."""
     if previstas is None or previstas.empty:
         return x.assign(**{c: np.nan for c in PREV_EXTRA})
     base = previstas.assign(data=previstas.index.normalize(), hora=previstas.index.hour)
@@ -70,7 +70,7 @@ def adicionar_previstas(x, previstas):
 
 
 def backtest_fontes(carga, temperatura, extras, previstas, folds, log=print):
-    """Devolve previsões longas: subsistema × data × hora × alvo × modelo."""
+    """Returns long-format forecasts: subsystem × date × hour × target × model."""
     saidas = []
     for subsistema, grupo in carga.groupby("subsistema"):
         temp = (temperatura[temperatura["subsistema"] == subsistema].groupby("instante")[["temp_prev_48h", "temp_analise"]].mean()
@@ -96,11 +96,11 @@ def backtest_fontes(carga, temperatura, extras, previstas, folds, log=print):
                 for nome in ("historico", "tudo"):
                     colunas = lags + CAL + GRUPOS[nome] + ["hora"]
                     saida["gbm_" + nome] = n * np.exp(_gbm(tr, teste, colunas, alvo))
-                # Vento/sol/umidade previstos só existem desde 2024: teste à parte, com treino a partir daí.
+                # Forecast wind/sun/humidity only exist from 2024: separate test, training from then on.
                 recente = tr[tr.index >= pd.Timestamp("2024-02-01")]
                 if inicio.year >= 2025 and previstas is not None:
                     for nome, grupo_colunas in GRUPOS_PREVISAO.items():
                         saida["recente_" + nome] = n * np.exp(_ridge_por_hora(recente, teste, lags + CAL + grupo_colunas, alvo))
                 saidas.append(saida.reset_index())
-            log(f"Fontes {subsistema} {inicio.year}")
+            log(f"Sources {subsistema} {inicio.year}")
     return pd.concat(saidas, ignore_index=True)

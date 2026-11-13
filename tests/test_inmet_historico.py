@@ -1,4 +1,4 @@
-"""O INMET mudou o formato de data, hora e cabeçalho ao longo dos anos. Sem rede."""
+"""INMET changed its date, time and header format over the years. No network."""
 import sys
 from datetime import datetime, timezone
 from pathlib import Path

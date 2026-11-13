@@ -45,7 +45,7 @@ def intervalo(frame, a, b, alvo="real"):
 
 
 def configuracao(horizonte):
-    """Candidatos por peça, régua (base) e modelos da carga líquida para cada horizonte."""
+    """Candidates per component, benchmark (base) and net-load models for each horizon."""
     if horizonte == 1:
         return {"base": "ons", "candidatos": ["ridge", "gbm", "media_ridge_gbm", "ridge_sem_previsao", "media_com_ons", "ons_corrigido", "media_com_ons_corrigido"],
                 "referencias": ["ons", "persistencia", "media7"],
@@ -77,14 +77,14 @@ def main():
     balanco = carregar_balanco_horario(con)
     dessem = carregar_dessem(con)
     con.close()
-    # O último dia do balanço costuma sair incompleto (visto em 09/11/2026 no Nordeste): fica fora.
+    # The last day of the balance often comes out incomplete (seen on 2026-11-09 in the Northeast): left out.
     ultimo = balanco["instante"].max().normalize() - pd.Timedelta(days=2)
     balanco = balanco[balanco["instante"] < ultimo + pd.Timedelta(days=1)]
     pecas = backtest_pecas(balanco, dessem, carregar_previsao_renovaveis(horizonte + 1), carregar_temperatura_prevista(horizonte + 1),
                            folds_trimestrais(2025, ultimo), horizonte=horizonte)
     pecas = pecas.dropna(subset=["ons", "ons_ant", "real", "persistencia"])
     for _, g in pecas.groupby(["peca", "subsistema"]):
-        # ons_corrigido é o do mundo D+1 (erros até T−2); ons_ant_corrigido só usa erros conhecidos na hora da decisão.
+        # ons_corrigido is the D+1-world one (errors up to T−2); ons_ant_corrigido only uses errors known at decision time.
         pecas.loc[g.index, "ons_corrigido"] = corrigir_vies(g).clip(lower=0)
         pecas.loc[g.index, "ons_ant_corrigido"] = corrigir_vies(g, coluna="ons_ant", gap=horizonte + 1).clip(lower=0)
         pecas.loc[g.index, "ons_ant_semana"] = corrigir_vies_semana(g, coluna="ons_ant", gap=horizonte + 1).clip(lower=0)
@@ -107,7 +107,6 @@ def main():
                                   "desenvolvimento_2025": resumo(desenvolvimento, colunas, base=base),
                                   "confirmacao_2026": resumo(confirmacao, colunas, base=base),
                                   "teste_2026": intervalo(confirmacao, escolhido, base)}
-    # Monta a carga líquida: uma linha por subsistema × data × hora.
     valores = list(dict.fromkeys(cfg["somas"] + candidatos))
     largura = pecas.pivot_table(index=["subsistema", "data", "hora"], columns="peca", values=valores)
     largura.columns = [f"{m}_{p}" for m, p in largura.columns]
@@ -115,7 +114,7 @@ def main():
     liquida = largura[["subsistema", "data", "hora"]].copy()
     for nome in cfg["somas"]:
         liquida[nome] = sum(s * largura[f"{nome}_{p}"] for p, s in SINAIS)
-    # Escolha por peça feita em 2025: é a "receita" que uma mesa fixaria antes de olhar 2026.
+    # Per-component choice made on 2025: the "recipe" a desk would freeze before looking at 2026.
     liquida["pecas_escolhidas"] = sum(s * largura[f"{escolhas[p]}_{p}"] for p, s in SINAIS)
     liquida = liquida.rename(columns=cfg["renomear"])
     modelos = cfg["modelos"]
@@ -139,7 +138,7 @@ def main():
         "rampa_sin_2026": {m: round(float((amplitude(conf_sin, m) - amplitude(conf_sin, "real")).abs().mean()), 1) for m in modelos},
     }
     if horizonte > 1:
-        # Quão perto chegamos da programação que o ONS só vai publicar depois (insumo do preço do dia).
+        # How close we get to the schedule ONS will only publish later (the input to that day's price).
         resultado["antecipa_programacao_sin_2026"] = resumo(conf_sin, ["ons_ant", "ons_ant_corrigido", "ons_ant_semana", "pecas_ml", "pecas_escolhidas"], alvo="ons", base="ons_ant")
     sufixo = "" if horizonte == 1 else f"_dmais{horizonte}"
     destino = Path(__file__).resolve().parents[1] / f"docs/inventory/carga_liquida{sufixo}_results.json"

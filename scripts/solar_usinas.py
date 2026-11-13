@@ -1,10 +1,10 @@
-"""Maiores usinas solares (ONS) e incidência solar nas coordenadas delas (NASA POWER).
+"""Largest solar plants (ONS) and solar irradiance at their coordinates (NASA POWER).
 
-Gera docs/inventory/solar_usinas.json: ranking, sazonalidade e quanto a radiação explica a geração.
-Radiação aqui é OBSERVADA por satélite/reanálise: mede a física, não é previsão.
-Dados NASA POWER são públicos; as respostas ficam na Bronze.
+Writes docs/inventory/solar_usinas.json: ranking, seasonality and how much radiation explains generation.
+Radiation here is OBSERVED by satellite/reanalysis: it measures physics, it is not a forecast.
+NASA POWER data are public; responses stay in Bronze.
 
-Executar: .\\.venv\\Scripts\\python.exe scripts/solar_usinas.py
+Run: .\\.venv\\Scripts\\python.exe scripts/solar_usinas.py
 """
 import json
 import sys
@@ -24,7 +24,7 @@ from models.dados import conectar  # noqa: E402
 N_USINAS = 12
 INICIO = date(2021, 1, 1)
 URL = "https://power.larc.nasa.gov/api/temporal/hourly/point?"
-# Usa só horas em que a usina já estava com quase toda a capacidade atual.
+# Use only hours when the plant already had almost all of its current capacity.
 FRACAO_CAPACIDADE = 0.95
 FIM_TREINO = pd.Timestamp("2025-01-01")
 
@@ -73,15 +73,15 @@ def baixar_radiacao(store, usina, lat, lon, fim):
         except (json.JSONDecodeError, KeyError, OSError) as erro:
             if tentativa == 4:
                 raise
-            print(f"{usina}: {type(erro).__name__}, nova tentativa", flush=True)
+            print(f"{usina}: {type(erro).__name__}, retrying", flush=True)
             time.sleep(30)
     frame = pd.DataFrame({"ghi": corpo["ALLSKY_SFC_SW_DWN"], "ghi_ceu_limpo": corpo["CLRSKY_SFC_SW_DWN"]})
     frame.index = pd.to_datetime(frame.index, format="%Y%m%d%H")
-    return frame.where(frame >= 0)  # POWER usa -999 para ausente.
+    return frame.where(frame >= 0)  # POWER uses -999 for missing.
 
 
 def melhor_defasagem(fc, ghi):
-    """Confere o fuso empiricamente: desloca a radiação e fica com a maior correlação."""
+    """Check the time zone empirically: shift the radiation and keep the highest correlation."""
     resultados = {}
     for horas in range(-6, 7):
         unido = pd.concat([fc, ghi.shift(horas, freq="h")], axis=1, join="inner").dropna()
@@ -105,7 +105,7 @@ def analisar_usina(gen, rad):
     treino, teste = dia[dia.index < FIM_TREINO], dia[dia.index >= FIM_TREINO]
     if len(treino) < 500 or len(teste) < 500:
         return None
-    # Razão pela origem: sem sol, sem geração. Modelo físico simples, com um coeficiente.
+    # Ratio through the origin: no sun, no generation. A simple one-coefficient physical model.
     b = float((treino["ghi"] * treino["fc"]).sum() / (treino["ghi"] ** 2).sum())
     clima = treino.groupby(["mes", "hora"])["fc"].mean().rename("clima")
     teste = teste.join(clima, on=["mes", "hora"]).dropna(subset=["clima"])
@@ -120,7 +120,7 @@ def analisar_usina(gen, rad):
 def main():
     con = conectar()
     tabela = ranking(con)
-    fim = date.today() - timedelta(days=10)  # Componentes de satélite chegam com alguns dias de atraso.
+    fim = date.today() - timedelta(days=10)  # Satellite components arrive a few days late.
     store, por_usina, mensal = Store(DATA_DIR), [], []
     try:
         for linha in tabela.itertuples():
@@ -130,7 +130,7 @@ def main():
             analise = analisar_usina(geracao(con, linha.usina), rad)
             time.sleep(2)
             if analise is None:
-                por_usina.append({"usina": linha.usina, "aviso": "histórico insuficiente com a capacidade atual"})
+                por_usina.append({"usina": linha.usina, "aviso": "not enough history at current capacity"})
                 continue
             resumo, dados = analise
             por_usina.append({"usina": linha.usina, "uf": linha.uf, **resumo})
@@ -141,7 +141,7 @@ def main():
         con.close()
     todos = pd.concat(mensal)
     todos["mes"], todos["hora"] = todos.index.month, todos.index.hour
-    # Médias diárias: 24 h × média horária (W/m²) / 1000 = kWh/m²/dia.
+    # Daily means: 24 h × hourly mean (W/m²) / 1000 = kWh/m²/day.
     grupo = todos.groupby("mes")
     sazonal = pd.DataFrame({"ghi_kwh_m2_dia": grupo["ghi"].mean() * 24 / 1000, "ceu_limpo_kwh_m2_dia": grupo["ghi_ceu_limpo"].mean() * 24 / 1000,
                             "indice_claridade": grupo["ghi"].sum() / grupo["ghi_ceu_limpo"].sum(), "fator_capacidade_pct": grupo["fc"].mean() * 100}).round(3)

@@ -1,10 +1,10 @@
-"""Verificações locais dos leitores meteorológicos, sem consultar a internet."""
+"""Local checks of the weather readers, without using the network."""
 import tempfile
 from pathlib import Path
 
 import eccodes
 
-# Carregamos o módulo pela pasta scripts sem iniciar o comando principal.
+# Load the module from the scripts folder without starting its main command.
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts" / "preparacao"))
@@ -13,14 +13,14 @@ from download_weather import grib_inventory
 
 
 def test_directory_parser_keeps_links_without_running_scripts():
-    """O parser só coleta href; não executa código que venha no HTML."""
+    """The parser only collects href; it never runs code coming in the HTML."""
     parser = Links()
-    parser.feed('<a href="rain.grib2">rain</a><script>throw new Error()</script><a>sem URL</a>')
+    parser.feed('<a href="rain.grib2">rain</a><script>throw new Error()</script><a>no URL</a>')
     assert parser.urls == ["rain.grib2"]
 
 
 def test_grib_inventory_retains_level_and_reference_metadata():
-    """Uma mensagem sintética comprova decodificação e preservação de metadados."""
+    """A synthetic message proves decoding and metadata preservation."""
     with tempfile.TemporaryDirectory() as folder:
         path = Path(folder) / "sample.grib2"
         handle = eccodes.codes_grib_new_from_samples("regular_ll_sfc_grib2")

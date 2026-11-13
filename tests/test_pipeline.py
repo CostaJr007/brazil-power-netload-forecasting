@@ -1,4 +1,4 @@
-"""Contratos e idempotência do tratamento; todos os exemplos são locais."""
+"""Processing contracts and idempotency; every example is local."""
 import json
 import sys
 import hashlib
@@ -76,7 +76,7 @@ def test_inmet_parse_sentinel_and_units_before_renaming(tmp_path):
 
 
 def test_http_validator_reuses_existing_bytes(tmp_path, monkeypatch):
-    """Um HEAD igual não deve disparar GET nem duplicar a aquisição."""
+    """An identical HEAD must not trigger a GET or duplicate the acquisition."""
     source = tmp_path / "source.bin"
     source.write_bytes(b"original")
     meta = {**manifest(source), "sha256": hashlib.sha256(b"original").hexdigest(),
@@ -89,7 +89,7 @@ def test_http_validator_reuses_existing_bytes(tmp_path, monkeypatch):
     monkeypatch.setattr("pipeline.urlopen", lambda *args, **kwargs: Response())
     monkeypatch.setattr(job, "previous_manifest", lambda url: (job.fingerprint(meta["headers"]), meta))
     def forbidden(*args, **kwargs):
-        raise AssertionError("GET não deveria ocorrer")
+        raise AssertionError("GET should not happen")
     monkeypatch.setattr(job.store, "fetch", forbidden)
     try:
         assert job.obtain("ons", "test", "r", meta["url"]) == meta
@@ -98,7 +98,7 @@ def test_http_validator_reuses_existing_bytes(tmp_path, monkeypatch):
 
 
 def test_failed_task_does_not_postpone_retry_or_block_other_source(tmp_path):
-    """Falha não grava último sucesso; fontes independentes continuam."""
+    """A failure does not record a last success; independent sources keep running."""
     job = Pipeline(tmp_path, {"version": "test", "scheduler_minutes": 15, "blocked_sources": {}}, {})
     def fail():
         raise ValueError("falha simulada")

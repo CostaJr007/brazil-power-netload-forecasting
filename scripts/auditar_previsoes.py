@@ -36,7 +36,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--inicio")
     parser.add_argument("--fim")
-    parser.add_argument("--reusar", action="store_true", help="só refaz o resumo a partir de data/gold/auditoria_previsoes.parquet")
+    parser.add_argument("--reusar", action="store_true", help="only rebuilds the summary from data/gold/auditoria_previsoes.parquet")
     args = parser.parse_args()
     con = conectar()
     balanco, dessem = carregar_balanco_horario(con), carregar_dessem(con)
@@ -58,14 +58,14 @@ def main():
             des = dessem[dessem["instante"] < decisao + 2 * UM_DIA]
             h = horizonte_efetivo(alvo, dias_completos(bal, "carga"), dias_completos(des, "demanda"))
             if h is None:
-                print(f"{alvo.date()} D+{passo}: sem dados suficientes naquela noite")
+                print(f"{alvo.date()} D+{passo}: not enough data that night")
                 continue
             previsoes, temperatura = insumos[h + 1]
             pecas = prever_dia(alvo, h, bal, des, previsoes, temperatura, escolhas[h])
             partes.append(pecas.assign(decisao=decisao, alvo=alvo, passo=passo))
             print(f"{alvo.date()} D+{passo} ok (horizonte treinado D+{h})", flush=True)
     tabela = pd.concat(partes, ignore_index=True)
-    # Real: balanço de hoje. ONS do próprio dia: DESSEM de T (só existia na véspera de T).
+    # Actual: today's balance. Same-day ONS: DESSEM for T (it only existed the day before T).
     real = balanco.assign(data=balanco["instante"].dt.normalize(), hora=balanco["instante"].dt.hour)
     real = real.melt(id_vars=["subsistema", "data", "hora"], value_vars=["carga", "eolica", "solar"], var_name="peca", value_name="real")
     tabela = tabela.drop(columns=["real"]).merge(real, on=["subsistema", "data", "hora", "peca"], how="left")
@@ -116,8 +116,8 @@ def resumir(tabela, inicio, fim, escolhas):
     destino = RAIZ / "docs/inventory/auditoria_previsoes.json"
     destino.write_text(json.dumps(resultado, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     for passo, r in resultado["passos"].items():
-        print(f"\n== {passo} (régua: {r['regua']}) | MAE SIN modelo {r['mae_sin_modelo_mw']} MW vs régua {r[f'mae_sin_{r['regua']}_mw']} MW "
-              f"({r['ganho_vs_regua_pct']:+}%), MAPE {r['mape_sin_modelo_pct']}%, venceu {r['dias_vencendo_a_regua']} dias, pico {r['acerto_hora_do_pico']}")
+        print(f"\n== {passo} (benchmark: {r['regua']}) | national MAE model {r['mae_sin_modelo_mw']} MW vs benchmark {r[f'mae_sin_{r['regua']}_mw']} MW "
+              f"({r['ganho_vs_regua_pct']:+}%), MAPE {r['mape_sin_modelo_pct']}%, won {r['dias_vencendo_a_regua']} days, peak {r['acerto_hora_do_pico']}")
         print(pd.DataFrame(r["diario"]).to_string(index=False))
     return 0 if np.isfinite(tabela["previsto"]).any() else 1
 

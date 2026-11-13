@@ -31,7 +31,7 @@ TEMP_O = [c + "_o" for c in TEMP]
 
 
 def _temperatura(serie, sufixo):
-    """Termos de temperatura de uma hora do dia. A média de 30 dias usa só dias anteriores a T."""
+    """Temperature terms for one hour of the day. The 30-day mean uses only days before T."""
     media = serie.shift(1).rolling(30, min_periods=20).mean()
     anomalia = serie - media
     return {"t_anom" + sufixo: anomalia, "t_anom2" + sufixo: anomalia ** 2,
@@ -39,10 +39,10 @@ def _temperatura(serie, sufixo):
 
 
 def preparar_d1(carga, temperatura, gap=GAP):
-    """carga: índice horário, colunas carga e programada. temperatura: índice horário, colunas temp_prev e temp_analise.
+    """carga: hourly index, columns carga and programada. temperatura: hourly index, columns temp_prev and temp_analise.
 
-    gap: dia mais recente com carga verificada, contado para trás a partir de T (2 para D+1, 3 para D+2...).
-    Os nomes r2, e2, e3 guardam o lag nominal; com gap maior, o lag efetivo é max(nominal, gap).
+    gap: most recent day with verified load, counted back from T (2 for D+1, 3 for D+2...).
+    Names r2, e2, e3 keep the nominal lag; with a larger gap the effective lag is max(nominal, gap).
     """
     base = carga.join(temperatura, how="left")
     base["data"], base["hora"] = base.index.normalize(), base.index.hour
@@ -54,7 +54,7 @@ def preparar_d1(carga, temperatura, gap=GAP):
     for hora, grupo in base.groupby("hora"):
         g = grupo.set_index("data").asfreq("D")
         c, p = g["carga"], g["programada"]
-        # O erro de T−1 ainda não é conhecido: tudo aqui começa em T−gap.
+        # The T−1 error is not known yet: everything here starts at T−gap.
         nivel = c.shift(gap).rolling(28, min_periods=21).mean()
         erro = c / p - 1
         x = pd.DataFrame({"carga": c, "programada": p, "nivel": nivel,
@@ -98,7 +98,7 @@ def _gbm(treino, teste, colunas, alvo):
 
 
 def backtest_d1(carga, temperatura, folds, log=print):
-    """Walk-forward anual por subsistema. Devolve uma linha por subsistema × hora × dia."""
+    """Yearly walk-forward per subsystem. Returns one row per subsystem × hour × day."""
     resultados = []
     for subsistema, grupo in carga.groupby("subsistema"):
         temp = (temperatura[temperatura["subsistema"] == subsistema].groupby("instante")[["temp_prev_48h", "temp_analise"]].mean()
@@ -123,5 +123,5 @@ def backtest_d1(carga, temperatura, folds, log=print):
             teste["gbm_sem_ons"] = n * np.exp(_gbm(treino, teste, LAGS + CAL + TEMP + ["hora"], "alvo_nivel"))
             teste["subsistema"], teste["ano"] = subsistema, inicio.year
             resultados.append(teste.reset_index())
-            log(f"D+1 {subsistema} {inicio.year}: {len(teste)} horas")
+            log(f"D+1 {subsistema} {inicio.year}: {len(teste)} hours")
     return pd.concat(resultados, ignore_index=True)

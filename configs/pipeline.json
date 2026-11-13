@@ -11,7 +11,7 @@
     "programada_offsets": [0, 1],
     "verificada_areas": ["SECO", "S", "NE", "N"],
     "verificada_lookback_days": 7,
-    "area_codes_note": "Códigos confirmados ao vivo em 10/11/2026: SECO, S, NE, N (subsistemas). SIN responde na verificada mas com TODOS os valores zero (2025-10 e 2026-11) — fora da coleta; some os subsistemas. Também respondem áreas estaduais/regionais: RJ, SP, MG, ES, PR, SC, RS, PESE, MT, MS, GO, DF, AC, RO, AM. SE e BA não respondem.",
+    "area_codes_note": "Codes confirmed live on 2026-11-10: SECO, S, NE, N (subsystems). SIN responds for verified load but with ALL values zero (2025-10 and 2026-11) — excluded from collection; sum the subsystems instead. State/regional areas also respond: RJ, SP, MG, ES, PR, SC, RS, PESE, MT, MS, GO, DF, AC, RO, AM. SE and BA do not respond.",
     "contracts": {
       "carga-energia-programada": {"required": ["cod_areacarga", "dat_referencia", "din_referenciautc", "val_cargaglobalprogramada"]},
       "carga-energia-verificada": {"required": ["cod_areacarga", "dat_referencia", "din_referenciautc", "din_atualizacao", "val_cargaglobal",
@@ -28,8 +28,8 @@
     "cycles": [0],
     "leads": [24, 48, 72, 96, 120, 144, 168, 192, 216, 240, 264, 288, 312, 336, 360],
     "params": ["tp", "2t", "ro"],
-    "params_note": "tp=chuva total, 2t=temperatura a 2 m, ro=escoamento (todos acumulados desde a rodada, exceto 2t). ~0,8 MB por horizonte; 15 horizontes ≈ 12 MB/dia. Para eólica acrescente 100u/100v (+1,3 MB por horizonte); para solar, ssrd (+0,5 MB).",
-    "license": "ECMWF Open Data, CC-BY-4.0 (atribuição obrigatória). Retenção na origem: ~12 rodadas."
+    "params_note": "tp=total precipitation, 2t=2 m temperature, ro=runoff (all accumulated since the run start, except 2t). ~0.8 MB per lead time; 15 lead times ≈ 12 MB/day. For wind add 100u/100v (+1.3 MB per lead time); for solar, ssrd (+0.5 MB).",
+    "license": "ECMWF Open Data, CC-BY-4.0 (attribution required). Retention at the source: ~12 runs."
   },
   "inmet": {"enabled": true, "interval_minutes": 1440, "max_file_mb": 500},
   "ccee": {
@@ -37,7 +37,7 @@
     "interval_minutes": 360,
     "catalog_url": "https://dadosabertos.ccee.org.br/api/3/action/",
     "datasets": ["pld_horario", "pld_media_diaria", "pld_media_semanal"],
-    "datasets_note": "Nomes confirmados no catálogo público em 10/11/2026. O catálogo também lista pld_horario_submercado (2023+) e pld_media_mensal. Os arquivos são anuais e as URLs (.../content) não trazem data.",
+    "datasets_note": "Names confirmed in the public catalog on 2026-11-10. The catalog also lists pld_horario_submercado (2023+) and pld_media_mensal. Files are yearly and the URLs (.../content) carry no date.",
     "formats": ["CSV", "PARQUET"],
     "lookback_days": 3,
     "max_file_mb": 200
@@ -52,11 +52,11 @@
       "restricao_coff_fotovoltaica", "dados-hidrologicos-res"
     ],
     "load_areas": {"programada": ["SECO", "S", "NE", "N"], "verificada": ["SECO", "S", "NE", "N"]},
-    "merge_note": "MERGE diário: ~1 arquivo/dia. Use intervalos explícitos; o plano mostra o volume antes de baixar."
+    "merge_note": "Daily MERGE: ~1 file/day. Use explicit ranges; the plan shows the volume before downloading."
   },
   "blocked_sources": {
-    "ccee_pld": "HTTP 403 do firewall da CCEE para o IP de saída em 10/11/2026 (inclusive www.ccee.org.br). Conector pronto em ccee.enabled=false; habilitar quando a rede tiver acesso. Enquanto isso, CMO semi-horário/semanal do ONS é a referência disponível (PLD horário = CMO do DESSEM limitado aos PLD mínimo/máximo regulados pela ANEEL; não substitui a série oficial).",
-    "era5_ecmwf_gefs_ana": "Conectores não habilitados nesta versão. ERA5/ECMWF exigem conta e chave CDS locais."
+    "ccee_pld": "HTTP 403 from the CCEE firewall for the outbound IP on 2026-11-10 (including www.ccee.org.br). Connector ready with ccee.enabled=false; enable it when the network has access. Meanwhile, the ONS half-hourly/weekly CMO is the available reference (hourly PLD = DESSEM CMO clipped to the ANEEL-regulated minimum/maximum PLD; it does not replace the official series).",
+    "era5_ecmwf_gefs_ana": "Connectors not enabled in this version. ERA5/ECMWF require a local CDS account and key."
   },
-  "notes": "Frequências de consulta são políticas do projeto, não horários prometidos pelas fontes. INMET anual é verificado diariamente, mas não contém observações novas todos os dias."
+  "notes": "Polling frequencies are project policies, not schedules promised by the sources. The yearly INMET package is checked daily but does not contain new observations every day."
 }

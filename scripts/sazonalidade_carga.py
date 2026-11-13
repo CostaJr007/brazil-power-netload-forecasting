@@ -1,6 +1,6 @@
-"""Backtest fatiado da carga de D+1; grava docs/inventory/sazonalidade_carga.json.
+"""Sliced backtest of D+1 load; writes docs/inventory/sazonalidade_carga.json.
 
-Escolhe entre modelo global, por estação e por janela de meses usando 2023-2024 e confirma em 2025-2026.
+Chooses between a global, per-season and per-month-window model using 2023-2024 and confirms on 2025-2026.
 """
 import json
 import sys
@@ -26,7 +26,7 @@ def tabela(frame, coluna):
 
 
 def indice_sazonal(carga):
-    """Carga de cada mês em relação à média do próprio ano; separa sazonalidade de crescimento."""
+    """Each month's load relative to its own year's mean; separates seasonality from growth."""
     d = carga.dropna(subset=["carga"]).copy()
     d["ano"], d["mes"] = d["instante"].dt.year, d["instante"].dt.month
     d = d[(d["ano"] >= 2022) & (d["ano"] <= 2025)]

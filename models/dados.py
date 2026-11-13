@@ -12,10 +12,10 @@ from dateutil.easter import easter
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from acquire import DATA_DIR  # noqa: E402
 
-# Estados de maior carga em cada subsistema: a temperatura de São Paulo pesa mais que a do Acre.
+# Highest-load states of each subsystem: São Paulo's temperature weighs more than Acre's.
 ESTADOS_SUBSISTEMA = {"SECO": ["SP", "RJ", "MG"], "S": ["RS", "PR", "SC"], "NE": ["BA", "PE", "CE"], "N": ["PA", "MA", "AM"]}
 
-# Capitais usadas para a temperatura prevista (coordenadas públicas): (nome, latitude, longitude).
+# Capitals used for forecast temperature (public coordinates): (name, latitude, longitude).
 CIDADES_SUBSISTEMA = {
     "SECO": [("sao_paulo", -23.55, -46.63), ("rio_de_janeiro", -22.91, -43.17), ("belo_horizonte", -19.92, -43.94), ("brasilia", -15.79, -47.88)],
     "S": [("porto_alegre", -30.03, -51.23), ("curitiba", -25.43, -49.27), ("florianopolis", -27.60, -48.55)],
@@ -23,7 +23,7 @@ CIDADES_SUBSISTEMA = {
     "N": [("belem", -1.46, -48.49), ("sao_luis", -2.53, -44.30), ("manaus", -3.12, -60.02)],
 }
 
-# Brasil sem horário de verão desde 2019; UTC−3 é aproximação boa para agregados diários.
+# Brazil has had no daylight saving since 2019; UTC−3 is a good approximation for daily aggregates.
 UTC_PARA_LOCAL = "- INTERVAL 3 HOUR"
 
 
@@ -36,13 +36,13 @@ def feriados_nacionais(ano):
     pascoa = easter(ano)
     fixos = [(1, 1), (4, 21), (5, 1), (9, 7), (10, 12), (11, 2), (11, 15), (12, 25)]
     if ano >= 2024:
-        fixos.append((11, 20))  # Consciência Negra: nacional desde a Lei 14.759/2023.
+        fixos.append((11, 20))  # Black Consciousness Day: national holiday since Law 14,759/2023.
     moveis = [pascoa - timedelta(days=d) for d in (48, 47, 2)] + [pascoa + timedelta(days=60)]
     return {date(ano, m, d) for m, d in fixos} | set(moveis)
 
 
 def carregar_bacias(con):
-    """Painel bacia × dia com ENA e chuva MERGE observada."""
+    """Basin × day panel with inflow (ENA) and observed MERGE rain."""
     frame = con.sql("""
         SELECT ena_nom_bacia AS bacia, data_referencia AS data, ena_bruta_mwmed AS ena, chuva_mm AS chuva
         FROM vw_chuva_x_ena_bacia
@@ -52,7 +52,7 @@ def carregar_bacias(con):
 
 
 def carregar_carga(con):
-    """Carga diária por subsistema; só entram dias completos (48 meias horas) em cada série."""
+    """Daily load per subsystem; only complete days (48 half-hours) enter each series."""
     frame = con.sql(f"""
         WITH d AS (
             SELECT subsistema, CAST(timezone('UTC', inicio_utc) {UTC_PARA_LOCAL} AS DATE) AS data,
@@ -68,7 +68,7 @@ def carregar_carga(con):
 
 
 def carregar_carga_horaria(con):
-    """Carga horária (hora local aproximada por UTC−3); só entram horas com as duas meias horas."""
+    """Hourly load (local time approximated as UTC−3); only hours with both half-hours enter."""
     frame = con.sql(f"""
         WITH h AS (
             SELECT subsistema, date_trunc('hour', timezone('UTC', inicio_utc) {UTC_PARA_LOCAL}) AS instante,
@@ -84,7 +84,7 @@ def carregar_carga_horaria(con):
 
 
 def carregar_extras(con):
-    """Por subsistema: clima observado (INMET, estados de maior carga), EAR, ENA e geração diárias."""
+    """Per subsystem: observed weather (INMET, highest-load states), storage, inflow and daily generation."""
     saida = {}
     for subsistema, estados in ESTADOS_SUBSISTEMA.items():
         codigo = "SE" if subsistema == "SECO" else subsistema
@@ -114,17 +114,17 @@ def carregar_extras(con):
     return saida
 
 
-HORAS_SEM_SOL = {20, 21, 22, 23, 0, 1, 2, 3, 4}  # hora local: o sol está abaixo do horizonte em todo o Brasil
+HORAS_SEM_SOL = {20, 21, 22, 23, 0, 1, 2, 3, 4}  # local time: the sun is below the horizon everywhere in Brazil
 LIMIAR_MW = 50.0
 HORAS_CONGELADO = 4
 
 
 def tratar_balanco(frame):
-    """Marca como ausente o que é fisicamente impossível ou preenchimento da fonte. Ausente, não zero.
+    """Mark as missing what is physically impossible or source filler. Missing, never zero.
 
-    - carga ≤ 0 (ex.: Sul em 04/11/2018);
-    - solar > 50 MW entre 20h e 4h59 locais (ex.: SE em 2022–2023);
-    - eólica ou solar idênticas por 4 h ou mais, acima de 50 MW (ex.: solar SE 2.876 MW a madrugada inteira em 10/11/2024).
+    - load ≤ 0 (e.g. South on 2018-11-04);
+    - solar > 50 MW between 8 pm and 4:59 am local time (e.g. SE in 2022–2023);
+    - wind or solar identical for 4 h or more above 50 MW (e.g. SE solar stuck at 2,876 MW all night on 2024-11-10).
     """
     frame = frame.sort_values(["subsistema", "instante"]).copy()
     frame["carga"] = frame["carga"].where(frame["carga"] > 0)
@@ -139,7 +139,7 @@ def tratar_balanco(frame):
 
 
 def carregar_balanco_horario(con):
-    """Carga, eólica e solar (usinas + telhados) por subsistema e hora, como no balanço do ONS, já tratadas."""
+    """Load, wind and solar (plants + rooftop) per subsystem and hour, as in the ONS balance, already cleaned."""
     frame = con.sql("""SELECT subsistema, instante_fonte AS instante, carga_mwmed AS carga, eolica_mwmed AS eolica, solar_mwmed AS solar
                        FROM vw_balanco_carga_liquida ORDER BY 1, 2""").df()
     frame["instante"] = pd.to_datetime(frame["instante"])
@@ -147,9 +147,9 @@ def carregar_balanco_horario(con):
 
 
 def carregar_dessem(con):
-    """Programação do ONS publicada na véspera (DESSEM), em médias horárias. Patamar 1 = 00:00–00:30.
+    """ONS schedule published the day before (DESSEM), as hourly means. Block 1 = 00:00–00:30.
 
-    Há dias publicados pela metade (136 subsistema-dias entre jul/2025 e jan/2026): só entram horas com as duas meias horas.
+    Some days are half-published (136 subsystem-days between Jul 2025 and Jan 2026): only hours with both half-hours enter.
     """
     frame = con.sql("""
         SELECT cod_subsistema AS subsistema,
@@ -161,17 +161,17 @@ def carregar_dessem(con):
 
 
 def carregar_previsao_renovaveis(dia=2):
-    """Previsões emitidas `dia` dias antes (48 h no padrão) nas regiões das usinas, ponderadas pela capacidade. Chave: (subsistema, fonte)."""
+    """Forecasts issued `dia` days before (48 h by default) over plant regions, capacity-weighted. Key: (subsystem, source)."""
     frame = pd.read_parquet(DATA_DIR / ("gold/previsao_renovaveis.parquet" if dia == 2 else f"gold/previsao_renovaveis_d{dia}.parquet"))
     return agregar_previsoes(frame)
 
 
 def agregar_previsoes(frame):
-    """Pontos (fonte, subsistema, lat, lon, peso, valid_utc, variáveis) → média ponderada por (subsistema, fonte) e hora local."""
+    """Points (source, subsystem, lat, lon, weight, valid_utc, variables) → weighted mean per (subsystem, source) and local hour."""
     frame = frame.copy()
     frame["instante"] = pd.to_datetime(frame["valid_utc"]) - pd.Timedelta(hours=3)
     colunas = [c for c in frame.columns if c.split("_")[0] in {"vento100", "radiacao", "nuvens"}]
-    # Arredondamentos dos modelos geram radiação −17 W/m² e nuvens −1% ou 101%: volta ao intervalo físico.
+    # Model rounding produces radiation of −17 W/m² and cloud cover of −1% or 101%: clip back to the physical range.
     for c in colunas:
         frame[c] = frame[c].clip(lower=0, upper=100 if c.startswith("nuvens") else None)
     saida = {}
@@ -185,16 +185,16 @@ def agregar_previsoes(frame):
 
 
 def carregar_previstas_extras():
-    """Vento, radiação, umidade e nuvens previstos 48 h antes (só desde 2024), por cidade × instante local."""
+    """Wind, radiation, humidity and cloud cover forecast 48 h ahead (only from 2024), per city × local time."""
     frame = pd.read_parquet(DATA_DIR / "gold/previsao_vento_sol.parquet")
     frame["instante"] = pd.to_datetime(frame["valid_utc"]) - pd.Timedelta(hours=3)
     return frame
 
 
 def carregar_temperatura_prevista(dia=2):
-    """Temperatura por cidade × instante local: prevista `dia` dias antes e análise (limite de previsão perfeita).
+    """Temperature per city × local time: forecast `dia` days before, plus analysis (perfect-foresight bound).
 
-    dia=2 devolve a coluna temp_prev_48h (usada pelos modelos de D+1); outros dias devolvem temp_prev.
+    dia=2 returns column temp_prev_48h (used by the D+1 models); other days return temp_prev.
     """
     if dia == 2:
         frame, coluna = pd.read_parquet(DATA_DIR / "gold/temperatura_prevista.parquet"), "temp_prev_48h"
@@ -205,7 +205,7 @@ def carregar_temperatura_prevista(dia=2):
 
 
 def carregar_temperatura(con):
-    """Temperatura média e máxima diária por estado, a partir das estações automáticas do INMET."""
+    """Daily mean and maximum temperature per state, from INMET automatic stations."""
     frame = con.sql(f"""
         WITH e AS (
             SELECT regexp_extract(_zip_member, 'INMET_[A-Z]+_([A-Z]{{2}})_', 1) AS uf, station_id,

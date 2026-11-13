@@ -26,7 +26,7 @@ DATAS = {"date", "decision_date"}
 TIPOS = {"int64": "int64", "int32": "int64", "double": "double", "float": "double", "bool": "boolean", "string": "string",
          "large_string": "string"}
 
-# Medidas por tabela: nome -> (DAX, formato). Em inglês (portfólio). Todas em uma linha para o TMDL ficar simples.
+# Measures per table: name -> (DAX, format). One line each, to keep TMDL simple.
 ERRO = "ABS({t}[forecast] - {t}[actual])"
 NL = "fact_net_load"
 MEDIDAS = {
@@ -111,7 +111,7 @@ SIN_PADRAO = 'VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CAL
 BASE_SIN = {NL: ["Model MAE (MW)", "Benchmark MAE (MW)", "ONS schedule MAE (MW)", "Model bias (MW)", "MAPE model", "Actual (MW)", "Forecast (MW)",
                  "Benchmark (MW)", "Band 80% low", "Band 80% high", "80% band coverage", "Days evaluated"],
             "fact_audit": ["Audit model MAE (MW)", "Audit benchmark MAE (MW)", "Audit actual (MW)", "Audit forecast (MW)"]}
-# Sem subsistema escolhido, as tabelas horárias somariam SIN + regiões: as medidas-base passam a usar o SIN.
+# With no subsystem selected, hourly tables would sum SIN + regions: base measures default to SIN.
 for _t, _nomes in BASE_SIN.items():
     for _n in _nomes:
         _dax, _fmt = MEDIDAS[_t][_n]
@@ -171,7 +171,7 @@ TEMAS = Path(r"C:\Program Files\Microsoft Power BI Desktop\bin\WebView2Resources
 
 
 def copiar_tema():
-    """Tema base mais recente do Power BI instalado, copiado para o projeto (como o Desktop faz ao salvar)."""
+    """Latest base theme of the installed Power BI, copied into the project (as Desktop does when saving)."""
     destino = RELATORIO / "StaticResources" / "SharedResources" / "BaseThemes"
     existentes = sorted(destino.glob("CY*.json"))
     instalados = sorted(TEMAS.glob("CY*.json")) if TEMAS.exists() else []
@@ -182,7 +182,7 @@ def copiar_tema():
         return alvo
     if existentes:
         return existentes[-1]
-    raise SystemExit("Tema base do Power BI não encontrado: instale o Power BI Desktop ou copie um BaseThemes/CY*.json para " + str(destino))
+    raise SystemExit("Power BI base theme not found: install Power BI Desktop or copy a BaseThemes/CY*.json to " + str(destino))
 
 
 def escrever(caminho, texto):
@@ -194,7 +194,7 @@ def main():
     origem = DATA_DIR / "bi"
     arquivos = sorted(origem.glob("*.parquet"))
     if not arquivos:
-        print("Rode antes: scripts/exportar_bi.py")
+        print("Run first: scripts/exportar_bi.py")
         return 1
     definicao = MODELO / "definition"
     for velho in (definicao / "tables").glob("*.tmdl"):
@@ -218,13 +218,13 @@ def main():
              f"{T}annotation PBI_ResultType = Text\n")
     escrever(MODELO / "definition.pbism", json.dumps({"version": "4.0", "settings": {}}, indent=2) + "\n")
     escrever(RELATORIO / "definition.pbir", json.dumps({"version": "4.0", "datasetReference": {"byPath": {"path": "../Energia.SemanticModel"}}}, indent=2) + "\n")
-    # Páginas (formato PBIR): (re)geradas só com --relatorio ou se ainda não existem, para não apagar ajustes feitos no Desktop.
+    # Pages (PBIR format): (re)generated only with --relatorio or if missing, so Desktop edits are not lost.
     if "--relatorio" in sys.argv or not (RELATORIO / "definition" / "pages").exists():
-        print(f"Relatório PBIR: {escrever_pbir(RELATORIO, MEDIDAS, copiar_tema().stem)} visuais")
+        print(f"PBIR report: {escrever_pbir(RELATORIO, MEDIDAS, copiar_tema().stem)} visuals")
     escrever(BI / "Energia.pbip", json.dumps({"version": "1.0", "artifacts": [{"report": {"path": "Energia.Report"}}],
                                               "settings": {"enableAutoRecovery": True}}, indent=2) + "\n")
-    escrever(BI / ".gitignore", "**/.pbi/\n")   # configurações locais e cache do Desktop
-    print(f"Projeto gerado em {BI} ({len(arquivos)} tabelas, {len(relacoes) // 4} relações, "
+    escrever(BI / ".gitignore", "**/.pbi/\n")   # Desktop local settings and cache
+    print(f"Project generated in {BI} ({len(arquivos)} tables, {len(relacoes) // 4} relationships, "
           f"{sum(len(v) for v in MEDIDAS.values())} medidas). Abra bi/Energia.pbip no Power BI Desktop e clique em Atualizar.")
     return 0
 

@@ -30,7 +30,7 @@
         "max_reference": null
       },
       "status": "non_temporal_resource",
-      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+      "freshness_assessment": "registry: HTTP confirmed; content freshness not proven by event dates"
     },
     {
       "dataset": "balanco-energia-subsistema",
@@ -429,7 +429,7 @@
         ]
       },
       "status": "readable",
-      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+      "freshness_assessment": "registry: HTTP confirmed; content freshness not proven by event dates"
     },
     {
       "dataset": "carga-energia",
@@ -2895,7 +2895,7 @@
         ]
       },
       "status": "readable",
-      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+      "freshness_assessment": "registry: HTTP confirmed; content freshness not proven by event dates"
     },
     {
       "dataset": "res_volumeespera",
@@ -3136,7 +3136,7 @@
         ]
       },
       "status": "readable",
-      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+      "freshness_assessment": "registry: HTTP confirmed; content freshness not proven by event dates"
     },
     {
       "dataset": "restricao_coff_eolica_detail",
@@ -3784,7 +3784,7 @@
         ]
       },
       "status": "readable",
-      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+      "freshness_assessment": "registry: HTTP confirmed; content freshness not proven by event dates"
     },
     {
       "dataset": "usina_pqu",
@@ -3869,7 +3869,7 @@
         ]
       },
       "status": "readable",
-      "freshness_assessment": "cadastro: HTTP confirmado; atualidade do conteúdo não comprovada por datas de eventos"
+      "freshness_assessment": "registry: HTTP confirmed; content freshness not proven by event dates"
     }
   ],
   "freshness_note": "Reference dates are reported, not a cadence/SLA guarantee. Cadastral tables may have no operational reference date.",

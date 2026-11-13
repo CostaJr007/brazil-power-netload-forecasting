@@ -1,7 +1,7 @@
-"""Backtest da previsão horária da carga de D+1; grava docs/inventory/carga_d1_results.json.
+"""Backtest of the hourly D+1 load forecast; writes docs/inventory/carga_d1_results.json.
 
-Antes, rode scripts/baixar_temperatura_prevista.py. Lê a Gold; não acessa a internet.
-A escolha do modelo usa 2023-2024; 2025-2026 fica reservado para confirmar a escolha sem viés de seleção.
+Run scripts/baixar_temperatura_prevista.py first. Reads Gold; no network.
+Model choice uses 2023-2024; 2025-2026 is reserved to confirm the choice without selection bias.
 """
 import json
 import sys
@@ -27,7 +27,7 @@ def metricas(frame, modelo):
 
 
 def diario(frame):
-    """Média diária e pico do dia, só em dias com as 24 horas."""
+    """Daily mean and daily peak, only on days with all 24 hours."""
     colunas = ["carga"] + MODELOS
     grupos = frame.groupby(["subsistema", "data"])
     completos = grupos["hora"].transform("size") == 24
@@ -37,7 +37,7 @@ def diario(frame):
 
 
 def sin(frame):
-    """Soma dos 4 subsistemas em cada hora: é o agregado que mais interessa ao preço nacional."""
+    """Sum of the 4 subsystems each hour: the aggregate that matters most for the national price."""
     colunas = ["carga"] + MODELOS
     grupo = frame.groupby(["data", "hora", "ano"])
     completos = grupo["subsistema"].transform("size") == 4

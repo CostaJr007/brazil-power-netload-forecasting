@@ -9,7 +9,7 @@ import numpy as np
 
 
 def ar_coefficient(x, y):
-    """φ de y = φ·x por mínimos quadrados sem intercepto (a anomalia já tem média ~0)."""
+    """φ of y = φ·x by least squares without intercept (the anomaly already has mean ~0)."""
     x, y = np.asarray(x, dtype=float), np.asarray(y, dtype=float)
     valid = np.isfinite(x) & np.isfinite(y)
     denominator = float(np.dot(x[valid], x[valid]))
@@ -17,18 +17,18 @@ def ar_coefficient(x, y):
 
 
 def ou_half_life(phi, horizon_days=1):
-    """Meia-vida ln2/θ em dias, com θ = −ln(φ)/h. Sem reversão à média (φ fora de (0,1)) devolve NaN."""
+    """Half-life ln2/θ in days, with θ = −ln(φ)/h. Without mean reversion (φ outside (0,1)) returns NaN."""
     if not 0 < phi < 1:
         return float("nan")
     return float(np.log(2) / (-np.log(phi) / horizon_days))
 
 
 def kalman_regression(X, y, horizon, r, q_ratio=1e-4, p0=1.0):
-    """Regressão com coeficientes variáveis, prevendo y[t] = valor em t+horizon com dados até t.
+    """Regression with time-varying coefficients, predicting y[t] = value at t+horizon with data up to t.
 
-    O coeficiente só é atualizado com o par (X[t−h], y[t−h]), porque a resposta dele só
-    fica conhecida em t. Essa é a parte que impede vazamento do futuro.
-    Devolve (previsões, NIS). NIS ~ qui-quadrado(1) quando o modelo está bem especificado.
+    The coefficient is only updated with the pair (X[t−h], y[t−h]), because its answer only becomes
+    known at t. This is what prevents look-ahead leakage.
+    Returns (forecasts, NIS). NIS ~ chi-squared(1) when the model is well specified.
     """
     X, y = np.asarray(X, dtype=float), np.asarray(y, dtype=float)
     n, k = X.shape

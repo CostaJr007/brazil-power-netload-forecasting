@@ -1,9 +1,9 @@
-"""Mede em que horário cada conjunto do ONS realmente muda, a partir do Last-Modified guardado na Bronze.
+"""Measure when each ONS dataset actually changes, from the Last-Modified headers stored in Bronze.
 
-Cada revisão real do arquivo vira uma observação. Quanto mais dias de coleta, mais confiável fica;
-com poucos dias, os horários indicam só o que foi visto até agora. Grava docs/inventory/horarios_publicacao.json.
+Each real file revision becomes an observation. More collection days make it more reliable;
+with few days, the times only reflect what has been seen so far. Writes docs/inventory/horarios_publicacao.json.
 
-Executar: .\\.venv\\Scripts\\python.exe scripts/horarios_publicacao.py
+Run: .\\.venv\\Scripts\\python.exe scripts/horarios_publicacao.py
 """
 import json
 from pathlib import Path
@@ -24,7 +24,7 @@ def ler_manifestos(pasta):
 
 
 def resumir(manifestos):
-    """Uma observação por conteúdo distinto de cada recurso; repetir o download não conta como publicação."""
+    """One observation per distinct content of each resource; re-downloading does not count as publication."""
     d = manifestos.copy()
     d["ultima_modificacao"] = pd.to_datetime(d["ultima_modificacao"], utc=True, errors="coerce")
     d = d.dropna(subset=["ultima_modificacao"]).drop_duplicates(["conjunto", "recurso", "sha256"])
@@ -42,7 +42,7 @@ def main():
     resultado = resumir(ler_manifestos(DATA_DIR / "bronze/ons"))
     (ROOT / "docs/inventory/horarios_publicacao.json").write_text(json.dumps(resultado, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     for conjunto, r in sorted(resultado.items()):
-        print(f"{conjunto:48s} rev={r['revisoes']:4d} dias={r['dias_observados']:3d} horas={r['revisoes_por_hora_local']}")
+        print(f"{conjunto:48s} rev={r['revisoes']:4d} days={r['dias_observados']:3d} hours={r['revisoes_por_hora_local']}")
 
 
 if __name__ == "__main__":

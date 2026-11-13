@@ -15,7 +15,7 @@ ROXO, ROXO_ESCURO, LILAS, CINZA, CINZA_CLARO, PRETO, FUNDO = "#A100FF", "#7500C0
 TEMA_PROPRIO = "ConsultingPurple.json"
 TEMA = {
     "name": "Consulting Purple",
-    "dataColors": [ROXO, CINZA, LILAS, PRETO, CINZA_CLARO, ROXO_ESCURO, "#5A0090", "#E9D2FF"],   # séries vizinhas bem distintas
+    "dataColors": [ROXO, CINZA, LILAS, PRETO, CINZA_CLARO, ROXO_ESCURO, "#5A0090", "#E9D2FF"],   # neighbouring series clearly distinct
     "background": "#FFFFFF", "foreground": PRETO, "tableAccent": ROXO,
     "good": "#1B7F3B", "bad": "#C62828", "neutral": CINZA,
     "textClasses": {"callout": {"fontFace": "Segoe UI Semibold", "fontSize": 26, "color": PRETO},
@@ -69,7 +69,7 @@ def _props(**kw):
 
 
 class Consulta:
-    """queryState do PBIR: projeções por papel, com Measure/Column distinguidos pelo dicionário de medidas."""
+    """PBIR queryState: projections per role, with Measure/Column told apart by the measures dictionary."""
 
     def __init__(self, medidas):
         self.medidas = medidas
@@ -81,7 +81,7 @@ class Consulta:
 
 
 def filtro_in(ref, valores):
-    """Filtro categórico 'campo em (valores)', usado em segmentações com seleção padrão."""
+    """Categorical filter 'field in (values)', used by slicers with a default selection."""
     tabela, nome = ref.split(".", 1)
     coluna = {"Column": {"Expression": {"SourceRef": {"Source": "f"}}, "Property": nome}}
     valores_lit = [[{"Literal": _lit(v)["expr"]["Literal"]}] for v in valores]
@@ -98,7 +98,7 @@ GRAFICOS = {"lineChart", "clusteredColumnChart", "clusteredBarChart", "stackedAr
 
 
 def visual(medidas, n, tipo, x, y, w, h, papeis, titulo=None, ordem=None, selecionado=None, objetos=None, cores=None, finas=None):
-    """cores: {"tabela.medida": "#hex"} fixa a cor de cada série; finas: séries com traço fino (ex.: a banda)."""
+    """cores: {"table.measure": "#hex"} fixes each series' colour; finas: series drawn with a thin stroke (e.g. the band)."""
     q = Consulta(medidas)
     estado = {}
     for papel, refs in papeis.items():
@@ -149,7 +149,7 @@ def texto(n, x, y, w, h, partes, fundo=None):
 
 
 def paginas(medidas):
-    """5 páginas em grade de 1280 × 720: rótulo + manchete, KPIs, gráficos e rodapé com fonte e definições."""
+    """5 pages on a 1280 × 720 grid: kicker + headline, KPIs, charts and a footnote with source and definitions."""
     v = lambda *a, **k: visual(medidas, *a, **k)  # noqa: E731
 
     def cabecalho(n, rotulo, manchete_medida):
@@ -158,7 +158,7 @@ def paginas(medidas):
                               "categoryLabels": _props(show=False)})
         manchete["visual"]["visualContainerObjects"]["background"] = _props(show=False)
         rotulo_faixa = texto(n, 0, 0, LARGURA, 96, [(rotulo.upper(), 9, ROXO, True)], fundo=PRETO)
-        rotulo_faixa["position"]["z"] = 0   # faixa preta atrás da manchete e dos filtros
+        rotulo_faixa["position"]["z"] = 0   # black band behind the headline and the slicers
         return [rotulo_faixa, manchete]
 
     def rodape(n, pagina):
@@ -266,7 +266,7 @@ def _json(caminho, dados):
 
 
 def escrever_pbir(relatorio, medidas, tema_base):
-    """Relatório no formato PBIR (o que o Desktop grava): definition/report.json, pages/*/page.json, visuals/*/visual.json."""
+    """Report in PBIR format (what Desktop saves): definition/report.json, pages/*/page.json, visuals/*/visual.json."""
     import shutil
     definicao = relatorio / "definition"
     if definicao.exists():

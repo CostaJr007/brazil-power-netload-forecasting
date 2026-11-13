@@ -24,12 +24,12 @@ from acquire import DATA_DIR, ROOT, atomic_json, json_get, utcnow
 from discover_weather import listing
 from pipeline import LOAD_API, LockBusy, Pipeline, select_period, single_run
 
-# Tamanho médio observado por resposta da API de carga em 10/11/2026 (bytes por dia de dados).
+# Mean size observed per load-API response on 2026-11-10 (bytes per day of data).
 LOAD_BYTES_PER_DAY = {"programada": 9_400, "verificada": 23_500}
 
 
 def head_size(url):
-    """Content-Length via HEAD; None quando o servidor não informa."""
+    """Content-Length via HEAD; None when the server does not report it."""
     try:
         with urlopen(Request(url, method="HEAD", headers={"User-Agent": "EnergyDataStudy/0.2"}), timeout=30) as response:
             value = response.headers.get("Content-Length")
@@ -39,7 +39,7 @@ def head_size(url):
 
 
 def months(start, end):
-    """Divide [start, end] em blocos mensais (primeiro e último podem ser parciais)."""
+    """Split [start, end] into monthly blocks (the first and last may be partial)."""
     cursor = start
     while cursor <= end:
         following = date(cursor.year + cursor.month // 12, cursor.month % 12 + 1, 1)
@@ -48,7 +48,7 @@ def months(start, end):
 
 
 def plan_ons(datasets, start, end):
-    """Arquivos anuais/mensais do catálogo ONS que cobrem o período (cadastros sem data ficam de fora)."""
+    """Yearly/monthly ONS catalog files covering the period (registries without a date are left out)."""
     items = []
     for name in datasets:
         payload = json_get("https://dados.ons.org.br/api/3/action/package_show?id=" + name)
@@ -59,7 +59,7 @@ def plan_ons(datasets, start, end):
 
 
 def plan_load(areas, start, end):
-    """Uma chamada por mês, tipo e área: ~100x menos requisições que dia a dia."""
+    """One call per month, type and area: ~100x fewer requests than day by day."""
     items = []
     for kind, codes in areas.items():
         for area in codes:
@@ -71,7 +71,7 @@ def plan_load(areas, start, end):
 
 
 def plan_merge(start, end):
-    """Arquivos MERGE diários; tamanho estimado pelo HEAD do primeiro arquivo de cada mês."""
+    """Daily MERGE files; size estimated from a HEAD of the first file of each month."""
     items = []
     for first, last in months(start, end):
         base = f"https://ftp.cptec.inpe.br/modelos/tempo/MERGE/GPM/DAILY/{first.year}/{first.month:02d}/"
@@ -91,7 +91,7 @@ def plan_merge(start, end):
 
 
 def plan_inmet(start, end):
-    """Um ZIP anual por ano do período, entre os anunciados na página do INMET."""
+    """One yearly ZIP per year of the period, among those listed on the INMET page."""
     items = []
     for url in listing("https://portal.inmet.gov.br/dadoshistoricos"):
         match = re.search(r"/(20\d{2})\.zip$", url)
@@ -101,7 +101,7 @@ def plan_inmet(start, end):
 
 
 def summarize(items, start, end, sources):
-    """Resumo por fonte/conjunto para decidir antes de baixar."""
+    """Summary per source/dataset, to decide before downloading."""
     groups = {}
     for item in items:
         if "error" in item:
@@ -117,26 +117,26 @@ def summarize(items, start, end, sources):
     return {"planned_at": utcnow(), "start": start.isoformat(), "end": end.isoformat(), "sources": sources,
             "groups": groups, "total_files": sum(g["files"] for g in groups.values()), "total_bytes_known": total,
             "errors": [i["error"] for i in items if "error" in i],
-            "note": "Bytes de carga e MERGE são estimativas; ONS vem do Content-Length de cada arquivo. "
-                    "Silver ocupa espaço adicional (Parquet zstd, em geral menor que a origem)."}
+            "note": "Load and MERGE bytes are estimates; ONS comes from each file's Content-Length. "
+                    "Silver takes additional space (zstd Parquet, usually smaller than the source)."}
 
 
 def write_plan(summary):
     atomic_json(ROOT / "docs/inventory/backfill_plan.json", summary)
-    lines = ["# Plano de backfill histórico", "",
-             f"Gerado em {summary['planned_at']}. Período: {summary['start']} a {summary['end']}. Fontes: {', '.join(summary['sources'])}.", "",
-             "| Conjunto | Arquivos/chamadas | Tamanho conhecido (MB) | Sem tamanho |", "|---|---:|---:|---:|"]
+    lines = ["# Historical backfill plan", "",
+             f"Generated at {summary['planned_at']}. Period: {summary['start']} to {summary['end']}. Sources: {', '.join(summary['sources'])}.", "",
+             "| Dataset | Files/calls | Known size (MB) | Without size |", "|---|---:|---:|---:|"]
     for name, group in sorted(summary["groups"].items()):
         lines.append(f"| {name} | {group['files']} | {group['bytes_known'] / 1e6:,.1f} | {group['unknown_size']} |")
-    lines += ["", f"**Total:** {summary['total_files']} arquivos/chamadas, ~{summary['total_bytes_known'] / 1e9:,.2f} GB conhecidos.", "",
+    lines += ["", f"**Total:** {summary['total_files']} files/calls, ~{summary['total_bytes_known'] / 1e9:,.2f} GB known.", "",
               summary["note"], ""]
     if summary["errors"]:
-        lines += ["Erros no planejamento:", ""] + [f"- {e}" for e in summary["errors"]]
+        lines += ["Planning errors:", ""] + [f"- {e}" for e in summary["errors"]]
     (ROOT / "docs/inventory/backfill_plan.md").write_text("\n".join(lines), encoding="utf-8")
 
 
 def execute(items, config, contracts, log):
-    """Baixa e trata item a item; uma falha não interrompe os demais."""
+    """Download and process item by item; one failure does not stop the others."""
     pipeline = Pipeline(DATA_DIR, config, contracts)
     pipeline.report["kind"] = "backfill"
     done = 0
@@ -151,7 +151,7 @@ def execute(items, config, contracts, log):
                     first, last = date.fromisoformat(item["start"]), date.fromisoformat(item["end"])
                     manifest, rows = pipeline.fetch_load(item["kind"], item["area"], first, last, item["resource_id"], "backfill")
                     if not rows:
-                        log.info("Sem dados na API para %s (fora do histórico disponível?)", item["resource_id"])
+                        log.info("No data in the API for %s (outside the available history?)", item["resource_id"])
                         continue
                     pipeline.transform(manifest)
                 elif item["source"] == "inmet":
@@ -175,7 +175,7 @@ def execute(items, config, contracts, log):
             pipeline.error("gold", exc)
         pipeline.report.update(completed_at=utcnow(), processed=done,
                                status="partial" if pipeline.report["errors"] else "success")
-        # Relatório próprio: não sobrescreve runs/latest.json, que descreve a coleta diária.
+        # Separate report: does not overwrite runs/latest.json, which describes the daily collection.
         atomic_json(DATA_DIR / "runs" / f"backfill_{pipeline.run_id}.json", pipeline.report)
         return pipeline.report
     finally:
@@ -187,20 +187,20 @@ def main():
     contracts = json.loads((ROOT / "configs/ons_contracts.json").read_text(encoding="utf-8"))
     settings = config["backfill"]
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--sources", default="ons,load", help="ons, load, merge e/ou inmet, separados por vírgula")
+    parser.add_argument("--sources", default="ons,load", help="ons, load, merge and/or inmet, comma-separated")
     parser.add_argument("--start", default=settings["default_start"])
-    parser.add_argument("--end", default=None, help="Padrão: ontem (UTC)")
-    parser.add_argument("--datasets", default=None, help="Conjuntos ONS; padrão em configs/pipeline.json → backfill")
-    parser.add_argument("--execute", action="store_true", help="Sem esta opção, apenas planeja")
-    parser.add_argument("--max-gb", type=float, default=10.0, help="Recusa executar planos maiores que isso")
+    parser.add_argument("--end", default=None, help="Default: yesterday (UTC)")
+    parser.add_argument("--datasets", default=None, help="ONS datasets; default in configs/pipeline.json → backfill")
+    parser.add_argument("--execute", action="store_true", help="Without this option, only plans")
+    parser.add_argument("--max-gb", type=float, default=10.0, help="Refuses to run plans larger than this")
     args = parser.parse_args()
     start = date.fromisoformat(args.start)
     end = date.fromisoformat(args.end) if args.end else datetime.now(timezone.utc).date() - timedelta(days=1)
     if start > end:
-        raise SystemExit("--start depois de --end")
+        raise SystemExit("--start after --end")
     sources = args.sources.split(",")
     if set(sources) - {"ons", "load", "merge", "inmet"}:
-        raise SystemExit("Fontes válidas: ons, load, merge, inmet")
+        raise SystemExit("Valid sources: ons, load, merge, inmet")
     (DATA_DIR / "runs").mkdir(parents=True, exist_ok=True)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s",
                         handlers=[logging.StreamHandler(), logging.FileHandler(DATA_DIR / "runs/backfill.log", encoding="utf-8")])
@@ -220,16 +220,16 @@ def main():
             write_plan(summary)
             print(json.dumps({k: summary[k] for k in ("total_files", "total_bytes_known", "errors")}, ensure_ascii=False))
             if not args.execute:
-                print("Plano salvo em docs/inventory/backfill_plan.md. Nada foi baixado; use --execute.")
+                print("Plan saved to docs/inventory/backfill_plan.md. Nothing was downloaded; use --execute.")
                 return 0
             if summary["total_bytes_known"] > args.max_gb * 1e9:
-                raise SystemExit(f"Plano com {summary['total_bytes_known'] / 1e9:.1f} GB excede --max-gb {args.max_gb}.")
+                raise SystemExit(f"Plan of {summary['total_bytes_known'] / 1e9:.1f} GB exceeds --max-gb {args.max_gb}.")
             report = execute(items, config, contracts, log)
             print(json.dumps({"status": report["status"], "processed": report["processed"],
                               "errors": len(report["errors"])}, ensure_ascii=False))
             return int(bool(report["errors"]))
     except LockBusy:
-        raise SystemExit("Outro backfill já está em andamento.")
+        raise SystemExit("Another backfill is already running.")
 
 
 if __name__ == "__main__":
