@@ -1,13 +1,12 @@
-# Documentação
+# Documentation
 
-Comece pelo [guia de estudo](guia_de_estudo.md), que conecta a estrutura do projeto aos conceitos de Python e engenharia de dados.
+Start with the one-page [results](results.md) and the [technical report](paper.md).
 
-- `architecture.md`: responsabilidades e decisões técnicas.
-- `sources.md`: fontes e caminhos de acesso.
-- `sql_do_projeto.md`: consultas e tabelas explicadas.
-- `environment.json`: bibliotecas e verificações do ambiente instalado.
-- `comment_validation.json`: comparação estrutural realizada ao inserir comentários Python.
-- `comment_review.json`: quantidade de funções/linhas e equivalência da revisão final dos comentários.
-- `inventory/`: resultados observados em coletas/auditorias.
+- `architecture.md`: responsibilities and technical decisions.
+- `sources.md`: data sources and access paths.
+- `gold_views.md`: the business views in the Gold layer.
+- `research/`: detailed research notes behind each model.
+- `environment.json`: libraries and checks of the installed environment.
+- `inventory/`: results observed in collections and audits.
 
-Relatórios refletem sua data de execução. Reexecutar um coletor pode mudar uma evidência; não interpretar uma data antiga como teste de disponibilidade feito hoje.
+Reports reflect the date they were run. Re-running a collector can change the evidence; an old date is not an availability test made today.

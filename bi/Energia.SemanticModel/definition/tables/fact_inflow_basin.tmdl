@@ -1,0 +1,47 @@
+table fact_inflow_basin
+	lineageTag: 0371f9ee-1bf8-44c4-a585-4cba0a16c0b9
+
+	measure 'Basin inflow % of mean' = AVERAGE(fact_inflow_basin[inflow_pct_ltm]) / 100
+		formatString: 0%
+		lineageTag: ea5a661b-3da9-464a-8886-1cc90858d5d4
+
+	measure 'Basin inflow (MW)' = SUM(fact_inflow_basin[inflow_mw])
+		formatString: #,0
+		lineageTag: d6649594-f97d-445d-ba27-ba54e9ad43ad
+
+	column basin
+		dataType: string
+		lineageTag: 96958576-7bd9-4107-a0fe-6ea1c79e0182
+		summarizeBy: none
+		sourceColumn: basin
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 873ffebd-9c20-4c04-b495-c3a72896b060
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column inflow_mw
+		dataType: double
+		lineageTag: a48cd2de-e92a-44f6-945d-c9529df1f4e6
+		summarizeBy: sum
+		sourceColumn: inflow_mw
+
+	column inflow_pct_ltm
+		dataType: double
+		lineageTag: b69171da-3887-436b-b57c-4f4f08419673
+		summarizeBy: sum
+		sourceColumn: inflow_pct_ltm
+
+	partition fact_inflow_basin = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_inflow_basin.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"basin", type text}, {"date", type date}, {"inflow_mw", type number}, {"inflow_pct_ltm", type number}})
+				in
+				    Tipos
+

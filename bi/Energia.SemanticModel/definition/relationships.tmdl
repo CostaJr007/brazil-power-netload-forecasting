@@ -1,0 +1,92 @@
+relationship fact_audit_date
+	fromColumn: fact_audit.date
+	toColumn: dim_date.date
+
+relationship fact_audit_hour
+	fromColumn: fact_audit.hour
+	toColumn: dim_hour.hour
+
+relationship fact_audit_subsystem
+	fromColumn: fact_audit.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_components_date
+	fromColumn: fact_components.date
+	toColumn: dim_date.date
+
+relationship fact_components_hour
+	fromColumn: fact_components.hour
+	toColumn: dim_hour.hour
+
+relationship fact_components_subsystem
+	fromColumn: fact_components.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_forecast_date
+	fromColumn: fact_forecast.date
+	toColumn: dim_date.date
+
+relationship fact_forecast_hour
+	fromColumn: fact_forecast.hour
+	toColumn: dim_hour.hour
+
+relationship fact_forecast_subsystem
+	fromColumn: fact_forecast.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_inflow_basin_date
+	fromColumn: fact_inflow_basin.date
+	toColumn: dim_date.date
+
+relationship fact_net_load_date
+	fromColumn: fact_net_load.date
+	toColumn: dim_date.date
+
+relationship fact_net_load_hour
+	fromColumn: fact_net_load.hour
+	toColumn: dim_hour.hour
+
+relationship fact_net_load_subsystem
+	fromColumn: fact_net_load.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_price_daily_date
+	fromColumn: fact_price_daily.date
+	toColumn: dim_date.date
+
+relationship fact_price_daily_subsystem
+	fromColumn: fact_price_daily.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_storage_daily_date
+	fromColumn: fact_storage_daily.date
+	toColumn: dim_date.date
+
+relationship fact_storage_daily_subsystem
+	fromColumn: fact_storage_daily.subsystem
+	toColumn: dim_subsystem.subsystem
+
+relationship fact_system_daily_date
+	fromColumn: fact_system_daily.date
+	toColumn: dim_date.date
+
+relationship e8b9db3f-bfe4-48a0-bd38-e5d7caad0d65
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_audit.timestamp
+	toColumn: LocalDateTable_73ce5628-351e-49fc-bd81-e5e32cf9b873.Date
+
+relationship 21efc89b-f932-491f-8f6d-d656b8342b35
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_forecast.decision_date
+	toColumn: LocalDateTable_e2aac4ea-dd26-4028-816c-f9cfd3a6d4c8.Date
+
+relationship f5250d7e-3267-4fee-b855-e2d1012abca0
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_forecast.timestamp
+	toColumn: LocalDateTable_76263bc4-0e9a-405b-b6c4-a453f39c5bf7.Date
+
+relationship 1cd09898-591c-4c34-b869-d037218635ac
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_net_load.timestamp
+	toColumn: LocalDateTable_7bc93dc3-70e2-448a-8c4f-0a21de89b17a.Date
+

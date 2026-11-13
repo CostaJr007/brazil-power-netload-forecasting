@@ -1,0 +1,166 @@
+table fact_net_load
+	lineageTag: 1ba02195-53fa-4cdc-9545-ff3f40b1455a
+
+	measure 'Model MAE (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(fact_net_load, ABS(fact_net_load[forecast] - fact_net_load[actual])), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: 8be3a1a6-e3cd-4b2b-a577-af22c1b7b5c7
+
+	measure 'Benchmark MAE (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(fact_net_load, ABS(fact_net_load[benchmark] - fact_net_load[actual])), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: c3e6439e-d137-413e-b3e4-bcd03f3cf316
+
+	measure 'ONS schedule MAE (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(FILTER(fact_net_load, NOT ISBLANK(fact_net_load[ons_schedule])), ABS(fact_net_load[ons_schedule] - fact_net_load[actual])), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: c6067e5a-28b4-4c89-9a08-3cb886e29cdf
+
+	measure 'Error reduction vs benchmark' = DIVIDE([Benchmark MAE (MW)] - [Model MAE (MW)], [Benchmark MAE (MW)])
+		formatString: 0.0%
+		lineageTag: d5ba0471-acbb-468d-ab10-49da93cbe14f
+
+	measure 'Model bias (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(fact_net_load, fact_net_load[forecast] - fact_net_load[actual]), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: 0907cde5-7af2-401a-841f-75b5f3f51feb
+
+	measure 'MAPE model' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(FILTER(fact_net_load, fact_net_load[actual] <> 0), ABS(fact_net_load[forecast] - fact_net_load[actual]) / ABS(fact_net_load[actual])), dim_subsystem[subsystem] = _s)
+		formatString: 0.00%
+		lineageTag: c89c700d-a36e-47a4-b882-a1ef8e677b4e
+
+	measure 'Actual (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_net_load[actual]), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: 09d2baeb-2b6c-4820-8142-9ca2d60695c1
+
+	measure 'Forecast (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_net_load[forecast]), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: 9d6147f8-a053-48a6-b107-e3187778eebe
+
+	measure 'Benchmark (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_net_load[benchmark]), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: 4611415f-5f86-41ca-a815-221f513a0e7b
+
+	measure 'Band 80% low' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_net_load[band_low]), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: a2cddec4-5b81-4458-bc09-99c24aae5d86
+
+	measure 'Band 80% high' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_net_load[band_high]), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: db267805-8d68-4091-9090-e798dba1b8c8
+
+	measure '80% band coverage' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(DIVIDE(COUNTROWS(FILTER(fact_net_load, NOT ISBLANK(fact_net_load[band_low]) && fact_net_load[actual] >= fact_net_load[band_low] && fact_net_load[actual] <= fact_net_load[band_high])), COUNTROWS(FILTER(fact_net_load, NOT ISBLANK(fact_net_load[band_low])))), dim_subsystem[subsystem] = _s)
+		formatString: 0.0%
+		lineageTag: d1553355-bba0-4bfd-96ea-d3bb5ba1da8d
+
+	measure 'Model bias excl. outages (MW)' = CALCULATE([Model bias (MW)], fact_net_load[telemetry_outage] = FALSE())
+		formatString: #,0
+		lineageTag: 395d6984-c7de-452e-8b37-328f50ae1d40
+
+	measure 'Days evaluated' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(DISTINCTCOUNT(fact_net_load[date]), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: 1ddb3b71-05bb-4980-be02-a2619a4b5f4b
+
+	measure 'Days model wins' = SUMX(VALUES(dim_date[date]), IF(NOT ISBLANK([Model MAE (MW)]) && [Model MAE (MW)] < [Benchmark MAE (MW)], 1, 0))
+		formatString: #,0
+		lineageTag: 8c49229c-dbf2-4fcd-bc85-f287d1d85813
+
+	measure 'Days model wins (%)' = DIVIDE([Days model wins], [Days evaluated])
+		formatString: 0%
+		lineageTag: cde9118e-4f64-48fd-a636-a912c18f53aa
+
+	measure 'Headline scoreboard' = IF(ISBLANK([Model MAE (MW)]), "No data for this selection", "Model error is " & FORMAT(ABS([Error reduction vs benchmark]), "0.0%") & IF([Error reduction vs benchmark] >= 0, " lower", " higher") & " than the benchmark, beating it on " & FORMAT([Days model wins (%)], "0%") & " of days")
+		lineageTag: 7de9d75d-cd6b-4b11-bcc1-638b26dc02c0
+
+	column subsystem
+		dataType: string
+		lineageTag: bd4cb75f-c8d5-4798-bf85-4ae92c0803d6
+		summarizeBy: none
+		sourceColumn: subsystem
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: de4cfa19-60fd-4203-911f-9486d6d2eb22
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hour
+		dataType: int64
+		lineageTag: a7446286-ffe9-4b66-860e-c9145e29878c
+		summarizeBy: none
+		sourceColumn: hour
+
+	column forecast
+		dataType: double
+		lineageTag: a6dbf480-9b7c-45ad-89fc-587a9f40654e
+		summarizeBy: sum
+		sourceColumn: forecast
+
+	column actual
+		dataType: double
+		lineageTag: 15106c01-d3b9-4e37-899e-ea9298427fc2
+		summarizeBy: sum
+		sourceColumn: actual
+
+	column benchmark
+		dataType: double
+		lineageTag: c19b64e2-1c42-45e8-b008-6ecc7f41a251
+		summarizeBy: sum
+		sourceColumn: benchmark
+
+	column ons_schedule
+		dataType: double
+		lineageTag: 95f0c182-88f6-4a51-9782-41afdbf0c399
+		summarizeBy: sum
+		sourceColumn: ons_schedule
+
+	column band_low
+		dataType: double
+		lineageTag: f775b486-2952-4aab-921a-02cc0a3ef443
+		summarizeBy: sum
+		sourceColumn: band_low
+
+	column band_high
+		dataType: double
+		lineageTag: c6c692f0-7ad9-4c59-a289-e2a943ad169b
+		summarizeBy: sum
+		sourceColumn: band_high
+
+	column horizon
+		dataType: string
+		lineageTag: e942d3e1-e730-47d2-aca9-e1351c0bc741
+		summarizeBy: none
+		sourceColumn: horizon
+
+	column period
+		dataType: string
+		lineageTag: 574612e9-7f2b-435e-aea8-6863ac41f4d1
+		summarizeBy: none
+		sourceColumn: period
+
+	column telemetry_outage
+		dataType: boolean
+		lineageTag: f1eb438d-4101-4c17-b184-b1e86679889f
+		summarizeBy: none
+		sourceColumn: telemetry_outage
+
+	column timestamp
+		dataType: dateTime
+		formatString: yyyy-mm-dd hh:nn
+		lineageTag: 359cb90e-a3e8-49b2-a461-1be38760bc92
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		variation Variation
+			isDefault
+			relationship: 1cd09898-591c-4c34-b869-d037218635ac
+			defaultHierarchy: LocalDateTable_7bc93dc3-70e2-448a-8c4f-0a21de89b17a.'Date Hierarchy'
+
+	partition fact_net_load = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_net_load.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"hour", Int64.Type}, {"forecast", type number}, {"actual", type number}, {"benchmark", type number}, {"ons_schedule", type number}, {"band_low", type number}, {"band_high", type number}, {"horizon", type text}, {"period", type text}, {"telemetry_outage", type logical}, {"timestamp", type datetime}})
+				in
+				    Tipos
+

@@ -1,0 +1,577 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "dim_hour.hour_label": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_hour",
+			          "ConceptualProperty": "hour_label"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Hour": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_forecast.average_forecast_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_forecast",
+			          "ConceptualProperty": "Average forecast (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Forecast": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_forecast.forecast_benchmark_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_forecast",
+			          "ConceptualProperty": "Forecast benchmark (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Benchmark": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_forecast.forecast_band_low": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_forecast",
+			          "ConceptualProperty": "Forecast band low"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "80% band, low": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_forecast.forecast_band_high": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_forecast",
+			          "ConceptualProperty": "Forecast band high"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "80% band, high": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_date.year_month": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_date",
+			          "ConceptualProperty": "year_month"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_date.day_type": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_date",
+			          "ConceptualProperty": "day_type"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Day type": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_date.date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_date",
+			          "ConceptualProperty": "date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_net_load.model_mae_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_net_load",
+			          "ConceptualProperty": "Model MAE (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Model": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Model MAE (MW)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_net_load.benchmark_mae_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_net_load",
+			          "ConceptualProperty": "Benchmark MAE (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Benchmark": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Benchmark MAE (MW)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_net_load.model_bias_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_net_load",
+			          "ConceptualProperty": "Model bias (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Bias (MW)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_net_load.days_evaluated": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_net_load",
+			          "ConceptualProperty": "Days evaluated"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Days": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_net_load.model_bias_excl__outages_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_net_load",
+			          "ConceptualProperty": "Model bias excl. outages (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Bias": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_components.component": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_components",
+			          "ConceptualProperty": "component"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Component": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_components.component_error_reduction": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_components",
+			          "ConceptualProperty": "Component error reduction"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Error reduction": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_components.component_bias_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_components",
+			          "ConceptualProperty": "Component bias (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Bias": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_components.component_model_mae_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_components",
+			          "ConceptualProperty": "Component model MAE (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Model": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_components.component_benchmark_mae_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_components",
+			          "ConceptualProperty": "Component benchmark MAE (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Benchmark": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_subsystem.name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_subsystem",
+			          "ConceptualProperty": "name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Subsystem": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_audit.timestamp": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_audit",
+			          "ConceptualProperty": "timestamp"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Hour": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_audit.audit_forecast_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_audit",
+			          "ConceptualProperty": "Audit forecast (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Forecast": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_audit.audit_actual_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_audit",
+			          "ConceptualProperty": "Audit actual (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Actual": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_system_daily.hydro_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_system_daily",
+			          "ConceptualProperty": "Hydro (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Hydro": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_system_daily.wind_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_system_daily",
+			          "ConceptualProperty": "Wind (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Wind": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_system_daily.solar_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_system_daily",
+			          "ConceptualProperty": "Solar (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Solar": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "fact_system_daily.thermal_mw": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_system_daily",
+			          "ConceptualProperty": "Thermal (MW)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Thermal": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

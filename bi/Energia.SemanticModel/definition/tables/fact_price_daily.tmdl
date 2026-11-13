@@ -1,0 +1,43 @@
+table fact_price_daily
+	lineageTag: b1525570-d034-4c2a-9c7c-1e9315888766
+
+	measure 'Spot price est. (R$/MWh)' = AVERAGE(fact_price_daily[price_est])
+		formatString: #,0.00
+		lineageTag: 465d0ee3-190a-47a8-9ff7-bf6603dbb387
+
+	column subsystem
+		dataType: string
+		lineageTag: befff4be-3b6c-4575-b90e-77fa20344b5d
+		summarizeBy: none
+		sourceColumn: subsystem
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 537d4612-0273-4b32-8dc4-7843e8bc0d27
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column price_est
+		dataType: double
+		lineageTag: b42d8b64-7df6-43c2-8577-02b3f3c118b6
+		summarizeBy: sum
+		sourceColumn: price_est
+
+	column structural_cap_applied
+		dataType: boolean
+		lineageTag: e043b965-c161-4566-a7db-8ae41f85275f
+		summarizeBy: none
+		sourceColumn: structural_cap_applied
+
+	partition fact_price_daily = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_price_daily.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"price_est", type number}, {"structural_cap_applied", type logical}})
+				in
+				    Tipos
+

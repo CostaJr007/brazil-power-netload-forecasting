@@ -1,0 +1,94 @@
+table fact_components
+	lineageTag: 82f30be2-3f8a-44f9-96c7-1218d3e7fdf9
+
+	measure 'Headline components' = VAR mx = MAXX(VALUES(fact_components[component]), [Component model MAE (MW)]) VAR comp = CONCATENATEX(FILTER(VALUES(fact_components[component]), [Component model MAE (MW)] = mx), fact_components[component], ", ") VAR r = [Component error reduction] RETURN IF(ISBLANK(mx), "No data for this selection", "Largest error source: " & comp & " (" & FORMAT(mx, "#,0") & " MW MAE). Across components the model " & IF(r >= 0, "cuts error by ", "adds error of ") & FORMAT(ABS(r), "0.0%") & " vs the benchmark")
+		lineageTag: 0e3b0f3e-35b8-41b1-8722-ed36b12245d4
+
+	measure 'Component model MAE (MW)' = AVERAGEX(fact_components, ABS(fact_components[forecast] - fact_components[actual]))
+		formatString: #,0
+		lineageTag: 4820a8c6-b9ad-468b-894f-d99933bfc6c0
+
+	measure 'Component benchmark MAE (MW)' = AVERAGEX(fact_components, ABS(fact_components[benchmark] - fact_components[actual]))
+		formatString: #,0
+		lineageTag: 3abf79c9-442c-427c-a6c7-44aba85c3479
+
+	measure 'Component error reduction' = DIVIDE([Component benchmark MAE (MW)] - [Component model MAE (MW)], [Component benchmark MAE (MW)])
+		formatString: 0.0%
+		lineageTag: 2a73d78f-3a5b-4718-9f47-0ed629ff5da5
+
+	measure 'Component bias (MW)' = AVERAGEX(fact_components, fact_components[forecast] - fact_components[actual])
+		formatString: #,0
+		lineageTag: a7533613-766e-41c3-b0bb-dbd9b1d22932
+
+	column subsystem
+		dataType: string
+		lineageTag: 3f5af022-8c98-41e3-b5d1-277e20032ef9
+		summarizeBy: none
+		sourceColumn: subsystem
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: c9841a68-a91f-4693-80ef-368cb9e4a9cd
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hour
+		dataType: int64
+		lineageTag: a48bf2fe-2c59-404d-8386-931eeb3534e0
+		summarizeBy: none
+		sourceColumn: hour
+
+	column component
+		dataType: string
+		lineageTag: d73e3ea5-8758-401e-8c86-cc0883b058a4
+		summarizeBy: none
+		sourceColumn: component
+
+	column forecast
+		dataType: double
+		lineageTag: e3748163-d92a-4c69-9f4f-567203e7fdee
+		summarizeBy: sum
+		sourceColumn: forecast
+
+	column actual
+		dataType: double
+		lineageTag: 0a6905a4-c8ab-4b1a-bfbd-292c8b613e68
+		summarizeBy: sum
+		sourceColumn: actual
+
+	column benchmark
+		dataType: double
+		lineageTag: fa4a1b7c-0ec6-42b4-bfbb-213734253724
+		summarizeBy: sum
+		sourceColumn: benchmark
+
+	column horizon
+		dataType: string
+		lineageTag: c446688b-00c9-4ca7-adfa-265d894fabcc
+		summarizeBy: none
+		sourceColumn: horizon
+
+	column period
+		dataType: string
+		lineageTag: 56c45782-673a-4b17-9a22-2c1631ed74c1
+		summarizeBy: none
+		sourceColumn: period
+
+	column telemetry_outage
+		dataType: boolean
+		lineageTag: 7c491343-0aa6-4b4c-b981-14b4657b9864
+		summarizeBy: none
+		sourceColumn: telemetry_outage
+
+	partition fact_components = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_components.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"hour", Int64.Type}, {"component", type text}, {"forecast", type number}, {"actual", type number}, {"benchmark", type number}, {"horizon", type text}, {"period", type text}, {"telemetry_outage", type logical}})
+				in
+				    Tipos
+

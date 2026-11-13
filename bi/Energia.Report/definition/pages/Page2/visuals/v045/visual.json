@@ -1,0 +1,150 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "v045",
+  "position": {
+    "x": 20,
+    "y": 108,
+    "z": 4500,
+    "height": 252,
+    "width": 620
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_subsystem"
+                    }
+                  },
+                  "Property": "name"
+                }
+              },
+              "queryRef": "dim_subsystem.name",
+              "active": true,
+              "displayName": "Subsystem"
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_components"
+                    }
+                  },
+                  "Property": "component"
+                }
+              },
+              "queryRef": "fact_components.component",
+              "active": true,
+              "displayName": "Component"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_components"
+                    }
+                  },
+                  "Property": "Component error reduction"
+                }
+              },
+              "queryRef": "fact_components.Component error reduction",
+              "displayName": "Error reduction"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Error reduction vs the benchmark, by component and subsystem'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "11.0D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "43acc6d5e8936db0381e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_components"
+              }
+            },
+            "Property": "component"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b0ad398643ed93be401a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_subsystem"
+              }
+            },
+            "Property": "name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "15abcd751949d75667a7",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "fact_components"
+              }
+            },
+            "Property": "Component error reduction"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

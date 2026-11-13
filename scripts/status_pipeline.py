@@ -1,8 +1,8 @@
-"""Mostra estado e resultados do pipeline sem coletar nem transformar arquivos.
+"""Shows pipeline status and results without collecting or transforming files.
 
-Além do último relatório, confere duas coisas que o relatório sozinho não mostra:
-- se ele está ATRASADO (uma execução que cai no meio não grava relatório nenhum);
-- o resultado da tarefa no Agendador do Windows (LastTaskResult).
+Besides the latest report, it checks two things the report alone cannot show:
+- whether the report is LATE (a run that dies midway writes no report);
+- the Windows Task Scheduler result (LastTaskResult).
 """
 import json
 import os
@@ -14,7 +14,7 @@ from acquire import DATA_DIR, ROOT, atomic_json, utcnow
 
 
 def scheduler_info(name="Energy-Data-Pipeline"):
-    """Lê a tarefa agendada via PowerShell; devolve None fora do Windows ou se não existir."""
+    """Read the scheduled task via PowerShell; returns None outside Windows or if it does not exist."""
     if os.name != "nt":
         return None
     command = (f"$i = Get-ScheduledTaskInfo -TaskName '{name}' -ErrorAction Stop; "
@@ -45,34 +45,34 @@ def main():
         tasks = [{"task": name, "last_success_utc": value} for name, value in con.execute("SELECT name,last_success FROM tasks ORDER BY name")]
     finally:
         con.close()
-    # Toda execução normal grava latest.json, mesmo sem nada a fazer. Mais velho que 2 ticks = algo parou.
+    # Every normal run writes latest.json, even with nothing to do. Older than 2 ticks = something stopped.
     age = (datetime.now(timezone.utc) - datetime.fromisoformat(latest["completed_at"])).total_seconds() / 60
     stale = age > 2 * config["scheduler_minutes"] + 5
     scheduler = scheduler_info()
     alerts = []
     if stale:
-        alerts.append(f"Último relatório tem {age:.0f} min: o agendamento pode ter parado ou execuções estão caindo.")
+        alerts.append(f"Latest report is {age:.0f} min old: the schedule may have stopped or runs are crashing.")
     if scheduler and scheduler.get("last_result") not in (0, 267009, 267011):
-        # 267009 = em execução; 267011 = ainda não executou.
-        alerts.append(f"Agendador: última execução terminou com código {scheduler['last_result']} (0 = sucesso).")
+        # 267009 = running; 267011 = has not run yet.
+        alerts.append(f"Task Scheduler: last run ended with code {scheduler['last_result']} (0 = success).")
     status = latest["status"] if not alerts else "attention"
     result = {"checked_at": utcnow(), "last_run": latest["run_id"], "last_run_status": latest["status"],
               "status": status, "minutes_since_last_run": round(age, 1), "alerts": alerts, "scheduler": scheduler,
               "errors": latest["errors"], "tasks": tasks, "datasets": list(datasets.values()),
-              "note": "Contagens são por snapshot de recurso, não energia total nem deduplicação entre produtos/fontes.",
+              "note": "Counts are per resource snapshot, not total energy and not deduplicated across products/sources.",
               "blocked_sources": latest["blocked_sources"]}
     atomic_json(ROOT / "docs/inventory/pipeline_status.json", result)
-    lines = ["# Estado do pipeline", "",
-             f"Verificado: {result['checked_at']}; execução: {result['last_run']} ({latest['status']}, há {age:.0f} min); status geral: **{status}**.", ""]
+    lines = ["# Pipeline status", "",
+             f"Checked: {result['checked_at']}; run: {result['last_run']} ({latest['status']}, {age:.0f} min ago); overall status: **{status}**.", ""]
     if scheduler:
-        lines += [f"Agendador: última execução {scheduler['last_run']}, código {scheduler['last_result']}; próxima {scheduler['next_run']}.", ""]
+        lines += [f"Task Scheduler: last run {scheduler['last_run']}, code {scheduler['last_result']}; next {scheduler['next_run']}.", ""]
     if alerts:
         lines += ["**Alertas:**", ""] + [f"- {a}" for a in alerts] + [""]
-    lines += ["| Conjunto | Snapshots de recursos | Linhas válidas | Rejeitadas |", "|---|---:|---:|---:|"]
+    lines += ["| Dataset | Resource snapshots | Valid rows | Rejected |", "|---|---:|---:|---:|"]
     for row in datasets.values():
         lines.append(f"| {row['dataset']} | {row['snapshots']} | {row['valid_rows']} | {row['rejected_rows']} |")
-    lines += ["", "As contagens não devem ser somadas como se fossem uma única tabela ou medidas de energia. Produtos e períodos podem se sobrepor.", "",
-              "Fontes bloqueadas:", ""] + [f"- **{k}**: {v}" for k, v in latest["blocked_sources"].items()]
+    lines += ["", "Counts must not be summed as if they were one table or energy measures. Products and periods may overlap.", "",
+              "Blocked sources:", ""] + [f"- **{k}**: {v}" for k, v in latest["blocked_sources"].items()]
     (ROOT / "docs/inventory/pipeline_status.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(json.dumps({"status": status, "alerts": alerts, "datasets": len(datasets),
                       "valid_rows_across_resources": sum(d["valid_rows"] for d in datasets.values()),

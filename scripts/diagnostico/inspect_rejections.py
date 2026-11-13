@@ -1,8 +1,8 @@
-"""Mostra as rejeições mais recentes por conjunto, sem modificar dados."""
+"""Show the most recent rejections per dataset, without modifying data."""
 import json
 from pathlib import Path
 import polars as pl
-# Scripts desta subpasta reutilizam os módulos de scripts/ (acquire, pipeline...).
+# Scripts in this subfolder reuse the modules in scripts/ (acquire, pipeline...).
 import sys as _sys
 from pathlib import Path as _Path
 _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))

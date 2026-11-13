@@ -1,0 +1,92 @@
+table fact_audit
+	lineageTag: d6bc0ff9-77aa-411f-b521-cfeba73a642b
+
+	measure 'Audit model MAE (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(fact_audit, ABS(fact_audit[forecast] - fact_audit[actual])), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: 9650181c-3288-47c9-8c50-e11ec7b39897
+
+	measure 'Audit benchmark MAE (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGEX(fact_audit, ABS(fact_audit[benchmark] - fact_audit[actual])), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: 0c19bf55-1b9c-4626-9a93-09dec59d4b1a
+
+	measure 'Audit error reduction' = DIVIDE([Audit benchmark MAE (MW)] - [Audit model MAE (MW)], [Audit benchmark MAE (MW)])
+		formatString: 0.0%
+		lineageTag: 4a008234-1c9a-4ece-850b-80dd927943d0
+
+	measure 'Audit actual (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_audit[actual]), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: 11c27f35-8219-4608-9212-2caa857d8e11
+
+	measure 'Audit forecast (MW)' = VAR _s = SELECTEDVALUE(dim_subsystem[subsystem], "SIN") RETURN CALCULATE(AVERAGE(fact_audit[forecast]), dim_subsystem[subsystem] = _s)
+		formatString: #,0
+		lineageTag: 000d44bc-8349-4772-8372-3059488fb460
+
+	measure 'Headline audit' = IF(ISBLANK([Audit model MAE (MW)]), "No audit for this selection", "Replay of " & FORMAT(MIN(fact_audit[date]), "mmm d") & "–" & FORMAT(MAX(fact_audit[date]), "mmm d") & ": model error " & FORMAT(ABS([Audit error reduction]), "0.0%") & IF([Audit error reduction] >= 0, " below", " above") & " the benchmark")
+		lineageTag: 45b7e5b9-0e69-47dd-9a60-db10ad7a5b1d
+
+	column subsystem
+		dataType: string
+		lineageTag: d2a57e7a-b7f4-488d-b03e-9a3ceec5783b
+		summarizeBy: none
+		sourceColumn: subsystem
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: abc07874-a4b7-4e4f-abb9-7f97748baa81
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hour
+		dataType: int64
+		lineageTag: d54a4a1f-0603-4c24-b6da-4ee3418b82e9
+		summarizeBy: none
+		sourceColumn: hour
+
+	column forecast
+		dataType: double
+		lineageTag: 157deb14-0282-4180-8f77-b279e206e960
+		summarizeBy: sum
+		sourceColumn: forecast
+
+	column actual
+		dataType: double
+		lineageTag: f2959a45-68ed-4a0c-b6f6-419f778dbb5f
+		summarizeBy: sum
+		sourceColumn: actual
+
+	column benchmark
+		dataType: double
+		lineageTag: 9a74a1e2-0068-474c-8a42-067b5d6eb7f1
+		summarizeBy: sum
+		sourceColumn: benchmark
+
+	column step
+		dataType: string
+		lineageTag: 10fc6764-e766-4d14-a509-492418990e22
+		summarizeBy: none
+		sourceColumn: step
+
+	column timestamp
+		dataType: dateTime
+		formatString: yyyy-mm-dd hh:nn
+		lineageTag: 4ce71222-1a46-49ed-a130-d223799b471f
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		variation Variation
+			isDefault
+			relationship: e8b9db3f-bfe4-48a0-bd38-e5d7caad0d65
+			defaultHierarchy: LocalDateTable_73ce5628-351e-49fc-bd81-e5e32cf9b873.'Date Hierarchy'
+
+	partition fact_audit = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_audit.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"hour", Int64.Type}, {"forecast", type number}, {"actual", type number}, {"benchmark", type number}, {"step", type text}, {"timestamp", type datetime}})
+				in
+				    Tipos
+

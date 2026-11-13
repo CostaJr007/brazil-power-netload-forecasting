@@ -10,5 +10,6 @@ shapely>=2,<3
 pyproj>=3.7,<4
 pyogrio>=0.10
 eccodes>=2.40
+scikit-learn>=1.5,<2
 pytest>=8,<10
 ruff>=0.11,<1

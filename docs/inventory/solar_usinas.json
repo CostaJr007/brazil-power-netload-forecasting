@@ -1,0 +1,516 @@
+{
+  "ranking_top20": [
+    {
+      "usina": "Conj. Janaúba",
+      "uf": "MG",
+      "subsistema": "SE",
+      "lat": -15.947,
+      "lon": -43.508,
+      "capacidade_mw": 1336.8,
+      "fator_capacidade_12m_pct": 20.7,
+      "gwh_12m": 2424.0
+    },
+    {
+      "usina": "Conj. Arinos 2 500 kV",
+      "uf": "MG",
+      "subsistema": "SE",
+      "lat": -15.738,
+      "lon": -45.966,
+      "capacidade_mw": 1189.9,
+      "fator_capacidade_12m_pct": 22.3,
+      "gwh_12m": 2326.0
+    },
+    {
+      "usina": "Conj. Paracatu 4 Piloto",
+      "uf": "MG",
+      "subsistema": "SE",
+      "lat": -17.069,
+      "lon": -47.113,
+      "capacidade_mw": 1014.3,
+      "fator_capacidade_12m_pct": 19.4,
+      "gwh_12m": 331.0
+    },
+    {
+      "usina": "Conj. Gilbués II 500 kV",
+      "uf": "PI",
+      "subsistema": "NE",
+      "lat": -10.104,
+      "lon": -45.282,
+      "capacidade_mw": 790.9,
+      "fator_capacidade_12m_pct": 18.9,
+      "gwh_12m": 1308.0
+    },
+    {
+      "usina": "Conj. Vista Alegre - Janaúba",
+      "uf": "MG",
+      "subsistema": "SE",
+      "lat": -15.833,
+      "lon": -43.447,
+      "capacidade_mw": 767.6,
+      "fator_capacidade_12m_pct": 21.4,
+      "gwh_12m": 1441.0
+    },
+    {
+      "usina": "Conj. Assu Sol",
+      "uf": "RN",
+      "subsistema": "NE",
+      "lat": -5.582,
+      "lon": -37.033,
+      "capacidade_mw": 752.7,
+      "fator_capacidade_12m_pct": 21.8,
+      "gwh_12m": 1436.0
+    },
+    {
+      "usina": "Conj. Futura",
+      "uf": "BA",
+      "subsistema": "NE",
+      "lat": -9.661,
+      "lon": -40.686,
+      "capacidade_mw": 692.4,
+      "fator_capacidade_12m_pct": 22.4,
+      "gwh_12m": 1361.0
+    },
+    {
+      "usina": "Conj. Sol do Cerrado",
+      "uf": "MG",
+      "subsistema": "SE",
+      "lat": -15.384,
+      "lon": -43.786,
+      "capacidade_mw": 681.3,
+      "fator_capacidade_12m_pct": 17.3,
+      "gwh_12m": 1029.0
+    },
+    {
+      "usina": "Conj. Paracatu 4 500 kV",
+      "uf": "MG",
+      "subsistema": "SE",
+      "lat": -17.064,
+      "lon": -47.118,
+      "capacidade_mw": 661.5,
+      "fator_capacidade_12m_pct": 19.8,
+      "gwh_12m": 925.0
+    },
+    {
+      "usina": "Conj. Draco",
+      "uf": "MG",
+      "subsistema": "SE",
+      "lat": -15.751,
+      "lon": -45.971,
+      "capacidade_mw": 505.2,
+      "fator_capacidade_12m_pct": 21.9,
+      "gwh_12m": 751.0
+    },
+    {
+      "usina": "Conj. Jaíba V",
+      "uf": "MG",
+      "subsistema": "SE",
+      "lat": -15.294,
+      "lon": -43.716,
+      "capacidade_mw": 500.0,
+      "fator_capacidade_12m_pct": 21.8,
+      "gwh_12m": 954.0
+    },
+    {
+      "usina": "Conj. Helio Valgas",
+      "uf": "MG",
+      "subsistema": "SE",
+      "lat": -17.578,
+      "lon": -44.644,
+      "capacidade_mw": 500.0,
+      "fator_capacidade_12m_pct": 21.5,
+      "gwh_12m": 943.0
+    },
+    {
+      "usina": "Conj. Lar do Sol",
+      "uf": "MG",
+      "subsistema": "SE",
+      "lat": -17.363,
+      "lon": -44.697,
+      "capacidade_mw": 495.0,
+      "fator_capacidade_12m_pct": 19.0,
+      "gwh_12m": 826.0
+    },
+    {
+      "usina": "Conj. Rio Brilhante 230 kV",
+      "uf": "MS",
+      "subsistema": "SE",
+      "lat": -21.54,
+      "lon": -53.819,
+      "capacidade_mw": 491.0,
+      "fator_capacidade_12m_pct": 14.7,
+      "gwh_12m": 122.0
+    },
+    {
+      "usina": "Conj. Rio Brilhante 230kV",
+      "uf": "MS",
+      "subsistema": "SE",
+      "lat": -21.54,
+      "lon": -53.819,
+      "capacidade_mw": 491.0,
+      "fator_capacidade_12m_pct": 17.0,
+      "gwh_12m": 22.0
+    },
+    {
+      "usina": "Conj. Pereira Barreto",
+      "uf": "SP",
+      "subsistema": "SE",
+      "lat": -20.62,
+      "lon": -51.3,
+      "capacidade_mw": 458.0,
+      "fator_capacidade_12m_pct": 18.8,
+      "gwh_12m": 754.0
+    },
+    {
+      "usina": "Conj. Belmonte",
+      "uf": "PE",
+      "subsistema": "NE",
+      "lat": -7.87,
+      "lon": -38.835,
+      "capacidade_mw": 455.0,
+      "fator_capacidade_12m_pct": 23.9,
+      "gwh_12m": 951.0
+    },
+    {
+      "usina": "Conj. Açú III 230 kV",
+      "uf": "RN",
+      "subsistema": "NE",
+      "lat": -5.616,
+      "lon": -37.036,
+      "capacidade_mw": 452.4,
+      "fator_capacidade_12m_pct": 21.5,
+      "gwh_12m": 853.0
+    },
+    {
+      "usina": "Conj. Serra do Mel C",
+      "uf": "RN",
+      "subsistema": "NE",
+      "lat": -5.131,
+      "lon": -37.05,
+      "capacidade_mw": 433.1,
+      "fator_capacidade_12m_pct": 26.9,
+      "gwh_12m": 1022.0
+    },
+    {
+      "usina": "Conj. Sol do Sertão",
+      "uf": "BA",
+      "subsistema": "NE",
+      "lat": -12.239,
+      "lon": -42.61,
+      "capacidade_mw": 415.0,
+      "fator_capacidade_12m_pct": 18.2,
+      "gwh_12m": 661.0
+    }
+  ],
+  "total_usinas": 99,
+  "capacidade_total_mw": 25475,
+  "capacidade_por_uf_mw": {
+    "MG": 9626.0,
+    "BA": 3445.0,
+    "PI": 2775.0,
+    "CE": 2516.0,
+    "RN": 2088.0,
+    "MS": 1382.0,
+    "PE": 1196.0,
+    "SP": 1162.0,
+    "GO": 700.0,
+    "PB": 584.0
+  },
+  "por_usina": [
+    {
+      "usina": "Conj. Janaúba",
+      "aviso": "histórico insuficiente com a capacidade atual"
+    },
+    {
+      "usina": "Conj. Arinos 2 500 kV",
+      "uf": "MG",
+      "horas_diurnas_teste": 732,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.52,
+      "mae_fc_radiacao": 0.1952,
+      "mae_fc_climatologia": 0.2142,
+      "skill_radiacao_vs_climatologia": 0.089
+    },
+    {
+      "usina": "Conj. Paracatu 4 Piloto",
+      "aviso": "histórico insuficiente com a capacidade atual"
+    },
+    {
+      "usina": "Conj. Gilbués II 500 kV",
+      "uf": "PI",
+      "horas_diurnas_teste": 1459,
+      "deslocamento_h": -2,
+      "correlacao_diurna": 0.605,
+      "mae_fc_radiacao": 0.1545,
+      "mae_fc_climatologia": 0.153,
+      "skill_radiacao_vs_climatologia": -0.01
+    },
+    {
+      "usina": "Conj. Vista Alegre - Janaúba",
+      "uf": "MG",
+      "horas_diurnas_teste": 1398,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.438,
+      "mae_fc_radiacao": 0.1967,
+      "mae_fc_climatologia": 0.1885,
+      "skill_radiacao_vs_climatologia": -0.043
+    },
+    {
+      "usina": "Conj. Assu Sol",
+      "aviso": "histórico insuficiente com a capacidade atual"
+    },
+    {
+      "usina": "Conj. Futura",
+      "uf": "BA",
+      "horas_diurnas_teste": 6852,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.523,
+      "mae_fc_radiacao": 0.1885,
+      "mae_fc_climatologia": 0.1808,
+      "skill_radiacao_vs_climatologia": -0.042
+    },
+    {
+      "usina": "Conj. Sol do Cerrado",
+      "uf": "MG",
+      "horas_diurnas_teste": 6699,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.417,
+      "mae_fc_radiacao": 0.1673,
+      "mae_fc_climatologia": 0.1851,
+      "skill_radiacao_vs_climatologia": 0.096
+    },
+    {
+      "usina": "Conj. Paracatu 4 500 kV",
+      "aviso": "histórico insuficiente com a capacidade atual"
+    },
+    {
+      "usina": "Conj. Draco",
+      "aviso": "histórico insuficiente com a capacidade atual"
+    },
+    {
+      "usina": "Conj. Jaíba V",
+      "uf": "MG",
+      "horas_diurnas_teste": 2031,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.347,
+      "mae_fc_radiacao": 0.2056,
+      "mae_fc_climatologia": 0.1732,
+      "skill_radiacao_vs_climatologia": -0.188
+    },
+    {
+      "usina": "Conj. Helio Valgas",
+      "uf": "MG",
+      "horas_diurnas_teste": 6653,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.482,
+      "mae_fc_radiacao": 0.2271,
+      "mae_fc_climatologia": 0.2261,
+      "skill_radiacao_vs_climatologia": -0.005
+    },
+    {
+      "usina": "Conj. Lar do Sol",
+      "uf": "MG",
+      "horas_diurnas_teste": 6660,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.445,
+      "mae_fc_radiacao": 0.2065,
+      "mae_fc_climatologia": 0.2,
+      "skill_radiacao_vs_climatologia": -0.033
+    },
+    {
+      "usina": "Conj. Rio Brilhante 230 kV",
+      "aviso": "histórico insuficiente com a capacidade atual"
+    },
+    {
+      "usina": "Conj. Rio Brilhante 230kV",
+      "aviso": "histórico insuficiente com a capacidade atual"
+    },
+    {
+      "usina": "Conj. Pereira Barreto",
+      "uf": "SP",
+      "horas_diurnas_teste": 1116,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.583,
+      "mae_fc_radiacao": 0.2163,
+      "mae_fc_climatologia": 0.2378,
+      "skill_radiacao_vs_climatologia": 0.09
+    },
+    {
+      "usina": "Conj. Belmonte",
+      "uf": "PE",
+      "horas_diurnas_teste": 6790,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.486,
+      "mae_fc_radiacao": 0.1998,
+      "mae_fc_climatologia": 0.1997,
+      "skill_radiacao_vs_climatologia": -0.0
+    },
+    {
+      "usina": "Conj. Açú III 230 kV",
+      "uf": "RN",
+      "horas_diurnas_teste": 6718,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.436,
+      "mae_fc_radiacao": 0.2027,
+      "mae_fc_climatologia": 0.1863,
+      "skill_radiacao_vs_climatologia": -0.088
+    },
+    {
+      "usina": "Conj. Serra do Mel C",
+      "uf": "RN",
+      "horas_diurnas_teste": 6718,
+      "deslocamento_h": -3,
+      "correlacao_diurna": 0.367,
+      "mae_fc_radiacao": 0.2368,
+      "mae_fc_climatologia": 0.1961,
+      "skill_radiacao_vs_climatologia": -0.208
+    }
+  ],
+  "sazonal_por_mes": [
+    {
+      "mes": 1,
+      "ghi_kwh_m2_dia": 5.929,
+      "ceu_limpo_kwh_m2_dia": 7.869,
+      "indice_claridade": 0.753,
+      "fator_capacidade_pct": 23.192
+    },
+    {
+      "mes": 2,
+      "ghi_kwh_m2_dia": 6.03,
+      "ceu_limpo_kwh_m2_dia": 7.75,
+      "indice_claridade": 0.778,
+      "fator_capacidade_pct": 23.329
+    },
+    {
+      "mes": 3,
+      "ghi_kwh_m2_dia": 5.986,
+      "ceu_limpo_kwh_m2_dia": 7.345,
+      "indice_claridade": 0.815,
+      "fator_capacidade_pct": 23.425
+    },
+    {
+      "mes": 4,
+      "ghi_kwh_m2_dia": 5.511,
+      "ceu_limpo_kwh_m2_dia": 6.574,
+      "indice_claridade": 0.838,
+      "fator_capacidade_pct": 21.916
+    },
+    {
+      "mes": 5,
+      "ghi_kwh_m2_dia": 5.081,
+      "ceu_limpo_kwh_m2_dia": 5.863,
+      "indice_claridade": 0.867,
+      "fator_capacidade_pct": 19.853
+    },
+    {
+      "mes": 6,
+      "ghi_kwh_m2_dia": 4.787,
+      "ceu_limpo_kwh_m2_dia": 5.448,
+      "indice_claridade": 0.879,
+      "fator_capacidade_pct": 19.115
+    },
+    {
+      "mes": 7,
+      "ghi_kwh_m2_dia": 5.131,
+      "ceu_limpo_kwh_m2_dia": 5.686,
+      "indice_claridade": 0.903,
+      "fator_capacidade_pct": 19.26
+    },
+    {
+      "mes": 8,
+      "ghi_kwh_m2_dia": 5.865,
+      "ceu_limpo_kwh_m2_dia": 6.352,
+      "indice_claridade": 0.923,
+      "fator_capacidade_pct": 20.63
+    },
+    {
+      "mes": 9,
+      "ghi_kwh_m2_dia": 6.569,
+      "ceu_limpo_kwh_m2_dia": 7.074,
+      "indice_claridade": 0.929,
+      "fator_capacidade_pct": 22.022
+    },
+    {
+      "mes": 10,
+      "ghi_kwh_m2_dia": 6.461,
+      "ceu_limpo_kwh_m2_dia": 7.568,
+      "indice_claridade": 0.854,
+      "fator_capacidade_pct": 22.763
+    },
+    {
+      "mes": 11,
+      "ghi_kwh_m2_dia": 6.324,
+      "ceu_limpo_kwh_m2_dia": 7.825,
+      "indice_claridade": 0.808,
+      "fator_capacidade_pct": 24.077
+    },
+    {
+      "mes": 12,
+      "ghi_kwh_m2_dia": 6.258,
+      "ceu_limpo_kwh_m2_dia": 7.903,
+      "indice_claridade": 0.792,
+      "fator_capacidade_pct": 23.182
+    }
+  ],
+  "janela_producao_por_mes": [
+    {
+      "mes": 1,
+      "min": 6,
+      "max": 17
+    },
+    {
+      "mes": 2,
+      "min": 6,
+      "max": 17
+    },
+    {
+      "mes": 3,
+      "min": 6,
+      "max": 17
+    },
+    {
+      "mes": 4,
+      "min": 6,
+      "max": 17
+    },
+    {
+      "mes": 5,
+      "min": 6,
+      "max": 17
+    },
+    {
+      "mes": 6,
+      "min": 6,
+      "max": 17
+    },
+    {
+      "mes": 7,
+      "min": 6,
+      "max": 17
+    },
+    {
+      "mes": 8,
+      "min": 6,
+      "max": 17
+    },
+    {
+      "mes": 9,
+      "min": 6,
+      "max": 17
+    },
+    {
+      "mes": 10,
+      "min": 5,
+      "max": 17
+    },
+    {
+      "mes": 11,
+      "min": 5,
+      "max": 17
+    },
+    {
+      "mes": 12,
+      "min": 6,
+      "max": 17
+    }
+  ]
+}

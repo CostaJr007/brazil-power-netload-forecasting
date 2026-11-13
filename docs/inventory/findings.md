@@ -1,53 +1,53 @@
-# Resultado da aquisição inicial
+# Initial acquisition results
 
-Fonte: chamadas reais à API CKAN e downloads HTTP oficiais nesta sessão. Evidência estruturada em acquisition_validation.json, sample_coverage.json e csv_parquet_comparison.json.
+Source: real calls to the CKAN API and official HTTP downloads in this session. Structured evidence in acquisition_validation.json, sample_coverage.json and csv_parquet_comparison.json.
 
-## Catálogo
+## Catalog
 
-**Escopo: inventário completo dos metadados do catálogo, com validação amostral dos arquivos. Não houve auditoria de acessibilidade dos 15.002 recursos, varredura paginada completa do bucket ou comprovação de atualização/correção de todas as séries.**
+**Scope: full inventory of the catalog metadata, with sample validation of the files. There was no accessibility audit of the 15,002 resources, no full paginated scan of the bucket and no proof that every series is updated/corrected.**
 
-- 88 conjuntos resolvidos sem erro pelo package_list + package_show.
-- 15.002 recursos catalogados; incluem formatos alternativos, dicionários e recursos potencialmente repetidos.
-- 39 conjuntos selecionados para a aquisição do projeto.
-- Scraping não foi necessário. Acesso pelo terminal precisou de autorização de rede fora do sandbox; isso é uma característica do ambiente desta sessão, não exigência do ONS.
+- 88 datasets resolved without error through package_list + package_show.
+- 15,002 resources cataloged; they include alternative formats, dictionaries and potentially repeated resources.
+- 39 datasets selected for the project's acquisition.
+- Scraping was not needed. Terminal access required network authorization outside the sandbox; that is a property of this session's environment, not an ONS requirement.
 
-Consulta posterior à raiz S3 por ListObjectsV2 (max-keys=5): HTTP 200, IsTruncated=true e token de continuação presente. Portanto, abrir a raiz não inventaria o bucket inteiro. A consulta foi apenas um teste de listagem, sem leitura dos objetos retornados; uma auditoria dos dados deve usar o prefixo dataset/ e percorrer todas as páginas. LastModified indica alteração do objeto, não a última data de referência dos registros.
+A later query to the S3 root via ListObjectsV2 (max-keys=5) returned HTTP 200, IsTruncated=true and a continuation token. So opening the root does not inventory the whole bucket. The query was only a listing test, without reading the returned objects; a data audit must use the dataset/ prefix and walk every page. LastModified indicates an object change, not the latest reference date of the records.
 
-## Amostras
+## Samples
 
-| Amostra | Resultado |
+| Sample | Result |
 |---|---|
-| Balanço 2025 CSV | 43.800 registros; N, NE, S, SE e SIN, 8.760 timestamps distintos em cada grupo |
-| Balanço 2025 Parquet | Mesmo schema e mesmos registros do CSV, por EXCEPT ALL nas duas direções com tipos DuckDB |
-| EAR 2025 CSV | 1.460 registros; quatro grupos, 365 datas distintas por grupo |
-| ENA 2025 CSV | 1.460 registros; quatro grupos, 365 datas distintas por grupo |
-| ZIP de bacias | 1.622.722 bytes; CRC verificado; .shp, .shx, .dbf, .prj, .cpg e .qmd presentes |
-| Dicionários JSON | Programação diária e carga programada/verificada baixados e decodificados |
+| Balance 2025 CSV | 43,800 records; N, NE, S, SE and SIN, 8,760 distinct timestamps in each group |
+| Balance 2025 Parquet | Same schema and same records as the CSV, by EXCEPT ALL in both directions with DuckDB types |
+| EAR 2025 CSV | 1,460 records; four groups, 365 distinct dates per group |
+| ENA 2025 CSV | 1,460 records; four groups, 365 distinct dates per group |
+| Basin ZIP | 1,622,722 bytes; CRC verified; .shp, .shx, .dbf, .prj, .cpg and .qmd present |
+| JSON dictionaries | Daily schedule and scheduled/verified load downloaded and decoded |
 
-As três amostras CSV não apresentaram grupos duplicados na chave proposta (subsistema, referência). Cobertura de 2025 encontrada no balanço: 01/01 00:00 até 31/12 23:00; EAR/ENA: 01/01 até 31/12. Isso não comprova validade física dos valores, latência histórica ou qualidade dos outros anos.
+The three CSV samples showed no duplicate groups on the proposed key (subsystem, reference). 2025 coverage found in the balance: 01/01 00:00 to 31/12 23:00; EAR/ENA: 01/01 to 31/12. This does not prove physical validity of the values, historical latency or the quality of other years.
 
-## Dois problemas concretos a considerar na futura Silver
+## Two concrete issues for the Silver layer
 
-1. **SIN já está no balanço.** Somar todas as linhas de subsistemas sem separar esse agregado pode contar o total novamente.
-2. **Chaves com espaços à direita.** EAR e ENA trazem `N ` e `S ` nas amostras, enquanto o balanço tem `N` e `S`. Preservamos os bytes originais; uma regra explícita de normalização será necessária para junções futuras.
+1. **SIN is already in the balance.** Summing every subsystem row without separating this aggregate can count the total twice.
+2. **Keys with trailing spaces.** EAR and ENA carry `N ` and `S ` in the samples, while the balance has `N` and `S`. The original bytes are preserved; an explicit normalization rule is needed for joins.
 
-## Achados posteriores (10/11/2026, pipeline e backfill)
+## Later findings (2026-11-10, pipeline and backfill)
 
-| Achado | Onde | Tratamento |
+| Finding | Where | Handling |
 |---|---|---|
-| API de carga exige `cod_areacarga`; sem ele devolve lista vazia | apicarga | Códigos confirmados: SECO, S, NE, N (+ áreas estaduais) |
-| Área `SIN` da carga verificada devolve **todos os valores zero** | apicarga | Fora da coleta; alerta `zero_total_load` na Silver |
-| **JSON inválido** em 2018 a fev/2019: campos MMGD sem valor escritos como `"campo": ,` | apicarga verificada | Leitura tolerante só para esse padrão (vira `null`); bytes originais intactos |
-| Carga verificada é **revisada** depois (`din_atualizacao`) | apicarga | Cada revisão é um objeto novo; views escolhem a mais recente |
-| `val_intercambioprogmwmed` ausente nos arquivos de 2023 | intercambio-nacional | Coluna marcada como `optional` no contrato |
-| 6 das 31 geometrias de bacias com autointerseção | bacia_contorno | `make_valid`, variação de área 0,000% |
-| Firewall da CCEE devolve 403 (inclusive no site principal) | CCEE | Conector desligado até haver acesso |
+| Load API requires `cod_areacarga`; without it, it returns an empty list | apicarga | Confirmed codes: SECO, S, NE, N (+ state areas) |
+| Verified load area `SIN` returns **all values as zero** | apicarga | Excluded from collection; `zero_total_load` alert in Silver |
+| **Invalid JSON** from 2018 to Feb/2019: empty MMGD fields written as `"field": ,` | apicarga verified | Tolerant parsing only for this pattern (becomes `null`); original bytes intact |
+| Verified load is **revised** later (`din_atualizacao`) | apicarga | Each revision is a new object; views pick the latest |
+| `val_intercambioprogmwmed` missing in the 2023 files | intercambio-nacional | Column marked `optional` in the contract |
+| 6 of the 31 basin geometries self-intersect | bacia_contorno | `make_valid`, area change 0.000% |
+| CCEE firewall returns 403 (including the main site) | CCEE | Connector disabled until access is available |
 
-## O que permanece sem validação ao vivo
+## Still not validated live
 
-- Equivalência entre a API de carga e os CSVs de outros produtos (granularidades e componentes diferentes).
-- Fuso horário dos produtos ONS em arquivo (só a API de carga declara UTC).
-- Correspondência entre bacias, reservatórios, usinas e áreas incrementais (5 polígonos sem ligação com a ENA).
-- Schema real dos conjuntos de PLD da CCEE.
+- Equivalence between the load API and the CSVs of other products (different granularities and components).
+- Time zone of the ONS file products (only the load API declares UTC).
+- Mapping between basins, reservoirs, plants and incremental areas (5 polygons not linked to ENA).
+- Real schema of the CCEE PLD datasets.
 
-Situação original desta seção (início do projeto): os quatro testes de aquisição passaram, com Python 3.13.13 e DuckDB 1.5.6. Hoje a suíte tem 35 testes.
+Original state of this section (start of the project): the four acquisition tests passed, with Python 3.13.13 and DuckDB 1.5.6. Today the suite has 91 tests.

@@ -1,45 +1,60 @@
-# Programas Python
+# Python programs
 
-Todos têm comentários em português no próprio código. O [guia de estudo](../docs/guia_de_estudo.md) sugere a ordem de leitura.
+File and function names follow the Portuguese domain vocabulary of the Brazilian power sector (`carga` = load,
+`eolica` = wind, `previsao` = forecast, `regua` = benchmark); the tables below explain each one.
 
-## `scripts/`: o pipeline (roda todo dia)
+## `scripts/`: the pipeline (runs every day)
 
-| Arquivo | Papel |
+| File | Role |
 |---|---|
-| `acquire.py` | Núcleo de aquisição: HTTP com novas tentativas, Bronze por hash (`Store`), `ROOT`/`DATA_DIR`, CLI de catálogo e download manual |
-| `pipeline.py` | Orquestra a coleta incremental (ONS arquivos, API de carga, MERGE, GFS, ECMWF, INMET, CCEE) → Silver → Gold. `--offline` evita rede |
-| `silver.py` | Tratamento Bronze → Silver: contratos, quarentena e snapshot. **O código deste arquivo define a versão da Silver** |
-| `basins.py` | Polígonos das bacias: reparo de geometria, pesos por área e médias por bacia |
-| `gold.py` | Agregados por bacia e views DuckDB (`data/gold/energia.duckdb`) |
-| `backfill.py` | Histórico: planeja com tamanhos; com `--execute` baixa e trata usando o mesmo código |
-| `status_pipeline.py` | Relatório de situação e alertas (relatório atrasado, código do Agendador), sem rede |
-| `discover_weather.py` | Listagem de diretórios meteorológicos (usada pelo pipeline) e inspeção das bacias |
-| `run_pipeline.ps1` / `install_pipeline_task.ps1` | Wrapper e instalador da tarefa do Agendador do Windows |
+| `acquire.py` | Acquisition core: HTTP with retries, hash-addressed Bronze (`Store`), `ROOT`/`DATA_DIR`, catalog CLI and manual download |
+| `pipeline.py` | Orchestrates incremental collection (ONS files, load API, MERGE, GFS, ECMWF, INMET, CCEE) → Silver → Gold. `--offline` avoids the network |
+| `silver.py` | Bronze → Silver: schema contracts, quarantine and snapshot. **The code of this file defines the Silver version** |
+| `basins.py` | Basin polygons: geometry repair, area weights and basin averages |
+| `gold.py` | Basin aggregates and DuckDB views (`data/gold/energia.duckdb`) |
+| `backfill.py` | History: plans with sizes; with `--execute` downloads and processes with the same code |
+| `modelagem.py` | Offline backtest of the inflow and load models (`models/`); results in `docs/inventory/model_results.json` |
+| `tabela_modelo.py` | Joins every source into one subsystem × hour table (`docs/tabela_modelo.md`) |
+| `baixar_temperatura_prevista.py` / `baixar_vento_sol_previstos.py` | Archived GFS forecasts (Open-Meteo) issued 48 h ahead |
+| `carga_d1.py` / `carga_fontes.py` | Backtests of D+1 load and of the value of each data source |
+| `baixar_previsao_renovaveis.py` | Archived forecasts (48/72/96 h ahead) of wind and radiation at plant cells |
+| `prever_carga_liquida.py` | **Operational forecast** of tomorrow's and the day after's net load, with frozen recipes, current weather and an 80% band |
+| `exportar_bi.py` / `gerar_projeto_bi.py` / `relatorio_bi.py` | Star-schema BI tables (`data/bi/`), Power BI semantic model (TMDL) and report pages (PBIR) in `bi/` |
+| `gerar_dashboard_html.py` / `dashboard_template.html` | Static HTML dashboard (single file, Plotly) in `docs/dashboard/`, from the same BI tables |
+| `auditar_previsoes.py` | Replays the operational forecast over a past week and compares with what happened |
+| `carga_liquida_d1.py` | Net load by component vs the ONS DESSEM schedule: D+1 (default) or `--horizonte 2` (see `docs/research/carga_liquida_d1.md` and `carga_liquida_d2.md`) |
+| `solar_usinas.py` / `solar_irradiancia.py` | Solar plant ranking, NASA POWER radiation and measured irradiance including curtailment |
+| `sazonalidade_carga.py` | D+1 load backtest sliced by season, month, hour band and day type |
+| `status_pipeline.py` | Offline status report and alerts (stale report, Task Scheduler code) |
+| `discover_weather.py` | Weather directory listing (used by the pipeline) and basin inspection |
+| `run_pipeline.ps1` / `install_pipeline_task.ps1` | Wrapper and installer for the Windows Task Scheduler job |
 
-## `scripts/preparacao/`: geraram configurações e inventários (rodar só quando a fonte mudar)
+## `scripts/preparacao/`: generated configs and inventories (run only when a source changes)
 
-| Arquivo | Papel |
+| File | Role |
 |---|---|
-| `inventory.py` | Catálogo ONS → `docs/inventory/ons_catalog.md` e `ons_resources.csv` |
-| `build_contracts.py` | Schemas auditados → `configs/ons_contracts.json` (revisar à mão) |
-| `plan_weather.py` | Inspeciona o shapefile e gera retângulos por bacia |
-| `download_weather.py` | Primeiro lote meteorológico e o inventário de estações INMET |
+| `inventory.py` | ONS catalog → `docs/inventory/ons_catalog.md` and `ons_resources.csv` |
+| `build_contracts.py` | Audited schemas → `configs/ons_contracts.json` (review by hand) |
+| `plan_weather.py` | Inspects the basin shapefile and builds bounding boxes |
+| `download_weather.py` | First weather batch and the INMET station inventory |
 
-## `scripts/diagnostico/`: auditorias e investigações pontuais
+## `scripts/diagnostico/`: audits and one-off investigations
 
-| Arquivo | Papel |
+| File | Role |
 |---|---|
-| `audit_endpoints.py` / `summarize_audit.py` | Testa as URLs recentes dos conjuntos e as datas internas |
-| `probe_load_api.py` | Teste original da API de carga (antes dos códigos de área) |
-| `validate_sources.py` / `inspect_samples.py` | As oito amostras iniciais e a cobertura delas |
-| `compare_formats.py` | CSV × Parquet do mesmo arquivo (DuckDB, `EXCEPT ALL`) |
-| `inspect_rejections.py` | Motivos das linhas em quarentena |
-| `check_environment.py` | Confere bibliotecas e gera o lock de versões |
-| `report_weather.py` | Relatório do primeiro lote meteorológico |
+| `audit_endpoints.py` / `summarize_audit.py` | Tests recent dataset URLs and their internal dates |
+| `probe_load_api.py` | Original load-API probe (before area codes) |
+| `validate_sources.py` / `inspect_samples.py` | The eight initial samples and their coverage |
+| `compare_formats.py` | CSV × Parquet of the same file (DuckDB, `EXCEPT ALL`) |
+| `inspect_rejections.py` | Reasons for quarantined rows |
+| `check_environment.py` | Checks libraries and writes the version lock |
+| `report_weather.py` | Report of the first weather batch |
+| `residuos_2026.py` | 2026 residuals vs candidate variables, second-stage model and resampling interval (is a new model worth it?) |
+| `fuzzy_banda.py` | Fuzzy risk score (heat, ONS bias, holiday): adaptive band and correction weight, selected on 2025 and validated on 2026 |
 
-Os scripts das subpastas importam os módulos de `scripts/` (por exemplo `from acquire import Store`) por meio de uma linha que acrescenta a pasta-mãe ao `sys.path`.
+Scripts in subfolders import modules from `scripts/` (e.g. `from acquire import Store`) through a line that adds the parent folder to `sys.path`.
 
-## Caminhos
+## Paths
 
-- `ROOT` é a raiz do projeto. `DATA_DIR` é a pasta de dados: o padrão é `<projeto>/data`, ou o valor da variável de ambiente `ENERGY_DATA_DIR`.
-- Os manifestos guardam caminhos absolutos. Se a pasta de dados mudar de lugar, `resolve_data_path()` reencontra os arquivos a partir de `bronze/`, `silver/` etc.
+- `ROOT` is the project root. `DATA_DIR` is the data folder: `<project>/data` by default, or the `ENERGY_DATA_DIR` environment variable.
+- Manifests store absolute paths. If the data folder moves, `resolve_data_path()` finds files again from `bronze/`, `silver/` and so on.

@@ -1,4 +1,4 @@
-"""Médias por bacia, correspondência de nomes e download por faixa de bytes. Sem rede."""
+"""Basin means, name matching and byte-range download. No network."""
 import sys
 from io import BytesIO
 from pathlib import Path
@@ -15,7 +15,7 @@ from basins import AREA_CRS, basin_means, ena_mapping, grid_weights, normalize_n
 
 
 def make_basins():
-    """Bacia A cobre 2×2 células inteiras; bacia B cobre metade de uma célula."""
+    """Basin A covers 2×2 whole cells; basin B covers half a cell."""
     geometry = [box(-50.0, -20.0, -49.8, -19.8), box(-49.8, -20.0, -49.75, -19.9)]
     frame = gpd.GeoDataFrame({"basin_id": [1, 2], "basin_name": ["Grande", "Uatuamã"],
                               "geometry_repaired": [False, False]}, geometry=geometry, crs="EPSG:4326")
@@ -33,10 +33,10 @@ def test_weights_sum_to_one_per_basin(tmp_path):
     totals = dict(weights.group_by("basin_id").agg(pl.col("weight").sum()).iter_rows())
     assert totals[1] == pytest.approx(1.0, abs=1e-6)
     assert totals[2] == pytest.approx(1.0, abs=1e-6)
-    # Bacia B ocupa metade da célula (-49.75, -19.95).
+    # Basin B covers half of cell (-49.75, -19.95).
     part = weights.filter(pl.col("basin_id") == 2)
     assert part.height == 1 and part["cell_fraction_inside"][0] == pytest.approx(0.5, abs=0.01)
-    # Segunda chamada usa o cache em disco.
+    # Second call uses the on-disk cache.
     assert len(list(tmp_path.glob("*.parquet"))) == 1
 
 
@@ -44,10 +44,10 @@ def test_area_weighted_mean_ignores_missing_cells_and_reports_coverage(tmp_path)
     basins = make_basins()
     weights = grid_weights(GRID_LATS, GRID_LONS, basins, tmp_path)
     lat, lon = np.meshgrid(GRID_LATS, GRID_LONS, indexing="ij")
-    values = [10.0, 20.0, 99.0, 30.0, None, 99.0]  # uma célula da bacia A sem valor
+    values = [10.0, 20.0, 99.0, 30.0, None, 99.0]  # one cell of basin A without a value
     frame = pl.DataFrame({"latitude": lat.ravel(), "longitude": lon.ravel(), "value": values, "variable": "precipitation_mm"})
     result = {r["basin_id"]: r for r in basin_means(frame, weights, basins, ["variable"]).iter_rows(named=True)}
-    # Células de A com valor têm áreas quase iguais: média ≈ (10+20+30)/3, cobertura ≈ 3/4.
+    # A's cells with values have almost equal areas: mean ≈ (10+20+30)/3, coverage ≈ 3/4.
     assert result[1]["value"] == pytest.approx(20.0, abs=0.1)
     assert result[1]["coverage"] == pytest.approx(0.75, abs=0.01)
     assert result[1]["basin_name"] == "Grande"

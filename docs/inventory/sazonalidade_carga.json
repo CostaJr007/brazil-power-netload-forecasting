@@ -1,0 +1,378 @@
+{
+  "escolhido_em_2023_2024": "global",
+  "linhas": 131088,
+  "mape_desenvolvimento": {
+    "ons": 3.114,
+    "ons_vies28": 2.599,
+    "global": 2.598,
+    "por_estacao": 2.824,
+    "por_mes_janela": 2.811
+  },
+  "mape_confirmacao": {
+    "ons": 3.052,
+    "ons_vies28": 2.778,
+    "global": 2.672,
+    "por_estacao": 2.691,
+    "por_mes_janela": 2.649
+  },
+  "testes_confirmacao": {
+    "por_estacao - global": {
+      "dif_mae": 10.05,
+      "ic95_baixo": -1.16,
+      "ic95_alto": 22.8
+    },
+    "por_mes_janela - global": {
+      "dif_mae": 0.54,
+      "ic95_baixo": -15.87,
+      "ic95_alto": 16.01
+    }
+  },
+  "por_estacao": {
+    "inverno": {
+      "ons": 2.613,
+      "ons_vies28": 2.454,
+      "global": 2.312,
+      "por_estacao": 2.192,
+      "por_mes_janela": 2.176
+    },
+    "outono": {
+      "ons": 3.06,
+      "ons_vies28": 2.812,
+      "global": 2.561,
+      "por_estacao": 2.666,
+      "por_mes_janela": 2.631
+    },
+    "primavera": {
+      "ons": 3.097,
+      "ons_vies28": 2.761,
+      "global": 2.525,
+      "por_estacao": 2.513,
+      "por_mes_janela": 2.56
+    },
+    "verao": {
+      "ons": 3.536,
+      "ons_vies28": 3.153,
+      "global": 3.413,
+      "por_estacao": 3.531,
+      "por_mes_janela": 3.35
+    }
+  },
+  "por_mes": {
+    "1": {
+      "ons": 3.442,
+      "ons_vies28": 3.052,
+      "global": 3.518,
+      "por_estacao": 3.718,
+      "por_mes_janela": 3.718
+    },
+    "2": {
+      "ons": 3.208,
+      "ons_vies28": 2.786,
+      "global": 2.743,
+      "por_estacao": 3.004,
+      "por_mes_janela": 2.726
+    },
+    "3": {
+      "ons": 2.958,
+      "ons_vies28": 2.83,
+      "global": 2.591,
+      "por_estacao": 2.668,
+      "por_mes_janela": 2.642
+    },
+    "4": {
+      "ons": 3.12,
+      "ons_vies28": 2.887,
+      "global": 2.762,
+      "por_estacao": 2.859,
+      "por_mes_janela": 2.859
+    },
+    "5": {
+      "ons": 3.104,
+      "ons_vies28": 2.721,
+      "global": 2.336,
+      "por_estacao": 2.477,
+      "por_mes_janela": 2.4
+    },
+    "6": {
+      "ons": 2.87,
+      "ons_vies28": 2.651,
+      "global": 2.422,
+      "por_estacao": 2.404,
+      "por_mes_janela": 2.373
+    },
+    "7": {
+      "ons": 2.492,
+      "ons_vies28": 2.354,
+      "global": 2.395,
+      "por_estacao": 2.131,
+      "por_mes_janela": 2.131
+    },
+    "8": {
+      "ons": 2.486,
+      "ons_vies28": 2.364,
+      "global": 2.123,
+      "por_estacao": 2.049,
+      "por_mes_janela": 2.031
+    },
+    "9": {
+      "ons": 2.918,
+      "ons_vies28": 2.569,
+      "global": 2.262,
+      "por_estacao": 2.325,
+      "por_mes_janela": 2.37
+    },
+    "10": {
+      "ons": 3.049,
+      "ons_vies28": 2.744,
+      "global": 2.493,
+      "por_estacao": 2.524,
+      "por_mes_janela": 2.524
+    },
+    "11": {
+      "ons": 3.459,
+      "ons_vies28": 3.091,
+      "global": 2.992,
+      "por_estacao": 2.791,
+      "por_mes_janela": 2.918
+    },
+    "12": {
+      "ons": 4.314,
+      "ons_vies28": 4.019,
+      "global": 4.412,
+      "por_estacao": 4.108,
+      "por_mes_janela": 3.74
+    }
+  },
+  "por_faixa": {
+    "madrugada_00_05": {
+      "ons": 2.256,
+      "ons_vies28": 2.231,
+      "global": 2.319,
+      "por_estacao": 2.253,
+      "por_mes_janela": 2.208
+    },
+    "manha_06_09": {
+      "ons": 3.006,
+      "ons_vies28": 2.581,
+      "global": 2.735,
+      "por_estacao": 2.818,
+      "por_mes_janela": 2.76
+    },
+    "noite_22_23": {
+      "ons": 2.743,
+      "ons_vies28": 2.795,
+      "global": 2.406,
+      "por_estacao": 2.293,
+      "por_mes_janela": 2.25
+    },
+    "ponta_16_21": {
+      "ons": 2.755,
+      "ons_vies28": 2.728,
+      "global": 2.298,
+      "por_estacao": 2.261,
+      "por_mes_janela": 2.232
+    },
+    "sol_10_15": {
+      "ons": 4.28,
+      "ons_vies28": 3.5,
+      "global": 3.448,
+      "por_estacao": 3.609,
+      "por_mes_janela": 3.566
+    }
+  },
+  "por_tipo_dia": {
+    "dia_util": {
+      "ons": 2.987,
+      "ons_vies28": 2.681,
+      "global": 2.54,
+      "por_estacao": 2.583,
+      "por_mes_janela": 2.554
+    },
+    "feriado": {
+      "ons": 3.659,
+      "ons_vies28": 3.636,
+      "global": 5.263,
+      "por_estacao": 4.676,
+      "por_mes_janela": 4.693
+    },
+    "fim_de_semana": {
+      "ons": 3.139,
+      "ons_vies28": 2.911,
+      "global": 2.681,
+      "por_estacao": 2.716,
+      "por_mes_janela": 2.633
+    }
+  },
+  "subsistema_estacao": {
+    "N|inverno": {
+      "ons": 2.365,
+      "ons_vies28": 1.832,
+      "global": 1.714,
+      "por_estacao": 1.686,
+      "por_mes_janela": 1.708
+    },
+    "N|outono": {
+      "ons": 2.985,
+      "ons_vies28": 2.409,
+      "global": 2.024,
+      "por_estacao": 2.105,
+      "por_mes_janela": 2.124
+    },
+    "N|primavera": {
+      "ons": 2.797,
+      "ons_vies28": 2.16,
+      "global": 2.003,
+      "por_estacao": 2.022,
+      "por_mes_janela": 2.005
+    },
+    "N|verao": {
+      "ons": 3.116,
+      "ons_vies28": 2.615,
+      "global": 2.361,
+      "por_estacao": 2.377,
+      "por_mes_janela": 2.345
+    },
+    "NE|inverno": {
+      "ons": 2.423,
+      "ons_vies28": 2.329,
+      "global": 1.998,
+      "por_estacao": 2.082,
+      "por_mes_janela": 2.052
+    },
+    "NE|outono": {
+      "ons": 3.081,
+      "ons_vies28": 2.827,
+      "global": 2.373,
+      "por_estacao": 2.449,
+      "por_mes_janela": 2.479
+    },
+    "NE|primavera": {
+      "ons": 2.828,
+      "ons_vies28": 2.571,
+      "global": 2.203,
+      "por_estacao": 2.253,
+      "por_mes_janela": 2.261
+    },
+    "NE|verao": {
+      "ons": 3.43,
+      "ons_vies28": 2.931,
+      "global": 2.832,
+      "por_estacao": 2.938,
+      "por_mes_janela": 2.857
+    },
+    "S|inverno": {
+      "ons": 3.711,
+      "ons_vies28": 3.858,
+      "global": 3.807,
+      "por_estacao": 3.179,
+      "por_mes_janela": 3.141
+    },
+    "S|outono": {
+      "ons": 3.881,
+      "ons_vies28": 3.801,
+      "global": 3.806,
+      "por_estacao": 3.954,
+      "por_mes_janela": 3.757
+    },
+    "S|primavera": {
+      "ons": 3.969,
+      "ons_vies28": 3.731,
+      "global": 3.71,
+      "por_estacao": 3.564,
+      "por_mes_janela": 3.702
+    },
+    "S|verao": {
+      "ons": 4.657,
+      "ons_vies28": 4.247,
+      "global": 5.521,
+      "por_estacao": 5.762,
+      "por_mes_janela": 5.345
+    },
+    "SECO|inverno": {
+      "ons": 1.953,
+      "ons_vies28": 1.795,
+      "global": 1.726,
+      "por_estacao": 1.819,
+      "por_mes_janela": 1.802
+    },
+    "SECO|outono": {
+      "ons": 2.293,
+      "ons_vies28": 2.21,
+      "global": 2.038,
+      "por_estacao": 2.153,
+      "por_mes_janela": 2.164
+    },
+    "SECO|primavera": {
+      "ons": 2.795,
+      "ons_vies28": 2.58,
+      "global": 2.184,
+      "por_estacao": 2.214,
+      "por_mes_janela": 2.271
+    },
+    "SECO|verao": {
+      "ons": 2.939,
+      "ons_vies28": 2.82,
+      "global": 2.938,
+      "por_estacao": 3.046,
+      "por_mes_janela": 2.852
+    }
+  },
+  "indice_sazonal_mensal": {
+    "N": {
+      "1": 0.917,
+      "2": 0.932,
+      "3": 0.934,
+      "4": 0.948,
+      "5": 0.982,
+      "6": 0.98,
+      "7": 0.993,
+      "8": 1.045,
+      "9": 1.083,
+      "10": 1.087,
+      "11": 1.074,
+      "12": 1.025
+    },
+    "NE": {
+      "1": 0.992,
+      "2": 1.023,
+      "3": 1.006,
+      "4": 0.988,
+      "5": 0.978,
+      "6": 0.938,
+      "7": 0.934,
+      "8": 0.97,
+      "9": 1.0,
+      "10": 1.056,
+      "11": 1.063,
+      "12": 1.053
+    },
+    "S": {
+      "1": 1.094,
+      "2": 1.144,
+      "3": 1.096,
+      "4": 0.966,
+      "5": 0.928,
+      "6": 0.93,
+      "7": 0.937,
+      "8": 0.933,
+      "9": 0.949,
+      "10": 0.969,
+      "11": 1.012,
+      "12": 1.042
+    },
+    "SECO": {
+      "1": 1.018,
+      "2": 1.073,
+      "3": 1.077,
+      "4": 1.006,
+      "5": 0.963,
+      "6": 0.922,
+      "7": 0.921,
+      "8": 0.949,
+      "9": 1.007,
+      "10": 1.019,
+      "11": 1.019,
+      "12": 1.025
+    }
+  }
+}

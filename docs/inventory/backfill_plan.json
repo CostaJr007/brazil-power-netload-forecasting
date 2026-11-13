@@ -1,19 +1,19 @@
 {
-  "planned_at": "2026-11-10T21:20:39.837933+00:00",
-  "start": "2023-12-25",
-  "end": "2024-12-31",
+  "planned_at": "2026-11-11T14:50:42.483331+00:00",
+  "start": "2023-01-01",
+  "end": "2026-11-10",
   "sources": [
-    "merge"
+    "ons"
   ],
   "groups": {
-    "merge": {
-      "files": 373,
-      "bytes_known": 153875662,
+    "balanco_dessem_detalhe": {
+      "files": 529,
+      "bytes_known": 8565604,
       "unknown_size": 0
     }
   },
-  "total_files": 373,
-  "total_bytes_known": 153875662,
+  "total_files": 529,
+  "total_bytes_known": 8565604,
   "errors": [],
   "note": "Bytes de carga e MERGE são estimativas; ONS vem do Content-Length de cada arquivo. Silver ocupa espaço adicional (Parquet zstd, em geral menor que a origem)."
 }

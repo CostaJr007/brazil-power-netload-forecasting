@@ -1,0 +1,12 @@
+{
+  "description": "Regulatory PLD limits set by ANEEL, in R$/MWh, per year in force. Used only to ESTIMATE the PLD from the ONS CMO (vw_pld_estimado_*); they do not replace the official CCEE series.",
+  "validation": "Each cap is the previous year's cap adjusted by IPCA inflation, with the same percentage for the hourly and structural caps (2022→2023: +5.90%; 2023→2024: +4.68%; 2024→2025: +4.87%; 2025→2026: +4.46%). This chaining was used to choose between conflicting values published in the press.",
+  "limits": [
+    {"ano": 2021, "pld_min": 49.77, "pld_max_estrutural": 583.88, "pld_max_horario": 1197.87, "fonte": "MegaWhat (minimum and structural); CPFL Soluções (hourly). Hourly value conflicts in the press (1,141.85 is the REN 858/2019 base value, at 2019 prices); 1,197.87 is the one consistent with the 2022 adjustment"},
+    {"ano": 2022, "pld_min": 55.70, "pld_max_estrutural": 646.58, "pld_max_horario": 1326.50, "fonte": "MegaWhat, citing an order in the DOU of 2021-12-17. Stima Energia published 640.50 and 1,314.02, inconsistent with the 2023 adjustment"},
+    {"ano": 2023, "pld_min": 69.04, "pld_max_estrutural": 684.73, "pld_max_horario": 1404.77, "fonte": "ANEEL ratifying resolution (process 48500.006275/2023-47); replaces the values announced earlier (678.29 and 1,391.56)"},
+    {"ano": 2024, "pld_min": 61.07, "pld_max_estrutural": 716.80, "pld_max_horario": 1470.57, "fonte": "Abraceel / Brasil Energia (Dec/2023)"},
+    {"ano": 2025, "pld_min": 58.60, "pld_max_estrutural": 751.73, "pld_max_horario": 1542.23, "fonte": "ANEEL, news from Dec/2024"},
+    {"ano": 2026, "pld_min": 57.31, "pld_max_estrutural": 785.27, "pld_max_horario": 1611.04, "fonte": "ANEEL DSP 3.850/2025, via Canal Solar e Cenário Energia"}
+  ]
+}

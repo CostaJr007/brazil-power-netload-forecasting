@@ -1,20 +1,16 @@
-"""Médias meteorológicas por BACIA hidrográfica (polígonos oficiais do ONS).
+"""Weather averages per hydro BASIN (official ONS polygons).
 
-Por que não usar o centróide ou o retângulo da bacia?
-Uma bacia como a do Madeira tem 1,5 milhão de km²: chover no centro não diz
-nada sobre o resto. A média correta pondera cada célula da grade pela área
-que ela tem DENTRO do polígono:
+Why not the basin centroid or bounding box? A basin like the Madeira covers 1.5 million km²: rain at the centre says
+nothing about the rest. The correct mean weights each grid cell by the area it has INSIDE the polygon:
 
-    chuva_bacia = Σ (chuva_célula × área_célula∩bacia) / Σ área_célula∩bacia
+    basin_rain = Σ (cell_rain × area(cell ∩ basin)) / Σ area(cell ∩ basin)
 
-As áreas são calculadas em projeção de área (EPSG:5880, SIRGAS 2000 / Brazil
-Polyconic), não em graus: 1° de longitude encolhe à medida que se afasta do
-Equador.
+Areas are computed in an equal-area projection (EPSG:5880, SIRGAS 2000 / Brazil Polyconic), not in degrees: one degree
+of longitude shrinks away from the Equator.
 
-Reparo de geometrias: 6 das 31 feições do arquivo do ONS têm autointerseções
-minúsculas. shapely.make_valid corrige sem mudar a área (variação medida:
-0,000%). O arquivo original na Bronze continua intacto; o reparo é registrado
-em cada linha (geometry_repaired).
+Geometry repair: 6 of the 31 features in the ONS file have tiny self-intersections. shapely.make_valid fixes them
+without changing the area (measured change: 0.000%). The original file in Bronze stays intact; the repair is recorded
+on each row (geometry_repaired).
 """
 import hashlib
 import json
@@ -32,22 +28,22 @@ AREA_CRS = "EPSG:5880"
 
 
 def normalize_name(value):
-    """'Paraíba do Sul' → 'PARAIBA DO SUL'; usado só para casar nomes entre fontes."""
+    """'Paraíba do Sul' → 'PARAIBA DO SUL'; used only to match names across sources."""
     text = unicodedata.normalize("NFKD", str(value)).encode("ascii", "ignore").decode()
     return " ".join(text.upper().replace("-", " ").split())
 
 
 def load_basins():
-    """Lê os polígonos do ONS, repara geometrias inválidas e calcula a área de cada bacia."""
+    """Read the ONS polygons, repair invalid geometries and compute each basin's area."""
     discovery = json.loads((ROOT / "docs/inventory/weather_discovery.json").read_text(encoding="utf-8"))
     # Caminho absoluto gravado na descoberta; resolve_data_path reencontra se data/ mudou de lugar.
     path = str(resolve_data_path(discovery["basins"]["access_copy"]))
     frame = gpd.read_file("zip://" + path)
     if frame.crs is None or frame.crs.to_epsg() != 4326:
-        raise ValueError(f"CRS inesperado nos polígonos: {frame.crs}")
+        raise ValueError(f"Unexpected CRS in the polygons: {frame.crs}")
     repaired = ~frame.is_valid
     geometry = frame.geometry.make_valid()
-    # make_valid pode devolver GeometryCollection com linhas soltas; só áreas importam.
+    # make_valid may return a GeometryCollection with stray lines; only areas matter.
     geometry = geometry.apply(lambda g: shapely.unary_union([p for p in getattr(g, "geoms", [g])
                                                             if p.geom_type in ("Polygon", "MultiPolygon")]))
     basins = gpd.GeoDataFrame({"basin_id": frame["ID"].astype(int), "basin_name": frame["Nome_Bacia"],
@@ -58,16 +54,16 @@ def load_basins():
 
 
 def grid_signature(lats, lons, basins):
-    """Identidade da grade + polígonos; pesos são reaproveitados enquanto ela não mudar."""
+    """Identity of grid + polygons; weights are reused while it does not change."""
     payload = json.dumps([np.round(lats, 4).tolist(), np.round(lons, 4).tolist(), basins["source_sha256"].iloc[0]])
     return hashlib.sha256(payload.encode()).hexdigest()[:16]
 
 
 def grid_weights(lats, lons, basins, cache_dir=None):
-    """Peso de cada célula em cada bacia: área(célula ∩ bacia) / área(bacia).
+    """Weight of each cell in each basin: area(cell ∩ basin) / area(basin).
 
-    lats/lons são os CENTROS das células de uma grade regular. A soma dos pesos
-    de uma bacia é ~1 quando a grade cobre a bacia inteira.
+    lats/lons are the CENTRES of the cells of a regular grid. A basin's weights sum
+    to ~1 when the grid covers the whole basin.
     """
     lats = np.unique(np.round(np.asarray(lats, dtype=float), 4))
     lons = np.unique(np.round(np.asarray(lons, dtype=float), 4))
@@ -98,10 +94,10 @@ def grid_weights(lats, lons, basins, cache_dir=None):
 
 
 def basin_means(frame, weights, basins, keys):
-    """Média ponderada por bacia; células sem valor (null) saem do numerador E do denominador.
+    """Weighted mean per basin; cells without a value (null) leave both numerator AND denominator.
 
-    coverage = fração da área da bacia com valor válido (1,0 = bacia toda coberta).
-    Não imputamos ausências: se coverage for baixo, quem consome decide se usa.
+    coverage = share of the basin area with a valid value (1.0 = whole basin covered).
+    Missing values are not imputed: if coverage is low, the consumer decides whether to use it.
     """
     names = pl.DataFrame({"basin_id": basins["basin_id"].tolist(), "basin_name": basins["basin_name"].tolist()})
     data = frame.with_columns(pl.col("latitude").round(3).alias("lat_key"), pl.col("longitude").round(3).alias("lon_key"))
@@ -112,17 +108,17 @@ def basin_means(frame, weights, basins, keys):
               .group_by(["basin_id", *keys])
               .agg((pl.col("_wv").sum() / pl.col("_w").sum()).alias("value"), pl.col("_w").sum().alias("coverage"),
                    pl.len().alias("cells")))
-    # Bacia sem nenhuma célula válida fica com value null (0/0), nunca zero.
+    # A basin without any valid cell gets a null value (0/0), never zero.
     result = result.with_columns(pl.when(pl.col("coverage") > 0).then(pl.col("value")).otherwise(None).alias("value"))
     return result.join(names, on="basin_id", how="left")
 
 
 def ena_mapping(basins, ena_names, overrides):
-    """Liga polígono ↔ nome de bacia usado nas séries de ENA/EAR do ONS.
+    """Link polygon ↔ basin name used in the ONS inflow/storage series.
 
-    Só aceita correspondência por nome normalizado ou por exceção explícita
-    (overrides, com justificativa em configs). Sem correspondência = None: não
-    adivinhamos que um polígono pequeno pertence a uma bacia maior.
+    Only accepts a match by normalised name or by an explicit exception
+    (overrides, justified in configs). No match = None: we never guess
+    that a small polygon belongs to a larger basin.
     """
     available = {normalize_name(n): n for n in ena_names}
     rows = []

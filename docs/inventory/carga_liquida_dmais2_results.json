@@ -1,0 +1,1323 @@
+{
+  "horizonte": "D+2",
+  "regua": "ons_ant_semana",
+  "periodo": [
+    "2025-06-07",
+    "2026-11-07"
+  ],
+  "escolhas": {
+    "carga": "media_ridge_gbm",
+    "eolica": "gbm",
+    "solar": "media_com_ons_ant_semana"
+  },
+  "pecas": {
+    "carga": {
+      "escolhido_em_2025": "media_ridge_gbm",
+      "desenvolvimento_2025": {
+        "ons_ant_semana": {
+          "mae": 731.6,
+          "ganho_vs_ons_ant_semana_pct": 0.0
+        },
+        "persistencia": {
+          "mae": 1704.9,
+          "ganho_vs_ons_ant_semana_pct": -133.0
+        },
+        "media7": {
+          "mae": 1205.9,
+          "ganho_vs_ons_ant_semana_pct": -64.8
+        },
+        "ons": {
+          "mae": 634.0,
+          "ganho_vs_ons_ant_semana_pct": 13.3
+        },
+        "ons_corrigido": {
+          "mae": 538.4,
+          "ganho_vs_ons_ant_semana_pct": 26.4
+        },
+        "ridge": {
+          "mae": 608.6,
+          "ganho_vs_ons_ant_semana_pct": 16.8
+        },
+        "gbm": {
+          "mae": 580.0,
+          "ganho_vs_ons_ant_semana_pct": 20.7
+        },
+        "media_ridge_gbm": {
+          "mae": 566.7,
+          "ganho_vs_ons_ant_semana_pct": 22.5
+        },
+        "ridge_sem_previsao": {
+          "mae": 725.1,
+          "ganho_vs_ons_ant_semana_pct": 0.9
+        },
+        "ons_ant": {
+          "mae": 1374.6,
+          "ganho_vs_ons_ant_semana_pct": -87.9
+        },
+        "ons_ant_corrigido": {
+          "mae": 1307.6,
+          "ganho_vs_ons_ant_semana_pct": -78.7
+        },
+        "media_com_ons_ant_corrigido": {
+          "mae": 807.0,
+          "ganho_vs_ons_ant_semana_pct": -10.3
+        },
+        "media_com_ons_ant_semana": {
+          "mae": 577.5,
+          "ganho_vs_ons_ant_semana_pct": 21.1
+        }
+      },
+      "confirmacao_2026": {
+        "ons_ant_semana": {
+          "mae": 847.4,
+          "ganho_vs_ons_ant_semana_pct": 0.0
+        },
+        "persistencia": {
+          "mae": 1963.0,
+          "ganho_vs_ons_ant_semana_pct": -131.6
+        },
+        "media7": {
+          "mae": 1335.9,
+          "ganho_vs_ons_ant_semana_pct": -57.6
+        },
+        "ons": {
+          "mae": 728.8,
+          "ganho_vs_ons_ant_semana_pct": 14.0
+        },
+        "ons_corrigido": {
+          "mae": 561.6,
+          "ganho_vs_ons_ant_semana_pct": 33.7
+        },
+        "ridge": {
+          "mae": 617.2,
+          "ganho_vs_ons_ant_semana_pct": 27.2
+        },
+        "gbm": {
+          "mae": 631.3,
+          "ganho_vs_ons_ant_semana_pct": 25.5
+        },
+        "media_ridge_gbm": {
+          "mae": 601.7,
+          "ganho_vs_ons_ant_semana_pct": 29.0
+        },
+        "ridge_sem_previsao": {
+          "mae": 750.7,
+          "ganho_vs_ons_ant_semana_pct": 11.4
+        },
+        "ons_ant": {
+          "mae": 1443.5,
+          "ganho_vs_ons_ant_semana_pct": -70.3
+        },
+        "ons_ant_corrigido": {
+          "mae": 1336.7,
+          "ganho_vs_ons_ant_semana_pct": -57.7
+        },
+        "media_com_ons_ant_corrigido": {
+          "mae": 850.8,
+          "ganho_vs_ons_ant_semana_pct": -0.4
+        },
+        "media_com_ons_ant_semana": {
+          "mae": 649.6,
+          "ganho_vs_ons_ant_semana_pct": 23.3
+        }
+      },
+      "teste_2026": {
+        "comparacao": "media_ridge_gbm - ons_ant_semana",
+        "dif_mae": -238.6,
+        "ic95": [
+          -319.9,
+          -161.4
+        ]
+      }
+    },
+    "eolica": {
+      "escolhido_em_2025": "gbm",
+      "desenvolvimento_2025": {
+        "ons_ant_semana": {
+          "mae": 662.4,
+          "ganho_vs_ons_ant_semana_pct": 0.0
+        },
+        "persistencia": {
+          "mae": 857.8,
+          "ganho_vs_ons_ant_semana_pct": -29.5
+        },
+        "media7": {
+          "mae": 701.1,
+          "ganho_vs_ons_ant_semana_pct": -5.9
+        },
+        "ons": {
+          "mae": 403.4,
+          "ganho_vs_ons_ant_semana_pct": 39.1
+        },
+        "ons_corrigido": {
+          "mae": 375.6,
+          "ganho_vs_ons_ant_semana_pct": 43.3
+        },
+        "ridge": {
+          "mae": 495.2,
+          "ganho_vs_ons_ant_semana_pct": 25.2
+        },
+        "gbm": {
+          "mae": 440.8,
+          "ganho_vs_ons_ant_semana_pct": 33.5
+        },
+        "media_ridge_gbm": {
+          "mae": 449.2,
+          "ganho_vs_ons_ant_semana_pct": 32.2
+        },
+        "ridge_sem_previsao": {
+          "mae": 654.7,
+          "ganho_vs_ons_ant_semana_pct": 1.2
+        },
+        "ons_ant": {
+          "mae": 684.0,
+          "ganho_vs_ons_ant_semana_pct": -3.3
+        },
+        "ons_ant_corrigido": {
+          "mae": 667.1,
+          "ganho_vs_ons_ant_semana_pct": -0.7
+        },
+        "media_com_ons_ant_corrigido": {
+          "mae": 500.6,
+          "ganho_vs_ons_ant_semana_pct": 24.4
+        },
+        "media_com_ons_ant_semana": {
+          "mae": 482.3,
+          "ganho_vs_ons_ant_semana_pct": 27.2
+        }
+      },
+      "confirmacao_2026": {
+        "ons_ant_semana": {
+          "mae": 695.9,
+          "ganho_vs_ons_ant_semana_pct": 0.0
+        },
+        "persistencia": {
+          "mae": 923.4,
+          "ganho_vs_ons_ant_semana_pct": -32.7
+        },
+        "media7": {
+          "mae": 771.1,
+          "ganho_vs_ons_ant_semana_pct": -10.8
+        },
+        "ons": {
+          "mae": 434.2,
+          "ganho_vs_ons_ant_semana_pct": 37.6
+        },
+        "ons_corrigido": {
+          "mae": 434.6,
+          "ganho_vs_ons_ant_semana_pct": 37.5
+        },
+        "ridge": {
+          "mae": 497.6,
+          "ganho_vs_ons_ant_semana_pct": 28.5
+        },
+        "gbm": {
+          "mae": 468.7,
+          "ganho_vs_ons_ant_semana_pct": 32.6
+        },
+        "media_ridge_gbm": {
+          "mae": 468.0,
+          "ganho_vs_ons_ant_semana_pct": 32.7
+        },
+        "ridge_sem_previsao": {
+          "mae": 725.4,
+          "ganho_vs_ons_ant_semana_pct": -4.2
+        },
+        "ons_ant": {
+          "mae": 657.5,
+          "ganho_vs_ons_ant_semana_pct": 5.5
+        },
+        "ons_ant_corrigido": {
+          "mae": 661.9,
+          "ganho_vs_ons_ant_semana_pct": 4.9
+        },
+        "media_com_ons_ant_corrigido": {
+          "mae": 511.5,
+          "ganho_vs_ons_ant_semana_pct": 26.5
+        },
+        "media_com_ons_ant_semana": {
+          "mae": 515.0,
+          "ganho_vs_ons_ant_semana_pct": 26.0
+        }
+      },
+      "teste_2026": {
+        "comparacao": "gbm - ons_ant_semana",
+        "dif_mae": -235.3,
+        "ic95": [
+          -276.0,
+          -192.0
+        ]
+      }
+    },
+    "solar": {
+      "escolhido_em_2025": "media_com_ons_ant_semana",
+      "desenvolvimento_2025": {
+        "ons_ant_semana": {
+          "mae": 332.1,
+          "ganho_vs_ons_ant_semana_pct": 0.0
+        },
+        "persistencia": {
+          "mae": 492.7,
+          "ganho_vs_ons_ant_semana_pct": -48.4
+        },
+        "media7": {
+          "mae": 397.9,
+          "ganho_vs_ons_ant_semana_pct": -19.8
+        },
+        "ons": {
+          "mae": 302.4,
+          "ganho_vs_ons_ant_semana_pct": 8.9
+        },
+        "ons_corrigido": {
+          "mae": 213.3,
+          "ganho_vs_ons_ant_semana_pct": 35.8
+        },
+        "ridge": {
+          "mae": 287.2,
+          "ganho_vs_ons_ant_semana_pct": 13.5
+        },
+        "gbm": {
+          "mae": 336.5,
+          "ganho_vs_ons_ant_semana_pct": -1.3
+        },
+        "media_ridge_gbm": {
+          "mae": 299.2,
+          "ganho_vs_ons_ant_semana_pct": 9.9
+        },
+        "ridge_sem_previsao": {
+          "mae": 386.5,
+          "ganho_vs_ons_ant_semana_pct": -16.4
+        },
+        "ons_ant": {
+          "mae": 419.5,
+          "ganho_vs_ons_ant_semana_pct": -26.3
+        },
+        "ons_ant_corrigido": {
+          "mae": 355.3,
+          "ganho_vs_ons_ant_semana_pct": -7.0
+        },
+        "media_com_ons_ant_corrigido": {
+          "mae": 298.1,
+          "ganho_vs_ons_ant_semana_pct": 10.2
+        },
+        "media_com_ons_ant_semana": {
+          "mae": 272.6,
+          "ganho_vs_ons_ant_semana_pct": 17.9
+        }
+      },
+      "confirmacao_2026": {
+        "ons_ant_semana": {
+          "mae": 372.5,
+          "ganho_vs_ons_ant_semana_pct": 0.0
+        },
+        "persistencia": {
+          "mae": 549.5,
+          "ganho_vs_ons_ant_semana_pct": -47.5
+        },
+        "media7": {
+          "mae": 442.8,
+          "ganho_vs_ons_ant_semana_pct": -18.9
+        },
+        "ons": {
+          "mae": 316.4,
+          "ganho_vs_ons_ant_semana_pct": 15.1
+        },
+        "ons_corrigido": {
+          "mae": 242.2,
+          "ganho_vs_ons_ant_semana_pct": 35.0
+        },
+        "ridge": {
+          "mae": 328.9,
+          "ganho_vs_ons_ant_semana_pct": 11.7
+        },
+        "gbm": {
+          "mae": 343.6,
+          "ganho_vs_ons_ant_semana_pct": 7.8
+        },
+        "media_ridge_gbm": {
+          "mae": 327.2,
+          "ganho_vs_ons_ant_semana_pct": 12.1
+        },
+        "ridge_sem_previsao": {
+          "mae": 420.8,
+          "ganho_vs_ons_ant_semana_pct": -13.0
+        },
+        "ons_ant": {
+          "mae": 441.5,
+          "ganho_vs_ons_ant_semana_pct": -18.5
+        },
+        "ons_ant_corrigido": {
+          "mae": 389.5,
+          "ganho_vs_ons_ant_semana_pct": -4.6
+        },
+        "media_com_ons_ant_corrigido": {
+          "mae": 322.8,
+          "ganho_vs_ons_ant_semana_pct": 13.3
+        },
+        "media_com_ons_ant_semana": {
+          "mae": 301.6,
+          "ganho_vs_ons_ant_semana_pct": 19.0
+        }
+      },
+      "teste_2026": {
+        "comparacao": "media_com_ons_ant_semana - ons_ant_semana",
+        "dif_mae": -73.3,
+        "ic95": [
+          -87.1,
+          -59.2
+        ]
+      }
+    }
+  },
+  "liquida_subsistemas_2026": {
+    "N": {
+      "ons_ant": {
+        "mae": 347.1,
+        "ganho_vs_ons_ant_semana_pct": -30.5
+      },
+      "ons_ant_corrigido": {
+        "mae": 339.7,
+        "ganho_vs_ons_ant_semana_pct": -27.7
+      },
+      "ons_ant_semana": {
+        "mae": 266.1,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 429.2,
+        "ganho_vs_ons_ant_semana_pct": -61.3
+      },
+      "pecas_ml": {
+        "mae": 191.0,
+        "ganho_vs_ons_ant_semana_pct": 28.2
+      },
+      "pecas_escolhidas": {
+        "mae": 194.7,
+        "ganho_vs_ons_ant_semana_pct": 26.8
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 210.9,
+        "ganho_vs_ons_ant_semana_pct": 20.7
+      },
+      "ons_corrigido": {
+        "mae": 198.6,
+        "ganho_vs_ons_ant_semana_pct": 25.4
+      },
+      "ons": {
+        "mae": 215.9,
+        "ganho_vs_ons_ant_semana_pct": 18.9
+      }
+    },
+    "NE": {
+      "ons_ant": {
+        "mae": 2436.8,
+        "ganho_vs_ons_ant_semana_pct": 5.4
+      },
+      "ons_ant_corrigido": {
+        "mae": 2469.3,
+        "ganho_vs_ons_ant_semana_pct": 4.2
+      },
+      "ons_ant_semana": {
+        "mae": 2576.7,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 3283.2,
+        "ganho_vs_ons_ant_semana_pct": -27.4
+      },
+      "pecas_ml": {
+        "mae": 1908.5,
+        "ganho_vs_ons_ant_semana_pct": 25.9
+      },
+      "pecas_escolhidas": {
+        "mae": 1861.5,
+        "ganho_vs_ons_ant_semana_pct": 27.8
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 1982.0,
+        "ganho_vs_ons_ant_semana_pct": 23.1
+      },
+      "ons_corrigido": {
+        "mae": 1766.6,
+        "ganho_vs_ons_ant_semana_pct": 31.4
+      },
+      "ons": {
+        "mae": 1753.2,
+        "ganho_vs_ons_ant_semana_pct": 32.0
+      }
+    },
+    "S": {
+      "ons_ant": {
+        "mae": 1529.9,
+        "ganho_vs_ons_ant_semana_pct": -44.0
+      },
+      "ons_ant_corrigido": {
+        "mae": 1542.0,
+        "ganho_vs_ons_ant_semana_pct": -45.2
+      },
+      "ons_ant_semana": {
+        "mae": 1062.2,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 2334.7,
+        "ganho_vs_ons_ant_semana_pct": -119.8
+      },
+      "pecas_ml": {
+        "mae": 733.9,
+        "ganho_vs_ons_ant_semana_pct": 30.9
+      },
+      "pecas_escolhidas": {
+        "mae": 760.3,
+        "ganho_vs_ons_ant_semana_pct": 28.4
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 808.9,
+        "ganho_vs_ons_ant_semana_pct": 23.9
+      },
+      "ons_corrigido": {
+        "mae": 599.3,
+        "ganho_vs_ons_ant_semana_pct": 43.6
+      },
+      "ons": {
+        "mae": 594.9,
+        "ganho_vs_ons_ant_semana_pct": 44.0
+      }
+    },
+    "SE": {
+      "ons_ant": {
+        "mae": 2922.3,
+        "ganho_vs_ons_ant_semana_pct": -57.5
+      },
+      "ons_ant_corrigido": {
+        "mae": 2728.1,
+        "ganho_vs_ons_ant_semana_pct": -47.0
+      },
+      "ons_ant_semana": {
+        "mae": 1855.5,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 3970.1,
+        "ganho_vs_ons_ant_semana_pct": -114.0
+      },
+      "pecas_ml": {
+        "mae": 1338.9,
+        "ganho_vs_ons_ant_semana_pct": 27.8
+      },
+      "pecas_escolhidas": {
+        "mae": 1337.2,
+        "ganho_vs_ons_ant_semana_pct": 27.9
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 1400.8,
+        "ganho_vs_ons_ant_semana_pct": 24.5
+      },
+      "ons_corrigido": {
+        "mae": 1260.3,
+        "ganho_vs_ons_ant_semana_pct": 32.1
+      },
+      "ons": {
+        "mae": 1566.8,
+        "ganho_vs_ons_ant_semana_pct": 15.6
+      }
+    }
+  },
+  "liquida_sin_2025": {
+    "ons_ant": {
+      "mae": 4318.5,
+      "ganho_vs_ons_ant_semana_pct": -47.1
+    },
+    "ons_ant_corrigido": {
+      "mae": 4218.2,
+      "ganho_vs_ons_ant_semana_pct": -43.6
+    },
+    "ons_ant_semana": {
+      "mae": 2936.6,
+      "ganho_vs_ons_ant_semana_pct": 0.0
+    },
+    "persistencia": {
+      "mae": 5462.3,
+      "ganho_vs_ons_ant_semana_pct": -86.0
+    },
+    "pecas_ml": {
+      "mae": 2426.1,
+      "ganho_vs_ons_ant_semana_pct": 17.4
+    },
+    "pecas_escolhidas": {
+      "mae": 2245.6,
+      "ganho_vs_ons_ant_semana_pct": 23.5
+    },
+    "pecas_ml_com_ons_ant_semana": {
+      "mae": 2279.9,
+      "ganho_vs_ons_ant_semana_pct": 22.4
+    },
+    "ons_corrigido": {
+      "mae": 1763.0,
+      "ganho_vs_ons_ant_semana_pct": 40.0
+    },
+    "ons": {
+      "mae": 1988.7,
+      "ganho_vs_ons_ant_semana_pct": 32.3
+    }
+  },
+  "liquida_sin_2026": {
+    "ons_ant": {
+      "mae": 4721.8,
+      "ganho_vs_ons_ant_semana_pct": -34.9
+    },
+    "ons_ant_corrigido": {
+      "mae": 4654.5,
+      "ganho_vs_ons_ant_semana_pct": -33.0
+    },
+    "ons_ant_semana": {
+      "mae": 3500.5,
+      "ganho_vs_ons_ant_semana_pct": 0.0
+    },
+    "persistencia": {
+      "mae": 6688.1,
+      "ganho_vs_ons_ant_semana_pct": -91.1
+    },
+    "pecas_ml": {
+      "mae": 2669.1,
+      "ganho_vs_ons_ant_semana_pct": 23.7
+    },
+    "pecas_escolhidas": {
+      "mae": 2594.4,
+      "ganho_vs_ons_ant_semana_pct": 25.9
+    },
+    "pecas_ml_com_ons_ant_semana": {
+      "mae": 2703.8,
+      "ganho_vs_ons_ant_semana_pct": 22.8
+    },
+    "ons_corrigido": {
+      "mae": 2210.6,
+      "ganho_vs_ons_ant_semana_pct": 36.8
+    },
+    "ons": {
+      "mae": 2366.4,
+      "ganho_vs_ons_ant_semana_pct": 32.4
+    }
+  },
+  "liquida_sin_2026_por_faixa": {
+    "madrugada_00_05": {
+      "ons_ant": {
+        "mae": 3444.4,
+        "ganho_vs_ons_ant_semana_pct": -6.3
+      },
+      "ons_ant_corrigido": {
+        "mae": 3502.4,
+        "ganho_vs_ons_ant_semana_pct": -8.1
+      },
+      "ons_ant_semana": {
+        "mae": 3241.1,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 5373.9,
+        "ganho_vs_ons_ant_semana_pct": -65.8
+      },
+      "pecas_ml": {
+        "mae": 2330.4,
+        "ganho_vs_ons_ant_semana_pct": 28.1
+      },
+      "pecas_escolhidas": {
+        "mae": 2382.0,
+        "ganho_vs_ons_ant_semana_pct": 26.5
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 2507.5,
+        "ganho_vs_ons_ant_semana_pct": 22.6
+      },
+      "ons_corrigido": {
+        "mae": 1941.6,
+        "ganho_vs_ons_ant_semana_pct": 40.1
+      },
+      "ons": {
+        "mae": 2005.0,
+        "ganho_vs_ons_ant_semana_pct": 38.1
+      }
+    },
+    "manha_06_09": {
+      "ons_ant": {
+        "mae": 4814.9,
+        "ganho_vs_ons_ant_semana_pct": -40.3
+      },
+      "ons_ant_corrigido": {
+        "mae": 4829.5,
+        "ganho_vs_ons_ant_semana_pct": -40.8
+      },
+      "ons_ant_semana": {
+        "mae": 3431.3,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 7146.0,
+        "ganho_vs_ons_ant_semana_pct": -108.3
+      },
+      "pecas_ml": {
+        "mae": 2785.5,
+        "ganho_vs_ons_ant_semana_pct": 18.8
+      },
+      "pecas_escolhidas": {
+        "mae": 2640.8,
+        "ganho_vs_ons_ant_semana_pct": 23.0
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 2659.9,
+        "ganho_vs_ons_ant_semana_pct": 22.5
+      },
+      "ons_corrigido": {
+        "mae": 2265.2,
+        "ganho_vs_ons_ant_semana_pct": 34.0
+      },
+      "ons": {
+        "mae": 2334.5,
+        "ganho_vs_ons_ant_semana_pct": 32.0
+      }
+    },
+    "noite_22_23": {
+      "ons_ant": {
+        "mae": 4035.5,
+        "ganho_vs_ons_ant_semana_pct": -11.8
+      },
+      "ons_ant_corrigido": {
+        "mae": 4129.1,
+        "ganho_vs_ons_ant_semana_pct": -14.4
+      },
+      "ons_ant_semana": {
+        "mae": 3608.5,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 5798.8,
+        "ganho_vs_ons_ant_semana_pct": -60.7
+      },
+      "pecas_ml": {
+        "mae": 2248.1,
+        "ganho_vs_ons_ant_semana_pct": 37.7
+      },
+      "pecas_escolhidas": {
+        "mae": 2260.8,
+        "ganho_vs_ons_ant_semana_pct": 37.3
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 2662.1,
+        "ganho_vs_ons_ant_semana_pct": 26.2
+      },
+      "ons_corrigido": {
+        "mae": 2151.7,
+        "ganho_vs_ons_ant_semana_pct": 40.4
+      },
+      "ons": {
+        "mae": 2091.9,
+        "ganho_vs_ons_ant_semana_pct": 42.0
+      }
+    },
+    "ponta_16_21": {
+      "ons_ant": {
+        "mae": 5260.2,
+        "ganho_vs_ons_ant_semana_pct": -43.1
+      },
+      "ons_ant_corrigido": {
+        "mae": 5201.5,
+        "ganho_vs_ons_ant_semana_pct": -41.5
+      },
+      "ons_ant_semana": {
+        "mae": 3674.9,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 7396.3,
+        "ganho_vs_ons_ant_semana_pct": -101.3
+      },
+      "pecas_ml": {
+        "mae": 2367.2,
+        "ganho_vs_ons_ant_semana_pct": 35.6
+      },
+      "pecas_escolhidas": {
+        "mae": 2414.7,
+        "ganho_vs_ons_ant_semana_pct": 34.3
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 2774.2,
+        "ganho_vs_ons_ant_semana_pct": 24.5
+      },
+      "ons_corrigido": {
+        "mae": 2265.1,
+        "ganho_vs_ons_ant_semana_pct": 38.4
+      },
+      "ons": {
+        "mae": 2316.4,
+        "ganho_vs_ons_ant_semana_pct": 37.0
+      }
+    },
+    "sol_10_15": {
+      "ons_ant": {
+        "mae": 5587.2,
+        "ganho_vs_ons_ant_semana_pct": -55.6
+      },
+      "ons_ant_corrigido": {
+        "mae": 5284.1,
+        "ganho_vs_ons_ant_semana_pct": -47.2
+      },
+      "ons_ant_semana": {
+        "mae": 3590.2,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 7245.6,
+        "ganho_vs_ons_ant_semana_pct": -101.8
+      },
+      "pecas_ml": {
+        "mae": 3357.6,
+        "ganho_vs_ons_ant_semana_pct": 6.5
+      },
+      "pecas_escolhidas": {
+        "mae": 3056.3,
+        "ganho_vs_ons_ant_semana_pct": 14.9
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 2867.1,
+        "ganho_vs_ons_ant_semana_pct": 20.1
+      },
+      "ons_corrigido": {
+        "mae": 2401.1,
+        "ganho_vs_ons_ant_semana_pct": 33.1
+      },
+      "ons": {
+        "mae": 2876.8,
+        "ganho_vs_ons_ant_semana_pct": 19.9
+      }
+    }
+  },
+  "liquida_sin_2026_por_mes": {
+    "1": {
+      "ons_ant": {
+        "mae": 6102.5,
+        "ganho_vs_ons_ant_semana_pct": -17.0
+      },
+      "ons_ant_corrigido": {
+        "mae": 6218.0,
+        "ganho_vs_ons_ant_semana_pct": -19.2
+      },
+      "ons_ant_semana": {
+        "mae": 5215.6,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 7695.3,
+        "ganho_vs_ons_ant_semana_pct": -47.5
+      },
+      "pecas_ml": {
+        "mae": 3682.4,
+        "ganho_vs_ons_ant_semana_pct": 29.4
+      },
+      "pecas_escolhidas": {
+        "mae": 3997.9,
+        "ganho_vs_ons_ant_semana_pct": 23.3
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 4112.2,
+        "ganho_vs_ons_ant_semana_pct": 21.2
+      },
+      "ons_corrigido": {
+        "mae": 3575.5,
+        "ganho_vs_ons_ant_semana_pct": 31.4
+      },
+      "ons": {
+        "mae": 3325.6,
+        "ganho_vs_ons_ant_semana_pct": 36.2
+      }
+    },
+    "2": {
+      "ons_ant": {
+        "mae": 5868.8,
+        "ganho_vs_ons_ant_semana_pct": -55.9
+      },
+      "ons_ant_corrigido": {
+        "mae": 5959.3,
+        "ganho_vs_ons_ant_semana_pct": -58.3
+      },
+      "ons_ant_semana": {
+        "mae": 3763.4,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 9694.8,
+        "ganho_vs_ons_ant_semana_pct": -157.6
+      },
+      "pecas_ml": {
+        "mae": 3060.3,
+        "ganho_vs_ons_ant_semana_pct": 18.7
+      },
+      "pecas_escolhidas": {
+        "mae": 3088.4,
+        "ganho_vs_ons_ant_semana_pct": 17.9
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 3000.3,
+        "ganho_vs_ons_ant_semana_pct": 20.3
+      },
+      "ons_corrigido": {
+        "mae": 2313.7,
+        "ganho_vs_ons_ant_semana_pct": 38.5
+      },
+      "ons": {
+        "mae": 2597.9,
+        "ganho_vs_ons_ant_semana_pct": 31.0
+      }
+    },
+    "3": {
+      "ons_ant": {
+        "mae": 5601.3,
+        "ganho_vs_ons_ant_semana_pct": -41.4
+      },
+      "ons_ant_corrigido": {
+        "mae": 5355.8,
+        "ganho_vs_ons_ant_semana_pct": -35.2
+      },
+      "ons_ant_semana": {
+        "mae": 3960.3,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 6462.7,
+        "ganho_vs_ons_ant_semana_pct": -63.2
+      },
+      "pecas_ml": {
+        "mae": 3009.7,
+        "ganho_vs_ons_ant_semana_pct": 24.0
+      },
+      "pecas_escolhidas": {
+        "mae": 3040.3,
+        "ganho_vs_ons_ant_semana_pct": 23.2
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 3297.4,
+        "ganho_vs_ons_ant_semana_pct": 16.7
+      },
+      "ons_corrigido": {
+        "mae": 2743.4,
+        "ganho_vs_ons_ant_semana_pct": 30.7
+      },
+      "ons": {
+        "mae": 3094.0,
+        "ganho_vs_ons_ant_semana_pct": 21.9
+      }
+    },
+    "4": {
+      "ons_ant": {
+        "mae": 4918.2,
+        "ganho_vs_ons_ant_semana_pct": -28.4
+      },
+      "ons_ant_corrigido": {
+        "mae": 4828.9,
+        "ganho_vs_ons_ant_semana_pct": -26.1
+      },
+      "ons_ant_semana": {
+        "mae": 3830.9,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 7037.5,
+        "ganho_vs_ons_ant_semana_pct": -83.7
+      },
+      "pecas_ml": {
+        "mae": 2107.2,
+        "ganho_vs_ons_ant_semana_pct": 45.0
+      },
+      "pecas_escolhidas": {
+        "mae": 2022.2,
+        "ganho_vs_ons_ant_semana_pct": 47.2
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 2474.9,
+        "ganho_vs_ons_ant_semana_pct": 35.4
+      },
+      "ons_corrigido": {
+        "mae": 2040.6,
+        "ganho_vs_ons_ant_semana_pct": 46.7
+      },
+      "ons": {
+        "mae": 2560.2,
+        "ganho_vs_ons_ant_semana_pct": 33.2
+      }
+    },
+    "5": {
+      "ons_ant": {
+        "mae": 4586.0,
+        "ganho_vs_ons_ant_semana_pct": -33.0
+      },
+      "ons_ant_corrigido": {
+        "mae": 4313.6,
+        "ganho_vs_ons_ant_semana_pct": -25.1
+      },
+      "ons_ant_semana": {
+        "mae": 3448.4,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 6973.6,
+        "ganho_vs_ons_ant_semana_pct": -102.2
+      },
+      "pecas_ml": {
+        "mae": 2791.9,
+        "ganho_vs_ons_ant_semana_pct": 19.0
+      },
+      "pecas_escolhidas": {
+        "mae": 2718.8,
+        "ganho_vs_ons_ant_semana_pct": 21.2
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 2692.5,
+        "ganho_vs_ons_ant_semana_pct": 21.9
+      },
+      "ons_corrigido": {
+        "mae": 2559.1,
+        "ganho_vs_ons_ant_semana_pct": 25.8
+      },
+      "ons": {
+        "mae": 2889.1,
+        "ganho_vs_ons_ant_semana_pct": 16.2
+      }
+    },
+    "6": {
+      "ons_ant": {
+        "mae": 4315.9,
+        "ganho_vs_ons_ant_semana_pct": -36.7
+      },
+      "ons_ant_corrigido": {
+        "mae": 4368.5,
+        "ganho_vs_ons_ant_semana_pct": -38.3
+      },
+      "ons_ant_semana": {
+        "mae": 3158.1,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 5643.3,
+        "ganho_vs_ons_ant_semana_pct": -78.7
+      },
+      "pecas_ml": {
+        "mae": 2421.3,
+        "ganho_vs_ons_ant_semana_pct": 23.3
+      },
+      "pecas_escolhidas": {
+        "mae": 2252.9,
+        "ganho_vs_ons_ant_semana_pct": 28.7
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 2417.5,
+        "ganho_vs_ons_ant_semana_pct": 23.5
+      },
+      "ons_corrigido": {
+        "mae": 1878.9,
+        "ganho_vs_ons_ant_semana_pct": 40.5
+      },
+      "ons": {
+        "mae": 1942.7,
+        "ganho_vs_ons_ant_semana_pct": 38.5
+      }
+    },
+    "7": {
+      "ons_ant": {
+        "mae": 3969.9,
+        "ganho_vs_ons_ant_semana_pct": -62.0
+      },
+      "ons_ant_corrigido": {
+        "mae": 3615.8,
+        "ganho_vs_ons_ant_semana_pct": -47.6
+      },
+      "ons_ant_semana": {
+        "mae": 2450.2,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 4986.3,
+        "ganho_vs_ons_ant_semana_pct": -103.5
+      },
+      "pecas_ml": {
+        "mae": 2237.1,
+        "ganho_vs_ons_ant_semana_pct": 8.7
+      },
+      "pecas_escolhidas": {
+        "mae": 2200.4,
+        "ganho_vs_ons_ant_semana_pct": 10.2
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 1991.7,
+        "ganho_vs_ons_ant_semana_pct": 18.7
+      },
+      "ons_corrigido": {
+        "mae": 1852.4,
+        "ganho_vs_ons_ant_semana_pct": 24.4
+      },
+      "ons": {
+        "mae": 2132.1,
+        "ganho_vs_ons_ant_semana_pct": 13.0
+      }
+    },
+    "8": {
+      "ons_ant": {
+        "mae": 3635.9,
+        "ganho_vs_ons_ant_semana_pct": -76.4
+      },
+      "ons_ant_corrigido": {
+        "mae": 3624.1,
+        "ganho_vs_ons_ant_semana_pct": -75.8
+      },
+      "ons_ant_semana": {
+        "mae": 2061.2,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 5440.2,
+        "ganho_vs_ons_ant_semana_pct": -163.9
+      },
+      "pecas_ml": {
+        "mae": 2406.6,
+        "ganho_vs_ons_ant_semana_pct": -16.8
+      },
+      "pecas_escolhidas": {
+        "mae": 2114.8,
+        "ganho_vs_ons_ant_semana_pct": -2.6
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 1880.0,
+        "ganho_vs_ons_ant_semana_pct": 8.8
+      },
+      "ons_corrigido": {
+        "mae": 1502.9,
+        "ganho_vs_ons_ant_semana_pct": 27.1
+      },
+      "ons": {
+        "mae": 1521.0,
+        "ganho_vs_ons_ant_semana_pct": 26.2
+      }
+    },
+    "9": {
+      "ons_ant": {
+        "mae": 3751.4,
+        "ganho_vs_ons_ant_semana_pct": -23.2
+      },
+      "ons_ant_corrigido": {
+        "mae": 3829.4,
+        "ganho_vs_ons_ant_semana_pct": -25.8
+      },
+      "ons_ant_semana": {
+        "mae": 3044.5,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 5827.2,
+        "ganho_vs_ons_ant_semana_pct": -91.4
+      },
+      "pecas_ml": {
+        "mae": 2599.7,
+        "ganho_vs_ons_ant_semana_pct": 14.6
+      },
+      "pecas_escolhidas": {
+        "mae": 2334.4,
+        "ganho_vs_ons_ant_semana_pct": 23.3
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 2467.6,
+        "ganho_vs_ons_ant_semana_pct": 18.9
+      },
+      "ons_corrigido": {
+        "mae": 1755.2,
+        "ganho_vs_ons_ant_semana_pct": 42.3
+      },
+      "ons": {
+        "mae": 1703.4,
+        "ganho_vs_ons_ant_semana_pct": 44.0
+      }
+    },
+    "10": {
+      "ons_ant": {
+        "mae": 4813.4,
+        "ganho_vs_ons_ant_semana_pct": -8.9
+      },
+      "ons_ant_corrigido": {
+        "mae": 4829.2,
+        "ganho_vs_ons_ant_semana_pct": -9.2
+      },
+      "ons_ant_semana": {
+        "mae": 4420.5,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 7168.9,
+        "ganho_vs_ons_ant_semana_pct": -62.2
+      },
+      "pecas_ml": {
+        "mae": 2623.1,
+        "ganho_vs_ons_ant_semana_pct": 40.7
+      },
+      "pecas_escolhidas": {
+        "mae": 2488.5,
+        "ganho_vs_ons_ant_semana_pct": 43.7
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 3042.6,
+        "ganho_vs_ons_ant_semana_pct": 31.2
+      },
+      "ons_corrigido": {
+        "mae": 2351.6,
+        "ganho_vs_ons_ant_semana_pct": 46.8
+      },
+      "ons": {
+        "mae": 2333.5,
+        "ganho_vs_ons_ant_semana_pct": 47.2
+      }
+    },
+    "11": {
+      "ons_ant": {
+        "mae": 5567.1,
+        "ganho_vs_ons_ant_semana_pct": -18.7
+      },
+      "ons_ant_corrigido": {
+        "mae": 5641.4,
+        "ganho_vs_ons_ant_semana_pct": -20.3
+      },
+      "ons_ant_semana": {
+        "mae": 4689.4,
+        "ganho_vs_ons_ant_semana_pct": 0.0
+      },
+      "persistencia": {
+        "mae": 9246.5,
+        "ganho_vs_ons_ant_semana_pct": -97.2
+      },
+      "pecas_ml": {
+        "mae": 3037.8,
+        "ganho_vs_ons_ant_semana_pct": 35.2
+      },
+      "pecas_escolhidas": {
+        "mae": 3148.4,
+        "ganho_vs_ons_ant_semana_pct": 32.9
+      },
+      "pecas_ml_com_ons_ant_semana": {
+        "mae": 3360.0,
+        "ganho_vs_ons_ant_semana_pct": 28.3
+      },
+      "ons_corrigido": {
+        "mae": 2030.9,
+        "ganho_vs_ons_ant_semana_pct": 56.7
+      },
+      "ons": {
+        "mae": 1940.5,
+        "ganho_vs_ons_ant_semana_pct": 58.6
+      }
+    }
+  },
+  "testes_sin_2026": [
+    {
+      "comparacao": "pecas_escolhidas - ons_ant_semana",
+      "dif_mae": -891.5,
+      "ic95": [
+        -1194.9,
+        -580.3
+      ]
+    },
+    {
+      "comparacao": "pecas_ml - ons_ant_semana",
+      "dif_mae": -836.6,
+      "ic95": [
+        -1178.1,
+        -483.2
+      ]
+    },
+    {
+      "comparacao": "ons_ant_semana - ons_ant_corrigido",
+      "dif_mae": -1056.5,
+      "ic95": [
+        -1286.5,
+        -806.1
+      ]
+    },
+    {
+      "comparacao": "ons_ant_corrigido - ons_ant",
+      "dif_mae": -47.7,
+      "ic95": [
+        -145.8,
+        44.9
+      ]
+    },
+    {
+      "comparacao": "pecas_escolhidas - ons_corrigido",
+      "dif_mae": 460.8,
+      "ic95": [
+        299.0,
+        635.9
+      ]
+    }
+  ],
+  "testes_subsistemas_2026": {
+    "N": {
+      "comparacao": "pecas_escolhidas - ons_ant_semana",
+      "dif_mae": -72.6,
+      "ic95": [
+        -88.8,
+        -55.8
+      ]
+    },
+    "NE": {
+      "comparacao": "pecas_escolhidas - ons_ant_semana",
+      "dif_mae": -741.2,
+      "ic95": [
+        -937.6,
+        -538.2
+      ]
+    },
+    "S": {
+      "comparacao": "pecas_escolhidas - ons_ant_semana",
+      "dif_mae": -307.4,
+      "ic95": [
+        -416.2,
+        -214.7
+      ]
+    },
+    "SE": {
+      "comparacao": "pecas_escolhidas - ons_ant_semana",
+      "dif_mae": -531.0,
+      "ic95": [
+        -691.3,
+        -379.4
+      ]
+    }
+  },
+  "rampa_sin_2026": {
+    "ons_ant": 3677.3,
+    "ons_ant_corrigido": 3474.6,
+    "ons_ant_semana": 3750.7,
+    "persistencia": 4308.2,
+    "pecas_ml": 3697.0,
+    "pecas_escolhidas": 3332.8,
+    "pecas_ml_com_ons_ant_semana": 3091.8,
+    "ons_corrigido": 2861.9,
+    "ons": 3094.3
+  },
+  "antecipa_programacao_sin_2026": {
+    "ons_ant": {
+      "mae": 3983.2,
+      "ganho_vs_ons_ant_pct": 0.0
+    },
+    "ons_ant_corrigido": {
+      "mae": 4210.6,
+      "ganho_vs_ons_ant_pct": -5.7
+    },
+    "ons_ant_semana": {
+      "mae": 3020.6,
+      "ganho_vs_ons_ant_pct": 24.2
+    },
+    "pecas_ml": {
+      "mae": 2314.2,
+      "ganho_vs_ons_ant_pct": 41.9
+    },
+    "pecas_escolhidas": {
+      "mae": 2255.9,
+      "ganho_vs_ons_ant_pct": 43.4
+    }
+  }
+}

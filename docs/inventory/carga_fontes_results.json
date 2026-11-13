@@ -1,0 +1,232 @@
+{
+  "programada": {
+    "2023_2026": {
+      "n": 130224,
+      "mape": {
+        "ridge_historico": 2.1,
+        "ridge_temp_prevista": 1.988,
+        "ridge_clima_observado": 2.007,
+        "ridge_reservatorios": 2.107,
+        "ridge_geracao": 2.1,
+        "ridge_tudo": 1.97,
+        "gbm_historico": 2.323,
+        "gbm_tudo": 2.155
+      },
+      "por_subsistema": {
+        "N": {
+          "ridge_historico": 1.329,
+          "ridge_temp_prevista": 1.295,
+          "ridge_clima_observado": 1.223,
+          "ridge_reservatorios": 1.328,
+          "ridge_geracao": 1.376,
+          "ridge_tudo": 1.264,
+          "gbm_historico": 1.488,
+          "gbm_tudo": 1.395
+        },
+        "NE": {
+          "ridge_historico": 1.675,
+          "ridge_temp_prevista": 1.665,
+          "ridge_clima_observado": 1.584,
+          "ridge_reservatorios": 1.669,
+          "ridge_geracao": 1.627,
+          "ridge_tudo": 1.594,
+          "gbm_historico": 1.871,
+          "gbm_tudo": 1.829
+        },
+        "S": {
+          "ridge_historico": 3.266,
+          "ridge_temp_prevista": 3.131,
+          "ridge_clima_observado": 3.194,
+          "ridge_reservatorios": 3.298,
+          "ridge_geracao": 3.251,
+          "ridge_tudo": 3.149,
+          "gbm_historico": 3.525,
+          "gbm_tudo": 3.308
+        },
+        "SECO": {
+          "ridge_historico": 2.126,
+          "ridge_temp_prevista": 1.858,
+          "ridge_clima_observado": 2.02,
+          "ridge_reservatorios": 2.126,
+          "ridge_geracao": 2.14,
+          "ridge_tudo": 1.868,
+          "gbm_historico": 2.403,
+          "gbm_tudo": 2.085
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ridge_temp_prevista - ridge_historico",
+          "dif_mae": -36.67,
+          "ic95": [
+            -44.52,
+            -29.22
+          ]
+        },
+        {
+          "comparacao": "ridge_clima_observado - ridge_historico",
+          "dif_mae": -18.9,
+          "ic95": [
+            -25.82,
+            -11.71
+          ]
+        },
+        {
+          "comparacao": "ridge_reservatorios - ridge_historico",
+          "dif_mae": 1.68,
+          "ic95": [
+            -0.91,
+            4.35
+          ]
+        },
+        {
+          "comparacao": "ridge_geracao - ridge_historico",
+          "dif_mae": -0.33,
+          "ic95": [
+            -4.74,
+            5.46
+          ]
+        },
+        {
+          "comparacao": "ridge_tudo - ridge_historico",
+          "dif_mae": -37.79,
+          "ic95": [
+            -48.97,
+            -26.7
+          ]
+        },
+        {
+          "comparacao": "gbm_historico - ridge_historico",
+          "dif_mae": 46.38,
+          "ic95": [
+            29.34,
+            62.21
+          ]
+        },
+        {
+          "comparacao": "gbm_tudo - ridge_historico",
+          "dif_mae": 2.46,
+          "ic95": [
+            -14.28,
+            21.07
+          ]
+        }
+      ]
+    }
+  },
+  "verificada": {
+    "2023_2026": {
+      "n": 130608,
+      "mape": {
+        "ridge_historico": 3.047,
+        "ridge_temp_prevista": 2.633,
+        "ridge_clima_observado": 2.825,
+        "ridge_reservatorios": 3.033,
+        "ridge_geracao": 3.05,
+        "ridge_tudo": 2.582,
+        "gbm_historico": 3.107,
+        "gbm_tudo": 2.749
+      },
+      "por_subsistema": {
+        "N": {
+          "ridge_historico": 2.249,
+          "ridge_temp_prevista": 2.07,
+          "ridge_clima_observado": 2.16,
+          "ridge_reservatorios": 2.239,
+          "ridge_geracao": 2.264,
+          "ridge_tudo": 2.098,
+          "gbm_historico": 2.274,
+          "gbm_tudo": 2.236
+        },
+        "NE": {
+          "ridge_historico": 2.354,
+          "ridge_temp_prevista": 2.26,
+          "ridge_clima_observado": 2.159,
+          "ridge_reservatorios": 2.352,
+          "ridge_geracao": 2.279,
+          "ridge_tudo": 2.149,
+          "gbm_historico": 2.419,
+          "gbm_tudo": 2.307
+        },
+        "S": {
+          "ridge_historico": 4.423,
+          "ridge_temp_prevista": 3.981,
+          "ridge_clima_observado": 4.186,
+          "ridge_reservatorios": 4.423,
+          "ridge_geracao": 4.451,
+          "ridge_tudo": 3.927,
+          "gbm_historico": 4.438,
+          "gbm_tudo": 3.946
+        },
+        "SECO": {
+          "ridge_historico": 3.161,
+          "ridge_temp_prevista": 2.223,
+          "ridge_clima_observado": 2.795,
+          "ridge_reservatorios": 3.117,
+          "ridge_geracao": 3.205,
+          "ridge_tudo": 2.154,
+          "gbm_historico": 3.298,
+          "gbm_tudo": 2.508
+        }
+      },
+      "testes": [
+        {
+          "comparacao": "ridge_temp_prevista - ridge_historico",
+          "dif_mae": -129.41,
+          "ic95": [
+            -149.52,
+            -107.86
+          ]
+        },
+        {
+          "comparacao": "ridge_clima_observado - ridge_historico",
+          "dif_mae": -53.84,
+          "ic95": [
+            -64.88,
+            -42.91
+          ]
+        },
+        {
+          "comparacao": "ridge_reservatorios - ridge_historico",
+          "dif_mae": -4.39,
+          "ic95": [
+            -9.62,
+            0.73
+          ]
+        },
+        {
+          "comparacao": "ridge_geracao - ridge_historico",
+          "dif_mae": 5.13,
+          "ic95": [
+            -6.56,
+            19.53
+          ]
+        },
+        {
+          "comparacao": "ridge_tudo - ridge_historico",
+          "dif_mae": -138.3,
+          "ic95": [
+            -160.58,
+            -114.65
+          ]
+        },
+        {
+          "comparacao": "gbm_historico - ridge_historico",
+          "dif_mae": 25.34,
+          "ic95": [
+            4.85,
+            46.93
+          ]
+        },
+        {
+          "comparacao": "gbm_tudo - ridge_historico",
+          "dif_mae": -89.23,
+          "ic95": [
+            -111.17,
+            -67.62
+          ]
+        }
+      ]
+    }
+  }
+}

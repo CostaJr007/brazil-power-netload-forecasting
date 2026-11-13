@@ -1,0 +1,5 @@
+expression PastaDados = "D:\EnergyData\data\bi\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 1397026d-daec-4460-92ce-1b8748a1f8b3
+
+	annotation PBI_ResultType = Text
+

@@ -1,21 +1,21 @@
-# Evidências de fontes e arquivos
+# Source and file evidence
 
-| Arquivo | Como interpretar |
+| File | How to read it |
 |---|---|
-| ons_catalog.md | Descrições e seleção de todos os conjuntos inventariados |
-| ons_resources.csv | Recursos, formatos e URLs recebidos do catálogo |
-| acquisition_validation.json | Oito downloads limitados e suas verificações |
-| sample_coverage.json | Cobertura e grupos duplicados nas amostras CSV |
-| csv_parquet_comparison.json | Diferenças de registros e schemas entre formatos |
-| endpoints_audit.json | Detalhes das URLs recentes e datas internas lidas |
-| endpoints_audit.md | Resumo legível dessa auditoria |
-| load_api_probe.json | Respostas do teste pontual das APIs de carga |
-| findings.md | Achados da aquisição inicial e seu escopo |
-| weather_discovery.json | Listagens oficiais e inspeção dos polígonos de bacias |
-| weather_acquisition.json | Manifestos e metadados internos do lote INPE/NOAA/INMET |
-| weather_acquisition.md | Resumo legível do lote e seus limites |
-| weather_summary.json | Arquivos, tamanhos, hashes e geometrias inválidas |
-| pipeline_status.md / pipeline_status.json | Estado da última execução e contagens de snapshots Silver |
-| windows_task.json | Configuração da tarefa Windows e resultado do disparo de teste |
+| ons_catalog.md | Descriptions and selection of every inventoried dataset |
+| ons_resources.csv | Resources, formats and URLs returned by the catalog |
+| acquisition_validation.json | Eight limited downloads and their checks |
+| sample_coverage.json | Coverage and duplicate groups in the CSV samples |
+| csv_parquet_comparison.json | Record and schema differences between formats |
+| endpoints_audit.json | Details of recent URLs and internal dates read |
+| endpoints_audit.md | Readable summary of that audit |
+| load_api_probe.json | Responses from the one-off load API test |
+| findings.md | Findings from the initial acquisition and their scope |
+| weather_discovery.json | Official listings and inspection of the basin polygons |
+| weather_acquisition.json | Manifests and internal metadata of the INPE/NOAA/INMET batch |
+| weather_acquisition.md | Readable summary of the batch and its limits |
+| weather_summary.json | Files, sizes, hashes and invalid geometries |
+| pipeline_status.md / pipeline_status.json | State of the last run and Silver snapshot counts |
+| windows_task.json | Windows task configuration and result of the test trigger |
 
-Os arquivos JSON são evidências para auditoria, não tabelas Gold. Um HTTP 200 comprova resposta; uma data máxima recente comprova presença daquela referência, mas não a completude de todas as entidades/períodos.
+The JSON files are audit evidence, not Gold tables. An HTTP 200 proves a response; a recent maximum date proves that reference is present, but not that every entity/period is complete.

@@ -1,0 +1,43 @@
+table fact_storage_daily
+	lineageTag: c1f0335f-55a7-46fb-920e-5f7ba2e0d7e4
+
+	measure 'Reservoir storage %' = AVERAGE(fact_storage_daily[storage_pct]) / 100
+		formatString: 0.0%
+		lineageTag: 282f2c29-9d2a-4bae-ad54-f86b1562d156
+
+	column subsystem
+		dataType: string
+		lineageTag: 120be84d-b5a9-4118-a23b-9b36fb59b9bd
+		summarizeBy: none
+		sourceColumn: subsystem
+
+	column date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 8681f756-1172-4198-9fdd-7c9cad72eb36
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column storage_pct
+		dataType: double
+		lineageTag: cfdec882-9348-45e1-af5f-794360dae3d4
+		summarizeBy: sum
+		sourceColumn: storage_pct
+
+	column storage_mwmonth
+		dataType: double
+		lineageTag: f4b6f8c2-d721-4bce-b69d-df9c1ca9b6fe
+		summarizeBy: sum
+		sourceColumn: storage_mwmonth
+
+	partition fact_storage_daily = m
+		mode: import
+		source =
+				let
+				    Fonte = Parquet.Document(File.Contents(PastaDados & "fact_storage_daily.parquet")),
+				    Tipos = Table.TransformColumnTypes(Fonte, {{"subsystem", type text}, {"date", type date}, {"storage_pct", type number}, {"storage_mwmonth", type number}})
+				in
+				    Tipos
+

@@ -707,7 +707,7 @@
     "optional": [
       "val_intercambioprogmwmed"
     ],
-    "optional_note": "Intercâmbio programado ausente em INTERCAMBIO_NACIONAL_2023.parquet; presente nos arquivos recentes (verificado em 10/11/2026)."
+    "optional_note": "Scheduled interchange missing in INTERCAMBIO_NACIONAL_2023.parquet; present in recent files (checked on 2026-11-10)."
   },
   "programacao_diaria": {
     "required": [
