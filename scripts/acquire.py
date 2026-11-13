@@ -18,7 +18,7 @@ import sys
 import time
 import uuid
 from datetime import date, datetime, timezone
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urlsplit
 from urllib.request import Request, urlopen
@@ -38,7 +38,9 @@ def resolve_data_path(stored):
     path = Path(stored)
     if path.exists():
         return path
-    parts = path.parts
+    # PureWindowsPath splits on both \ and /, so a path saved on Windows
+    # is also broken into parts correctly when the code runs on Linux (CI).
+    parts = PureWindowsPath(str(stored)).parts
     for anchor in ("bronze", "silver", "gold", "geography", "catalog", "runs", "weather_catalog"):
         if anchor in parts:
             candidate = DATA_DIR.joinpath(*parts[parts.index(anchor):])
