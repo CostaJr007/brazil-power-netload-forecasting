@@ -29,7 +29,7 @@ Use tomorrow's schedule (`ons_ant`) as the forecast for the day after. Three ver
 |---|---|
 | `ons_ant`: T−1 schedule, unadjusted | 4,722 |
 | `ons_ant_corrigido`: minus the mean bias at the same hour | 4,655 |
-| **`ons_ant_semana`**: minus the bias at the same hour **and weekday** (last 4 occurrences) | **3,501** |
+| **`ons_ant_semana`**: minus the bias at the same hour **and weekday** (last 4 occurrences) | **3,500** |
 
 - **The raw version is too weak.** On a Monday it uses Sunday's schedule. A first test against `ons_ant_corrigido` showed a 42% gain, too high to be fair.
 - **The official benchmark is `ons_ant_semana`**, which fixes exactly that weekday switch (`models.renovaveis.corrigir_vies_semana`).
@@ -40,7 +40,7 @@ Use tomorrow's schedule (`ons_ant`) as the forecast for the day after. Three ver
 
 | Component | Benchmark `ons_ant_semana` | Recipe chosen on 2025 | MAE | Gain |
 |---|---|---|---|---|
-| Load | 847 | mean of Ridge and GBM | 602 | 29.0% |
+| Load | 848 | mean of Ridge and GBM | 603 | 28.8% |
 | Wind | 696 | GBM | 469 | 32.6% |
 | Solar | 373 | mean(ML, benchmark) | 302 | 19.0% |
 
@@ -48,17 +48,19 @@ Use tomorrow's schedule (`ons_ant`) as the forecast for the day after. Three ver
 
 | | Benchmark | Recipe | Gain | Same-day ONS schedule (published later), corrected |
 |---|---|---|---|---|
-| 2025 (selection) | 2,937 | 2,246 | 23.5% | 1,763 |
-| 2026 (confirmation) | 3,501 | 2,594 | **25.9%** | 2,211 |
+| 2025 (selection) | 2,937 | 2,242 | 23.6% | 1,763 |
+| 2026 (validation) | 3,500 | 2,602 | **25.7%** | 2,211 |
 
-- **Test on 2026:** recipe − benchmark = −892 MW, 95% CI [−1,195, −580].
-- **Gain in every subsystem,** CIs excluding zero: N +26.8%, NE +27.8%, S +28.4%, SE +27.9%.
-- **By hour band:** evening +37%, peak +34%, overnight +27%, morning +23%, solar hours +15%.
-- **By month:** gain in 10 of 11 months; the exception is August (−2.6%).
-- The dashboard, which uses every available hour, shows 2,607 vs 3,534 MW (26.2%).
+- **Test on 2026:** recipe − benchmark = −883 MW, 95% CI [−1,186, −575].
+- **Gain in every subsystem,** CIs excluding zero: N +26.8%, NE +27.6%, S +28.7%, SE +27.5%.
+- **By hour band:** evening +38%, peak +34%, overnight +26%, morning +23%, solar hours +14.5%.
+- **By month:** gain in 10 of 11 months; the exception is August (−3.4%).
+- The dashboard, which uses every available hour, shows 2,614 vs 3,534 MW (26.0%).
+- Training in each quarterly fold stops at T−3 for the fold's first day, so the fold boundary leaks nothing.
 
-**Cost of deciding a day earlier:** the D+2 recipe errs 461 MW more (95% CI [299, 636]) than the same-day corrected
-ONS schedule, which ONS publishes a day later; it is still close to the raw ONS schedule (2,366 MW).
+**Cost of deciding a day earlier:** the D+2 recipe errs 469 MW more (95% CI [310, 647]) than the same-day corrected
+ONS schedule, which ONS publishes a day later, and about 10% more than the raw ONS schedule (2,366 MW). Once the
+official schedule exists, it should be used.
 
 ## Anticipating the ONS schedule
 
@@ -69,7 +71,7 @@ T, which is the input to T's price.
 |---|---|
 | T−1 schedule, raw | 3,983 |
 | Benchmark `ons_ant_semana` | 3,021 |
-| **Component recipe** | **2,256** |
+| **Component recipe** | **2,264** |
 
 The recipe anticipates the ONS schedule with 25% less error than the best simple benchmark.
 

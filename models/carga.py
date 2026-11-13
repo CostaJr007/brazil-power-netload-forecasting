@@ -18,7 +18,7 @@ import pandas as pd
 from sklearn.ensemble import HistGradientBoostingRegressor
 
 from models.dados import ESTADOS_SUBSISTEMA, feriados_nacionais
-from models.validation import placebo_shift
+from models.validation import placebo_shift, train_cutoff
 
 GAP = 2
 CALENDARIO = ["dia_semana", "mes", "sen", "cos", "feriado", "vespera", "pos_feriado", "ponte"]
@@ -87,7 +87,7 @@ def backtest_carga(carga, temperatura, folds, log=print):
         x_placebo, _, _ = preparar_subsistema(serie, temp, placebo=True)
         for inicio, fim in folds:
             base = x["alvo"].notna() & x["nivel"].notna()
-            treino_m = base & (x.index < inicio)
+            treino_m = base & (x.index < train_cutoff(inicio, GAP))
             teste_m = base & (x.index >= inicio) & (x.index < fim) & x["naive"].notna() & x["programada"].notna()
             # Compare only days where every model has a value.
             teste_m &= x[cenario].notna().any(axis=1)

@@ -22,7 +22,7 @@
       },
       "sha256": "1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4",
       "bytes": 1622722,
-      "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\bacia_contorno\\beb946ac-f35a-4b5b-b8b2-ea017e9e5783\\1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4",
+      "path": "data/bronze/ons/bacia_contorno/beb946ac-f35a-4b5b-b8b2-ea017e9e5783/1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4",
       "source": "ons",
       "dataset": "bacia_contorno",
       "resource_id": "beb946ac-f35a-4b5b-b8b2-ea017e9e5783",
@@ -36,7 +36,7 @@
       },
       "note": "HTTP Last-Modified is not a historical publication timestamp."
     },
-    "access_copy": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\geography\\1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4.zip",
+    "access_copy": "data/geography/1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4.zip",
     "crs": "EPSG:4326",
     "columns": [
       "ID",

@@ -32,7 +32,7 @@ def conectar():
 
 
 def feriados_nacionais(ano):
-    """Feriados nacionais e pontos facultativos de maior efeito na carga (Carnaval, Corpus Christi)."""
+    """National holidays plus the optional days with the largest effect on load (Carnival, Corpus Christi)."""
     pascoa = easter(ano)
     fixos = [(1, 1), (4, 21), (5, 1), (9, 7), (10, 12), (11, 2), (11, 15), (12, 25)]
     if ano >= 2024:

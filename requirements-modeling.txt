@@ -1,4 +1,4 @@
-# Fase de modelagem (séries temporais, ML clássico). Inclui todo o ambiente de dados.
+# Modelling (time series, classical ML). Includes the whole data environment.
 -r requirements-research.txt
 statsmodels>=0.14,<1
 scikit-learn>=1.5,<2

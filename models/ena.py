@@ -5,6 +5,10 @@ training data. Three feature families:
   - basin memory: anomalies up to t;
   - observed rain up to t (MERGE): already fallen, not yet turned into flow;
   - rain from t+1 to t+h: a perfect-foresight SCENARIO showing the upper bound of the gain from rain forecasts.
+
+Timing: t is the last day with observed ENA. ONS publishes daily ENA the next morning, so a forecast "h days ahead"
+is issued on t+1 and its effective lead time is h−1 days (h=1 is a same-day nowcast). Training only uses targets
+dated up to t, i.e. known when the first target of the fold is forecast.
 """
 import numpy as np
 import pandas as pd
@@ -30,8 +34,11 @@ def harmonicos(datas):
 
 
 def preparar_bacia(serie, inicio_teste, h, placebo=False):
-    """Features for one basin. serie: daily index with columns ena and chuva. Only training data define the scales."""
-    treino = serie[serie.index < inicio_teste]
+    """Features for one basin. serie: daily index with columns ena and chuva. Only training data define the scales.
+
+    The first target of the fold (inicio_teste) is forecast from day inicio_teste−h, so only data up to that day count.
+    """
+    treino = serie[serie.index <= inicio_teste - pd.Timedelta(days=h)]
     media = treino["ena"].mean()
     # Days without data are left out of the fit: a single NaN would contaminate every coefficient.
     observado = treino["ena"].notna().to_numpy()
@@ -72,7 +79,9 @@ def backtest_ena(painel, folds, horizontes=HORIZONTES, log=print):
                     destino.append(x)
             dados, dados_placebo = pd.concat(partes), pd.concat(placebos)
             base = dados["a0"].notna() & dados["alvo"].notna()
-            treino_m = base & (dados["data_alvo"] < inicio)
+            # Targets known on the issue day of the fold's first target (inicio − h): no fold-boundary leakage.
+            corte = inicio - pd.Timedelta(days=h)
+            treino_m = base & (dados["data_alvo"] <= corte)
             teste_m = base & (dados["data_alvo"] >= inicio) & (dados["data_alvo"] < fim)
             teste = dados[teste_m].copy()
             desfazer = lambda a, d: d["media"].to_numpy() * (d["clima_alvo"].to_numpy() + a)  # noqa: E731
@@ -83,7 +92,7 @@ def backtest_ena(painel, folds, horizontes=HORIZONTES, log=print):
             ou, ridge, kalman = {}, {}, {}
             for bacia, grupo in dados.groupby("bacia"):
                 valido = grupo["a0"].notna() & grupo["alvo"].notna()
-                tr = grupo[valido & (grupo["data_alvo"] < inicio)]
+                tr = grupo[valido & (grupo["data_alvo"] <= corte)]
                 te = grupo[valido & (grupo["data_alvo"] >= inicio) & (grupo["data_alvo"] < fim)]
                 if te.empty or tr.empty:
                     continue

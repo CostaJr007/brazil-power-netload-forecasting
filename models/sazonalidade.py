@@ -8,7 +8,8 @@ Two different ideas:
 import numpy as np
 import pandas as pd
 
-from models.carga_d1 import CAL, LAGS, TEMP, _ridge_por_hora, preparar_d1
+from models.carga_d1 import CAL, GAP, LAGS, TEMP, _ridge_por_hora, preparar_d1
+from models.validation import train_cutoff
 
 ESTACOES = {12: "verao", 1: "verao", 2: "verao", 3: "outono", 4: "outono", 5: "outono",
             6: "inverno", 7: "inverno", 8: "inverno", 9: "primavera", 10: "primavera", 11: "primavera"}
@@ -45,7 +46,7 @@ def backtest_sazonal(carga, temperatura, folds, log=print):
                 .rename(columns={"temp_prev_48h": "temp_prev"}))
         x = preparar_d1(grupo.set_index("instante")[["carga", "programada"]], temp)
         for inicio, fim in folds:
-            treino = x[x.index < inicio]
+            treino = x[x.index < train_cutoff(inicio, GAP)]
             exigidas = ["carga", "programada", "nivel", "e_m28", "t_prev"] + COLUNAS
             teste = x[(x.index >= inicio) & (x.index < fim) & x[exigidas].notna().all(axis=1)].copy()
             if teste.empty:

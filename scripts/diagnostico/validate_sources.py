@@ -4,7 +4,6 @@
 """Small live smoke check; downloads only a bounded set, never full history."""
 import json
 from pathlib import Path
-# De zipfile, importa ZipFile: inspeciona ZIP e verifica integridade CRC.
 from zipfile import ZipFile
 
 # Scripts in this subfolder reuse the modules in scripts/ (acquire, pipeline...).

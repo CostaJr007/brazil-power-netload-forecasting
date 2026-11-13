@@ -1,4 +1,4 @@
-# Ambiente e IDE
+# Environment and IDE
 .venv/
 .idea/
 __pycache__/
@@ -7,14 +7,15 @@ __pycache__/
 .ruff_cache/
 .ipynb_checkpoints/
 
-# Dados (Bronze/Silver/Gold/estado). Localmente "data" pode ser um junction para outro disco,
-# por isso o padrão sem barra final: ignora tanto a pasta quanto o link.
+# Data (Bronze/Silver/Gold/state). Locally "data" may be a junction to another drive,
+# hence the pattern without a trailing slash: it ignores both the folder and the link.
 /data
 data/
 artifacts/
 *.part
 
-# Segredos e credenciais locais (CDS, ANA, etc.)
+# Local secrets and credentials (CDS, ANA, etc.)
+.mcp.json
 .env
 .cdsapirc
 *.token

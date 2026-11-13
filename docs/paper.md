@@ -1,4 +1,4 @@
-# Beating the grid operator's net-load schedule with open data: a leakage-safe forecasting pipeline for the Brazilian power system
+# Forecasting net load against the grid operator's schedule with open data: a leakage-safe pipeline for the Brazilian power system
 
 *Technical report · November 2026 · personal research project*
 
@@ -11,13 +11,15 @@ already has. We build a Bronze/Silver/Gold data platform over 37 ONS datasets, t
 weather sources. Each component (load, wind, solar) is forecast per subsystem with per-hour Ridge
 regressions, gradient boosting and bias-corrected operator schedules. Combination "recipes" are selected on
 2025 and validated on 2026 in a walk-forward design that only uses information available at 10 pm the day
-before. For the national grid in 2026, the model reduces hourly net-load MAE by **11.2%** against the
-operator's day-ahead schedule at D+1 (2,104 vs 2,371 MW), and by **25.9%** at D+2, before any official
-schedule exists, against a bias-corrected previous-day schedule (2,594 vs 3,501 MW). Archived weather
-forecasts are the main source of skill, cutting error by 37% (wind), 22% (solar) and 17% (load). An empirical
-80% prediction band is well calibrated (79–80% coverage). We also report what did **not** work: extra heat
-features, a second-stage residual model and fuzzy-logic risk bands all failed out of sample. A one-week live
-replay shows the method's main weakness: the operator's bias can flip sign during heat waves.
+before. For the national grid in 2026, at D+1 the model reduces hourly net-load MAE by **5.0%** against the
+operator's day-ahead schedule corrected by its own recent bias (2,097 vs 2,207 MW; 11.3% against the raw
+schedule, most of which is the bias correction). The D+1 recipe is itself half the operator's schedule. The
+larger edge is at D+2, before any official schedule exists: **25.7%** against a bias-corrected previous-day
+schedule (2,602 vs 3,500 MW). With the same Ridge model, archived weather forecasts cut error by 32% (wind),
+22% (solar) and 17% (load). An empirical 80% prediction band is well calibrated (79.3–79.5% coverage). We also
+report what did **not** work: extra heat features, a second-stage residual model and fuzzy-logic risk bands all
+failed out of sample. A one-week replay shows the method's main weakness: the operator's bias can flip sign
+during heat waves.
 
 ## 1. Introduction
 
@@ -68,7 +70,7 @@ Applied before any model, each rule motivated by an observed defect:
 
 Fewer than 1% of hours are affected.
 
-One defect was found after the backtest: on 3 days of 2026 (Jan 16, Mar 7, May 9) the published balance lost most Northeast wind (0.2–0.5 GW reported against ~12 GW in the operator's own schedule). These days are kept in all reported results, which makes them conservative: excluding them raises the 2026 gain to 12.6% at D+1 and 27.7% at D+2. A future cleaning rule should flag hours where verified renewables fall below 15% of the operator's same-day schedule.
+One defect was found after the backtest: on 3 days of 2026 (Jan 16, Mar 7, May 9) the published balance lost most Northeast wind (0.2–0.5 GW reported against ~12 GW in the operator's own schedule). These days are kept in all reported results, which makes them conservative: excluding them raises the 2026 dashboard gain from 4.9% to 5.4% at D+1 and from 26.0% to 27.5% at D+2. A future cleaning rule should flag hours where verified renewables fall below 15% of the operator's same-day schedule.
 
 ### 2.4 Weather features
 
@@ -104,18 +106,18 @@ Each component is modelled separately per subsystem, and net load is assembled a
 - **Operator references:** the DESSEM value (`ons`); the same value corrected by the 28-day mean error at the same hour (`ons_corrected`); for D+2, the previous day's schedule corrected by the mean error of the last four same-weekday, same-hour occurrences (`ons_prev_weekday`).
 - **Recipes:** 50/50 blends of the ML mean with each operator reference, plus the pure models. One recipe is chosen **per component and horizon on 2025 only**.
 
-Models are refit every quarter on all data before the quarter, because archived weather forecasts only start in 2024.
+Models are refit every quarter, because archived weather forecasts only start in 2024. Each refit uses only targets already published when the quarter's first day is forecast (up to T−2 at D+1, T−3 at D+2), so no fold boundary leaks future values; a unit test checks this.
 
 ### 3.3 Benchmarks and inference
 
-- **D+1 benchmark:** the operator's DESSEM schedule. We also report the gain over the bias-corrected schedule, a stronger reference.
+- **D+1 benchmark:** the operator's DESSEM schedule corrected by its mean error over the last 28 days at the same hour, known at decision time. Any desk can compute it, so it is the fair reference; the raw schedule is reported for context.
 - **D+2 benchmark:** the previous-day schedule corrected by hour and weekday. A naive version made the first D+2 result look like a 42% gain; the weekday correction brought it down to 26%. That gap is why benchmark choice is treated as part of the method.
 - **Uncertainty:** differences in MAE are given with 95% confidence intervals from a **14-day block bootstrap**, which preserves the autocorrelation of forecast errors.
 
 ### 3.4 Prediction band
 
 For each subsystem and hour, the 10th and 90th percentiles of the model's errors over the previous 120 days,
-excluding the day before decision, define an 80% band. This is the limit of a Monte Carlo resampling of past
+using only errors already known at decision time, define an 80% band. This is the limit of a Monte Carlo resampling of past
 errors. It is recomputed monthly in the backtest and at every decision in operations.
 
 ### 3.5 Recipes selected on 2025
@@ -125,8 +127,9 @@ errors. It is recomputed monthly in the backtest and at every decision in operat
 | D+1 | ML + corrected ONS (50/50) | ML + corrected ONS (50/50) | corrected ONS |
 | D+2 | Ridge + GBM mean | GBM | ML + weekday-corrected T−1 schedule |
 
-At D+1 the operator's own schedule is hard to beat alone, so the model works best blended with it. At D+2
-the operator has not yet seen the weather for the target day, and pure ML wins for load and wind.
+At D+1 the operator's own schedule is hard to beat: ML alone loses to it for wind and solar, so the recipe
+blends ML with the bias-corrected schedule (and uses the corrected schedule alone for solar). At D+2 the
+operator has not yet seen the weather for the target day, and pure ML wins for load and wind.
 
 ## 4. Results
 
@@ -134,21 +137,22 @@ the operator has not yet seen the weather for the target day, and pure ML wins f
 
 | Horizon | Model MAE | Benchmark MAE | Reduction | Additional evidence |
 |---|---|---|---|---|
-| D+1 | 2,104 MW | 2,371 MW (DESSEM) | **11.2%** | −94 MW vs bias-corrected DESSEM, 95% CI [−171, −19] |
-| D+2 | 2,594 MW | 3,501 MW (weekday-corrected T−1) | **25.9%** | 95% CI of the difference [−1,195, −580] MW; anticipates the not-yet-published DESSEM with MAE 2,256 vs 3,021 MW |
+| D+1 | 2,097 MW | 2,207 MW (bias-corrected DESSEM) | **5.0%** | 95% CI of the difference [−172, −21] MW; vs raw DESSEM (2,364 MW): 11.3% |
+| D+2 | 2,602 MW | 3,500 MW (weekday-corrected T−1) | **25.7%** | 95% CI of the difference [−1,186, −575] MW; anticipates the not-yet-published DESSEM with MAE 2,264 vs 3,021 MW |
 
-These figures use the common sample where every candidate model has a value; recomputed on every available hour, as in the dashboard, they are 2,110 vs 2,373 MW (11.1%) and 2,607 vs 3,534 MW (26.2%).
+These figures use the common sample where every candidate model has a value; recomputed on every available hour, as in the dashboard, they are 2,102 vs 2,209 MW (4.9%) and 2,614 vs 3,534 MW (26.0%). Once ONS publishes its D+1 schedule, that schedule (bias-corrected, 2,211 MW) beats our D+2 forecast, as expected.
 
-The model beats the benchmark on 64% of days at D+1 and 69% at D+2. Errors peak in the late morning
-(11 am at D+1), when solar ramps and solar forecast errors are largest, not at the evening load peak.
-Holidays and weekends are harder than weekdays (D+1: 2,333 and 2,250 vs 2,041 MW), but the model still beats
-the benchmark on both.
+The model beats the benchmark on 59% of days at D+1 and 68% at D+2. Errors peak in the late morning
+(11 am at D+1), when solar ramps and solar forecast errors are largest, not at the evening load peak; between
+11 am and 3 pm the bias-corrected DESSEM is better than the D+1 recipe. Holidays are the hardest days (D+1:
+2,343 vs 2,032 MW on weekdays) but the recipe still beats the benchmark there; on weekends D+1 is a tie
+(2,243 vs 2,229 MW). By month, D+1 loses in February, August and September.
 
-### 4.2 Value of each information source (2026, D+1)
+### 4.2 Value of weather forecasts (2026, D+1, same per-hour Ridge with and without them)
 
 | Component | MAE without weather | MAE with weather | Reduction |
 |---|---|---|---|
-| Wind | 703 MW | 446 MW | 37% |
+| Wind | 703 MW | 477 MW | 32% |
 | Solar | 406 MW | 316 MW | 22% |
 | Load | 682 MW | 569 MW | 17% |
 
@@ -161,12 +165,12 @@ rain with shuffled rain reduced 1-day inflow skill from 30.5% to 23.4%, confirmi
 | Forecast | Benchmark | Result |
 |---|---|---|
 | Load D+1 by subsystem | ONS scheduled load (API) | −22% MAE nationally; −26 MW/h beyond bias correction |
-| Basin inflow (ENA), 1/3/7/14 days | Persistence | 30.5%, 19.2%, 14.1%, 14.9% skill |
+| Basin inflow (ENA), 1/3/7/14 days after the last published value | Persistence | 30.5%, 19.3%, 14.1%, 14.8% skill (ENA is published the next morning, so the effective lead is about a day shorter) |
 
 ### 4.4 Calibration
 
-The 80% band covered **79.2%** of hours at D+1 and **79.5%** at D+2 in 2026. Its average width is about
-6.4 GW at D+1 and 8.1 GW at D+2 for the national grid.
+The 80% band covered **79.3%** of hours at D+1 and **79.5%** at D+2 in 2026. Its average width is about
+6.5 GW at D+1 and 8.2 GW at D+2 for the national grid.
 
 ## 5. What did not work
 
@@ -184,10 +188,11 @@ The interpretation is that the temperature terms already in the model capture mo
 and the remaining error is closer to noise than to a missing variable. Further gains need **new information**,
 such as fresher weather runs or state-level holidays, rather than a different regression.
 
-## 6. Live replay: November 4–10, 2026
+## 6. Week replay: November 4–10, 2026
 
-Each day was re-forecast as of 10 pm the night before, with data cut at that time, archived weather and
-frozen recipes.
+Each day was re-forecast with data cut at 10 pm the night before, archived weather and frozen recipes. This is
+a replay, not a true as-of run: the inputs are today's revised ONS values cut by date, not the exact vintages
+that existed that night. The D+1 benchmark here is the raw DESSEM schedule.
 
 | | Model MAE | Benchmark MAE | Result | Days won | Peak hour (±1 h) |
 |---|---|---|---|---|---|
@@ -208,7 +213,10 @@ between the 3-day and 28-day operator bias is reported as a **risk alert** for t
 - **Holidays:** the model knows only national holidays; the operator also knows regional and company schedules.
 - **Price:** the official spot price (CCEE) was not reachable from the project's network (HTTP 403), so price is estimated from CMO with regulatory floor and cap. Because the price sat at the floor in 82% and 98% of hours in 2022 and 2023, the project forecasts net load rather than price.
 - **Weather data:** archived forecasts have roughly 25–110 km resolution, and the free Open-Meteo tier is licensed for non-commercial use only.
-- **Revised data:** the backtest uses revised verified data, while operations see the first, preliminary release.
+- **Revised data:** the backtest and the week replay use revised verified data, while operations see the first, preliminary release. Every vintage is kept in Bronze, but an as-of rebuild is not implemented.
+- **2026 is validation, not a pristine test:** recipes were chosen on 2025, but later diagnostics (correction window, residual models, fuzzy bands) also looked at 2026. The recipes are now frozen; the daily operational forecasts stored from November 2026 are the clean test.
+- **ENA lead time:** daily inflow is published the morning after, so the "1 day ahead" inflow forecast is closer to a same-day nowcast.
+- **Benchmark definitions:** part of the DESSEM bias in the Southeast may come from a difference between DESSEM demand and balance load, which was not verified.
 
 ## 8. Reproducibility and delivery
 
@@ -217,17 +225,18 @@ All steps run from scripts on a laptop:
 - **Ingestion:** `pipeline.py` (scheduled every 15 minutes).
 - **Backtests:** `carga_liquida_d1.py`, with `--horizonte 2` for D+2.
 - **Operational forecast:** `prever_carga_liquida.py`.
-- **Audit:** `auditar_previsoes.py`.
+- **Week replay:** `auditar_previsoes.py`.
 - **Diagnostics:** `scripts/diagnostico/`.
 - **Dashboard:** a Power BI project kept as code (PBIP + TMDL, star schema, 54 DAX measures, 5 pages), generated by `exportar_bi.py` and `gerar_projeto_bi.py`.
-- **Tests:** 91 offline tests, including leakage tests, run in CI.
+- **Tests:** 92 offline tests, including leakage tests (also at fold boundaries), run in CI.
 
 ## 9. Conclusion and future work
 
-With open data and careful timing, a simple, well-benchmarked model beats the grid operator's own net-load
-schedule by about 11% one day ahead. The edge rises to about 26% two days ahead, when the operator has not yet
-seen the target day's weather. Most of the edge comes from archived weather forecasts and from correcting the
-operator's systematic bias. More complex additions did not survive out-of-sample tests.
+With open data and careful timing, one day ahead the best recipe is the operator's own schedule, corrected
+for its bias and blended with ML: it beats the corrected schedule by about 5% (11% against the raw one). Two
+days ahead, before the operator has published anything for the target day, ML driven by archived weather
+forecasts beats the best free reference by about 26%. The honest summary is that the D+1 edge is mostly bias
+correction and the D+2 edge is mostly weather. More complex additions did not survive out-of-sample tests.
 
 Next steps:
 1. Link the D+2 net-load forecast to the estimated price and test whether benchmark errors anticipate price moves.

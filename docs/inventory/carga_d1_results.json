@@ -20,37 +20,37 @@
       "ridge_ons_sem_temp": {
         "mae": 507.1,
         "mape": 2.688,
-        "vies_pct": 0.062
+        "vies_pct": 0.061
       },
       "ridge_ons": {
         "mae": 493.1,
         "mape": 2.639,
-        "vies_pct": 0.047
+        "vies_pct": 0.046
       },
       "gbm_ons": {
-        "mae": 507.5,
-        "mape": 2.715,
-        "vies_pct": 0.048
+        "mae": 506.7,
+        "mape": 2.712,
+        "vies_pct": 0.033
       },
       "combinado": {
-        "mae": 485.4,
-        "mape": 2.593,
-        "vies_pct": 0.086
+        "mae": 485.3,
+        "mape": 2.592,
+        "vies_pct": 0.081
       },
       "ridge_ons_limite": {
         "mae": 489.2,
         "mape": 2.617,
-        "vies_pct": 0.051
+        "vies_pct": 0.05
       },
       "ridge_sem_ons": {
-        "mae": 501.6,
-        "mape": 2.637,
-        "vies_pct": -0.074
+        "mae": 501.1,
+        "mape": 2.635,
+        "vies_pct": -0.071
       },
       "gbm_sem_ons": {
-        "mae": 521.2,
-        "mape": 2.722,
-        "vies_pct": 0.013
+        "mae": 524.3,
+        "mape": 2.73,
+        "vies_pct": 0.02
       }
     },
     "desenvolvimento": {
@@ -66,23 +66,23 @@
       },
       "ridge_ons_sem_temp": {
         "mae": 471.8,
-        "mape": 2.62,
+        "mape": 2.621,
         "vies_pct": 0.381
       },
       "ridge_ons": {
         "mae": 461.3,
         "mape": 2.583,
-        "vies_pct": 0.326
+        "vies_pct": 0.325
       },
       "gbm_ons": {
-        "mae": 479.9,
-        "mape": 2.678,
-        "vies_pct": 0.298
+        "mae": 479.1,
+        "mape": 2.675,
+        "vies_pct": 0.27
       },
       "combinado": {
-        "mae": 449.2,
+        "mae": 449.1,
         "mape": 2.512,
-        "vies_pct": 0.277
+        "vies_pct": 0.267
       },
       "ridge_ons_limite": {
         "mae": 457.6,
@@ -90,13 +90,13 @@
         "vies_pct": 0.325
       },
       "ridge_sem_ons": {
-        "mae": 481.8,
+        "mae": 481.6,
         "mape": 2.599,
-        "vies_pct": -0.132
+        "vies_pct": -0.131
       },
       "gbm_sem_ons": {
-        "mae": 510.0,
-        "mape": 2.755,
+        "mae": 514.4,
+        "mape": 2.769,
         "vies_pct": 0.022
       }
     },
@@ -114,37 +114,37 @@
       "ridge_ons_sem_temp": {
         "mae": 543.0,
         "mape": 2.756,
-        "vies_pct": -0.263
+        "vies_pct": -0.265
       },
       "ridge_ons": {
         "mae": 525.4,
         "mape": 2.695,
-        "vies_pct": -0.236
+        "vies_pct": -0.238
       },
       "gbm_ons": {
-        "mae": 535.7,
-        "mape": 2.753,
-        "vies_pct": -0.206
+        "mae": 534.8,
+        "mape": 2.749,
+        "vies_pct": -0.208
       },
       "combinado": {
-        "mae": 522.3,
+        "mae": 522.1,
         "mape": 2.674,
-        "vies_pct": -0.108
+        "vies_pct": -0.109
       },
       "ridge_ons_limite": {
         "mae": 521.4,
         "mape": 2.671,
-        "vies_pct": -0.228
+        "vies_pct": -0.23
       },
       "ridge_sem_ons": {
-        "mae": 521.7,
-        "mape": 2.675,
-        "vies_pct": -0.015
+        "mae": 521.1,
+        "mape": 2.672,
+        "vies_pct": -0.01
       },
       "gbm_sem_ons": {
-        "mae": 532.5,
-        "mape": 2.688,
-        "vies_pct": 0.004
+        "mae": 534.3,
+        "mape": 2.69,
+        "vies_pct": 0.017
       }
     }
   },
@@ -161,39 +161,39 @@
         "vies_pct": 0.116
       },
       "ridge_ons_sem_temp": {
-        "mae": 195.3,
-        "mape": 2.267,
-        "vies_pct": -0.286
+        "mae": 195.4,
+        "mape": 2.268,
+        "vies_pct": -0.289
       },
       "ridge_ons": {
-        "mae": 192.3,
-        "mape": 2.23,
-        "vies_pct": -0.283
+        "mae": 192.4,
+        "mape": 2.231,
+        "vies_pct": -0.287
       },
       "gbm_ons": {
-        "mae": 198.1,
+        "mae": 198.2,
         "mape": 2.299,
-        "vies_pct": -0.254
+        "vies_pct": -0.252
       },
       "combinado": {
-        "mae": 189.5,
+        "mae": 189.6,
         "mape": 2.202,
-        "vies_pct": -0.14
+        "vies_pct": -0.141
       },
       "ridge_ons_limite": {
         "mae": 187.7,
-        "mape": 2.177,
-        "vies_pct": -0.275
+        "mape": 2.178,
+        "vies_pct": -0.278
       },
       "ridge_sem_ons": {
-        "mae": 172.9,
+        "mae": 172.8,
         "mape": 2.012,
-        "vies_pct": -0.044
+        "vies_pct": -0.042
       },
       "gbm_sem_ons": {
-        "mae": 185.6,
-        "mape": 2.172,
-        "vies_pct": -0.049
+        "mae": 185.8,
+        "mape": 2.173,
+        "vies_pct": -0.051
       }
     },
     "NE": {
@@ -210,37 +210,37 @@
       "ridge_ons_sem_temp": {
         "mae": 361.9,
         "mape": 2.608,
-        "vies_pct": -0.27
+        "vies_pct": -0.271
       },
       "ridge_ons": {
-        "mae": 356.5,
+        "mae": 356.6,
         "mape": 2.572,
-        "vies_pct": -0.132
+        "vies_pct": -0.133
       },
       "gbm_ons": {
-        "mae": 364.7,
-        "mape": 2.629,
-        "vies_pct": -0.154
+        "mae": 365.5,
+        "mape": 2.634,
+        "vies_pct": -0.164
       },
       "combinado": {
-        "mae": 355.2,
-        "mape": 2.564,
-        "vies_pct": -0.06
+        "mae": 355.7,
+        "mape": 2.567,
+        "vies_pct": -0.063
       },
       "ridge_ons_limite": {
         "mae": 353.8,
         "mape": 2.553,
-        "vies_pct": -0.114
+        "vies_pct": -0.115
       },
       "ridge_sem_ons": {
-        "mae": 321.0,
-        "mape": 2.332,
-        "vies_pct": 0.017
+        "mae": 320.7,
+        "mape": 2.329,
+        "vies_pct": 0.02
       },
       "gbm_sem_ons": {
-        "mae": 338.8,
-        "mape": 2.455,
-        "vies_pct": 0.061
+        "mae": 336.3,
+        "mape": 2.437,
+        "vies_pct": 0.07
       }
     },
     "S": {
@@ -256,38 +256,38 @@
       },
       "ridge_ons_sem_temp": {
         "mae": 549.3,
-        "mape": 3.847,
-        "vies_pct": -0.247
+        "mape": 3.846,
+        "vies_pct": -0.248
       },
       "ridge_ons": {
-        "mae": 538.2,
+        "mae": 538.1,
         "mape": 3.779,
-        "vies_pct": -0.22
+        "vies_pct": -0.221
       },
       "gbm_ons": {
-        "mae": 548.5,
-        "mape": 3.848,
-        "vies_pct": -0.231
+        "mae": 546.1,
+        "mape": 3.832,
+        "vies_pct": -0.236
       },
       "combinado": {
-        "mae": 533.6,
-        "mape": 3.744,
-        "vies_pct": -0.081
+        "mae": 532.8,
+        "mape": 3.738,
+        "vies_pct": -0.084
       },
       "ridge_ons_limite": {
         "mae": 536.2,
         "mape": 3.768,
-        "vies_pct": -0.206
+        "vies_pct": -0.207
       },
       "ridge_sem_ons": {
-        "mae": 593.1,
-        "mape": 4.161,
-        "vies_pct": 0.119
+        "mae": 592.4,
+        "mape": 4.156,
+        "vies_pct": 0.129
       },
       "gbm_sem_ons": {
-        "mae": 540.2,
-        "mape": 3.792,
-        "vies_pct": -0.027
+        "mae": 539.7,
+        "mape": 3.794,
+        "vies_pct": 0.014
       }
     },
     "SECO": {
@@ -304,37 +304,37 @@
       "ridge_ons_sem_temp": {
         "mae": 1061.6,
         "mape": 2.299,
-        "vies_pct": -0.25
+        "vies_pct": -0.252
       },
       "ridge_ons": {
         "mae": 1010.8,
         "mape": 2.195,
-        "vies_pct": -0.308
+        "vies_pct": -0.31
       },
       "gbm_ons": {
-        "mae": 1028.0,
-        "mape": 2.233,
-        "vies_pct": -0.187
+        "mae": 1025.8,
+        "mape": 2.228,
+        "vies_pct": -0.181
       },
       "combinado": {
-        "mae": 1007.0,
-        "mape": 2.184,
-        "vies_pct": -0.15
+        "mae": 1006.8,
+        "mape": 2.183,
+        "vies_pct": -0.149
       },
       "ridge_ons_limite": {
-        "mae": 1004.3,
+        "mae": 1004.2,
         "mape": 2.181,
-        "vies_pct": -0.318
+        "vies_pct": -0.32
       },
       "ridge_sem_ons": {
-        "mae": 995.9,
-        "mape": 2.186,
-        "vies_pct": -0.153
+        "mae": 994.3,
+        "mape": 2.182,
+        "vies_pct": -0.146
       },
       "gbm_sem_ons": {
-        "mae": 1061.5,
-        "mape": 2.329,
-        "vies_pct": 0.031
+        "mae": 1071.2,
+        "mape": 2.351,
+        "vies_pct": 0.035
       }
     }
   },
@@ -342,46 +342,46 @@
     "2023": {
       "ons": 3.582,
       "ons_vies28": 2.698,
-      "ridge_ons_sem_temp": 2.702,
-      "ridge_ons": 2.671,
-      "gbm_ons": 2.816,
-      "combinado": 2.59,
-      "ridge_ons_limite": 2.653,
-      "ridge_sem_ons": 2.676,
-      "gbm_sem_ons": 2.921
+      "ridge_ons_sem_temp": 2.703,
+      "ridge_ons": 2.672,
+      "gbm_ons": 2.804,
+      "combinado": 2.588,
+      "ridge_ons_limite": 2.654,
+      "ridge_sem_ons": 2.675,
+      "gbm_sem_ons": 2.935
     },
     "2024": {
       "ons": 2.599,
       "ons_vies28": 2.495,
       "ridge_ons_sem_temp": 2.528,
       "ridge_ons": 2.484,
-      "gbm_ons": 2.523,
-      "combinado": 2.425,
+      "gbm_ons": 2.53,
+      "combinado": 2.427,
       "ridge_ons_limite": 2.464,
       "ridge_sem_ons": 2.514,
-      "gbm_sem_ons": 2.57
+      "gbm_sem_ons": 2.584
     },
     "2025": {
       "ons": 3.017,
       "ons_vies28": 2.801,
       "ridge_ons_sem_temp": 2.775,
       "ridge_ons": 2.716,
-      "gbm_ons": 2.756,
+      "gbm_ons": 2.755,
       "combinado": 2.696,
       "ridge_ons_limite": 2.694,
-      "ridge_sem_ons": 2.735,
-      "gbm_sem_ons": 2.695
+      "ridge_sem_ons": 2.732,
+      "gbm_sem_ons": 2.69
     },
     "2026": {
       "ons": 3.097,
       "ons_vies28": 2.756,
       "ridge_ons_sem_temp": 2.735,
-      "ridge_ons": 2.67,
-      "gbm_ons": 2.749,
-      "combinado": 2.65,
+      "ridge_ons": 2.671,
+      "gbm_ons": 2.743,
+      "combinado": 2.648,
       "ridge_ons_limite": 2.645,
-      "ridge_sem_ons": 2.604,
-      "gbm_sem_ons": 2.68
+      "ridge_sem_ons": 2.602,
+      "gbm_sem_ons": 2.69
     }
   },
   "media_diaria": {
@@ -399,37 +399,37 @@
       "ridge_ons_sem_temp": {
         "mae": 412.6,
         "mape": 2.172,
-        "vies_pct": 0.03
+        "vies_pct": 0.029
       },
       "ridge_ons": {
         "mae": 393.1,
         "mape": 2.098,
-        "vies_pct": 0.015
+        "vies_pct": 0.014
       },
       "gbm_ons": {
-        "mae": 409.9,
-        "mape": 2.185,
-        "vies_pct": 0.018
+        "mae": 409.4,
+        "mape": 2.184,
+        "vies_pct": 0.003
       },
       "combinado": {
-        "mae": 394.5,
-        "mape": 2.098,
-        "vies_pct": 0.056
+        "mae": 394.6,
+        "mape": 2.099,
+        "vies_pct": 0.051
       },
       "ridge_ons_limite": {
         "mae": 390.1,
         "mape": 2.081,
-        "vies_pct": 0.02
+        "vies_pct": 0.019
       },
       "ridge_sem_ons": {
-        "mae": 401.1,
-        "mape": 2.097,
-        "vies_pct": -0.114
+        "mae": 400.6,
+        "mape": 2.095,
+        "vies_pct": -0.111
       },
       "gbm_sem_ons": {
-        "mae": 405.3,
-        "mape": 2.122,
-        "vies_pct": -0.034
+        "mae": 408.5,
+        "mape": 2.13,
+        "vies_pct": -0.028
       }
     },
     "confirmacao": {
@@ -444,39 +444,39 @@
         "vies_pct": 0.088
       },
       "ridge_ons_sem_temp": {
-        "mae": 435.1,
+        "mae": 435.2,
         "mape": 2.2,
-        "vies_pct": -0.3
+        "vies_pct": -0.302
       },
       "ridge_ons": {
         "mae": 413.3,
         "mape": 2.118,
-        "vies_pct": -0.271
+        "vies_pct": -0.273
       },
       "gbm_ons": {
-        "mae": 426.3,
-        "mape": 2.189,
-        "vies_pct": -0.238
+        "mae": 425.2,
+        "mape": 2.183,
+        "vies_pct": -0.239
       },
       "combinado": {
-        "mae": 416.8,
+        "mae": 416.7,
         "mape": 2.131,
-        "vies_pct": -0.14
+        "vies_pct": -0.141
       },
       "ridge_ons_limite": {
         "mae": 411.2,
-        "mape": 2.104,
-        "vies_pct": -0.262
+        "mape": 2.105,
+        "vies_pct": -0.264
       },
       "ridge_sem_ons": {
-        "mae": 409.4,
-        "mape": 2.105,
-        "vies_pct": -0.059
+        "mae": 408.7,
+        "mape": 2.102,
+        "vies_pct": -0.053
       },
       "gbm_sem_ons": {
-        "mae": 401.4,
-        "mape": 2.047,
-        "vies_pct": -0.046
+        "mae": 403.3,
+        "mape": 2.048,
+        "vies_pct": -0.033
       }
     }
   },
@@ -494,37 +494,37 @@
     "ridge_ons_sem_temp": {
       "mae": 604.0,
       "mape": 2.636,
-      "vies_pct": -0.624
+      "vies_pct": -0.625
     },
     "ridge_ons": {
       "mae": 575.3,
       "mape": 2.549,
-      "vies_pct": -0.565
+      "vies_pct": -0.567
     },
     "gbm_ons": {
-      "mae": 590.4,
-      "mape": 2.616,
-      "vies_pct": -0.327
+      "mae": 590.3,
+      "mape": 2.614,
+      "vies_pct": -0.32
     },
     "combinado": {
-      "mae": 577.3,
+      "mae": 577.7,
       "mape": 2.55,
-      "vies_pct": -0.333
+      "vies_pct": -0.331
     },
     "ridge_ons_limite": {
-      "mae": 571.2,
+      "mae": 571.3,
       "mape": 2.521,
-      "vies_pct": -0.55
+      "vies_pct": -0.552
     },
     "ridge_sem_ons": {
-      "mae": 488.5,
-      "mape": 2.229,
-      "vies_pct": -0.241
+      "mae": 488.2,
+      "mape": 2.228,
+      "vies_pct": -0.236
     },
     "gbm_sem_ons": {
-      "mae": 491.5,
-      "mape": 2.198,
-      "vies_pct": -0.299
+      "mae": 495.4,
+      "mape": 2.211,
+      "vies_pct": -0.289
     }
   },
   "sin_horario_confirmacao": {
@@ -539,61 +539,61 @@
       "vies_pct": 0.06
     },
     "ridge_ons_sem_temp": {
-      "mae": 1445.4,
+      "mae": 1445.5,
       "mape": 1.736,
-      "vies_pct": -0.293
+      "vies_pct": -0.295
     },
     "ridge_ons": {
       "mae": 1398.1,
       "mape": 1.683,
-      "vies_pct": -0.29
+      "vies_pct": -0.292
     },
     "gbm_ons": {
-      "mae": 1389.1,
-      "mape": 1.672,
-      "vies_pct": -0.223
+      "mae": 1388.5,
+      "mape": 1.671,
+      "vies_pct": -0.222
     },
     "combinado": {
-      "mae": 1362.8,
-      "mape": 1.638,
+      "mae": 1363.7,
+      "mape": 1.639,
       "vies_pct": -0.151
     },
     "ridge_ons_limite": {
-      "mae": 1391.3,
+      "mae": 1391.2,
       "mape": 1.675,
-      "vies_pct": -0.288
+      "vies_pct": -0.29
     },
     "ridge_sem_ons": {
-      "mae": 1496.4,
-      "mape": 1.816,
-      "vies_pct": -0.121
+      "mae": 1493.4,
+      "mape": 1.812,
+      "vies_pct": -0.115
     },
     "gbm_sem_ons": {
-      "mae": 1443.4,
-      "mape": 1.746,
-      "vies_pct": -0.038
+      "mae": 1450.2,
+      "mape": 1.755,
+      "vies_pct": -0.026
     }
   },
   "por_hora_mape_confirmacao": {
     "0": {
       "ons": 2.334,
       "ons_vies28": 2.297,
-      "combinado": 2.19
+      "combinado": 2.188
     },
     "1": {
       "ons": 2.28,
       "ons_vies28": 2.277,
-      "combinado": 2.161
+      "combinado": 2.16
     },
     "2": {
       "ons": 2.257,
       "ons_vies28": 2.258,
-      "combinado": 2.155
+      "combinado": 2.153
     },
     "3": {
       "ons": 2.225,
       "ons_vies28": 2.229,
-      "combinado": 2.136
+      "combinado": 2.131
     },
     "4": {
       "ons": 2.203,
@@ -603,42 +603,42 @@
     "5": {
       "ons": 2.239,
       "ons_vies28": 2.152,
-      "combinado": 2.086
+      "combinado": 2.088
     },
     "6": {
       "ons": 2.374,
       "ons_vies28": 2.187,
-      "combinado": 2.139
+      "combinado": 2.136
     },
     "7": {
       "ons": 2.644,
       "ons_vies28": 2.326,
-      "combinado": 2.277
+      "combinado": 2.278
     },
     "8": {
       "ons": 3.186,
       "ons_vies28": 2.71,
-      "combinado": 2.653
+      "combinado": 2.652
     },
     "9": {
       "ons": 3.831,
       "ons_vies28": 3.11,
-      "combinado": 3.043
+      "combinado": 3.04
     },
     "10": {
       "ons": 4.322,
       "ons_vies28": 3.395,
-      "combinado": 3.295
+      "combinado": 3.296
     },
     "11": {
       "ons": 4.544,
       "ons_vies28": 3.479,
-      "combinado": 3.363
+      "combinado": 3.362
     },
     "12": {
       "ons": 4.617,
       "ons_vies28": 3.604,
-      "combinado": 3.453
+      "combinado": 3.45
     },
     "13": {
       "ons": 4.509,
@@ -648,37 +648,37 @@
     "14": {
       "ons": 4.162,
       "ons_vies28": 3.574,
-      "combinado": 3.434
+      "combinado": 3.435
     },
     "15": {
       "ons": 3.547,
       "ons_vies28": 3.301,
-      "combinado": 3.163
+      "combinado": 3.161
     },
     "16": {
       "ons": 3.091,
       "ons_vies28": 2.975,
-      "combinado": 2.823
+      "combinado": 2.822
     },
     "17": {
       "ons": 2.741,
       "ons_vies28": 2.668,
-      "combinado": 2.548
+      "combinado": 2.551
     },
     "18": {
       "ons": 2.609,
       "ons_vies28": 2.592,
-      "combinado": 2.485
+      "combinado": 2.488
     },
     "19": {
       "ons": 2.615,
       "ons_vies28": 2.626,
-      "combinado": 2.51
+      "combinado": 2.508
     },
     "20": {
       "ons": 2.709,
       "ons_vies28": 2.727,
-      "combinado": 2.608
+      "combinado": 2.61
     },
     "21": {
       "ons": 2.772,
@@ -688,7 +688,7 @@
     "22": {
       "ons": 2.749,
       "ons_vies28": 2.794,
-      "combinado": 2.683
+      "combinado": 2.681
     },
     "23": {
       "ons": 2.74,
@@ -699,23 +699,23 @@
   "testes_confirmacao": [
     {
       "comparacao": "combinado - ons",
-      "dif_mae": -75.28,
+      "dif_mae": -75.39,
       "ic95": [
-        -95.38,
-        -56.93
+        -95.79,
+        -57.07
       ]
     },
     {
       "comparacao": "combinado - ons_vies28",
-      "dif_mae": -25.9,
+      "dif_mae": -26.01,
       "ic95": [
-        -31.49,
-        -20.67
+        -31.52,
+        -20.83
       ]
     },
     {
       "comparacao": "ridge_ons - ridge_ons_sem_temp",
-      "dif_mae": -17.78,
+      "dif_mae": -17.79,
       "ic95": [
         -24.06,
         -11.48
@@ -723,26 +723,26 @@
     },
     {
       "comparacao": "ridge_ons_limite - ridge_ons",
-      "dif_mae": -4.0,
+      "dif_mae": -4.02,
       "ic95": [
-        -5.83,
-        -2.2
+        -5.84,
+        -2.23
       ]
     },
     {
       "comparacao": "combinado - ons_vies28",
-      "dif_mae": -25.9,
+      "dif_mae": -26.01,
       "ic95": [
-        -31.49,
-        -20.67
+        -31.52,
+        -20.83
       ]
     },
     {
       "comparacao": "ridge_sem_ons - ons",
-      "dif_mae": -74.59,
+      "dif_mae": -75.28,
       "ic95": [
-        -103.38,
-        -44.9
+        -104.15,
+        -45.38
       ]
     }
   ]

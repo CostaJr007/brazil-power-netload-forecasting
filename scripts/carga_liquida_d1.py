@@ -70,7 +70,9 @@ def configuracao(horizonte):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--horizonte", type=int, default=1, help="1 = D+1, 2 = D+2...")
-    horizonte = parser.parse_args().horizonte
+    parser.add_argument("--ate", type=pd.Timestamp, help="last backtest day (YYYY-MM-DD), to reproduce a past run")
+    args = parser.parse_args()
+    horizonte = args.horizonte
     cfg = configuracao(horizonte)
     base, candidatos = cfg["base"], cfg["candidatos"]
     con = conectar()
@@ -79,6 +81,8 @@ def main():
     con.close()
     # The last day of the balance often comes out incomplete (seen on 2026-11-09 in the Northeast): left out.
     ultimo = balanco["instante"].max().normalize() - pd.Timedelta(days=2)
+    if args.ate is not None:
+        ultimo = min(ultimo, args.ate)
     balanco = balanco[balanco["instante"] < ultimo + pd.Timedelta(days=1)]
     pecas = backtest_pecas(balanco, dessem, carregar_previsao_renovaveis(horizonte + 1), carregar_temperatura_prevista(horizonte + 1),
                            folds_trimestrais(2025, ultimo), horizonte=horizonte)

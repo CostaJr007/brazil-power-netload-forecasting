@@ -1,20 +1,20 @@
-# Executado de modo oculto pelo Agendador. O caminho vem deste script, não do diretório atual.
+# Run hidden by Task Scheduler. The path comes from this script, not the current directory.
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $pythonPath = Join-Path $projectRoot '.venv\Scripts\python.exe'
 $scriptPath = Join-Path $PSScriptRoot 'pipeline.py'
-# Mesma regra do Python: ENERGY_DATA_DIR, se definida, senão <projeto>\data.
+# Same rule as Python: ENERGY_DATA_DIR if set, otherwise <project>\data.
 $dataDir = if ($env:ENERGY_DATA_DIR) { $env:ENERGY_DATA_DIR } else { Join-Path $projectRoot 'data' }
 $logDir = Join-Path $dataDir 'runs'
 New-Item -ItemType Directory -Path $logDir -Force | Out-Null
 Set-Location -LiteralPath $projectRoot
-# UTC e UTF-8 deixam os registros consistentes mesmo no Windows em português.
+# UTC and UTF-8 keep the logs consistent even on a Portuguese-locale Windows.
 $env:PYTHONUTF8 = '1'
 $schedulerLog = Join-Path $logDir 'scheduler.log'
 try {
-    # No PowerShell 5.1, redirecionar stderr de executável nativo com
-    # ErrorActionPreference=Stop transforma a primeira linha de log em exceção
-    # e encerra o Python no meio da execução. O cmd.exe faz o redirecionamento.
+    # In PowerShell 5.1, redirecting a native executable's stderr with
+    # ErrorActionPreference=Stop turns the first log line into an exception
+    # and kills Python mid-run. cmd.exe does the redirection instead.
     & cmd.exe /d /c "`"$pythonPath`" `"$scriptPath`" >> `"$schedulerLog`" 2>&1"
     exit $LASTEXITCODE
 } catch {

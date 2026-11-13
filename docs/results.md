@@ -1,8 +1,13 @@
 # Results on one page
 
 What the project delivers, how it was measured and where the details are. All model numbers come from a
-**walk-forward backtest**: the model "recipe" is chosen on one period (2025) and confirmed on a later one
-(2026). 95% intervals come from a 14-day block bootstrap.
+**walk-forward backtest**: the model "recipe" is chosen on one period (2025) and scored on a later one
+(2026). 95% intervals come from a 14-day block bootstrap. Each fold trains only on targets that were already
+published when its first day is forecast.
+
+> **2026 is a validation year, not a pristine test set.** Several checks (bias-correction window, residual
+> models, fuzzy bands) were run on 2026 after the recipes were chosen, so repeated looks may flatter it slightly.
+> The recipes are now frozen; the daily operational forecasts stored from Nov 2026 onwards are the clean test.
 
 ## The question
 
@@ -14,16 +19,25 @@ edge when it anticipates net load better than the public references, or before t
 
 | Forecast | Benchmark (what is already free) | Result | Details (PT) |
 |---|---|---|---|
-| **Net load D+1**, national grid, hourly | ONS day-ahead schedule (DESSEM) | **−11.2% MAE** in 2026 (2,104 vs 2,371 MW); −94 MW beyond a simple bias correction of the ONS schedule (95% CI −171 to −19) | [carga_liquida_d1.md](research/carga_liquida_d1.md) |
-| **Net load D+2**, national grid, hourly | Previous-day schedule corrected by hour and weekday | **−25.9% MAE** in 2026 (2,594 vs 3,501 MW); anticipates the schedule ONS has not yet published with 25% less error | [carga_liquida_d2.md](research/carga_liquida_d2.md) |
+| **Net load D+1**, national grid, hourly | ONS day-ahead schedule (DESSEM) corrected by its 28-day bias | **−5.0% MAE** in 2026 (2,097 vs 2,207 MW; 95% CI of the difference −172 to −21 MW). Against the raw schedule: −11.3% (2,364 MW), of which 6.6 points are the bias correction alone | [carga_liquida_d1.md](research/carga_liquida_d1.md) |
+| **Net load D+2**, national grid, hourly | Previous-day schedule corrected by hour and weekday | **−25.7% MAE** in 2026 (2,602 vs 3,500 MW; CI −1,186 to −575 MW); anticipates the schedule ONS has not yet published with 25% less error | [carga_liquida_d2.md](research/carga_liquida_d2.md) |
 | Load D+1, by subsystem | ONS scheduled load (API) | −22% MAE nationally; −26 MW/h beyond bias correction | [carga_d1.md](research/carga_d1.md) |
-| River inflow (ENA) by basin, 1–14 days | Persistence | 30.5% (1 day), 19.2% (3), 14.1% (7), 14.9% (14) with memory and observed rain | [modelagem_meteorologia_energia.md](research/modelagem_meteorologia_energia.md) |
+| River inflow (ENA) by basin, 1–14 days after the last published value | Persistence | 30.5% (1 day), 19.3% (3), 14.1% (7), 14.8% (14) with memory and observed rain; ENA is published the next morning, so the effective lead is about a day shorter | [modelagem_meteorologia_energia.md](research/modelagem_meteorologia_energia.md) |
 
-> **Two equivalent ways of counting.** The research tables score every candidate on the same sample of hours (2,104 vs 2,371 MW at D+1, 11.2%); the dashboard uses every available hour (2,110 vs 2,373 MW, 11.1%; D+2: 2,607 vs 3,534 MW, 26.2%). Both are out of sample.
+> **What the D+1 recipe is.** Load and wind: 50/50 blend of ML (Ridge + boosting) with the bias-corrected DESSEM. Solar: the bias-corrected DESSEM alone. ML on its own loses to the operator at D+1 for wind and solar, so the D+1 result is "operator + bias correction + a modest ML blend". At D+2, pure ML wins for load and wind.
+>
+> **Two ways of counting.** The research tables score every candidate on the same sample of hours; the dashboard uses every available hour (D+1: 2,102 vs 2,209 MW, −4.9%; D+2: 2,614 vs 3,534 MW, −26.0%). Both are out of sample.
+
+## Where the model does not win (2026, national grid)
+
+- **D+1, solar hours (11 am – 3 pm):** the bias-corrected DESSEM is better than the recipe in every one of these hours.
+- **D+1, weekends:** a tie (2,243 vs 2,229 MW). Holidays are the hardest days, though the recipe still beats the benchmark there.
+- **D+1, by month:** loses in February, August and September (−1% to −8%), the Northeast high-wind season.
+- **D+1, days won:** 59% of days; at D+2, 68%. D+2 loses only in August (−3%).
 
 ## What we learned (useful for any desk)
 
-1. **Correct the operator's bias before any ML.** The DESSEM schedule runs 1.15 GW above verified load in the Southeast; that correction alone gains 6.6% nationally at D+1.
+1. **Correct the operator's bias before any ML.** The DESSEM schedule runs about 1.15 GW above verified load in the Southeast; that correction alone gains 6.6% nationally at D+1, more than the ML blend adds on top (5.0%). Part of this gap may be definitional (DESSEM demand vs. balance load), which was not verified.
 2. **Forecast temperature is what moves load.** Reservoirs, inflows and past generation added nothing to D+1 load.
 3. **The value of weather forecasts grows with the horizon.** At D+1 ML only helps when blended with the operator; at D+2 yesterday's schedule does not know about the wind front, and the model gains 33% on wind.
 4. **Subsystem errors cancel nationally.** Winning in every region does not guarantee winning in total, so the national grid is scored separately.
@@ -36,13 +50,14 @@ edge when it anticipates net load better than the public references, or before t
 hour, with the frozen recipes and the current weather forecast at plant locations.
 
 - **If yesterday's balance is not yet published** (around 7:50 pm Brasília time), the day is forecast with the next horizon, which needs less information; the horizon used is recorded in the output.
-- **80% prediction band:** each forecast carries a range taken from the backtest errors of the previous 120 days (empirical Monte Carlo). In 2026 it covered 79–80% of hours. Example, national grid on Nov 13, 2026: average 59.6 GW, band 56.8–64.2 GW, peak at 7 pm.
+- **80% prediction band:** each forecast carries a range taken from the backtest errors of the previous 120 days that were already known at decision time (empirical Monte Carlo). In 2026 it covered 79.3% (D+1) and 79.5% (D+2) of hours. Example, national grid on Nov 13, 2026: average 59.6 GW, band 56.8–64.2 GW, peak at 7 pm.
 - **Dashboard:** `scripts/exportar_bi.py` builds the star schema and `bi/Energia.pbip` opens the Power BI project ([bi/README.md](../bi/README.md)).
 
-## Live audit: Nov 4–10, 2026
+## Week replay: Nov 4–10, 2026
 
-`scripts/auditar_previsoes.py` replays each forecast as of 10 pm the night before: data cut at that night,
-archived weather forecast and frozen recipes, then compares with what happened.
+`scripts/auditar_previsoes.py` rebuilds each forecast with data cut at 10 pm the night before, archived weather
+forecast and frozen recipes, then compares with what happened. It is a **replay**, not a true as-of run: the
+inputs are today's revised ONS values cut by date, not the exact vintages that existed that night.
 
 | | Model (national MAE) | Benchmark | Result | Days beating | Peak hour (±1 h) |
 |---|---|---|---|---|---|
@@ -71,7 +86,7 @@ to candidate variables before any retraining.
 - **Half-published DESSEM schedules** (136 subsystem-days): only complete hours are used.
 - **Last day of the balance** is preliminary and stays out of the backtest.
 - **Verified-load revisions** are each preserved in Bronze.
-- **ONS telemetry outages:** on 3 days of 2026 (Jan 16, Mar 7, May 9) the published balance lost most Northeast wind (0.2–0.5 GW reported vs ~12 GW scheduled by ONS itself). They are **kept** in the headline numbers, which are therefore conservative; excluding them, the gain rises to 12.6% at D+1 and 27.7% at D+2. The dashboard flags these days and leaves them out of the daily bias chart.
+- **ONS telemetry outages:** on 3 days of 2026 (Jan 16, Mar 7, May 9) the published balance lost most Northeast wind (0.2–0.5 GW reported vs ~12 GW scheduled by ONS itself). They are **kept** in the headline numbers, which are therefore conservative; excluding them, the dashboard gain rises from 4.9% to 5.4% at D+1 and from 26.0% to 27.5% at D+2. The dashboard flags these days and leaves them out of the daily bias chart.
 - **Weather forecasts** are **archived as issued** (Open-Meteo Previous Runs), not reanalysis, so there is no hidden "perfect forecast".
 
 ## Honest limitations
@@ -81,6 +96,7 @@ to candidate variables before any retraining.
 - **Official spot price:** CCEE blocks the egress IP (HTTP 403), so price is estimated from marginal cost with the regulator's limits.
 - **Weather grid** is about 110 km. Open-Meteo is free for **non-commercial** use only; commercial production would need a licence or another source.
 - **First publication:** in operations the last verified day is preliminary, while the backtest used revised values.
+- **ENA horizon:** daily ENA is published the morning after, so "1 day ahead" counts from the last published day; the effective lead time is about a day shorter.
 
 ## Next steps
 

@@ -29,7 +29,8 @@ from models.operacional import banda_walk_forward, carga_liquida, historico_liqu
 
 RAIZ = Path(__file__).resolve().parents[1]
 DESTINO = DATA_DIR / "bi"
-HORIZONTES = {"D+1": ("previsoes_carga_liquida", "carga_liquida_results.json", "ons"),
+# D+1 benchmark: the DESSEM schedule corrected by its own 28-day bias (free for any desk); the raw schedule stays as ons.
+HORIZONTES = {"D+1": ("previsoes_carga_liquida", "carga_liquida_results.json", "ons_corrigido"),
               "D+2": ("previsoes_carga_liquida_dmais2", "carga_liquida_dmais2_results.json", "ons_ant_semana")}
 INICIO_BANDA = pd.Timestamp("2025-10-01")      # 120 days of accumulated errors before the first band
 INICIO_CONFIRMACAO = pd.Timestamp("2026-01-01")
@@ -75,12 +76,13 @@ def fatos_backtest():
         info[horizonte] = {"receitas": escolhas, "regua": regua}
         liq = historico_liquido(p, escolhas, regua)
         liq = liq.merge(carga_liquida(p, "ons").rename(columns={"ons": "ons"}), on=["subsistema", "data", "hora"], how="left")
-        liq = banda_walk_forward(liq, INICIO_BANDA).merge(liq, how="right")  # band only from Oct 2025
+        dias = int(horizonte.removeprefix("D+"))  # "D+2" -> 2: errors known 2 days before the target
+        liq = banda_walk_forward(liq, INICIO_BANDA, horizonte=dias).merge(liq, how="right")  # band only from Oct 2025
         liquidas.append(liq.assign(horizonte=horizonte))
         q = p.assign(previsto=float("nan"))
         for peca, receita in escolhas.items():
             q.loc[q["peca"] == peca, "previsto"] = q.loc[q["peca"] == peca, receita]
-        pecas.append(q[["subsistema", "data", "hora", "peca", "previsto", "real", regua]].rename(columns={regua: "regua"})
+        pecas.append(q[["subsistema", "data", "hora", "peca", "previsto", "real", "ons", regua]].rename(columns={regua: "regua"})
                      .dropna(subset=["previsto", "real"]).assign(horizonte=horizonte))
     liq = pd.concat(liquidas, ignore_index=True)
     liq["periodo"] = periodo(liq["data"])
@@ -91,10 +93,10 @@ def fatos_backtest():
 
 def dias_falha_telemetria(pec, limite=0.15, minimo_mw=1000, horas=6):
     """Days when the ONS balance lost plants: verified wind/solar < 15% of ONS's own schedule
-    (with schedule > 1 GW) in 6+ hours of a subsystem. Detected at D+1, where the benchmark is the same-day schedule.
+    (with schedule > 1 GW) in 6+ hours of a subsystem. Detected at D+1 against the raw same-day schedule (ons).
     E.g. 2026-01-16, 03-07 and 05-09: Northeast wind at 0.2–0.5 GW against ~12 GW scheduled."""
     r = pec[(pec["horizonte"] == "D+1") & pec["peca"].isin(["eolica", "solar"])]
-    suspeitas = r[(r["real"] < limite * r["regua"]) & (r["regua"] > minimo_mw)]
+    suspeitas = r[(r["real"] < limite * r["ons"]) & (r["ons"] > minimo_mw)]
     contagem = suspeitas.groupby(["subsistema", "data"]).size()
     return set(contagem[contagem >= horas].index.get_level_values("data"))
 
@@ -171,7 +173,7 @@ def main():
     tabelas["info_execucao"] = pd.DataFrame([{"gerado_em": datetime.now().isoformat(timespec="seconds"),
                                               "receita_d1": json.dumps(info["D+1"]["receitas"], ensure_ascii=False),
                                               "receita_d2": json.dumps(info["D+2"]["receitas"], ensure_ascii=False),
-                                              "regua_d1": "ONS day-ahead schedule (DESSEM)",
+                                              "regua_d1": "ONS day-ahead schedule (DESSEM), bias-corrected over 28 days",
                                               "regua_d2": "previous-day ONS schedule, bias-corrected by hour and weekday"}])
     for nome in ("fato_previsao", "fato_auditoria", "fato_carga_liquida"):   # continuous hourly axis in charts
         t = tabelas[nome]
@@ -185,8 +187,8 @@ def main():
             if pd.api.types.is_datetime64_any_dtype(tabela[c]):
                 tabela[c] = tabela[c].astype("datetime64[ms]")   # Power BI reads millisecond timestamps fine
         tabela.to_parquet(DESTINO / f"{nome}.parquet", index=False)
-        print(f"{nome:22s} {len(tabela):>9,} linhas  {list(tabela.columns)}")
-    print(f"\nPasta: {DESTINO}")
+        print(f"{nome:22s} {len(tabela):>9,} rows  {list(tabela.columns)}")
+    print(f"\nFolder: {DESTINO}")
     return 0
 
 

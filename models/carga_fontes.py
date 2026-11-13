@@ -9,7 +9,8 @@ All observed data enter with a 2-day lag, the same as verified load.
 import numpy as np
 import pandas as pd
 
-from models.carga_d1 import CAL, LAGS, TEMP, _gbm, _ridge_por_hora, preparar_d1
+from models.carga_d1 import CAL, GAP, LAGS, TEMP, _gbm, _ridge_por_hora, preparar_d1
+from models.validation import train_cutoff
 
 P_LAGS = ["p1", "p7", "p14", "tend_p"]
 BASES = {"verificada": ("alvo_nivel", "nivel", LAGS), "programada": ("alvo_prog", "nivel_p", P_LAGS)}
@@ -80,7 +81,7 @@ def backtest_fontes(carga, temperatura, extras, previstas, folds, log=print):
         extra_h = previstas[previstas["subsistema"] == subsistema].groupby("instante")[PREVISTAS].mean() if previstas is not None else None
         x = adicionar_previstas(x, extra_h)
         for inicio, fim in folds:
-            treino = x[x.index < inicio]
+            treino = x[x.index < train_cutoff(inicio, GAP)]
             teste_base = x[(x.index >= inicio) & (x.index < fim)]
             for alvo_nome, (alvo, nivel, lags) in BASES.items():
                 real = {"verificada": "carga", "programada": "programada"}[alvo_nome]

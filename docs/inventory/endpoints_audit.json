@@ -66,7 +66,7 @@
         "status": "readable",
         "bytes": 1822095,
         "sha256": "95ebd9442e7110e68fbc93a55808a88724a2c11f75308a889c33ccd447e1aafc",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\8ed74eb27a820c837f4102423818ca8d66dc81e182ac0ea35286a3e521e0208b.parquet",
+        "path": "data/endpoint_audit/8ed74eb27a820c837f4102423818ca8d66dc81e182ac0ea35286a3e521e0208b.parquet",
         "rows": 37320,
         "date_columns": {
           "din_instante": {
@@ -152,7 +152,7 @@
         "status": "readable",
         "bytes": 16470,
         "sha256": "a04f10d4f4218855d65452f5cb3a2a46ea20b12a625a8789bf3c66ad6cd37a74",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\d7ba49e072800d0214d8dc8535399eb3d29bf467624ca6d7b86d168978578954.parquet",
+        "path": "data/endpoint_audit/d7ba49e072800d0214d8dc8535399eb3d29bf467624ca6d7b86d168978578954.parquet",
         "rows": 192,
         "date_columns": {
           "din_programacaodia": {
@@ -250,7 +250,7 @@
         "status": "readable",
         "bytes": 11899,
         "sha256": "fa5bf35fb8af4ad512c4c4fdb5b518919451d3d66f549dc3c3cac4edf6e77137",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\e5b64fc98bf7708b09b197f1b3e59e94a46e2059d907d5593f7df14f87cba035.parquet",
+        "path": "data/endpoint_audit/e5b64fc98bf7708b09b197f1b3e59e94a46e2059d907d5593f7df14f87cba035.parquet",
         "rows": 192,
         "date_columns": {
           "din_programacaodia": {
@@ -332,7 +332,7 @@
         "status": "readable",
         "bytes": 243532,
         "sha256": "d1992f12dc0ec840d1dc67ffeec536b74508d49cede69a93dd24c9c7c7245f45",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\928819d3e5b719c7f35f5d95da5765960dac505976dad1e272dbdcd6b6170ca1.parquet",
+        "path": "data/endpoint_audit/928819d3e5b719c7f35f5d95da5765960dac505976dad1e272dbdcd6b6170ca1.parquet",
         "rows": 5837,
         "date_columns": {
           "dat_entradateste": {
@@ -465,7 +465,7 @@
         "status": "readable",
         "bytes": 17279,
         "sha256": "cbc6d92e9d08f6ea26d73bc06d373e52c31a8b54c94d1e87ff84114c373c6bc8",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\a3b85309baa6b06cb2eb996b4e9a5b075d6e2abfbb9c21447fba6201009305a0.parquet",
+        "path": "data/endpoint_audit/a3b85309baa6b06cb2eb996b4e9a5b075d6e2abfbb9c21447fba6201009305a0.parquet",
         "rows": 1240,
         "date_columns": {
           "din_instante": {
@@ -569,7 +569,7 @@
         "status": "readable",
         "bytes": 382276,
         "sha256": "21ef00adeab56a9263233a8a35a948dd526032cd9f201559bd01965e02453afb",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\2a9b4ca7d94cdff1558ef7c27213f74dc1bf5cee30cef3d9d8ec19f28192a9c1.parquet",
+        "path": "data/endpoint_audit/2a9b4ca7d94cdff1558ef7c27213f74dc1bf5cee30cef3d9d8ec19f28192a9c1.parquet",
         "rows": 59520,
         "date_columns": {
           "din_instante": {
@@ -635,7 +635,7 @@
         "status": "readable",
         "bytes": 334755,
         "sha256": "bf3735622c3422b5a66b7fb38ab93f0375583e34417c1446fa2fc1e522543192",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\201b13e88624ce49954f863a09c33b1fcde4084cc0ee8f912b97e763c204ae19.parquet",
+        "path": "data/endpoint_audit/201b13e88624ce49954f863a09c33b1fcde4084cc0ee8f912b97e763c204ae19.parquet",
         "rows": 29856,
         "date_columns": {
           "din_instante": {
@@ -701,7 +701,7 @@
         "status": "readable",
         "bytes": 24793,
         "sha256": "0218109d57a016d7d4b84fcd6cd6e913b8b112180f9c73a5583492e2619d1aaf",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\83226a33ac3ee1021629e0f6807432d30a057e10ba132080eb0905e7f64102da.parquet",
+        "path": "data/endpoint_audit/83226a33ac3ee1021629e0f6807432d30a057e10ba132080eb0905e7f64102da.parquet",
         "rows": 4674,
         "date_columns": {
           "dat_iniciosemana": {
@@ -800,7 +800,7 @@
         "status": "readable",
         "bytes": 1799772,
         "sha256": "4878be3c89f7405af535ad38f4bc817b0ed05f1e61092740ed3dbc18d642970c",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\70b3565bdb7bf87de3a8684a30e3f76ed2803b007890ba8b747b0f6f50b4dded.parquet",
+        "path": "data/endpoint_audit/70b3565bdb7bf87de3a8684a30e3f76ed2803b007890ba8b747b0f6f50b4dded.parquet",
         "rows": 54485,
         "date_columns": {
           "din_instante": {
@@ -950,7 +950,7 @@
         "status": "readable",
         "bytes": 520041,
         "sha256": "815a5bb1d7247148b312103214964d76489827a9031c28a4353ce51ef991b575",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\f554afb9c0b9ee4c256371adb67011edc09d10a89c6642fd2c9c7011d5e6116a.parquet",
+        "path": "data/endpoint_audit/f554afb9c0b9ee4c256371adb67011edc09d10a89c6642fd2c9c7011d5e6116a.parquet",
         "rows": 35999,
         "date_columns": {
           "din_instante": {
@@ -1072,7 +1072,7 @@
         "status": "readable",
         "bytes": 59415,
         "sha256": "1d1427f2e69266cbf650911b26975f76628230398fc134247b855d9195602c1d",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\ca5974d3e7bdc524d04d86cd7138c11419b9af4a24fdb2a2635a08e7b996052f.parquet",
+        "path": "data/endpoint_audit/ca5974d3e7bdc524d04d86cd7138c11419b9af4a24fdb2a2635a08e7b996052f.parquet",
         "rows": 33708,
         "date_columns": {
           "din_instante": {
@@ -1174,7 +1174,7 @@
         "status": "readable",
         "bytes": 111698,
         "sha256": "9491f1861c170da5ebf9497c69c51011480343b6289397050a09486fe728f30e",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\4fa85efa7c4f7f504541b3a81dc36ff906e74d8b9da6659a1465d347f5d9869b.parquet",
+        "path": "data/endpoint_audit/4fa85efa7c4f7f504541b3a81dc36ff906e74d8b9da6659a1465d347f5d9869b.parquet",
         "rows": 10908,
         "date_columns": {
           "ear_data": {
@@ -1244,7 +1244,7 @@
         "status": "readable",
         "bytes": 66575,
         "sha256": "3593b2d586a8b8fae3247f5753841181578be5e61ea5d8f99e28cea7437e2bec",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\fb7830f1102e238877468f39ed78fc1b2f64435fafdd0d4f88327b26c4673881.parquet",
+        "path": "data/endpoint_audit/fb7830f1102e238877468f39ed78fc1b2f64435fafdd0d4f88327b26c4673881.parquet",
         "rows": 3744,
         "date_columns": {
           "ear_data": {
@@ -1314,7 +1314,7 @@
         "status": "readable",
         "bytes": 1113728,
         "sha256": "f1d4c69e6f72d91b506d2c22fee1cccf56d07d0b6c09156a7294fe4894488317",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\fea62308dadb9fd8f4be532f5a3660a861117501a7714dc0262cd5e51a2d2812.parquet",
+        "path": "data/endpoint_audit/fea62308dadb9fd8f4be532f5a3660a861117501a7714dc0262cd5e51a2d2812.parquet",
         "rows": 23636,
         "date_columns": {
           "ear_data": {
@@ -1464,7 +1464,7 @@
         "status": "readable",
         "bytes": 27566,
         "sha256": "7c8ae0fcca5a5b5462a412dc610e0ba85d777e734a03c3afccbcef5f88119024",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\c0dd611c11df1162080d52824e8df6dfaac52d304c7721a5c71249fb95334b69.parquet",
+        "path": "data/endpoint_audit/c0dd611c11df1162080d52824e8df6dfaac52d304c7721a5c71249fb95334b69.parquet",
         "rows": 1248,
         "date_columns": {
           "ear_data": {
@@ -1538,7 +1538,7 @@
         "status": "readable",
         "bytes": 348274,
         "sha256": "c70d45b572d940a487731fe3d8f8bb7d9b7e865e059253aa5f4322a912d80962",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\d4fa95bc67b9044011642952e2161c83a13d161482a66b8930001025f115dd47.parquet",
+        "path": "data/endpoint_audit/d4fa95bc67b9044011642952e2161c83a13d161482a66b8930001025f115dd47.parquet",
         "rows": 10908,
         "date_columns": {
           "ena_data": {
@@ -1612,7 +1612,7 @@
         "status": "readable",
         "bytes": 157730,
         "sha256": "7d661433fce9f00cd23bf4700235482d2aace85204a0fbabe119b3f29bf0a002",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\cf344e0e0ba8615b40ba9f065ee42408484b1c7c03ba225d1d9d29941a60c996.parquet",
+        "path": "data/endpoint_audit/cf344e0e0ba8615b40ba9f065ee42408484b1c7c03ba225d1d9d29941a60c996.parquet",
         "rows": 3744,
         "date_columns": {
           "ena_data": {
@@ -1686,7 +1686,7 @@
         "status": "readable",
         "bytes": 1761211,
         "sha256": "4fc5f2745a81305248b33682e411aae138c4448af8cd513fe27098a865a3d4c5",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\73387c24bd31731a5b2c05b2668af72ae3cec61f035ca77bd292fe44382ba1b6.parquet",
+        "path": "data/endpoint_audit/73387c24bd31731a5b2c05b2668af72ae3cec61f035ca77bd292fe44382ba1b6.parquet",
         "rows": 48205,
         "date_columns": {
           "ena_data": {
@@ -1792,7 +1792,7 @@
         "status": "readable",
         "bytes": 49920,
         "sha256": "e21223abc774af5f14f21f208bc39c72af01179f68e8db4794eb6f14a53058e1",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\ac8bf9fab19e18d54fe49553b1fe691715b383da848a0f6673fe37bd8458ca97.parquet",
+        "path": "data/endpoint_audit/ac8bf9fab19e18d54fe49553b1fe691715b383da848a0f6673fe37bd8458ca97.parquet",
         "rows": 1248,
         "date_columns": {
           "ena_data": {
@@ -1870,7 +1870,7 @@
         "status": "readable",
         "bytes": 704007,
         "sha256": "6f8cee4a925e1449a2dc781528ed622c4360c1a255372eacfd8903aafba7b32c",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\2a21d19085444051831ca4459a17a9cc507f9fbd97841399cd078bf018913add.parquet",
+        "path": "data/endpoint_audit/2a21d19085444051831ca4459a17a9cc507f9fbd97841399cd078bf018913add.parquet",
         "rows": 21932,
         "date_columns": {
           "din_instante": {
@@ -1992,7 +1992,7 @@
         "status": "readable",
         "bytes": 587372,
         "sha256": "aa4517126ed4e866b348ffa6cf5714bd2d80f5a56010e2a7be510e134e77cd4d",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\c53f6bdda8ca1a485f5f486ee3a53955af090057f59c833044566169d3115c52.parquet",
+        "path": "data/endpoint_audit/c53f6bdda8ca1a485f5f486ee3a53955af090057f59c833044566169d3115c52.parquet",
         "rows": 33984,
         "date_columns": {
           "din_instante": {
@@ -2126,7 +2126,7 @@
         "status": "readable",
         "bytes": 313099,
         "sha256": "37871ed398f3d2e25a2677f625442591b2e27557e4a53270d2f755b190a4542e",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\937b00fe2befb0c92db9a95f4779ea5ee14b43db1db09590cec1601832bbe77e.parquet",
+        "path": "data/endpoint_audit/937b00fe2befb0c92db9a95f4779ea5ee14b43db1db09590cec1601832bbe77e.parquet",
         "rows": 27840,
         "date_columns": {
           "din_instante": {
@@ -2377,7 +2377,7 @@
         "status": "readable",
         "bytes": 1265942,
         "sha256": "eae64bb729e1ef5d6b96dd09db5f4f498a0623f4719076141cf52be093c914d2",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\3d8d6953dc820a252ecf27a111e358e099cc564c8db0a46157a3487a7c377161.parquet",
+        "path": "data/endpoint_audit/3d8d6953dc820a252ecf27a111e358e099cc564c8db0a46157a3487a7c377161.parquet",
         "rows": 132672,
         "date_columns": {
           "din_instante": {
@@ -2475,7 +2475,7 @@
         "status": "readable",
         "bytes": 430325,
         "sha256": "f1d3b9f93191458c931747eff1b1440892738c99941510e047998375859bc8cd",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\d42677e8ee763eb7309f936e3f62f7d283f2c15707e961f6d6efbdd9802492a6.parquet",
+        "path": "data/endpoint_audit/d42677e8ee763eb7309f936e3f62f7d283f2c15707e961f6d6efbdd9802492a6.parquet",
         "rows": 32609,
         "date_columns": {
           "din_medicao": {
@@ -2561,7 +2561,7 @@
         "status": "readable",
         "bytes": 643781,
         "sha256": "348a752fd0f7d4293c6715eeb2e3299c50bc772abe2bd65e780e855bf080a4b6",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\f8902b6a029622a5e9b55d29be905bbeb795bbe7804e3e67d2bae96a66a3b8f3.parquet",
+        "path": "data/endpoint_audit/f8902b6a029622a5e9b55d29be905bbeb795bbe7804e3e67d2bae96a66a3b8f3.parquet",
         "rows": 29952,
         "date_columns": {
           "din_instante": {
@@ -2639,7 +2639,7 @@
         "status": "readable",
         "bytes": 169270,
         "sha256": "cedf7fdfd8cfb60daafeb6f22b59330c750ff2538ccfbbe60efd6e70a14feef0",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\eb98f619934898582dfdad06a4f6dc52471cfbc299015c2b70b843f57f492271.parquet",
+        "path": "data/endpoint_audit/eb98f619934898582dfdad06a4f6dc52471cfbc299015c2b70b843f57f492271.parquet",
         "rows": 204288,
         "date_columns": {
           "din_programacaodia": {
@@ -2773,7 +2773,7 @@
         "status": "readable",
         "bytes": 154794,
         "sha256": "3c53f8d895563cfffdf78f3238ef13fe165d9d22e32b5a8c5219890e7ea98871",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\1a89d21ea38ca4c8f2d5fc07558808416180cd6708038f0e42f3463fdf1a6b75.parquet",
+        "path": "data/endpoint_audit/1a89d21ea38ca4c8f2d5fc07558808416180cd6708038f0e42f3463fdf1a6b75.parquet",
         "rows": 29088,
         "date_columns": {
           "dat_programacao": {
@@ -2847,7 +2847,7 @@
         "status": "readable",
         "bytes": 791470,
         "sha256": "f72fbdc7a1de495693d7316566f339109a8f4a7014808b01f769ea455f9480a0",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\9ad36be17e86fd759a3e05ff60999dd4cacc3ab3092bf5c0abbc669c44c457bd.parquet",
+        "path": "data/endpoint_audit/9ad36be17e86fd759a3e05ff60999dd4cacc3ab3092bf5c0abbc669c44c457bd.parquet",
         "rows": 45102,
         "date_columns": {
           "din_valinicial": {
@@ -2931,7 +2931,7 @@
         "status": "readable",
         "bytes": 15402,
         "sha256": "406c0a82f135495fd4cb1929877ae3c3a12d2102926eb3926a906e30ffbaf578",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\2f412c34351fce2ae2bc7ca11337391fbb9244c23756fcbfbff037325915680d.parquet",
+        "path": "data/endpoint_audit/2f412c34351fce2ae2bc7ca11337391fbb9244c23756fcbfbff037325915680d.parquet",
         "rows": 8343,
         "date_columns": {
           "din_instante": {
@@ -3025,7 +3025,7 @@
         "status": "readable",
         "bytes": 37939,
         "sha256": "af5e249fc494f8d9417549440716b9ad47352cd22b28dcb1599ea206fc373f46",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\cdee4da569693221b6e70df5fb7f1aaada8842c23d65de6f657c269c47cfa3da.parquet",
+        "path": "data/endpoint_audit/cdee4da569693221b6e70df5fb7f1aaada8842c23d65de6f657c269c47cfa3da.parquet",
         "rows": 162,
         "date_columns": {
           "dat_entrada": {
@@ -3172,7 +3172,7 @@
         "status": "readable",
         "bytes": 3984576,
         "sha256": "6ae35b38ca6158f2a2502b79dbcb6b0d1800253176f191c0f872b77dcfbf89c2",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\413799c15804f7e3983123cbc5b590363271d8d6b9ec04794aa724adca7123b7.parquet",
+        "path": "data/endpoint_audit/413799c15804f7e3983123cbc5b590363271d8d6b9ec04794aa724adca7123b7.parquet",
         "rows": 413952,
         "date_columns": {
           "din_instante": {
@@ -3294,7 +3294,7 @@
         "status": "readable",
         "bytes": 1326274,
         "sha256": "ea938d0884c10323e5256e84ee8c970bae7e9198bf6729a7f7ca9725542f0b1b",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\8514a7e2b9c7c4148ba63da699e555880735937bfa0d184eed2fb177f804afca.parquet",
+        "path": "data/endpoint_audit/8514a7e2b9c7c4148ba63da699e555880735937bfa0d184eed2fb177f804afca.parquet",
         "rows": 58368,
         "date_columns": {
           "din_instante": {
@@ -3440,7 +3440,7 @@
         "status": "readable",
         "bytes": 509270,
         "sha256": "2f5603d81d442d80f7ca1645bb554cd9fc857420b3662f7dcba9fbfea51d8bdc",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\6c03fd693c0f4cd6ce968aff88ab1680497b46a3ec5e3a1e8f58d2e0f1749b8d.parquet",
+        "path": "data/endpoint_audit/6c03fd693c0f4cd6ce968aff88ab1680497b46a3ec5e3a1e8f58d2e0f1749b8d.parquet",
         "rows": 32256,
         "date_columns": {
           "din_instante": {
@@ -3586,7 +3586,7 @@
         "status": "readable",
         "bytes": 2069441,
         "sha256": "5df597a75ace78b17691e71e43c33d57cd4cd8e2f23afa93acb86b1beb7aaa6a",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\f818e6f68d982408143b5adb0a4f61bdd506eff947263aed7d5824cfb5029942.parquet",
+        "path": "data/endpoint_audit/f818e6f68d982408143b5adb0a4f61bdd506eff947263aed7d5824cfb5029942.parquet",
         "rows": 217728,
         "date_columns": {
           "din_instante": {
@@ -3708,7 +3708,7 @@
         "status": "readable",
         "bytes": 69990,
         "sha256": "18debf5171ab69697e6c17dcb3f95c91906742ea4b576b0b8d42147f6c509ac7",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\b98ec30c283ecafa9a54171e1eedce35c471968f20a97ee1cfc77e318bde2ba2.parquet",
+        "path": "data/endpoint_audit/b98ec30c283ecafa9a54171e1eedce35c471968f20a97ee1cfc77e318bde2ba2.parquet",
         "rows": 2159,
         "date_columns": {
           "dat_iniciorelacionamento": {
@@ -3820,7 +3820,7 @@
         "status": "readable",
         "bytes": 47185,
         "sha256": "2d3515e678291fa87de7d4d072fcbb4376e96495ab752f99df746a20a972c114",
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\endpoint_audit\\f265942207c1062d8ba2628ad4f14f271df84325511c69da12025b5bd61d66c2.parquet",
+        "path": "data/endpoint_audit/f265942207c1062d8ba2628ad4f14f271df84325511c69da12025b5bd61d66c2.parquet",
         "rows": 1318,
         "date_columns": {},
         "reference_column": null,

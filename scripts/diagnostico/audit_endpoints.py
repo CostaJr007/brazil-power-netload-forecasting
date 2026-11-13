@@ -13,7 +13,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 
-# Importa duckdb: consulta CSV/Parquet usando SQL em processo local.
 import duckdb
 
 # Scripts in this subfolder reuse the modules in scripts/ (acquire, pipeline...).

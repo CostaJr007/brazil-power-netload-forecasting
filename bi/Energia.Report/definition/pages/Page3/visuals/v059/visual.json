@@ -18,7 +18,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Each forecast rebuilt with only the data available at 10 pm the day before (archived weather, frozen recipes). Actuals: latest ONS balance; the most recent day is still preliminary.",
+                    "value": "Each forecast rebuilt with only the data available at 10 pm the day before (archived weather, frozen recipes). Inputs are today's revised ONS values, not the exact vintages of that night. Actuals: latest ONS balance.",
                     "textStyle": {
                       "fontSize": "7pt",
                       "color": "#66646E"

@@ -84,7 +84,30 @@ def json_get(url):
 
 
 # atomic_json: writes JSON to a temporary file and only then publishes the final name, so readers never see a half-written file.
+def portable_paths(value):
+    """Swap this machine's absolute paths for portable ones (data/..., or relative to the project).
+
+    Evidence published in docs/ must not expose the local user folder; resolve_data_path finds the files again.
+    """
+    if isinstance(value, dict):
+        return {k: portable_paths(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [portable_paths(v) for v in value]
+    if not isinstance(value, str):
+        return value
+    for base, prefix in ((str(DATA_DIR), "data"), (str(ROOT), ".")):
+        if base in value:
+            head, _, tail = value.partition(base)
+            # Only the path part changes to forward slashes; surrounding text is kept as is.
+            path_part = re.match(r"[^\s\"'<>|]*", tail).group(0)
+            value = head + prefix + path_part.replace("\\", "/") + tail[len(path_part):]
+            return portable_paths(value)
+    return value
+
+
 def atomic_json(path, payload):
+    if Path(path).resolve().is_relative_to(ROOT / "docs"):
+        payload = portable_paths(payload)
     path.parent.mkdir(parents=True, exist_ok=True)
     temp = path.with_name(path.name + "." + uuid.uuid4().hex + ".part")
     temp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

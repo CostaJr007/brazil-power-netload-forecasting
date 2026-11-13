@@ -97,13 +97,16 @@ def historico_liquido(pecas_backtest, escolhas, regua=None):
     return liq.dropna(subset=["previsto", "real"]).reset_index(drop=True)
 
 
-def quantis_residuo(historico, ate, janela=120, nivel=0.8):
-    """Quantiles of the error (forecast − actual) per subsystem and hour over the `janela` days before `ate` (exclusive, 1-day margin).
+def quantis_residuo(historico, ate, janela=120, nivel=0.8, margem=1):
+    """Quantiles of the error (forecast − actual) per subsystem and hour over the `janela` days before `ate`.
+
+    Only errors dated before `ate − margem` days are used. With `ate` = the target day, margem = horizon: the actual of
+    day d is known from d+2, so a D+h forecast decided on ate−h only knows errors up to ate−h−1.
 
     It is the limit of a Monte Carlo simulation that resamples past errors: in 2026 the 80% band covered
     79–80% of hours (scripts/diagnostico/residuos_2026.py). `historico`: columns subsistema, data, hora, previsto, real.
     """
-    h = historico[(historico["data"] < ate - UM_DIA) & (historico["data"] >= ate - pd.Timedelta(days=janela))]
+    h = historico[(historico["data"] < ate - pd.Timedelta(days=margem)) & (historico["data"] >= ate - pd.Timedelta(days=janela))]
     erro = (h["previsto"] - h["real"]).rename("erro")
     alfa = (1 - nivel) / 2
     q = erro.groupby([h["subsistema"], h["hora"]]).quantile([alfa, 1 - alfa]).unstack()
@@ -117,12 +120,12 @@ def aplicar_banda(frame, quantis):
     return f.assign(banda_inf=f["previsto"] - f["q_sup"], banda_sup=f["previsto"] - f["q_inf"]).drop(columns=["q_inf", "q_sup"])
 
 
-def banda_walk_forward(historico, inicio, janela=120, nivel=0.8):
-    """Band for each month from `inicio`, with quantiles from days before that month only (no look-ahead)."""
+def banda_walk_forward(historico, inicio, janela=120, nivel=0.8, horizonte=1):
+    """Band for each month from `inicio`, with quantiles only from errors known when its first day was forecast."""
     partes = []
     for mes in pd.date_range(inicio, historico["data"].max(), freq="MS"):
         alvo = historico[(historico["data"] >= mes) & (historico["data"] < mes + pd.offsets.MonthBegin(1))]
-        partes.append(aplicar_banda(alvo, quantis_residuo(historico, mes, janela, nivel)))
+        partes.append(aplicar_banda(alvo, quantis_residuo(historico, mes, janela, nivel, margem=horizonte)))
     return pd.concat(partes, ignore_index=True)
 
 

@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 
 from models.carga_d1 import CAL, LAGS, TEMP, _gbm, _ridge_por_hora, preparar_d1
+from models.validation import train_cutoff
 
 GAP = 2
 NIVEL_MINIMO = 1.0
@@ -94,12 +95,12 @@ def variaveis_previsao(previsoes, fonte):
     return [f"{c}{s}" for c in colunas for s in ("", "_a", "_a2")] if fonte != "cidade" else []
 
 
-def prever_fonte(x, colunas_prev, inicio, fim, operacional=False):
-    """Train up to `inicio` and forecast [inicio, fim). Night hours (level ~0) get a zero forecast.
+def prever_fonte(x, colunas_prev, inicio, fim, operacional=False, gap=GAP):
+    """Train on targets known when `inicio` is forecast and forecast [inicio, fim). Night hours (level ~0) get a zero forecast.
 
     operacional=True forecasts days whose actual value does not exist yet (production use, not backtest).
     """
-    treino = x[(x.index < inicio) & x["alvo"].notna()]
+    treino = x[(x.index < train_cutoff(inicio, gap)) & x["alvo"].notna()]
     periodo = (x.index >= inicio) & (x.index < fim) & x["persistencia"].notna()
     teste = x[periodo if operacional else periodo & x["y"].notna()].copy()
     if teste.empty or len(treino) < 500:
@@ -159,7 +160,7 @@ def backtest_pecas(balanco, dessem, previsoes, temperatura, folds, log=print, ho
             colunas_prev = [f"{c}{s}" for c in prev.columns if prev[c].notna().mean() > 0.4 for s in ("", "_a", "_a2")]
             referencia = referencias_ons(d, peca, horizonte)
             for inicio, fim in folds:
-                teste = prever_fonte(x, colunas_prev, inicio, fim, operacional=operacional)
+                teste = prever_fonte(x, colunas_prev, inicio, fim, operacional=operacional, gap=gap)
                 if teste is None:
                     continue
                 unido = teste.reset_index().merge(referencia, on=["data", "hora"], how="left").rename(columns={"y": "real"})
@@ -171,7 +172,7 @@ def backtest_pecas(balanco, dessem, previsoes, temperatura, folds, log=print, ho
         referencia = referencias_ons(d.rename(columns={"demanda": "carga"}), "carga", horizonte)
         colunas = LAGS + CAL + TEMP
         for inicio, fim in folds:
-            treino = x[(x.index < inicio) & x["alvo_nivel"].notna()]
+            treino = x[(x.index < train_cutoff(inicio, gap)) & x["alvo_nivel"].notna()]
             exigidas = ["nivel"] + colunas if operacional else ["carga", "nivel"] + colunas
             teste = x[(x.index >= inicio) & (x.index < fim) & x[exigidas].notna().all(axis=1)].copy()
             if teste.empty:

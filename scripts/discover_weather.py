@@ -14,7 +14,7 @@ from urllib.parse import urljoin
 import geopandas as gpd
 
 # Reuses the project's paths, report writing and HTTP policy.
-from acquire import DATA_DIR, ROOT, atomic_json, open_http, utcnow
+from acquire import DATA_DIR, ROOT, atomic_json, open_http, resolve_data_path, utcnow
 
 
 class Links(HTMLParser):
@@ -59,7 +59,7 @@ def basin_inventory():
     # an access copy with an extension, without modifying the original object.
     spatial = DATA_DIR / "geography" / (manifest["sha256"] + ".zip")
     spatial.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(manifest["path"], spatial)
+    shutil.copyfile(resolve_data_path(manifest["path"]), spatial)
     frame = gpd.read_file("zip://" + spatial.as_posix())
     if frame.crs is None:
         raise ValueError("Polygons without a documented CRS")

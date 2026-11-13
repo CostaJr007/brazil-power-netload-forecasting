@@ -1,5 +1,5 @@
-# Código e configuração sempre com quebra de linha LF, em qualquer sistema.
-# Importante: o código de scripts/silver.py entra na assinatura de versão da Silver.
+# Code and configuration always use LF line endings, on every system.
+# Important: the code of scripts/silver.py is part of the Silver version signature.
 * text=auto eol=lf
 *.ps1 text eol=crlf
 *.parquet binary

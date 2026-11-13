@@ -25,7 +25,7 @@
         },
         "sha256": "69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
         "bytes": 4077517,
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\balanco-energia-subsistema\\719955c5-9ee2-48ef-aef6-b9c3d65db24b\\69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
+        "path": "data/bronze/ons/balanco-energia-subsistema/719955c5-9ee2-48ef-aef6-b9c3d65db24b/69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
         "source": "ons",
         "dataset": "balanco-energia-subsistema",
         "resource_id": "719955c5-9ee2-48ef-aef6-b9c3d65db24b",
@@ -40,7 +40,7 @@
         "note": "HTTP Last-Modified is not a historical publication timestamp."
       },
       "profile": {
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\balanco-energia-subsistema\\719955c5-9ee2-48ef-aef6-b9c3d65db24b\\69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
+        "path": "data/bronze/ons/balanco-energia-subsistema/719955c5-9ee2-48ef-aef6-b9c3d65db24b/69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
         "sha256": "69c163bca9c02c3ad256dca4ca390fc17922040ce7bb1341f85f0d0e770d2eac",
         "rows": 43800,
         "columns": [
@@ -96,7 +96,7 @@
         },
         "sha256": "e9b36337b8980693228de317789d06e309305949f643cb50c5d6bf53fe5ca2d0",
         "bytes": 2105644,
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\balanco-energia-subsistema\\cdc17ef6-29a0-48a6-8c07-fbbc2a4c5db9\\e9b36337b8980693228de317789d06e309305949f643cb50c5d6bf53fe5ca2d0",
+        "path": "data/bronze/ons/balanco-energia-subsistema/cdc17ef6-29a0-48a6-8c07-fbbc2a4c5db9/e9b36337b8980693228de317789d06e309305949f643cb50c5d6bf53fe5ca2d0",
         "source": "ons",
         "dataset": "balanco-energia-subsistema",
         "resource_id": "cdc17ef6-29a0-48a6-8c07-fbbc2a4c5db9",
@@ -135,7 +135,7 @@
         },
         "sha256": "289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
         "bytes": 71449,
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\ear-diario-por-subsistema\\b180b221-8939-488d-bb09-1d5ede971470\\289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
+        "path": "data/bronze/ons/ear-diario-por-subsistema/b180b221-8939-488d-bb09-1d5ede971470/289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
         "source": "ons",
         "dataset": "ear-diario-por-subsistema",
         "resource_id": "b180b221-8939-488d-bb09-1d5ede971470",
@@ -150,7 +150,7 @@
         "note": "HTTP Last-Modified is not a historical publication timestamp."
       },
       "profile": {
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\ear-diario-por-subsistema\\b180b221-8939-488d-bb09-1d5ede971470\\289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
+        "path": "data/bronze/ons/ear-diario-por-subsistema/b180b221-8939-488d-bb09-1d5ede971470/289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
         "sha256": "289726444477b5904730cc30116bf73574fa594d7481c7ec04138794eddc8b19",
         "rows": 1460,
         "columns": [
@@ -200,7 +200,7 @@
         },
         "sha256": "04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
         "bytes": 92203,
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\ena-diario-por-subsistema\\06c9cfdc-2938-4b1d-ab71-086b1bea44a3\\04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
+        "path": "data/bronze/ons/ena-diario-por-subsistema/06c9cfdc-2938-4b1d-ab71-086b1bea44a3/04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
         "source": "ons",
         "dataset": "ena-diario-por-subsistema",
         "resource_id": "06c9cfdc-2938-4b1d-ab71-086b1bea44a3",
@@ -215,7 +215,7 @@
         "note": "HTTP Last-Modified is not a historical publication timestamp."
       },
       "profile": {
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\ena-diario-por-subsistema\\06c9cfdc-2938-4b1d-ab71-086b1bea44a3\\04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
+        "path": "data/bronze/ons/ena-diario-por-subsistema/06c9cfdc-2938-4b1d-ab71-086b1bea44a3/04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
         "sha256": "04369568b9356872a9d8a14f86f824562e2b25798f0f48f48331ca3e1bc11e7b",
         "rows": 1460,
         "columns": [
@@ -267,7 +267,7 @@
         },
         "sha256": "1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4",
         "bytes": 1622722,
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\bacia_contorno\\beb946ac-f35a-4b5b-b8b2-ea017e9e5783\\1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4",
+        "path": "data/bronze/ons/bacia_contorno/beb946ac-f35a-4b5b-b8b2-ea017e9e5783/1456e2b8c4446b9984be2fa4206588d94b8fe6e0270534f467c803f95c0198d4",
         "source": "ons",
         "dataset": "bacia_contorno",
         "resource_id": "beb946ac-f35a-4b5b-b8b2-ea017e9e5783",
@@ -316,7 +316,7 @@
         },
         "sha256": "3d78e62a8a83f00a3e8cb6435aed15ff22ba3bb995efa64ef01effbef3d540d3",
         "bytes": 2817,
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\programacao_diaria\\94437ef6-d928-4c24-8d74-c2d8c49c8825\\3d78e62a8a83f00a3e8cb6435aed15ff22ba3bb995efa64ef01effbef3d540d3",
+        "path": "data/bronze/ons/programacao_diaria/94437ef6-d928-4c24-8d74-c2d8c49c8825/3d78e62a8a83f00a3e8cb6435aed15ff22ba3bb995efa64ef01effbef3d540d3",
         "source": "ons",
         "dataset": "programacao_diaria",
         "resource_id": "94437ef6-d928-4c24-8d74-c2d8c49c8825",
@@ -357,7 +357,7 @@
         },
         "sha256": "9afa920dbc3fac6024d2a20b92e2a9386207913000e8cb5cf39cebefa1a354df",
         "bytes": 693,
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\carga-energia-programada\\89977965-9817-4e5f-8fc2-df0995ee595c\\9afa920dbc3fac6024d2a20b92e2a9386207913000e8cb5cf39cebefa1a354df",
+        "path": "data/bronze/ons/carga-energia-programada/89977965-9817-4e5f-8fc2-df0995ee595c/9afa920dbc3fac6024d2a20b92e2a9386207913000e8cb5cf39cebefa1a354df",
         "source": "ons",
         "dataset": "carga-energia-programada",
         "resource_id": "89977965-9817-4e5f-8fc2-df0995ee595c",
@@ -398,7 +398,7 @@
         },
         "sha256": "a3362aea962fb1c97d6eac040c8aa985798c548457763fc7cb2bf542570d440f",
         "bytes": 1947,
-        "path": "C:\\Users\\adeil\\PycharmProjects\\Energy\\data\\bronze\\ons\\carga-energia-verificada\\8bdbe075-53b0-441d-9770-a6ec2289f1ba\\a3362aea962fb1c97d6eac040c8aa985798c548457763fc7cb2bf542570d440f",
+        "path": "data/bronze/ons/carga-energia-verificada/8bdbe075-53b0-441d-9770-a6ec2289f1ba/a3362aea962fb1c97d6eac040c8aa985798c548457763fc7cb2bf542570d440f",
         "source": "ons",
         "dataset": "carga-energia-verificada",
         "resource_id": "8bdbe075-53b0-441d-9770-a6ec2289f1ba",

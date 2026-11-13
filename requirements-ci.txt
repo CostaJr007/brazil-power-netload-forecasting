@@ -1,5 +1,5 @@
-# Mínimo para rodar os testes no CI (GitHub Actions, Linux). Sem rede nos testes.
-# A biblioteca nativa do eccodes vem do sistema (apt: libeccodes-dev).
+# Minimum to run the tests in CI (GitHub Actions, Linux). Tests use no network.
+# The native eccodes library comes from the system (apt: libeccodes-dev).
 duckdb==1.5.6
 numpy>=2,<3
 pandas>=2.2,<4
